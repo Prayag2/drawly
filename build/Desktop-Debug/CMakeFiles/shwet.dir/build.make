@@ -154,10 +154,150 @@ CMakeFiles/shwet.dir/src/components/ctoolbar.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/shwet.dir/src/components/ctoolbar.cpp.s"
 	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/prayag/me/programming/in-progress/qt/shwet/src/components/ctoolbar.cpp -o CMakeFiles/shwet.dir/src/components/ctoolbar.cpp.s
 
+CMakeFiles/shwet.dir/src/components/canvas.cpp.o: CMakeFiles/shwet.dir/flags.make
+CMakeFiles/shwet.dir/src/components/canvas.cpp.o: /home/prayag/me/programming/in-progress/qt/shwet/src/components/canvas.cpp
+CMakeFiles/shwet.dir/src/components/canvas.cpp.o: CMakeFiles/shwet.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/shwet.dir/src/components/canvas.cpp.o"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/shwet.dir/src/components/canvas.cpp.o -MF CMakeFiles/shwet.dir/src/components/canvas.cpp.o.d -o CMakeFiles/shwet.dir/src/components/canvas.cpp.o -c /home/prayag/me/programming/in-progress/qt/shwet/src/components/canvas.cpp
+
+CMakeFiles/shwet.dir/src/components/canvas.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/shwet.dir/src/components/canvas.cpp.i"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/prayag/me/programming/in-progress/qt/shwet/src/components/canvas.cpp > CMakeFiles/shwet.dir/src/components/canvas.cpp.i
+
+CMakeFiles/shwet.dir/src/components/canvas.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/shwet.dir/src/components/canvas.cpp.s"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/prayag/me/programming/in-progress/qt/shwet/src/components/canvas.cpp -o CMakeFiles/shwet.dir/src/components/canvas.cpp.s
+
+CMakeFiles/shwet.dir/src/shapes/shape.cpp.o: CMakeFiles/shwet.dir/flags.make
+CMakeFiles/shwet.dir/src/shapes/shape.cpp.o: /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/shape.cpp
+CMakeFiles/shwet.dir/src/shapes/shape.cpp.o: CMakeFiles/shwet.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/shwet.dir/src/shapes/shape.cpp.o"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/shwet.dir/src/shapes/shape.cpp.o -MF CMakeFiles/shwet.dir/src/shapes/shape.cpp.o.d -o CMakeFiles/shwet.dir/src/shapes/shape.cpp.o -c /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/shape.cpp
+
+CMakeFiles/shwet.dir/src/shapes/shape.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/shwet.dir/src/shapes/shape.cpp.i"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/shape.cpp > CMakeFiles/shwet.dir/src/shapes/shape.cpp.i
+
+CMakeFiles/shwet.dir/src/shapes/shape.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/shwet.dir/src/shapes/shape.cpp.s"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/shape.cpp -o CMakeFiles/shwet.dir/src/shapes/shape.cpp.s
+
+CMakeFiles/shwet.dir/src/shapes/line.cpp.o: CMakeFiles/shwet.dir/flags.make
+CMakeFiles/shwet.dir/src/shapes/line.cpp.o: /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/line.cpp
+CMakeFiles/shwet.dir/src/shapes/line.cpp.o: CMakeFiles/shwet.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/shwet.dir/src/shapes/line.cpp.o"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/shwet.dir/src/shapes/line.cpp.o -MF CMakeFiles/shwet.dir/src/shapes/line.cpp.o.d -o CMakeFiles/shwet.dir/src/shapes/line.cpp.o -c /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/line.cpp
+
+CMakeFiles/shwet.dir/src/shapes/line.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/shwet.dir/src/shapes/line.cpp.i"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/line.cpp > CMakeFiles/shwet.dir/src/shapes/line.cpp.i
+
+CMakeFiles/shwet.dir/src/shapes/line.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/shwet.dir/src/shapes/line.cpp.s"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/line.cpp -o CMakeFiles/shwet.dir/src/shapes/line.cpp.s
+
+CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.o: CMakeFiles/shwet.dir/flags.make
+CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.o: /home/prayag/me/programming/in-progress/qt/shwet/src/data-structures/quadtree.cpp
+CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.o: CMakeFiles/shwet.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.o"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.o -MF CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.o.d -o CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.o -c /home/prayag/me/programming/in-progress/qt/shwet/src/data-structures/quadtree.cpp
+
+CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.i"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/prayag/me/programming/in-progress/qt/shwet/src/data-structures/quadtree.cpp > CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.i
+
+CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.s"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/prayag/me/programming/in-progress/qt/shwet/src/data-structures/quadtree.cpp -o CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.s
+
+CMakeFiles/shwet.dir/src/shapes/rectangle.cpp.o: CMakeFiles/shwet.dir/flags.make
+CMakeFiles/shwet.dir/src/shapes/rectangle.cpp.o: /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/rectangle.cpp
+CMakeFiles/shwet.dir/src/shapes/rectangle.cpp.o: CMakeFiles/shwet.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/shwet.dir/src/shapes/rectangle.cpp.o"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/shwet.dir/src/shapes/rectangle.cpp.o -MF CMakeFiles/shwet.dir/src/shapes/rectangle.cpp.o.d -o CMakeFiles/shwet.dir/src/shapes/rectangle.cpp.o -c /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/rectangle.cpp
+
+CMakeFiles/shwet.dir/src/shapes/rectangle.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/shwet.dir/src/shapes/rectangle.cpp.i"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/rectangle.cpp > CMakeFiles/shwet.dir/src/shapes/rectangle.cpp.i
+
+CMakeFiles/shwet.dir/src/shapes/rectangle.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/shwet.dir/src/shapes/rectangle.cpp.s"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/rectangle.cpp -o CMakeFiles/shwet.dir/src/shapes/rectangle.cpp.s
+
+CMakeFiles/shwet.dir/src/shapes/ellipse.cpp.o: CMakeFiles/shwet.dir/flags.make
+CMakeFiles/shwet.dir/src/shapes/ellipse.cpp.o: /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/ellipse.cpp
+CMakeFiles/shwet.dir/src/shapes/ellipse.cpp.o: CMakeFiles/shwet.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/shwet.dir/src/shapes/ellipse.cpp.o"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/shwet.dir/src/shapes/ellipse.cpp.o -MF CMakeFiles/shwet.dir/src/shapes/ellipse.cpp.o.d -o CMakeFiles/shwet.dir/src/shapes/ellipse.cpp.o -c /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/ellipse.cpp
+
+CMakeFiles/shwet.dir/src/shapes/ellipse.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/shwet.dir/src/shapes/ellipse.cpp.i"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/ellipse.cpp > CMakeFiles/shwet.dir/src/shapes/ellipse.cpp.i
+
+CMakeFiles/shwet.dir/src/shapes/ellipse.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/shwet.dir/src/shapes/ellipse.cpp.s"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/ellipse.cpp -o CMakeFiles/shwet.dir/src/shapes/ellipse.cpp.s
+
+CMakeFiles/shwet.dir/src/shapes/arrow.cpp.o: CMakeFiles/shwet.dir/flags.make
+CMakeFiles/shwet.dir/src/shapes/arrow.cpp.o: /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/arrow.cpp
+CMakeFiles/shwet.dir/src/shapes/arrow.cpp.o: CMakeFiles/shwet.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/shwet.dir/src/shapes/arrow.cpp.o"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/shwet.dir/src/shapes/arrow.cpp.o -MF CMakeFiles/shwet.dir/src/shapes/arrow.cpp.o.d -o CMakeFiles/shwet.dir/src/shapes/arrow.cpp.o -c /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/arrow.cpp
+
+CMakeFiles/shwet.dir/src/shapes/arrow.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/shwet.dir/src/shapes/arrow.cpp.i"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/arrow.cpp > CMakeFiles/shwet.dir/src/shapes/arrow.cpp.i
+
+CMakeFiles/shwet.dir/src/shapes/arrow.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/shwet.dir/src/shapes/arrow.cpp.s"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/arrow.cpp -o CMakeFiles/shwet.dir/src/shapes/arrow.cpp.s
+
+CMakeFiles/shwet.dir/src/shapes/stroke.cpp.o: CMakeFiles/shwet.dir/flags.make
+CMakeFiles/shwet.dir/src/shapes/stroke.cpp.o: /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/stroke.cpp
+CMakeFiles/shwet.dir/src/shapes/stroke.cpp.o: CMakeFiles/shwet.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/shwet.dir/src/shapes/stroke.cpp.o"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/shwet.dir/src/shapes/stroke.cpp.o -MF CMakeFiles/shwet.dir/src/shapes/stroke.cpp.o.d -o CMakeFiles/shwet.dir/src/shapes/stroke.cpp.o -c /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/stroke.cpp
+
+CMakeFiles/shwet.dir/src/shapes/stroke.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/shwet.dir/src/shapes/stroke.cpp.i"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/stroke.cpp > CMakeFiles/shwet.dir/src/shapes/stroke.cpp.i
+
+CMakeFiles/shwet.dir/src/shapes/stroke.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/shwet.dir/src/shapes/stroke.cpp.s"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/stroke.cpp -o CMakeFiles/shwet.dir/src/shapes/stroke.cpp.s
+
+CMakeFiles/shwet.dir/src/shapes/draggableshape.cpp.o: CMakeFiles/shwet.dir/flags.make
+CMakeFiles/shwet.dir/src/shapes/draggableshape.cpp.o: /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/draggableshape.cpp
+CMakeFiles/shwet.dir/src/shapes/draggableshape.cpp.o: CMakeFiles/shwet.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/shwet.dir/src/shapes/draggableshape.cpp.o"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/shwet.dir/src/shapes/draggableshape.cpp.o -MF CMakeFiles/shwet.dir/src/shapes/draggableshape.cpp.o.d -o CMakeFiles/shwet.dir/src/shapes/draggableshape.cpp.o -c /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/draggableshape.cpp
+
+CMakeFiles/shwet.dir/src/shapes/draggableshape.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/shwet.dir/src/shapes/draggableshape.cpp.i"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/draggableshape.cpp > CMakeFiles/shwet.dir/src/shapes/draggableshape.cpp.i
+
+CMakeFiles/shwet.dir/src/shapes/draggableshape.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/shwet.dir/src/shapes/draggableshape.cpp.s"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/draggableshape.cpp -o CMakeFiles/shwet.dir/src/shapes/draggableshape.cpp.s
+
+CMakeFiles/shwet.dir/src/shapes/eraser.cpp.o: CMakeFiles/shwet.dir/flags.make
+CMakeFiles/shwet.dir/src/shapes/eraser.cpp.o: /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/eraser.cpp
+CMakeFiles/shwet.dir/src/shapes/eraser.cpp.o: CMakeFiles/shwet.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/shwet.dir/src/shapes/eraser.cpp.o"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/shwet.dir/src/shapes/eraser.cpp.o -MF CMakeFiles/shwet.dir/src/shapes/eraser.cpp.o.d -o CMakeFiles/shwet.dir/src/shapes/eraser.cpp.o -c /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/eraser.cpp
+
+CMakeFiles/shwet.dir/src/shapes/eraser.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/shwet.dir/src/shapes/eraser.cpp.i"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/eraser.cpp > CMakeFiles/shwet.dir/src/shapes/eraser.cpp.i
+
+CMakeFiles/shwet.dir/src/shapes/eraser.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/shwet.dir/src/shapes/eraser.cpp.s"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/eraser.cpp -o CMakeFiles/shwet.dir/src/shapes/eraser.cpp.s
+
 CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.o: CMakeFiles/shwet.dir/flags.make
 CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.o: shwet_autogen/F4FAE6NH3Q/qrc_res.cpp
 CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.o: CMakeFiles/shwet.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.o"
 	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.o -MF CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.o.d -o CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.o -c /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp
 
 CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.i: cmake_force
@@ -175,6 +315,16 @@ shwet_OBJECTS = \
 "CMakeFiles/shwet.dir/src/window/window.cpp.o" \
 "CMakeFiles/shwet.dir/src/components/cbutton.cpp.o" \
 "CMakeFiles/shwet.dir/src/components/ctoolbar.cpp.o" \
+"CMakeFiles/shwet.dir/src/components/canvas.cpp.o" \
+"CMakeFiles/shwet.dir/src/shapes/shape.cpp.o" \
+"CMakeFiles/shwet.dir/src/shapes/line.cpp.o" \
+"CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.o" \
+"CMakeFiles/shwet.dir/src/shapes/rectangle.cpp.o" \
+"CMakeFiles/shwet.dir/src/shapes/ellipse.cpp.o" \
+"CMakeFiles/shwet.dir/src/shapes/arrow.cpp.o" \
+"CMakeFiles/shwet.dir/src/shapes/stroke.cpp.o" \
+"CMakeFiles/shwet.dir/src/shapes/draggableshape.cpp.o" \
+"CMakeFiles/shwet.dir/src/shapes/eraser.cpp.o" \
 "CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.o"
 
 # External object files for target shwet
@@ -185,6 +335,16 @@ shwet: CMakeFiles/shwet.dir/src/main.cpp.o
 shwet: CMakeFiles/shwet.dir/src/window/window.cpp.o
 shwet: CMakeFiles/shwet.dir/src/components/cbutton.cpp.o
 shwet: CMakeFiles/shwet.dir/src/components/ctoolbar.cpp.o
+shwet: CMakeFiles/shwet.dir/src/components/canvas.cpp.o
+shwet: CMakeFiles/shwet.dir/src/shapes/shape.cpp.o
+shwet: CMakeFiles/shwet.dir/src/shapes/line.cpp.o
+shwet: CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.o
+shwet: CMakeFiles/shwet.dir/src/shapes/rectangle.cpp.o
+shwet: CMakeFiles/shwet.dir/src/shapes/ellipse.cpp.o
+shwet: CMakeFiles/shwet.dir/src/shapes/arrow.cpp.o
+shwet: CMakeFiles/shwet.dir/src/shapes/stroke.cpp.o
+shwet: CMakeFiles/shwet.dir/src/shapes/draggableshape.cpp.o
+shwet: CMakeFiles/shwet.dir/src/shapes/eraser.cpp.o
 shwet: CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.o
 shwet: CMakeFiles/shwet.dir/build.make
 shwet: /nix/store/4v8zscynk625j9nrcf40cxhgcc1biq09-qt-full-6.8.0/lib/libQt6Widgets.so.6.8.0
@@ -193,7 +353,7 @@ shwet: /nix/store/4v8zscynk625j9nrcf40cxhgcc1biq09-qt-full-6.8.0/lib/libGLX.so
 shwet: /nix/store/4v8zscynk625j9nrcf40cxhgcc1biq09-qt-full-6.8.0/lib/libOpenGL.so
 shwet: /nix/store/4v8zscynk625j9nrcf40cxhgcc1biq09-qt-full-6.8.0/lib/libQt6Core.so.6.8.0
 shwet: CMakeFiles/shwet.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable shwet"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Linking CXX executable shwet"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/shwet.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

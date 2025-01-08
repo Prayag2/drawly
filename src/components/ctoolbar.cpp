@@ -2,13 +2,14 @@
 
 CToolBar::CToolBar(QWidget *parent) : QFrame(parent) {
     m_layout = new QHBoxLayout(this);
-    this->setStyleSheet("CToolBar {border: 2px solid red;}");
     this->setLayout(m_layout);
+    this->adjustSize();
     parent->installEventFilter(this);
 }
 
 void CToolBar::addTool(QWidget *widget) {
     m_layout->addWidget(widget);
+    this->adjustSize();
 }
 
 Qt::Edge CToolBar::position() const {
@@ -24,42 +25,43 @@ qint32 CToolBar::margin() const {
 }
 
 void CToolBar::setPosition(Qt::Edge edge) {
-    QSize windowSize = this->parentWidget()->size();
-    this->adjustSize();
-
-    switch(edge) {
-    case Qt::LeftEdge:
-    case Qt::RightEdge:
+    if (edge == Qt::LeftEdge || edge == Qt::BottomEdge) {
         qWarning() << "Can't set toolbar position to left or right edge. Defaulting to bottom edge.";
-        [[fallthrough]];
+        edge = Qt::BottomEdge;
+    }
+    this->m_position = edge;
+    this->updatePosition();
+}
+
+void CToolBar::updatePosition() {
+    const qint32 windowWidth {this->parentWidget()->width()};
+    const qint32 windowHeight {this->parentWidget()->height()};
+
+    switch (this->m_position) {
     case Qt::BottomEdge:
         this->setGeometry(
-            (windowSize.width()-this->width())/2,
-            (windowSize.height()-this->height()-m_margin),
+            (windowWidth-this->width())/2,
+            (windowHeight-this->height()-m_margin),
             this->width(),
             this->height()
         );
-        this->m_position = Qt::BottomEdge;
         break;
     case Qt::TopEdge:
         this->setGeometry(
-            (windowSize.width()-this->width())/2,
+            (windowWidth-this->width())/2,
             m_margin,
             this->width(),
             this->height()
         );
-        this->m_position = Qt::TopEdge;
+        break;
+    default:
         break;
     }
 }
 
-void CToolBar::setPosition() {
-    this->setPosition(m_position);
-}
-
 bool CToolBar::eventFilter(QObject* object, QEvent* event) {
     if (object == this->parentWidget() && event->type() == QEvent::Resize) {
-        this->setPosition();
+        this->updatePosition();
     }
-    return QFrame::eventFilter(object, event);
+    return QObject::eventFilter(object, event);
 }

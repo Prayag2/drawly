@@ -42,15 +42,33 @@ endif()
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/home/prayag/me/programming/in-progress/qt/shwet/*.cpp")
 set(OLD_GLOB
   "/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles/3.30.5/CompilerIdCXX/CMakeCXXCompilerId.cpp"
+  "/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/moc_canvas.cpp"
   "/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/moc_cbutton.cpp"
   "/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/moc_ctoolbar.cpp"
   "/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/EWIEGA46WW/moc_mainwindow.cpp"
   "/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp"
   "/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/ML7GKOQR6K/moc_window.cpp"
   "/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/mocs_compilation.cpp"
+  "/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Release/CMakeFiles/3.30.5/CompilerIdCXX/CMakeCXXCompilerId.cpp"
+  "/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Release/shwet_autogen/4LREYSKJD5/moc_canvas.cpp"
+  "/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Release/shwet_autogen/4LREYSKJD5/moc_cbutton.cpp"
+  "/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Release/shwet_autogen/4LREYSKJD5/moc_ctoolbar.cpp"
+  "/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Release/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp"
+  "/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Release/shwet_autogen/ML7GKOQR6K/moc_window.cpp"
+  "/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Release/shwet_autogen/mocs_compilation.cpp"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/components/canvas.cpp"
   "/home/prayag/me/programming/in-progress/qt/shwet/src/components/cbutton.cpp"
   "/home/prayag/me/programming/in-progress/qt/shwet/src/components/ctoolbar.cpp"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/data-structures/quadtree.cpp"
   "/home/prayag/me/programming/in-progress/qt/shwet/src/main.cpp"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/arrow.cpp"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/draggableshape.cpp"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/ellipse.cpp"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/eraser.cpp"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/line.cpp"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/rectangle.cpp"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/shape.cpp"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/stroke.cpp"
   "/home/prayag/me/programming/in-progress/qt/shwet/src/window/window.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
@@ -71,8 +89,19 @@ endif()
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/home/prayag/me/programming/in-progress/qt/shwet/*.h")
 set(OLD_GLOB
   "/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/moc_predefs.h"
+  "/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Release/shwet_autogen/moc_predefs.h"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/components/canvas.h"
   "/home/prayag/me/programming/in-progress/qt/shwet/src/components/cbutton.h"
   "/home/prayag/me/programming/in-progress/qt/shwet/src/components/ctoolbar.h"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/data-structures/quadtree.h"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/arrow.h"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/draggableshape.h"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/ellipse.h"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/eraser.h"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/line.h"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/rectangle.h"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/shape.h"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/stroke.h"
   "/home/prayag/me/programming/in-progress/qt/shwet/src/window/window.h"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")

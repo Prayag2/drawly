@@ -1,10 +1,10 @@
 CMakeFiles/shwet.dir/shwet_autogen/mocs_compilation.cpp.o: \
  /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/mocs_compilation.cpp \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/stdc-predef.h \
- /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/moc_cbutton.cpp \
- /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/../../../../src/components/cbutton.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QPushButton \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qpushbutton.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/moc_canvas.cpp \
+ /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/../../../../src/components/canvas.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QWidget \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qwidget.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qtwidgetsglobal.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtguiglobal.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qglobal.h \
@@ -189,9 +189,8 @@ CMakeFiles/shwet.dir/shwet_autogen/mocs_compilation.cpp.o: \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtguiexports.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qtwidgets-config.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qtwidgetsexports.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qabstractbutton.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qicon.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qsize.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qwindowdefs.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qobjectdefs.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qnamespace.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcompare.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcomparehelpers.h \
@@ -230,25 +229,13 @@ CMakeFiles/shwet.dir/shwet_autogen/mocs_compilation.cpp.o: \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_tempbuf.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/cstdlib \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qtmetamacros.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qhashfunctions.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstring.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qchar.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringview.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qbytearray.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qrefcount.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qarraydata.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qpair.h \
- /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/string.h \
- /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/strings.h \
- /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/strings_fortified.h \
- /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/string_fortified.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qarraydatapointer.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qarraydataops.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcontainertools_impl.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qxptype_traits.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/cstring \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/iterator \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stream_iterator.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qobjectdefs_impl.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qfunctionaltools_impl.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/memory \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_raw_storage_iter.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/align.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/unique_ptr.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/shared_ptr.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/iosfwd \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stringfwd.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/postypes.h \
@@ -262,16 +249,8 @@ CMakeFiles/shwet.dir/shwet_autogen/mocs_compilation.cpp.o: \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/types/FILE.h \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/wchar2-decl.h \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/wchar2.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/streambuf_iterator.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/streambuf \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/localefwd.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/x86_64-unknown-linux-gnu/bits/c++locale.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/clocale \
- /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/locale.h \
- /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/locale.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/cctype \
- /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/ctype.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/ios_base.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/shared_ptr_base.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/allocated_ptr.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/ext/atomicity.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/x86_64-unknown-linux-gnu/bits/gthr.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/x86_64-unknown-linux-gnu/bits/gthr-default.h \
@@ -290,6 +269,40 @@ CMakeFiles/shwet.dir/shwet_autogen/mocs_compilation.cpp.o: \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/pthread_stack_min-dynamic.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/x86_64-unknown-linux-gnu/bits/atomic_word.h \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/sys/single_threaded.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/ext/concurrence.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/shared_ptr_atomic.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/backward/auto_ptr.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/pstl/glue_memory_defs.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/pstl/execution_defs.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qobject.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstring.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qchar.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringview.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qbytearray.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qrefcount.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qarraydata.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qpair.h \
+ /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/string.h \
+ /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/strings.h \
+ /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/strings_fortified.h \
+ /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/string_fortified.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qarraydatapointer.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qarraydataops.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcontainertools_impl.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qxptype_traits.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/cstring \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/iterator \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stream_iterator.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/streambuf_iterator.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/streambuf \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/localefwd.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/x86_64-unknown-linux-gnu/bits/c++locale.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/clocale \
+ /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/locale.h \
+ /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/locale.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/cctype \
+ /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/ctype.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/ios_base.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/locale_classes.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/string \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/char_traits.h \
@@ -324,18 +337,6 @@ CMakeFiles/shwet.dir/shwet_autogen/mocs_compilation.cpp.o: \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/x86_64-unknown-linux-gnu/bits/error_constants.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/stdexcept \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/streambuf.tcc \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/memory \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_raw_storage_iter.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/align.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/unique_ptr.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/shared_ptr.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/shared_ptr_base.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/allocated_ptr.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/ext/concurrence.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/shared_ptr_atomic.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/backward/auto_ptr.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/pstl/glue_memory_defs.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/pstl/execution_defs.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/algorithm \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/pstl/glue_algorithm_defs.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/q20functional.h \
@@ -353,54 +354,20 @@ CMakeFiles/shwet.dir/shwet_autogen/mocs_compilation.cpp.o: \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringbuilder.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringconverter.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringconverter_base.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qlist.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qhashfunctions.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/numeric \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_numeric.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/pstl/glue_numeric_defs.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qmargins.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/q23utility.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qlist.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qiterator.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qbytearraylist.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringlist.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qalgorithms.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringmatcher.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpixmap.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpaintdevice.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qwindowdefs.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qobjectdefs.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qobjectdefs_impl.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qfunctionaltools_impl.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qrect.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qpoint.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qcolor.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qrgb.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qrgba64.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/lib/gcc/x86_64-unknown-linux-gnu/13.3.0/include/limits.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/lib/gcc/x86_64-unknown-linux-gnu/13.3.0/include/syslimits.h \
- /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/limits.h \
- /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/posix1_lim.h \
- /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/local_lim.h \
- /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/linux/limits.h \
- /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/posix2_lim.h \
- /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/xopen_lim.h \
- /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/uio_lim.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qshareddata.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qimage.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpixelformat.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtransform.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpolygon.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qregion.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qdatastream.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qscopedpointer.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qiodevicebase.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qspan.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/cassert \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/q20iterator.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qline.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qkeysequence.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qwidget.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qobject.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qmetatype.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qdatastream.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qiodevicebase.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qfloat16.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qmath.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qiterable.h \
@@ -421,7 +388,38 @@ CMakeFiles/shwet.dir/shwet_autogen/mocs_compilation.cpp.o: \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/chrono.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/ratio \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/ctime \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qmargins.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/q23utility.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qaction.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qkeysequence.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qicon.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qsize.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpixmap.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpaintdevice.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qrect.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qpoint.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qcolor.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qrgb.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qrgba64.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/lib/gcc/x86_64-unknown-linux-gnu/13.3.0/include/limits.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/lib/gcc/x86_64-unknown-linux-gnu/13.3.0/include/syslimits.h \
+ /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/limits.h \
+ /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/posix1_lim.h \
+ /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/local_lim.h \
+ /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/linux/limits.h \
+ /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/posix2_lim.h \
+ /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/xopen_lim.h \
+ /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/uio_lim.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qshareddata.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qimage.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpixelformat.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtransform.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpolygon.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qregion.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qspan.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/cassert \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/q20iterator.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qline.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qvariant.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qdebug.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qtextstream.h \
@@ -443,11 +441,63 @@ CMakeFiles/shwet.dir/shwet_autogen/mocs_compilation.cpp.o: \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qsizepolicy.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qcursor.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qbitmap.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QPaintEvent \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qevent.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcoreevent.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qiodevice.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qurl.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qeventpoint.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qvector2d.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qvectornd.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpointingdevice.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qinputdevice.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qscreen.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QList \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qlist.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QObject \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qobject.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QRect \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qrect.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QSize \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qsize.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QSizeF \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QTransform \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtransform.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qnativeinterface.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qscreen_platform.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qguiapplication.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcoreapplication.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qdeadlinetimer.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qelapsedtimer.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qeventloop.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcoreapplication_platform.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qinputmethod.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qlocale.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qguiapplication_platform.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QPainter \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpainter.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtextoption.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpen.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QImage \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qimage.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QList \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QPixmap \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpixmap.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/../../../../src/components/../shapes/shape.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/../../../../src/components/../data-structures/quadtree.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QVector \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qvector.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QRect \
+ /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/../../../../src/components/../data-structures/../shapes/shape.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qtmochelpers.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/moc_cbutton.cpp \
+ /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/../../../../src/components/cbutton.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QPushButton \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qpushbutton.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qabstractbutton.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qwidget.h \
  /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/moc_ctoolbar.cpp \
  /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/../../../../src/components/ctoolbar.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QWidget \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qwidget.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QFrame \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qframe.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QHBoxLayout \

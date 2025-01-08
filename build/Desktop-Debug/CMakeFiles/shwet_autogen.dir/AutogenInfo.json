@@ -430,6 +430,12 @@
 	"HEADERS" : 
 	[
 		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/components/canvas.h",
+			"MU",
+			"4LREYSKJD5/moc_canvas.cpp",
+			null
+		],
+		[
 			"/home/prayag/me/programming/in-progress/qt/shwet/src/components/cbutton.h",
 			"MU",
 			"4LREYSKJD5/moc_cbutton.cpp",
@@ -439,6 +445,60 @@
 			"/home/prayag/me/programming/in-progress/qt/shwet/src/components/ctoolbar.h",
 			"MU",
 			"4LREYSKJD5/moc_ctoolbar.cpp",
+			null
+		],
+		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/data-structures/quadtree.h",
+			"MU",
+			"FMSE3QEKLS/moc_quadtree.cpp",
+			null
+		],
+		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/arrow.h",
+			"MU",
+			"2S5AI7NIVA/moc_arrow.cpp",
+			null
+		],
+		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/draggableshape.h",
+			"MU",
+			"2S5AI7NIVA/moc_draggableshape.cpp",
+			null
+		],
+		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/ellipse.h",
+			"MU",
+			"2S5AI7NIVA/moc_ellipse.cpp",
+			null
+		],
+		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/eraser.h",
+			"MU",
+			"2S5AI7NIVA/moc_eraser.cpp",
+			null
+		],
+		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/line.h",
+			"MU",
+			"2S5AI7NIVA/moc_line.cpp",
+			null
+		],
+		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/rectangle.h",
+			"MU",
+			"2S5AI7NIVA/moc_rectangle.cpp",
+			null
+		],
+		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/shape.h",
+			"MU",
+			"2S5AI7NIVA/moc_shape.cpp",
+			null
+		],
+		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/stroke.h",
+			"MU",
+			"2S5AI7NIVA/moc_stroke.cpp",
 			null
 		],
 		[
@@ -509,6 +569,11 @@
 	"SOURCES" : 
 	[
 		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/components/canvas.cpp",
+			"MU",
+			null
+		],
+		[
 			"/home/prayag/me/programming/in-progress/qt/shwet/src/components/cbutton.cpp",
 			"MU",
 			null
@@ -519,7 +584,52 @@
 			null
 		],
 		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/data-structures/quadtree.cpp",
+			"MU",
+			null
+		],
+		[
 			"/home/prayag/me/programming/in-progress/qt/shwet/src/main.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/arrow.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/draggableshape.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/ellipse.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/eraser.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/line.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/rectangle.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/shape.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/shapes/stroke.cpp",
 			"MU",
 			null
 		],

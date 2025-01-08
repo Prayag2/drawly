@@ -31,6 +31,16 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/resources/res.qrc
         src/resources/style.qss
         src/components/ctoolbar.h src/components/ctoolbar.cpp
+        src/components/canvas.h src/components/canvas.cpp
+        src/shapes/shape.h src/shapes/shape.cpp
+        src/shapes/line.h src/shapes/line.cpp
+        src/data-structures/quadtree.h src/data-structures/quadtree.cpp
+        src/shapes/rectangle.h src/shapes/rectangle.cpp
+        src/shapes/ellipse.h src/shapes/ellipse.cpp
+        src/shapes/arrow.h src/shapes/arrow.cpp
+        src/shapes/stroke.h src/shapes/stroke.cpp
+        src/shapes/draggableshape.h src/shapes/draggableshape.cpp
+        src/shapes/eraser.h src/shapes/eraser.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET shwet APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
