@@ -1,0 +1,9 @@
+/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles/shwet.dir
+/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles/edit_cache.dir
+/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles/rebuild_cache.dir
+/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles/list_install_components.dir
+/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles/install.dir
+/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles/install/local.dir
+/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles/install/strip.dir
+/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles/shwet_autogen_timestamp_deps.dir
+/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles/shwet_autogen.dir
