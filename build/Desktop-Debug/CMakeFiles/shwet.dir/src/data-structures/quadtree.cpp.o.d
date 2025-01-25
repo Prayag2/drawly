@@ -1,14 +1,8 @@
 CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.o: \
  /home/prayag/me/programming/in-progress/qt/shwet/src/data-structures/quadtree.cpp \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/stdc-predef.h \
- /home/prayag/me/programming/in-progress/qt/shwet/src/data-structures/quadtree.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QVector \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qvector.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qlist.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qarraydatapointer.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qarraydataops.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qarraydata.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qpair.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QDebug \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qdebug.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcontainerfwd.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qtconfigmacros.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qtconfiginclude.h \
@@ -60,6 +54,8 @@ CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.o: \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/stdint-uintn.h \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/stdint-least.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/limits \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qtextstream.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qiodevicebase.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qglobal.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/lib/gcc/x86_64-unknown-linux-gnu/13.3.0/include/stdbool.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qtpreprocessorsupport.h \
@@ -187,19 +183,63 @@ CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.o: \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qtresource.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qttranslation.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qversiontagging.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qchar.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcompare.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcomparehelpers.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/q20type_traits.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/functional \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_function.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/backward/binders.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/refwrap.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/std_function.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/unordered_map \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/unordered_map.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/hashtable.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/hashtable_policy.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/ext/alloc_traits.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/alloc_traits.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/memoryfwd.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/allocator.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/x86_64-unknown-linux-gnu/bits/c++allocator.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/new_allocator.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/node_handle.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/range_access.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/erase_if.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/memory_resource.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/uses_allocator_args.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/vector \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_uninitialized.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_vector.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_bvector.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/vector.tcc \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/array \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/compare \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_algo.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/algorithmfwd.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_heap.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/uniform_int_dist.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_tempbuf.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/cstdlib \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringview.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qbytearray.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qrefcount.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qnamespace.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qtmetamacros.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qarraydata.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qpair.h \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/string.h \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/strings.h \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/strings_fortified.h \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/string_fortified.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qarraydatapointer.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qarraydataops.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcontainertools_impl.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qxptype_traits.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/q20type_traits.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/cstring \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/iterator \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stream_iterator.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/iosfwd \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stringfwd.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/memoryfwd.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/postypes.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/cwchar \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/wchar.h \
@@ -242,22 +282,12 @@ CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.o: \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/locale_classes.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/string \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/char_traits.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/allocator.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/x86_64-unknown-linux-gnu/bits/c++allocator.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/new_allocator.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/ostream_insert.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/cxxabi_forced.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_function.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/backward/binders.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/refwrap.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/range_access.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/basic_string.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/ext/alloc_traits.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/alloc_traits.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/string_view \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/string_view.tcc \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/ext/string_conversions.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/cstdlib \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/cstdio \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/stdio.h \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/types/__fpos_t.h \
@@ -278,16 +308,12 @@ CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.o: \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/types/error_t.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/charconv.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/basic_string.tcc \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/memory_resource.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/uses_allocator_args.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/locale_classes.tcc \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/system_error \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/x86_64-unknown-linux-gnu/bits/error_constants.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/stdexcept \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/streambuf.tcc \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/memory \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_tempbuf.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_uninitialized.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_raw_storage_iter.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/align.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/unique_ptr.h \
@@ -300,81 +326,26 @@ CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.o: \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/pstl/glue_memory_defs.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/pstl/execution_defs.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/algorithm \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_algo.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/algorithmfwd.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_heap.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/uniform_int_dist.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/pstl/glue_algorithm_defs.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qnamespace.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcompare.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcomparehelpers.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/functional \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/std_function.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/unordered_map \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/unordered_map.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/hashtable.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/hashtable_policy.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/node_handle.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/erase_if.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/vector \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_vector.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_bvector.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/vector.tcc \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/array \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/compare \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qtmetamacros.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/q20functional.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/q20memory.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qhashfunctions.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstring.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qchar.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringview.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qbytearray.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qrefcount.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qbytearrayalgorithms.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qbytearrayview.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringfwd.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/stdlib.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringliteral.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringalgorithms.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qscopedpointer.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringconverter_base.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstring.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qlatin1stringview.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qanystringview.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qutf8stringview.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringtokenizer.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringbuilder.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringconverter.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringconverter_base.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/numeric \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_numeric.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/pstl/glue_numeric_defs.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qiterator.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qbytearraylist.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringlist.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qalgorithms.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringmatcher.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QRect \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qrect.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qmargins.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/q23utility.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qsize.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qpoint.h \
- /home/prayag/me/programming/in-progress/qt/shwet/src/data-structures/../shapes/shape.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QPainter \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpainter.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtguiglobal.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtgui-config.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtguiexports.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qrect.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qscopedpointer.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpixmap.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpaintdevice.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qwindowdefs.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qobjectdefs.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qobjectdefs_impl.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qfunctionaltools_impl.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qcolor.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qrgb.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qrgba64.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcontiguouscache.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/climits \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/lib/gcc/x86_64-unknown-linux-gnu/13.3.0/include/limits.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/lib/gcc/x86_64-unknown-linux-gnu/13.3.0/include/syslimits.h \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/limits.h \
@@ -384,26 +355,25 @@ CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.o: \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/posix2_lim.h \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/xopen_lim.h \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/bits/uio_lim.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qsharedpointer.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qshareddata.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qimage.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpixelformat.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtransform.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpolygon.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qregion.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qdatastream.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qiodevicebase.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qspan.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/cassert \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/q20iterator.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qline.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtextoption.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qhashfunctions.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/numeric \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_numeric.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/pstl/glue_numeric_defs.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qsharedpointer_impl.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qmetatype.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qdatastream.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qfloat16.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qmath.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qalgorithms.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qiterable.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qmetacontainer.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcontainerinfo.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qtaggedpointer.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qobjectdefs.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qobjectdefs_impl.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qfunctionaltools_impl.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qscopeguard.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/list \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_list.h \
@@ -412,25 +382,61 @@ CMakeFiles/shwet.dir/src/data-structures/quadtree.cpp.o: \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_tree.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_map.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/stl_multimap.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/chrono \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/chrono.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/ratio \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/ctime \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qlist.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qiterator.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qbytearraylist.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringlist.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qstringmatcher.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qmap.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qshareddata_impl.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qset.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qhash.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qvarlengtharray.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/data-structures/quadtree.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QVector \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qvector.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QRect \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qrect.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qmargins.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/q23utility.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qsize.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qpoint.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QPainter \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpainter.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtguiglobal.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtgui-config.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtguiexports.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qrect.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpixmap.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpaintdevice.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qwindowdefs.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qcolor.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qrgb.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qrgba64.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qimage.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpixelformat.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtransform.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpolygon.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qregion.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qspan.h \
+ /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/cassert \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/q20iterator.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qline.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtextoption.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpen.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qbrush.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qfontinfo.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qfont.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qendian.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qfontmetrics.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QDebug \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qdebug.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qtextstream.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcontiguouscache.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/climits \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qsharedpointer.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qsharedpointer_impl.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/chrono \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/chrono.h \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/ratio \
- /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/ctime \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qmap.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qshareddata_impl.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qset.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qhash.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qvarlengtharray.h
+ /home/prayag/me/programming/in-progress/qt/shwet/src/data-structures/../item/item.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/data-structures/../item/properties/fill.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QColor \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qcolor.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/data-structures/../item/properties/./itemproperty.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/data-structures/../item/properties/stroke.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/data-structures/../item/properties/font.h

@@ -13,9 +13,10 @@ public:
     const QRect& boundingBox() const override;
     ShapeType shapeType() const override;
     bool intersects(QRect boundingBox) const override;
+    void draw(QPainter& painter) const override;
 
     void setBoundingBox(QRect boundingBox);
-    QCursor createCursor (int size, int borderWidth) const;
+    static QCursor createCursor (int size, int borderWidth);
 };
 
 #endif // ERASER_H

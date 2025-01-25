@@ -1,10 +1,13 @@
-#include "quadtree.h"
 #include <QDebug>
+#include "quadtree.h"
 
 QuadTree::QuadTree(QRect region, int capacity)
     : m_boundingBox {region}, m_capacity {capacity} {}
 
 QuadTree::~QuadTree() {
+    for (Item *item : m_items) {
+        delete item;
+    }
     delete m_topLeft;
     delete m_topRight;
     delete m_bottomRight;
@@ -22,23 +25,23 @@ void QuadTree::subdivide() {
     m_bottomLeft = new QuadTree{QRect{x, y+halfHeight, halfWidth, halfHeight}, m_capacity};
 }
 
-void QuadTree::insertShape(Shape* const shape) {
+void QuadTree::insertItem(Item* const item) {
     /*
-     * TODO: If the shape lies outside this node's bounding box,
+     * TODO: If the item lies outside this node's bounding box,
      *       then, expand its bounding box. This will make the
      *       whiteboard infinite.
      */
     // For now, the whiteboard is finite:
-    insert(shape);
+    insert(item);
 }
 
-bool QuadTree::insert(Shape* const shape) {
-    if (!m_boundingBox.intersects(shape->boundingBox())) {
+bool QuadTree::insert(Item* const item) {
+    if (!m_boundingBox.intersects(item->boundingBox())) {
         return false;
     }
 
-    if (m_shapes.size() < m_capacity) {
-        m_shapes.push_back(shape);
+    if (m_items.size() < m_capacity) {
+        m_items.push_back(item);
         return true;
     }
 
@@ -46,110 +49,121 @@ bool QuadTree::insert(Shape* const shape) {
     if (m_topLeft == nullptr) subdivide();
 
     bool inserted = false;
-    if (m_topLeft->insert(shape)) inserted = true;
-    if (m_topRight->insert(shape)) inserted = true;
-    if (m_bottomRight->insert(shape)) inserted = true;
-    if (m_bottomLeft->insert(shape)) inserted = true;
+    if (m_topLeft->insert(item)) inserted = true;
+    if (m_topRight->insert(item)) inserted = true;
+    if (m_bottomRight->insert(item)) inserted = true;
+    if (m_bottomLeft->insert(item)) inserted = true;
 
     return inserted;
 }
 
-void QuadTree::deleteShape(Shape* const shape) {
-    if (!m_boundingBox.intersects(shape->boundingBox())) {
+void QuadTree::deleteItem(Item* const item) {
+    if (!m_boundingBox.intersects(item->boundingBox())) {
         return;
     }
 
-    auto it = std::find(m_shapes.begin(), m_shapes.end(), shape);
-    if (it != m_shapes.end()) {
-        m_shapes.erase(it);
+    auto it = std::find(m_items.begin(), m_items.end(), item);
+    if (it != m_items.end()) {
+        m_items.erase(it);
     }
 
-    // If the node is subdivided, attempt to delete the shape from children
+    // If the node is subdivided, attempt to delete the item from children
     if (m_topLeft != nullptr) {
-        m_topLeft->deleteShape(shape);
-        m_topRight->deleteShape(shape);
-        m_bottomLeft->deleteShape(shape);
-        m_bottomRight->deleteShape(shape);
+        m_topLeft->deleteItem(item);
+        m_topRight->deleteItem(item);
+        m_bottomLeft->deleteItem(item);
+        m_bottomRight->deleteItem(item);
     }
 }
 
-void QuadTree::deleteShapes(const QRect& boundingBox) {
+void QuadTree::deleteItems(const QRect& boundingBox) {
     if (!m_boundingBox.intersects(boundingBox)) return;
 
-    for (int i = 0; i < m_shapes.size();) {
-        if (boundingBox.intersects(m_shapes[i]->boundingBox())) {
-            m_shapes.erase(m_shapes.begin()+i);
+    for (int i = 0; i < m_items.size();) {
+        if (boundingBox.intersects(m_items[i]->boundingBox())) {
+            m_items.erase(m_items.begin()+i);
         } else {
             i++;
         }
     }
 
     if (m_topLeft != nullptr) {
-        m_topLeft->deleteShapes(boundingBox);
-        m_topRight->deleteShapes(boundingBox);
-        m_bottomRight->deleteShapes(boundingBox);
-        m_bottomLeft->deleteShapes(boundingBox);
+        m_topLeft->deleteItems(boundingBox);
+        m_topRight->deleteItems(boundingBox);
+        m_bottomRight->deleteItems(boundingBox);
+        m_bottomLeft->deleteItems(boundingBox);
     }
 }
 
-QVector<Shape*> QuadTree::queryShapes(const QRect& boundingBox, bool onlyBoundingBox) const {
-    QVector<Shape*> curShapes {};
+QVector<Item*> QuadTree::getAllItems() const {
+    QVector<Item*> curItems {m_items};
+    if (m_topLeft != nullptr) {
+        curItems += m_topLeft->getAllItems();
+        curItems += m_topRight->getAllItems();
+        curItems += m_bottomRight->getAllItems();
+        curItems += m_bottomLeft->getAllItems();
+    }
+    return curItems;
+}
+
+QVector<Item*> QuadTree::queryItems(const QRect& boundingBox, bool onlyBoundingBox) const {
+    QVector<Item*> curItems {};
 
     if (!m_boundingBox.intersects(boundingBox)) {
-        return curShapes;
+        return curItems;
     }
 
-    for (Shape* const shape : m_shapes) {
-        if (shape->boundingBox().intersects(boundingBox)) {
-            if (onlyBoundingBox || shape->intersects(boundingBox)) {
-                curShapes.push_back(shape);
+    for (Item* const item : m_items) {
+        if (item->boundingBox().intersects(boundingBox)) {
+            if (onlyBoundingBox || item->intersects(boundingBox)) {
+                curItems.push_back(item);
             }
         }
     }
 
     // if this node has sub-regions
     if (m_topLeft != nullptr) {
-        curShapes += m_topLeft->queryShapes(boundingBox);
-        curShapes += m_topRight->queryShapes(boundingBox);
-        curShapes += m_bottomRight->queryShapes(boundingBox);
-        curShapes += m_bottomLeft->queryShapes(boundingBox);
+        curItems += m_topLeft->queryItems(boundingBox);
+        curItems += m_topRight->queryItems(boundingBox);
+        curItems += m_bottomRight->queryItems(boundingBox);
+        curItems += m_bottomLeft->queryItems(boundingBox);
     }
-    return curShapes;
+    return curItems;
 };
 
-QVector<Shape*> QuadTree::queryAllShapes(const QRect& boundingBox, std::optional<int> level) const {
+QVector<Item*> QuadTree::queryConnectedItems(const QRect& boundingBox, std::optional<int> level) const {
     // Performs DFS
-    // Creates a list of all the shapes intersecting directly or indirectly
+    // Creates a list of all the items intersecting directly or indirectly
     // with the given bounding box
-    QVector<Shape*> output {};
-    dfs(boundingBox, m_shapes, output, level);
+    QVector<Item*> output {};
+    dfs(boundingBox, m_items, output, level);
     return output;
 };
 
-void QuadTree::dfs(const QRect& boundingBox, QVector<Shape*> shapes, QVector<Shape*>& out, std::optional<int> level) const {
+void QuadTree::dfs(const QRect& boundingBox, QVector<Item*> items, QVector<Item*>& out, std::optional<int> level) const {
     if (level.has_value() && level.value() <= 0) return;
     if (!m_boundingBox.intersects(boundingBox)) {
         return;
     }
 
     std::optional<int> nextLevel {level.has_value() ? level.value()-1 : level};
-    int N = shapes.size();
+    int N = items.size();
     for (int i = 0; i < N; i++) {
-        if (shapes[i] == nullptr) continue;
-        if (shapes[i]->boundingBox().intersects(boundingBox)) {
-            out.push_back(shapes[i]);
-            QRect newBox = shapes[i]->boundingBox();
-            shapes[i] = nullptr;
-            dfs(newBox, shapes, out, nextLevel);
+        if (items[i] == nullptr) continue;
+        if (items[i]->boundingBox().intersects(boundingBox)) {
+            out.push_back(items[i]);
+            QRect newBox = items[i]->boundingBox();
+            items[i] = nullptr;
+            dfs(newBox, items, out, nextLevel);
         }
     }
 
     // if this node has sub-regions
     if (m_topLeft != nullptr) {
-        m_topLeft->dfs(boundingBox, m_topLeft->m_shapes, out, nextLevel);
-        m_topRight->dfs(boundingBox, m_topRight->m_shapes, out, nextLevel);
-        m_bottomRight->dfs(boundingBox, m_bottomRight->m_shapes, out, nextLevel);
-        m_bottomLeft->dfs(boundingBox, m_bottomLeft->m_shapes, out, nextLevel);
+        m_topLeft->dfs(boundingBox, m_topLeft->m_items, out, nextLevel);
+        m_topRight->dfs(boundingBox, m_topRight->m_items, out, nextLevel);
+        m_bottomRight->dfs(boundingBox, m_bottomRight->m_items, out, nextLevel);
+        m_bottomLeft->dfs(boundingBox, m_bottomLeft->m_items, out, nextLevel);
     }
 };
 

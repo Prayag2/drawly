@@ -19,8 +19,6 @@ set(PROJECT_SOURCES
         ${SRC_DIR}/main.cpp
         ${SRC_DIR}/window/window.cpp
         ${SRC_DIR}/window/window.h
-        ${SRC_DIR}/components/cbutton.h
-        ${SRC_DIR}/components/cbutton.cpp
         ${TS_FILES}
 )
 
@@ -30,17 +28,29 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         src/resources/res.qrc
         src/resources/style.qss
-        src/components/ctoolbar.h src/components/ctoolbar.cpp
-        src/components/canvas.h src/components/canvas.cpp
-        src/shapes/shape.h src/shapes/shape.cpp
-        src/shapes/line.h src/shapes/line.cpp
         src/data-structures/quadtree.h src/data-structures/quadtree.cpp
-        src/shapes/rectangle.h src/shapes/rectangle.cpp
-        src/shapes/ellipse.h src/shapes/ellipse.cpp
-        src/shapes/arrow.h src/shapes/arrow.cpp
-        src/shapes/stroke.h src/shapes/stroke.cpp
-        src/shapes/draggableshape.h src/shapes/draggableshape.cpp
-        src/shapes/eraser.h src/shapes/eraser.cpp
+        src/window/boardlayout.h src/window/boardlayout.cpp
+        src/canvas/canvas.h src/canvas/canvas.cpp
+        src/components/toolbar.h src/components/toolbar.cpp
+        src/tools/tool.h src/tools/tool.cpp
+        src/controller/controller.h src/controller/controller.cpp
+        src/context/applicationcontext.h src/context/applicationcontext.cpp
+        src/event/event.h src/event/event.cpp
+        src/tools/drawingtool.h src/tools/drawingtool.cpp
+        src/item/item.h src/item/item.cpp
+        src/item/polygon.h src/item/polygon.cpp
+        src/item/properties/stroke.h src/item/properties/stroke.cpp
+        src/item/properties/fill.h src/item/properties/fill.cpp
+        src/item/properties/font.h src/item/properties/font.cpp
+        src/item/properties/itemproperty.h src/item/properties/itemproperty.cpp
+        src/item/rectangle.h src/item/rectangle.cpp
+        src/item/factory/itemfactory.h src/item/factory/itemfactory.cpp
+        src/item/factory/rectanglefactory.h src/item/factory/rectanglefactory.cpp
+        src/tools/polygondrawingtool.h src/tools/polygondrawingtool.cpp
+        src/tools/rectangletool.h src/tools/rectangletool.cpp
+        src/item/ellipse.h src/item/ellipse.cpp
+        src/tools/ellipsetool.h src/tools/ellipsetool.cpp
+        src/item/factory/ellipsefactory.h src/item/factory/ellipsefactory.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET shwet APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

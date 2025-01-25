@@ -488,6 +488,8 @@ CMakeFiles/shwet.dir/src/components/canvas.cpp.o: \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qvector.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QRect \
  /home/prayag/me/programming/in-progress/qt/shwet/src/components/../data-structures/../shapes/shape.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QBuffer \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qbuffer.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QBitmap \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qbitmap.h \
  /home/prayag/me/programming/in-progress/qt/shwet/src/components/../shapes/stroke.h \

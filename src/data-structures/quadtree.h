@@ -3,20 +3,21 @@
 
 #include <QVector>
 #include <QRect>
-#include "../shapes/shape.h"
+#include <QPainter>
+#include "../item/item.h"
 
 /*
  * A QuadTree is a tree data structure which divides the space,
  * or in our case, the canvas, into 4 regions recursively.
- * It will be useful here to detect collisions with existing shapes
- * And redraw only the shapes necessary which improves performance.
+ * It will be useful here to detect collisions with existing items
+ * And redraw only the items necessary which improves performance.
  * The following implementation of QuadTree is specific to this whiteboard
- * app since it uses the Shape class which is implemented in the shapes folder.
+ * app since it uses the Item class which is implemented in the items folder.
  */
 class QuadTree
 {
 private:
-    QVector<Shape*> m_shapes {};
+    QVector<Item*> m_items {};
     QRect m_boundingBox {};
     int m_capacity {};
     QuadTree* m_topLeft {nullptr};
@@ -29,19 +30,20 @@ public:
 
     int size() const;
     void subdivide();
-    void insertShape(Shape* const shape);
-    void deleteShape(Shape* const shape);
-    void deleteShapes(const QRect& boundingBox);
-    QVector<Shape*> queryShapes(const QRect& boundingBox, bool onlyBoundingBox = false) const;
-    QVector<Shape*> queryAllShapes(const QRect& boundingBox, std::optional<int> level = {}) const;
+    void insertItem(Item* const item);
+    void deleteItem(Item* const item);
+    void deleteItems(const QRect& boundingBox);
+    QVector<Item*> getAllItems() const;
+    QVector<Item*> queryItems(const QRect& boundingBox, bool onlyBoundingBox = false) const;
+    QVector<Item*> queryConnectedItems(const QRect& boundingBox, std::optional<int> level = {}) const;
 
     void draw(QPainter& painter) const;
 
 private:
-    bool insert(Shape* const shape);
+    bool insert(Item* const item);
     QImage* m_img;
 
-    void dfs(const QRect& boundingBox, QVector<Shape*> shapes, QVector<Shape*>& out, std::optional<int> level) const;
+    void dfs(const QRect& boundingBox, QVector<Item*> items, QVector<Item*>& out, std::optional<int> level) const;
 };
 
 #endif // QUADTREE_H

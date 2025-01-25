@@ -440,74 +440,10 @@ CMakeFiles/shwet.dir/src/window/window.cpp.o: \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qsizepolicy.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qcursor.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qbitmap.h \
- /home/prayag/me/programming/in-progress/qt/shwet/src/window/../components/cbutton.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QPushButton \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qpushbutton.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qabstractbutton.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qwidget.h \
- /home/prayag/me/programming/in-progress/qt/shwet/src/window/../components/canvas.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QPaintEvent \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qevent.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcoreevent.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qiodevice.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qurl.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qeventpoint.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qvector2d.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qvectornd.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpointingdevice.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qinputdevice.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qscreen.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QList \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qlist.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QObject \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qobject.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QRect \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qrect.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QSize \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qsize.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QSizeF \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QTransform \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtransform.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qnativeinterface.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qscreen_platform.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qguiapplication.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcoreapplication.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qdeadlinetimer.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qelapsedtimer.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qeventloop.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcoreapplication_platform.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qinputmethod.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qlocale.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qguiapplication_platform.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QPainter \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpainter.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtextoption.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpen.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QImage \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qimage.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QList \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QPixmap \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpixmap.h \
- /home/prayag/me/programming/in-progress/qt/shwet/src/window/../components/../shapes/shape.h \
- /home/prayag/me/programming/in-progress/qt/shwet/src/window/../components/../data-structures/quadtree.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QVector \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qvector.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QRect \
- /home/prayag/me/programming/in-progress/qt/shwet/src/window/../components/../data-structures/../shapes/shape.h \
- /home/prayag/me/programming/in-progress/qt/shwet/src/window/../components/ctoolbar.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QFrame \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qframe.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QHBoxLayout \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qboxlayout.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qlayout.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qlayoutitem.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qboxlayout.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qgridlayout.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QEvent \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcoreevent.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QFile \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qfile.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qfiledevice.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qiodevice.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/filesystem \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/fs_fwd.h \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/fs_path.h \
@@ -542,4 +478,82 @@ CMakeFiles/shwet.dir/src/window/window.cpp.o: \
  /nix/store/4krab2h0hd4wvxxmscxrw21pl77j4i7j-gcc-13.3.0/include/c++/13.3.0/bits/fs_ops.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QButtonGroup \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qbuttongroup.h \
- /home/prayag/me/programming/in-progress/qt/shwet/src/window/../shapes/shape.h
+ /home/prayag/me/programming/in-progress/qt/shwet/src/window/../controller/controller.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QObject \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qobject.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QMouseEvent \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qevent.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcoreevent.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qurl.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qeventpoint.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qvector2d.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qvectornd.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpointingdevice.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qinputdevice.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qscreen.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QList \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qlist.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QObject \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QRect \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qrect.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QSize \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qsize.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QSizeF \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QTransform \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtransform.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qnativeinterface.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qscreen_platform.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qguiapplication.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcoreapplication.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qdeadlinetimer.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qelapsedtimer.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qeventloop.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcoreapplication_platform.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qinputmethod.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qlocale.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qguiapplication_platform.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/window/../context/applicationcontext.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QPoint \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qpoint.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QPen \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpen.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/window/../context/../data-structures/quadtree.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QVector \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qvector.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QRect \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QPainter \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpainter.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtextoption.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpen.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/window/../context/../data-structures/../item/item.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/window/../context/../data-structures/../item/properties/fill.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QColor \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qcolor.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/window/../context/../data-structures/../item/properties/./itemproperty.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/window/../context/../data-structures/../item/properties/stroke.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/window/../context/../data-structures/../item/properties/font.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/window/../context/../canvas/canvas.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/window/../context/../components/toolbar.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QHBoxLayout \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qboxlayout.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qlayout.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qlayoutitem.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qboxlayout.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qgridlayout.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QFrame \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qframe.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qwidget.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QPushButton \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qpushbutton.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qabstractbutton.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/window/../context/../components/../tools/tool.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QCursor \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qcursor.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/window/../context/../event/event.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QtTypes \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qtypes.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/window/../components/toolbar.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/window/../canvas/canvas.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/window/boardlayout.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QLayout \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qlayout.h

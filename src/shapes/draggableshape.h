@@ -7,7 +7,6 @@ class DraggableShape : public Shape
 {
 public:
     DraggableShape(int strokeWidth);
-    virtual void draw(QPainter& painter) const = 0;
 
     virtual void setStart(QPoint start);
     virtual void setEnd(QPoint end);

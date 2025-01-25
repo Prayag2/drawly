@@ -16,8 +16,7 @@ public:
     bool intersects(QRect boundingBox) const override;
 
     void addPoint(const QPoint& point);
-    void addPoint(QPainter& painter, const QPoint& point);
-    void draw(QPainter& painter) const;
+    void draw(QPainter& painter) const override;
 
     ShapeType shapeType() const override;
     int size() const;

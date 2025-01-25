@@ -44,15 +44,6 @@ void Stroke::addPoint(const QPoint& point) {
     m_points.push_back(point);
 }
 
-void Stroke::addPoint(QPainter& painter, const QPoint& point) {
-    addPoint(point);
-    if (m_points.size() == 1) {
-        painter.drawPoint(m_points.back());
-    } else {
-        painter.drawLine(*(m_points.end()-2), *(m_points.end()-1));
-    }
-}
-
 void Stroke::draw(QPainter& painter) const {
     int buffer {10};
     QVector<QPoint> points {m_points.front()};

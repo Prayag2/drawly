@@ -18,34 +18,42 @@ public:
     void setShape(ShapeType shapeType);
     ShapeType shape() const;
 private:
-    void paintEvent(QPaintEvent *event) override;
     QImage* m_canvas {};
-    QImage* m_overlayCanvas {};
+    QImage* m_overlay {};
+
     QPainter m_canvasPainter {};
     QPainter m_overlayPainter {};
     QPainter m_widgetPainter {};
+
     QPen m_pen {};
     QPen m_overlayResetPen {};
-    QuadTree* m_shapes {};
+    QPen m_selectionPen {};
+    QuadTree* m_shapeTree {};
 
-    QRect m_dirtyRegion {};
-    QVector<Shape*> m_dirtyShapes {};
-    Shape* m_curShape {nullptr};
-    ShapeType m_shape {};
-
+    ShapeType m_curShapeType {};
+    Shape* m_curDrawnShape {nullptr};
     QCursor m_eraser {};
 
     bool m_isDrawing {false};
+
+    QPoint m_topLeftPosition {0, 0};
     double m_scale {};
-    int m_width {800};
-    int m_height {800};
+    int m_width {500};
+    int m_height {500};
+    QSize m_initialScreenSize {};
 
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
-    bool eventFilter(QObject *object, QEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
+    void paintEvent(QPaintEvent *event) override;
 
-    QVector<Shape*> getDirtyShapes(const QRect& boundingBox) const;
+    QImage* m_createImage(QColor fill) const;
+
+    void m_startCanvasPainter();
+    void m_startOverlayPainter();
+    void m_endCanvasPainter();
+    void m_endOverlayPainter();
 };
 
 #endif // CANVAS_H

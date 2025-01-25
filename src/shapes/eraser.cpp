@@ -22,7 +22,7 @@ bool Eraser::intersects(QRect boundingBox) const {
     return m_boundingBox.intersects(boundingBox);
 }
 
-QCursor Eraser::createCursor(int size, int borderWidth) const {
+QCursor Eraser::createCursor(int size, int borderWidth) {
     QBitmap eraserShape {size, size};
     QPen eraserPen {};
     eraserPen.setWidth(borderWidth);
@@ -35,3 +35,7 @@ QCursor Eraser::createCursor(int size, int borderWidth) const {
     eraserPainter.drawRect(borderWidth/2, borderWidth/2, size-borderWidth, size-borderWidth);
     return QCursor(eraserShape, 0, 0);
 }
+
+void Eraser::draw(QPainter& painter) const {
+    throw std::logic_error("You can not call draw on the eraser");
+};

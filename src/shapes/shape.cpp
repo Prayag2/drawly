@@ -2,6 +2,7 @@
 
 #include "line.h"
 #include "rectangle.h"
+#include "selection.h"
 #include "eraser.h"
 #include "ellipse.h"
 #include "arrow.h"
@@ -28,6 +29,9 @@ Shape* Shape::createShape(ShapeType shapeType, int strokeWidth) {
         break;
     case ShapeType::Eraser:
         shape = new Eraser();
+        break;
+    case ShapeType::Selection:
+        shape = new Selection();
         break;
     case ShapeType::Stroke:
     default:

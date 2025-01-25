@@ -15,7 +15,8 @@ enum class ShapeType {
     Ellipse = 0x04,
     Arrow = 0x08,
     Stroke = 0x10,
-    Eraser = 0x20
+    Eraser = 0x20,
+    Selection = 0x40,
 };
 
 class Shape
@@ -27,6 +28,7 @@ public:
     virtual const QRect& boundingBox() const = 0;
     virtual ShapeType shapeType() const = 0;
     virtual bool intersects(QRect boundingBox) const = 0;
+    virtual void draw(QPainter& painter) const = 0;
 
     static Shape* createShape(ShapeType shapeType, int strokeWidth);
 

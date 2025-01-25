@@ -1,8 +1,8 @@
 CMakeFiles/shwet.dir/shwet_autogen/mocs_compilation.cpp.o: \
  /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/mocs_compilation.cpp \
  /nix/store/lw21wr626v5sdcaxxkv2k4zf1121hfc9-glibc-2.40-36-dev/include/stdc-predef.h \
- /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/moc_canvas.cpp \
- /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/../../../../src/components/canvas.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/SXBUF2WVFU/moc_canvas.cpp \
+ /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/SXBUF2WVFU/../../../../src/canvas/canvas.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QWidget \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qwidget.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qtwidgetsglobal.h \
@@ -441,7 +441,35 @@ CMakeFiles/shwet.dir/shwet_autogen/mocs_compilation.cpp.o: \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qsizepolicy.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qcursor.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qbitmap.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QPaintEvent \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QPainter \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpainter.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtextoption.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpen.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qtmochelpers.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/moc_toolbar.cpp \
+ /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/../../../../src/components/toolbar.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QHBoxLayout \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qboxlayout.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qlayout.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qlayoutitem.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qboxlayout.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qgridlayout.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QFrame \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qframe.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qwidget.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QPushButton \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qpushbutton.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qabstractbutton.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QButtonGroup \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qbuttongroup.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/../../../../src/components/../tools/tool.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QCursor \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qcursor.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/KECQXMYYOW/moc_controller.cpp \
+ /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/KECQXMYYOW/../../../../src/controller/controller.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QObject \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qobject.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QMouseEvent \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qevent.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcoreevent.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qiodevice.h \
@@ -455,7 +483,6 @@ CMakeFiles/shwet.dir/shwet_autogen/mocs_compilation.cpp.o: \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QList \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qlist.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QObject \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qobject.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QRect \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qrect.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QSize \
@@ -474,39 +501,9 @@ CMakeFiles/shwet.dir/shwet_autogen/mocs_compilation.cpp.o: \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qinputmethod.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qlocale.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qguiapplication_platform.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QPainter \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpainter.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qtextoption.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpen.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QImage \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qimage.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QList \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QPixmap \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qpixmap.h \
- /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/../../../../src/components/../shapes/shape.h \
- /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/../../../../src/components/../data-structures/quadtree.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QVector \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qvector.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QRect \
- /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/../../../../src/components/../data-structures/../shapes/shape.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qtmochelpers.h \
- /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/moc_cbutton.cpp \
- /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/../../../../src/components/cbutton.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QPushButton \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qpushbutton.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qabstractbutton.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qwidget.h \
- /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/moc_ctoolbar.cpp \
- /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/4LREYSKJD5/../../../../src/components/ctoolbar.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QFrame \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qframe.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QHBoxLayout \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qboxlayout.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/ML7GKOQR6K/moc_boardlayout.cpp \
+ /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/ML7GKOQR6K/../../../../src/window/boardlayout.h \
+ /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/QLayout \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qlayout.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qlayoutitem.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qboxlayout.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtWidgets/qgridlayout.h \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/QEvent \
- /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtCore/qcoreevent.h \
  /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/ML7GKOQR6K/moc_window.cpp \
  /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/ML7GKOQR6K/../../../../src/window/window.h

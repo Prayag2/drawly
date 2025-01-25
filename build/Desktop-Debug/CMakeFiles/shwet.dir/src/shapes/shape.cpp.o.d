@@ -416,6 +416,7 @@ CMakeFiles/shwet.dir/src/shapes/shape.cpp.o: \
  /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/line.h \
  /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/draggableshape.h \
  /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/rectangle.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/selection.h \
  /home/prayag/me/programming/in-progress/qt/shwet/src/shapes/eraser.h \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/QCursor \
  /nix/store/9prg7kzx3689q4ki17c6g1bwk4wj6wz2-qtbase-6.8.0/include/QtGui/qcursor.h \
