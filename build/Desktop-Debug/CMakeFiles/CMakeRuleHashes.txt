@@ -1,4 +1,0 @@
-# Hashes of file build rules.
-7f6aa5b5d2f9e69b0e0dd7dd75683774 CMakeFiles/shwet_autogen
-481a72cffabb1ef04298cd3e73d7f65c shwet_autogen/F4FAE6NH3Q/qrc_res.cpp
-3d119e7927cd6ecdde9d15e21e7a2f59 shwet_autogen/timestamp
