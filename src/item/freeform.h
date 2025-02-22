@@ -9,8 +9,8 @@ public:
     Freeform();
     ~Freeform() = default;
 
-    void draw(QPainter& painter) const override;
-    void quickDraw(QPainter& painter) const;
+    void draw(QPainter& painter, const QPoint& offset) const override;
+    void quickDraw(QPainter& painter, const QPoint& offset) const;
 };
 
 #endif // FREEFORM_H

@@ -6,6 +6,7 @@
 #include "../tools/arrowtool.h"
 #include "../tools/freeformtool.h"
 #include "../tools/erasertool.h"
+#include "../tools/movetool.h"
 
 ApplicationContext::ApplicationContext(QWidget* parent)
     : QObject {parent} {
@@ -26,6 +27,7 @@ ApplicationContext::ApplicationContext(QWidget* parent)
     m_toolbar->addTool(new LineTool());
     m_toolbar->addTool(new FreeformTool());
     m_toolbar->addTool(new EraserTool());
+    m_toolbar->addTool(new MoveTool());
 
     QObject::connect(m_canvas, &Canvas::destroyed, this, &ApplicationContext::endPainters);
     QObject::connect(m_canvas, &Canvas::resizeStart, this, &ApplicationContext::endPainters);
@@ -96,4 +98,12 @@ void ApplicationContext::beginPainters() {
 
 void ApplicationContext::toolChanged(Tool& tool) {
     m_canvas->setCursor(tool.cursor());
+}
+
+const QPoint& ApplicationContext::offsetPos() const {
+    return m_offsetPos;
+}
+
+void ApplicationContext::setOffsetPos(const QPoint& pos) {
+    m_offsetPos = pos;
 }

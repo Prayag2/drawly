@@ -602,10 +602,24 @@ CMakeFiles/shwet.dir/src/tools/erasertool.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/shwet.dir/src/tools/erasertool.cpp.s"
 	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/prayag/me/programming/in-progress/qt/shwet/src/tools/erasertool.cpp -o CMakeFiles/shwet.dir/src/tools/erasertool.cpp.s
 
+CMakeFiles/shwet.dir/src/tools/movetool.cpp.o: CMakeFiles/shwet.dir/flags.make
+CMakeFiles/shwet.dir/src/tools/movetool.cpp.o: /home/prayag/me/programming/in-progress/qt/shwet/src/tools/movetool.cpp
+CMakeFiles/shwet.dir/src/tools/movetool.cpp.o: CMakeFiles/shwet.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/shwet.dir/src/tools/movetool.cpp.o"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/shwet.dir/src/tools/movetool.cpp.o -MF CMakeFiles/shwet.dir/src/tools/movetool.cpp.o.d -o CMakeFiles/shwet.dir/src/tools/movetool.cpp.o -c /home/prayag/me/programming/in-progress/qt/shwet/src/tools/movetool.cpp
+
+CMakeFiles/shwet.dir/src/tools/movetool.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/shwet.dir/src/tools/movetool.cpp.i"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/prayag/me/programming/in-progress/qt/shwet/src/tools/movetool.cpp > CMakeFiles/shwet.dir/src/tools/movetool.cpp.i
+
+CMakeFiles/shwet.dir/src/tools/movetool.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/shwet.dir/src/tools/movetool.cpp.s"
+	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/prayag/me/programming/in-progress/qt/shwet/src/tools/movetool.cpp -o CMakeFiles/shwet.dir/src/tools/movetool.cpp.s
+
 CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.o: CMakeFiles/shwet.dir/flags.make
 CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.o: shwet_autogen/F4FAE6NH3Q/qrc_res.cpp
 CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.o: CMakeFiles/shwet.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.o"
 	/etc/profiles/per-user/prayag/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.o -MF CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.o.d -o CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.o -c /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp
 
 CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.i: cmake_force
@@ -655,6 +669,7 @@ shwet_OBJECTS = \
 "CMakeFiles/shwet.dir/src/item/factory/freeformfactory.cpp.o" \
 "CMakeFiles/shwet.dir/src/tools/freeformtool.cpp.o" \
 "CMakeFiles/shwet.dir/src/tools/erasertool.cpp.o" \
+"CMakeFiles/shwet.dir/src/tools/movetool.cpp.o" \
 "CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.o"
 
 # External object files for target shwet
@@ -697,6 +712,7 @@ shwet: CMakeFiles/shwet.dir/src/item/freeform.cpp.o
 shwet: CMakeFiles/shwet.dir/src/item/factory/freeformfactory.cpp.o
 shwet: CMakeFiles/shwet.dir/src/tools/freeformtool.cpp.o
 shwet: CMakeFiles/shwet.dir/src/tools/erasertool.cpp.o
+shwet: CMakeFiles/shwet.dir/src/tools/movetool.cpp.o
 shwet: CMakeFiles/shwet.dir/shwet_autogen/F4FAE6NH3Q/qrc_res.cpp.o
 shwet: CMakeFiles/shwet.dir/build.make
 shwet: /nix/store/qcvz1s10bjr2na60w3zh91pfny8y5qxr-qt-full-6.8.1/lib/libQt6Widgets.so.6.8.1
@@ -705,7 +721,7 @@ shwet: /nix/store/qcvz1s10bjr2na60w3zh91pfny8y5qxr-qt-full-6.8.1/lib/libGLX.so
 shwet: /nix/store/qcvz1s10bjr2na60w3zh91pfny8y5qxr-qt-full-6.8.1/lib/libOpenGL.so
 shwet: /nix/store/qcvz1s10bjr2na60w3zh91pfny8y5qxr-qt-full-6.8.1/lib/libQt6Core.so.6.8.1
 shwet: CMakeFiles/shwet.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Linking CXX executable shwet"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Linking CXX executable shwet"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/shwet.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

@@ -12,7 +12,7 @@ public:
     void setStart(QPoint start) override;
     void setEnd(QPoint end) override;
 
-    void draw(QPainter& painter) const override;
+    void draw(QPainter& painter, const QPoint& offset) const override;
     bool intersects(const QRect& rect) override;
 
 private:

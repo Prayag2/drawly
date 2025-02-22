@@ -21,6 +21,8 @@ public:
     Event& event() const;
     QPainter& canvasPainter() const;
     QPainter& overlayPainter() const;
+    const QPoint& offsetPos() const;
+    void setOffsetPos(const QPoint& pos);
 
 private slots:
     void beginPainters();
@@ -37,7 +39,7 @@ private:
     QPainter *m_overlayPainter {};
 
     int m_scale {};
-    QPoint m_centerPos {};
+    QPoint m_offsetPos {}; // all `Items` are positioned relative to this point
 };
 
 #endif // APPLICATIONCONTEXT_H

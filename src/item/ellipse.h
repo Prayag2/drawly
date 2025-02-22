@@ -9,7 +9,7 @@ public:
     Ellipse();
     virtual ~Ellipse() = default;
 
-    void draw(QPainter& painter) const override;
+    void draw(QPainter& painter, const QPoint& offset) const override;
     bool intersects(const QRect& rect) override;
 
 private:

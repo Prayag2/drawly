@@ -1,9 +1,10 @@
 #include "rectangle.h"
+#include <QDebug>
 
 Rectangle::Rectangle() {}
 
-void Rectangle::draw(QPainter& painter) const {
-    painter.drawRect(QRect(start(), end()));
+void Rectangle::draw(QPainter& painter, const QPoint& offset) const {
+    painter.drawRect(QRect(start()+offset, end()+offset));
 }
 
 bool Rectangle::intersects(const QRect& rect) {

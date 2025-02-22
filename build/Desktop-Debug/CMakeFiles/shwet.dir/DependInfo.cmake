@@ -42,6 +42,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/prayag/me/programming/in-progress/qt/shwet/src/tools/erasertool.cpp" "CMakeFiles/shwet.dir/src/tools/erasertool.cpp.o" "gcc" "CMakeFiles/shwet.dir/src/tools/erasertool.cpp.o.d"
   "/home/prayag/me/programming/in-progress/qt/shwet/src/tools/freeformtool.cpp" "CMakeFiles/shwet.dir/src/tools/freeformtool.cpp.o" "gcc" "CMakeFiles/shwet.dir/src/tools/freeformtool.cpp.o.d"
   "/home/prayag/me/programming/in-progress/qt/shwet/src/tools/linetool.cpp" "CMakeFiles/shwet.dir/src/tools/linetool.cpp.o" "gcc" "CMakeFiles/shwet.dir/src/tools/linetool.cpp.o.d"
+  "/home/prayag/me/programming/in-progress/qt/shwet/src/tools/movetool.cpp" "CMakeFiles/shwet.dir/src/tools/movetool.cpp.o" "gcc" "CMakeFiles/shwet.dir/src/tools/movetool.cpp.o.d"
   "/home/prayag/me/programming/in-progress/qt/shwet/src/tools/polygondrawingtool.cpp" "CMakeFiles/shwet.dir/src/tools/polygondrawingtool.cpp.o" "gcc" "CMakeFiles/shwet.dir/src/tools/polygondrawingtool.cpp.o.d"
   "/home/prayag/me/programming/in-progress/qt/shwet/src/tools/rectangletool.cpp" "CMakeFiles/shwet.dir/src/tools/rectangletool.cpp.o" "gcc" "CMakeFiles/shwet.dir/src/tools/rectangletool.cpp.o.d"
   "/home/prayag/me/programming/in-progress/qt/shwet/src/tools/tool.cpp" "CMakeFiles/shwet.dir/src/tools/tool.cpp.o" "gcc" "CMakeFiles/shwet.dir/src/tools/tool.cpp.o.d"

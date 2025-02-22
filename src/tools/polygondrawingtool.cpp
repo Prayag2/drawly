@@ -15,7 +15,7 @@ void PolygonDrawingTool::mousePressed(ApplicationContext *context) {
         curItem = std::dynamic_pointer_cast<Polygon>(m_itemFactory->create());
         curItem->setScale(context->canvas().scale());
         curItem->setBoundingBoxPadding(10*context->canvas().scale());
-        curItem->setStart(context->event().pos());
+        curItem->setStart(context->event().pos()-context->offsetPos());
         m_isDrawing = true;
     }
 };
@@ -31,12 +31,12 @@ void PolygonDrawingTool::mouseMoved(ApplicationContext *context) {
         painter.setPen(eraser);
         painter.setCompositionMode(QPainter::CompositionMode_Clear);
 
-        curItem->draw(painter);
-        curItem->setEnd(context->event().pos());
+        curItem->draw(painter, context->offsetPos());
+        curItem->setEnd(context->event().pos()-context->offsetPos());
 
         painter.setPen(context->pen());
         painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
-        curItem->draw(painter);
+        curItem->draw(painter, context->offsetPos());
 
         context->canvas().update();
     }
@@ -52,11 +52,12 @@ void PolygonDrawingTool::mouseReleased(ApplicationContext *context) {
         overlayPainter.setCompositionMode(QPainter::CompositionMode_SourceOver);
 
         canvasPainter.setPen(context->pen());
-        curItem->draw(canvasPainter);
+        curItem->draw(canvasPainter, context->offsetPos());
         context->quadtree().insertItem(curItem);
 
         m_isDrawing = false;
         qDebug() << "QuadTree size: " << context->quadtree().size();
+        qDebug() << "QuadTree rect: " << context->quadtree().boundingBox();
         context->canvas().update();
     }
 };

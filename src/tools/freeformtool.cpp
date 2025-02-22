@@ -16,7 +16,7 @@ void FreeformTool::mousePressed(ApplicationContext *context) {
     if (context->event().button() == Qt::LeftButton) {
         curItem = std::dynamic_pointer_cast<Freeform>(m_itemFactory->create());
         curItem->setBoundingBoxPadding(10*context->canvas().scale());
-        curItem->addPoint(context->event().pos());
+        curItem->addPoint(context->event().pos()-context->offsetPos());
         m_isDrawing = true;
     }
 }
@@ -26,8 +26,8 @@ void FreeformTool::mouseMoved(ApplicationContext *context) {
         QPainter& painter {context->overlayPainter()};
         painter.setPen(context->pen());
 
-        curItem->addPoint(context->event().pos());
-        curItem->quickDraw(painter);
+        curItem->addPoint(context->event().pos()-context->offsetPos());
+        curItem->quickDraw(painter, context->offsetPos());
 
         context->canvas().update();
     }
@@ -43,7 +43,7 @@ void FreeformTool::mouseReleased(ApplicationContext *context) {
         overlayPainter.setCompositionMode(QPainter::CompositionMode_SourceOver);
 
         canvasPainter.setPen(context->pen());
-        curItem->draw(canvasPainter);
+        curItem->draw(canvasPainter, context->offsetPos());
         context->quadtree().insertItem(curItem);
 
         m_isDrawing = false;

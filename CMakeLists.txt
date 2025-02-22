@@ -62,6 +62,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/item/factory/freeformfactory.h src/item/factory/freeformfactory.cpp
         src/tools/freeformtool.h src/tools/freeformtool.cpp
         src/tools/erasertool.h src/tools/erasertool.cpp
+        src/tools/movetool.h src/tools/movetool.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET shwet APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

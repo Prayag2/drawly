@@ -29,7 +29,6 @@ public:
     ~QuadTree();
 
     int size() const;
-    void subdivide();
     void insertItem(std::shared_ptr<Item> item);
     void deleteItem(std::shared_ptr<Item> item);
     void deleteItems(const QRect& boundingBox);
@@ -37,12 +36,15 @@ public:
     QVector<std::shared_ptr<Item>> queryItems(const QRect& boundingBox, bool onlyBoundingBox = false) const;
     QVector<std::shared_ptr<Item>> queryConnectedItems(const QRect& boundingBox, std::optional<int> level = {}) const;
 
-    void draw(QPainter& painter) const;
+    void draw(QPainter& painter, const QPoint& offset) const;
+    const QRect& boundingBox() const;
 
 private:
     bool insert(std::shared_ptr<Item> item);
     void query(const QRect& boundingBox, bool onlyBoundingBox, QVector<std::shared_ptr<Item>>& out) const;
     void dfs(const QRect& boundingBox, QVector<std::shared_ptr<Item>> items, QVector<std::shared_ptr<Item>>& out, std::optional<int> level) const;
+    void subdivide();
+    void expand(const QPoint& point);
 };
 
 #endif // QUADTREE_H

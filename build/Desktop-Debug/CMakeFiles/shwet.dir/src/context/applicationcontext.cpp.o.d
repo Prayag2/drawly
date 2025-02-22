@@ -491,4 +491,5 @@ CMakeFiles/shwet.dir/src/context/applicationcontext.cpp.o: \
  /home/prayag/me/programming/in-progress/qt/shwet/src/context/../tools/linetool.h \
  /home/prayag/me/programming/in-progress/qt/shwet/src/context/../tools/arrowtool.h \
  /home/prayag/me/programming/in-progress/qt/shwet/src/context/../tools/freeformtool.h \
- /home/prayag/me/programming/in-progress/qt/shwet/src/context/../tools/erasertool.h
+ /home/prayag/me/programming/in-progress/qt/shwet/src/context/../tools/erasertool.h \
+ /home/prayag/me/programming/in-progress/qt/shwet/src/context/../tools/movetool.h

@@ -18,12 +18,10 @@ void QuadTree::subdivide() {
 }
 
 void QuadTree::insertItem(std::shared_ptr<Item> item) {
-    /*
-     * TODO: If the item lies outside this node's bounding box,
-     *       then, expand its bounding box. This will make the
-     *       whiteboard infinite.
-     */
-    // For now, the whiteboard is finite:
+    expand(item->boundingBox().topLeft());
+    expand(item->boundingBox().topRight());
+    expand(item->boundingBox().bottomRight());
+    expand(item->boundingBox().bottomLeft());
     insert(item);
 }
 
@@ -137,6 +135,10 @@ QVector<std::shared_ptr<Item>> QuadTree::queryConnectedItems(const QRect& boundi
     return output;
 };
 
+const QRect& QuadTree::boundingBox() const {
+    return m_boundingBox;
+};
+
 void QuadTree::dfs(const QRect& boundingBox, QVector<std::shared_ptr<Item>> items, QVector<std::shared_ptr<Item>>& out, std::optional<int> level) const {
     if (level.has_value() && level.value() <= 0) return;
     if (!m_boundingBox.intersects(boundingBox)) {
@@ -176,13 +178,67 @@ int QuadTree::size() const {
     return totalNodes;
 }
 
-void QuadTree::draw(QPainter& painter) const {
-    painter.drawRect(m_boundingBox);
+void QuadTree::draw(QPainter& painter, const QPoint& offset) const {
+    painter.drawRect(m_boundingBox.translated(offset));
 
     if (m_topLeft != nullptr) {
-        m_topLeft->draw(painter);
-        m_topRight->draw(painter);
-        m_bottomRight->draw(painter);
-        m_bottomLeft->draw(painter);
+        m_topLeft->draw(painter, offset);
+        m_topRight->draw(painter, offset);
+        m_bottomRight->draw(painter, offset);
+        m_bottomLeft->draw(painter, offset);
     }
+}
+
+void QuadTree::expand(const QPoint& point) {
+    // This function grows the quadtree in size recursively if the
+    // point lies outside of it, making it almost (until integer overflow) infinite!
+    if (m_boundingBox.contains(point)) return;
+
+    int treeW {m_boundingBox.width()}, treeH {m_boundingBox.height()};
+    int x {point.x()}, y {point.y()};
+    QPoint tl {m_boundingBox.topLeft()}, tr {m_boundingBox.topRight()};
+    QPoint bl {m_boundingBox.bottomLeft()}, br {m_boundingBox.bottomRight()};
+
+    std::unique_ptr<QuadTree> topLeft {std::make_unique<QuadTree>(m_boundingBox, m_capacity)};
+    std::unique_ptr<QuadTree> topRight {std::make_unique<QuadTree>(m_boundingBox, m_capacity)};
+    std::unique_ptr<QuadTree> bottomRight {std::make_unique<QuadTree>(m_boundingBox, m_capacity)};
+    std::unique_ptr<QuadTree> bottomLeft {std::make_unique<QuadTree>(m_boundingBox, m_capacity)};
+    std::unique_ptr<QuadTree> cur {};
+
+    if (x < tl.x() || y < tl.y()) {
+        m_boundingBox.adjust(-treeW, -treeH, 0, 0);
+
+        topLeft->m_boundingBox.translate(-treeW, -treeH);
+        topRight->m_boundingBox.translate(0, -treeH);
+        bottomLeft->m_boundingBox.translate(-treeW, 0);
+
+        cur = std::move(bottomRight);
+    } else if (x > br.x() || y > br.y()) {
+        m_boundingBox.adjust(0, 0, treeW, treeH);
+
+        topRight->m_boundingBox.translate(treeW, 0);
+        bottomRight->m_boundingBox.translate(treeW, treeH);
+        bottomLeft->m_boundingBox.translate(0, treeH);
+
+        cur = std::move(topLeft);
+    }
+
+    if (m_topLeft) {
+        cur->m_topLeft = std::move(m_topLeft);
+        cur->m_topRight = std::move(m_topRight);
+        cur->m_bottomRight = std::move(m_bottomRight);
+        cur->m_bottomLeft = std::move(m_bottomLeft);
+    }
+    cur->m_items = std::move(m_items);
+
+    if (topLeft == nullptr) topLeft = std::move(cur);
+    else if (bottomRight == nullptr) bottomRight = std::move(cur);
+
+    m_topLeft = std::move(topLeft);
+    m_topRight = std::move(topRight);
+    m_bottomRight = std::move(bottomRight);
+    m_bottomLeft = std::move(bottomLeft);
+
+    // expand recursively
+    expand(point);
 }

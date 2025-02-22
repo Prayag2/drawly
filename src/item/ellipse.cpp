@@ -2,8 +2,8 @@
 
 Ellipse::Ellipse() {}
 
-void Ellipse::draw(QPainter& painter) const {
-    painter.drawEllipse(QRect(start(), end()));
+void Ellipse::draw(QPainter& painter, const QPoint& offset) const {
+    painter.drawEllipse(QRect(start()+offset, end()+offset));
 }
 
 bool Ellipse::onEllipse(QLine line) const {

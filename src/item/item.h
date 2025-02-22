@@ -15,7 +15,7 @@ public:
     virtual ~Item() = default;
 
     virtual bool intersects(const QRect& rect) = 0;
-    virtual void draw(QPainter& painter) const = 0;
+    virtual void draw(QPainter& painter, const QPoint& offset) const = 0;
     const QRect& boundingBox() const;
 
     Stroke& stroke() const;

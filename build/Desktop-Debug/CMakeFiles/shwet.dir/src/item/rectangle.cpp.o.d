@@ -422,4 +422,20 @@ CMakeFiles/shwet.dir/src/item/rectangle.cpp.o: \
  /nix/store/08ppkh4vgi2m5mk094m2ljhha1g611s4-qtbase-6.8.1/include/QtGui/qcolor.h \
  /home/prayag/me/programming/in-progress/qt/shwet/src/item/properties/./itemproperty.h \
  /home/prayag/me/programming/in-progress/qt/shwet/src/item/properties/stroke.h \
- /home/prayag/me/programming/in-progress/qt/shwet/src/item/properties/font.h
+ /home/prayag/me/programming/in-progress/qt/shwet/src/item/properties/font.h \
+ /nix/store/08ppkh4vgi2m5mk094m2ljhha1g611s4-qtbase-6.8.1/include/QtCore/QDebug \
+ /nix/store/08ppkh4vgi2m5mk094m2ljhha1g611s4-qtbase-6.8.1/include/QtCore/qdebug.h \
+ /nix/store/08ppkh4vgi2m5mk094m2ljhha1g611s4-qtbase-6.8.1/include/QtCore/qtextstream.h \
+ /nix/store/08ppkh4vgi2m5mk094m2ljhha1g611s4-qtbase-6.8.1/include/QtCore/qcontiguouscache.h \
+ /nix/store/62qjb50708fdhb4f2y7zxyqr1afir4fk-gcc-13.3.0/include/c++/13.3.0/climits \
+ /nix/store/08ppkh4vgi2m5mk094m2ljhha1g611s4-qtbase-6.8.1/include/QtCore/qsharedpointer.h \
+ /nix/store/08ppkh4vgi2m5mk094m2ljhha1g611s4-qtbase-6.8.1/include/QtCore/qsharedpointer_impl.h \
+ /nix/store/62qjb50708fdhb4f2y7zxyqr1afir4fk-gcc-13.3.0/include/c++/13.3.0/chrono \
+ /nix/store/62qjb50708fdhb4f2y7zxyqr1afir4fk-gcc-13.3.0/include/c++/13.3.0/bits/chrono.h \
+ /nix/store/62qjb50708fdhb4f2y7zxyqr1afir4fk-gcc-13.3.0/include/c++/13.3.0/ratio \
+ /nix/store/62qjb50708fdhb4f2y7zxyqr1afir4fk-gcc-13.3.0/include/c++/13.3.0/ctime \
+ /nix/store/08ppkh4vgi2m5mk094m2ljhha1g611s4-qtbase-6.8.1/include/QtCore/qmap.h \
+ /nix/store/08ppkh4vgi2m5mk094m2ljhha1g611s4-qtbase-6.8.1/include/QtCore/qshareddata_impl.h \
+ /nix/store/08ppkh4vgi2m5mk094m2ljhha1g611s4-qtbase-6.8.1/include/QtCore/qset.h \
+ /nix/store/08ppkh4vgi2m5mk094m2ljhha1g611s4-qtbase-6.8.1/include/QtCore/qhash.h \
+ /nix/store/08ppkh4vgi2m5mk094m2ljhha1g611s4-qtbase-6.8.1/include/QtCore/qvarlengtharray.h

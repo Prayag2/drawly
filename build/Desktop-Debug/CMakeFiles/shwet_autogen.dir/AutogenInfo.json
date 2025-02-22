@@ -610,6 +610,12 @@
 			null
 		],
 		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/tools/movetool.h",
+			"MU",
+			"MR466ZQLAD/moc_movetool.cpp",
+			null
+		],
+		[
 			"/home/prayag/me/programming/in-progress/qt/shwet/src/tools/polygondrawingtool.h",
 			"MU",
 			"MR466ZQLAD/moc_polygondrawingtool.cpp",
@@ -852,6 +858,11 @@
 		],
 		[
 			"/home/prayag/me/programming/in-progress/qt/shwet/src/tools/linetool.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/prayag/me/programming/in-progress/qt/shwet/src/tools/movetool.cpp",
 			"MU",
 			null
 		],

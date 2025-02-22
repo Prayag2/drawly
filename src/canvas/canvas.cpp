@@ -128,8 +128,8 @@ void Canvas::resize() {
     m_maxSize.setWidth(std::max(oldSize.width(), newSize.width()));
     m_maxSize.setHeight(std::max(oldSize.height(), newSize.height()));
 
-    QImage *canvas = new QImage(m_maxSize, m_imageFormat);
-    QImage *overlay = new QImage(m_maxSize, m_imageFormat);
+    QImage *canvas {new QImage(m_maxSize, m_imageFormat)};
+    QImage *overlay {new QImage(m_maxSize, m_imageFormat)};
     setBg(bg(), canvas, overlay);
 
     QPainter canvasPainter {canvas}, overlayPainter {overlay};

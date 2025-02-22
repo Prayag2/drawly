@@ -2,8 +2,8 @@
 
 Line::Line() {}
 
-void Line::draw(QPainter& painter) const {
-    painter.drawLine(start(), end());
+void Line::draw(QPainter& painter, const QPoint& offset) const {
+    painter.drawLine(start()+offset, end()+offset);
 }
 
 bool Line::intersects(const QRect& rect) {

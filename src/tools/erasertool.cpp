@@ -32,12 +32,12 @@ void EraserTool::mouseMoved(ApplicationContext *context) {
         QPainter& painter {context->canvasPainter()};
         painter.setPen(context->pen());
 
-        QRect eraserBoundingBox {QRect(context->event().pos(), m_cursor.pixmap().size())};
+        QRect eraserBoundingBox {QRect(context->event().pos()-context->offsetPos(), m_cursor.pixmap().size())};
         QVector<std::shared_ptr<Item>> toBeErased {context->quadtree().queryItems(eraserBoundingBox)};
         QVector<QRect> dirtyRegions {};
 
         for (std::shared_ptr<Item> item : toBeErased) {
-            painter.fillRect(item->boundingBox(), context->canvas().bg());
+            painter.fillRect(item->boundingBox().translated(context->offsetPos()), context->canvas().bg());
             dirtyRegions.push_back(item->boundingBox());
             context->quadtree().deleteItem(item);
         }
@@ -48,7 +48,7 @@ void EraserTool::mouseMoved(ApplicationContext *context) {
         }
 
         for (std::shared_ptr<Item> item : dirtyShapes) {
-            item->draw(painter);
+            item->draw(painter, context->offsetPos());
         }
     }
     context->canvas().update();

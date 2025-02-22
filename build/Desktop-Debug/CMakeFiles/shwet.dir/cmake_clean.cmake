@@ -68,6 +68,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/shwet.dir/src/tools/freeformtool.cpp.o.d"
   "CMakeFiles/shwet.dir/src/tools/linetool.cpp.o"
   "CMakeFiles/shwet.dir/src/tools/linetool.cpp.o.d"
+  "CMakeFiles/shwet.dir/src/tools/movetool.cpp.o"
+  "CMakeFiles/shwet.dir/src/tools/movetool.cpp.o.d"
   "CMakeFiles/shwet.dir/src/tools/polygondrawingtool.cpp.o"
   "CMakeFiles/shwet.dir/src/tools/polygondrawingtool.cpp.o.d"
   "CMakeFiles/shwet.dir/src/tools/rectangletool.cpp.o"

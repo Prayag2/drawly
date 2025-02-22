@@ -28,10 +28,10 @@ void Arrow::calcArrowPoints() {
                        y2 - arrowSize * std::sin(angle + (M_PI / 180) * 30));
 }
 
-void Arrow::draw(QPainter& painter) const {
-    painter.drawLine(start(), end());
-    painter.drawLine(end(), m_arrowP1);
-    painter.drawLine(end(), m_arrowP2);
+void Arrow::draw(QPainter& painter, const QPoint& offset) const {
+    painter.drawLine(start()+offset, end()+offset);
+    painter.drawLine(end()+offset, m_arrowP1+offset);
+    painter.drawLine(end()+offset, m_arrowP2+offset);
 }
 
 bool Arrow::intersects(const QRect& rect) {
