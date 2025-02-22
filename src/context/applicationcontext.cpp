@@ -15,7 +15,7 @@ ApplicationContext::ApplicationContext(QWidget* parent)
 
     m_toolbar = new Toolbar(parent);
     m_pen = new QPen();
-    m_quadtree = new QuadTree(QRect{{0, 0}, m_canvas->sizeHint()}, 10);
+    m_quadtree = new QuadTree(QRect{{0, 0}, m_canvas->sizeHint()}, 100);
     m_event = new Event();
 
     m_canvasPainter = new QPainter(m_canvas->canvas());
