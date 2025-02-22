@@ -4,9 +4,8 @@
 #include <QColor>
 #include "./itemproperty.h"
 
-class Stroke : public ItemProperty
-{
-public:
+class Stroke : public ItemProperty {
+  public:
     Stroke();
     int width() const;
     void setWidth(int width);
@@ -14,7 +13,7 @@ public:
     const QColor& color() const;
     void setColor(const QColor& color);
 
-private:
+  private:
     int m_width {};
     QColor m_color {};
 };

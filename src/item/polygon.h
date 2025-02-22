@@ -3,9 +3,8 @@
 
 #include "item.h"
 
-class Polygon : public Item
-{
-public:
+class Polygon : public Item {
+  public:
     Polygon();
 
     virtual void setStart(QPoint start);
@@ -14,7 +13,7 @@ public:
     const QPoint& start() const;
     const QPoint& end() const;
 
-private:
+  private:
     QPoint m_start {};
     QPoint m_end {};
     void m_updateBoundingBox();

@@ -3,9 +3,8 @@
 
 #include "polygon.h"
 
-class Arrow : public Polygon
-{
-public:
+class Arrow : public Polygon {
+  public:
     Arrow();
     ~Arrow() override = default;
 
@@ -15,7 +14,7 @@ public:
     void draw(QPainter& painter, const QPoint& offset) const override;
     bool intersects(const QRect& rect) override;
 
-private:
+  private:
     QPoint m_arrowP1;
     QPoint m_arrowP2;
 

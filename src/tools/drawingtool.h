@@ -4,16 +4,15 @@
 #include "tool.h"
 #include "../item/factory/itemfactory.h"
 
-class DrawingTool : public Tool
-{
-protected:
+class DrawingTool : public Tool {
+  protected:
     std::unique_ptr<ItemFactory> m_itemFactory {};
 
-public:
+  public:
     DrawingTool();
     ~DrawingTool() override = default;
 
-protected:
+  protected:
     bool m_isDrawing {false};
 };
 

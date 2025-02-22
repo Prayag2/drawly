@@ -4,13 +4,12 @@
 #include <QColor>
 #include "./itemproperty.h"
 
-class Fill : public ItemProperty
-{
-public:
+class Fill : public ItemProperty {
+  public:
     Fill();
     const QColor& color() const;
     void setColor(const QColor& color);
-private:
+  private:
     QColor m_color {};
 };
 

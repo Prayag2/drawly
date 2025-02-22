@@ -23,21 +23,21 @@ bool Rectangle::intersects(const QRect& rect) {
     QPoint d {rect.bottomLeft()};
 
     return (
-        Item::linesIntersect({p, q}, {a, b}) ||
-        Item::linesIntersect({p, q}, {b, c}) ||
-        Item::linesIntersect({p, q}, {c, d}) ||
-        Item::linesIntersect({p, q}, {d, a}) ||
-        Item::linesIntersect({q, r}, {a, b}) ||
-        Item::linesIntersect({q, r}, {b, c}) ||
-        Item::linesIntersect({q, r}, {c, d}) ||
-        Item::linesIntersect({q, r}, {d, a}) ||
-        Item::linesIntersect({r, s}, {a, b}) ||
-        Item::linesIntersect({r, s}, {b, c}) ||
-        Item::linesIntersect({r, s}, {c, d}) ||
-        Item::linesIntersect({r, s}, {d, a}) ||
-        Item::linesIntersect({p, s}, {a, b}) ||
-        Item::linesIntersect({p, s}, {b, c}) ||
-        Item::linesIntersect({p, s}, {c, d}) ||
-        Item::linesIntersect({p, s}, {d, a})
-    );
+               Item::linesIntersect({p, q}, {a, b}) ||
+               Item::linesIntersect({p, q}, {b, c}) ||
+               Item::linesIntersect({p, q}, {c, d}) ||
+               Item::linesIntersect({p, q}, {d, a}) ||
+               Item::linesIntersect({q, r}, {a, b}) ||
+               Item::linesIntersect({q, r}, {b, c}) ||
+               Item::linesIntersect({q, r}, {c, d}) ||
+               Item::linesIntersect({q, r}, {d, a}) ||
+               Item::linesIntersect({r, s}, {a, b}) ||
+               Item::linesIntersect({r, s}, {b, c}) ||
+               Item::linesIntersect({r, s}, {c, d}) ||
+               Item::linesIntersect({r, s}, {d, a}) ||
+               Item::linesIntersect({p, s}, {a, b}) ||
+               Item::linesIntersect({p, s}, {b, c}) ||
+               Item::linesIntersect({p, s}, {c, d}) ||
+               Item::linesIntersect({p, s}, {d, a})
+           );
 };

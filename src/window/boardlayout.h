@@ -3,10 +3,9 @@
 
 #include <QLayout>
 
-class BoardLayout : public QLayout
-{
-Q_OBJECT
-public:
+class BoardLayout : public QLayout {
+    Q_OBJECT
+  public:
     BoardLayout(QWidget *parent = nullptr);
     ~BoardLayout();
 
@@ -23,7 +22,7 @@ public:
     void setRightWidget(QWidget* const item, bool pinned = false);
     void setBottomWidget(QWidget* const item, bool pinned = false);
     void setCentralWidget(QWidget* const item);
-private:
+  private:
     QLayoutItem *m_centralWidget {nullptr};
     QLayoutItem *m_leftWidget {nullptr};
     QLayoutItem *m_topWidget {nullptr};

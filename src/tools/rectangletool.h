@@ -3,9 +3,8 @@
 
 #include "polygondrawingtool.h"
 
-class RectangleTool : public PolygonDrawingTool
-{
-public:
+class RectangleTool : public PolygonDrawingTool {
+  public:
     RectangleTool();
     ~RectangleTool() override = default;
 

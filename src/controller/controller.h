@@ -5,21 +5,20 @@
 #include <QMouseEvent>
 class ApplicationContext;
 
-class Controller : public QObject
-{
+class Controller : public QObject {
     Q_OBJECT
 
-public:
+  public:
     Controller(QObject *parent = nullptr);
 
     void setContext(ApplicationContext *context);
 
-public slots:
+  public slots:
     void mousePressed(QMouseEvent *event);
     void mouseMoved(QMouseEvent *event);
     void mouseReleased(QMouseEvent *event);
 
-private:
+  private:
     ApplicationContext *m_context {};
 };
 

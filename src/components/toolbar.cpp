@@ -1,8 +1,7 @@
 #include "toolbar.h"
 
 Toolbar::Toolbar(QWidget *parent)
-    : QFrame{parent}
-{
+    : QFrame{parent} {
     m_group = new QButtonGroup(this);
     m_layout = new QHBoxLayout(this);
     this->setLayout(m_layout);

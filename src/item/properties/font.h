@@ -4,11 +4,10 @@
 /* FOR THE FUTURE */
 #include "./itemproperty.h"
 
-class Font : public ItemProperty
-{
-public:
+class Font : public ItemProperty {
+  public:
     Font();
-private:
+  private:
 
 };
 

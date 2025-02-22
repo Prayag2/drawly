@@ -5,9 +5,8 @@
 class ApplicationContext;
 
 // INTERFACE
-class Tool
-{
-public:
+class Tool {
+  public:
     Tool();
     virtual ~Tool() = default;
 
@@ -17,7 +16,7 @@ public:
     virtual void mouseMoved(ApplicationContext *context) = 0;
     virtual void mouseReleased(ApplicationContext *context) = 0;
 
-protected:
+  protected:
     QCursor m_cursor {};
 };
 

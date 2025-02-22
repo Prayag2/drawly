@@ -4,16 +4,15 @@
 #include "item.h"
 #include <QVector>
 
-class Polyline : public Item
-{
-public:
+class Polyline : public Item {
+  public:
     Polyline();
     ~Polyline() = default;
 
     void addPoint(const QPoint& point);
     bool intersects(const QRect& rect) override;
 
-protected:
+  protected:
     QVector<QPoint> m_points {};
 };
 

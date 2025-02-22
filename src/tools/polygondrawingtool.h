@@ -4,11 +4,10 @@
 #include "drawingtool.h"
 class Polygon;
 
-class PolygonDrawingTool : public DrawingTool
-{
-protected:
+class PolygonDrawingTool : public DrawingTool {
+  protected:
     std::shared_ptr<Polygon> curItem {};
-public:
+  public:
     PolygonDrawingTool();
     ~PolygonDrawingTool() override = default;
 

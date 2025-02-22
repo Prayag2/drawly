@@ -3,9 +3,8 @@
 
 #include "itemfactory.h"
 
-class ArrowFactory : public ItemFactory
-{
-public:
+class ArrowFactory : public ItemFactory {
+  public:
     ArrowFactory();
     std::shared_ptr<Item> create() const override;
 };

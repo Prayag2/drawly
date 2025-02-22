@@ -25,7 +25,8 @@ void MoveTool::mouseMoved(ApplicationContext *context) {
         context->setOffsetPos(newPoint);
 
         QPainter& painter {context->canvasPainter()};
-        QPen pen {context->pen()}; painter.setPen(pen);
+        QPen pen {context->pen()};
+        painter.setPen(pen);
 
         // redraw all shapes (brute force, just for testing)
         context->canvas().setBg(context->canvas().bg());

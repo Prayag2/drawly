@@ -3,9 +3,8 @@
 
 #include "polygon.h"
 
-class Line : public Polygon
-{
-public:
+class Line : public Polygon {
+  public:
     Line();
     ~Line() override = default;
 

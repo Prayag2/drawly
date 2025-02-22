@@ -9,9 +9,8 @@
 #include "../components/toolbar.h"
 #include "../event/event.h"
 
-class ApplicationContext : public QObject
-{
-public:
+class ApplicationContext : public QObject {
+  public:
     ApplicationContext(QWidget *parent = nullptr);
     ~ApplicationContext();
     Canvas& canvas() const;
@@ -24,12 +23,12 @@ public:
     const QPoint& offsetPos() const;
     void setOffsetPos(const QPoint& pos);
 
-private slots:
+  private slots:
     void beginPainters();
     void endPainters();
     void toolChanged(Tool&);
 
-private:
+  private:
     QuadTree *m_quadtree {nullptr};
     Canvas *m_canvas {nullptr};
     Toolbar *m_toolbar {nullptr};

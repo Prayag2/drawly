@@ -3,9 +3,8 @@
 
 #include "polygondrawingtool.h"
 
-class EllipseTool : public PolygonDrawingTool
-{
-public:
+class EllipseTool : public PolygonDrawingTool {
+  public:
     EllipseTool();
 
     ~EllipseTool() override = default;

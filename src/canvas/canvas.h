@@ -4,11 +4,10 @@
 #include <QWidget>
 #include <QPainter>
 
-class Canvas : public QWidget
-{
+class Canvas : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit Canvas(QWidget *parent = nullptr);
     ~Canvas();
 
@@ -22,7 +21,7 @@ public:
     qreal scale() const;
     void setScale(const qreal scale);
 
-signals:
+  signals:
     void mousePressed(QMouseEvent *event);
     void mouseMoved(QMouseEvent *event);
     void mouseReleased(QMouseEvent *event);
@@ -30,14 +29,14 @@ signals:
     void resizeEnd();
     void destroyed();
 
-protected:
+  protected:
     void paintEvent(QPaintEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
 
-private:
+  private:
     qreal m_scale {1.0}; // default scale is 1
     QImage *m_canvas {};
     QImage *m_overlay {};

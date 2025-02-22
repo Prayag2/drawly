@@ -14,9 +14,8 @@
  * The following implementation of QuadTree is specific to this whiteboard
  * app since it uses the Item class which is implemented in the items folder.
  */
-class QuadTree
-{
-private:
+class QuadTree {
+  private:
     QVector<std::shared_ptr<Item>> m_items {};
     QRect m_boundingBox {};
     int m_capacity {};
@@ -24,7 +23,7 @@ private:
     std::unique_ptr<QuadTree> m_topRight {nullptr};
     std::unique_ptr<QuadTree> m_bottomRight {nullptr};
     std::unique_ptr<QuadTree> m_bottomLeft {nullptr};
-public:
+  public:
     QuadTree(QRect region, int capacity);
     ~QuadTree();
 
@@ -39,7 +38,7 @@ public:
     void draw(QPainter& painter, const QPoint& offset) const;
     const QRect& boundingBox() const;
 
-private:
+  private:
     bool insert(std::shared_ptr<Item> item);
     void query(const QRect& boundingBox, bool onlyBoundingBox, QVector<std::shared_ptr<Item>>& out) const;
     void dfs(const QRect& boundingBox, QVector<std::shared_ptr<Item>> items, QVector<std::shared_ptr<Item>>& out, std::optional<int> level) const;

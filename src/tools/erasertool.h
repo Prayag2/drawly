@@ -3,9 +3,8 @@
 
 #include "tool.h"
 
-class EraserTool : public Tool
-{
-public:
+class EraserTool : public Tool {
+  public:
     EraserTool();
     ~EraserTool() override = default;
 
@@ -14,7 +13,7 @@ public:
     void mouseMoved(ApplicationContext *context) override;
     void mouseReleased(ApplicationContext *context) override;
 
-private:
+  private:
     bool m_isErasing {false};
 };
 

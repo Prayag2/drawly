@@ -4,9 +4,8 @@
 
 class Item;
 
-class ItemFactory
-{
-public:
+class ItemFactory {
+  public:
     ItemFactory();
     virtual std::shared_ptr<Item> create() const = 0;
 };

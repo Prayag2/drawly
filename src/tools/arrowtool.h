@@ -3,9 +3,8 @@
 
 #include "polygondrawingtool.h"
 
-class ArrowTool : public PolygonDrawingTool
-{
-public:
+class ArrowTool : public PolygonDrawingTool {
+  public:
     ArrowTool();
     ~ArrowTool() override = default;
     QString iconAlt() const override;

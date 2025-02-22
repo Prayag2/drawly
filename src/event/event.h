@@ -4,9 +4,8 @@
 #include <QtTypes>
 #include <QPoint>
 
-class Event
-{
-public:
+class Event {
+  public:
     Event();
     const QPoint& pos() const;
     Qt::MouseButton button() const;
@@ -14,7 +13,7 @@ public:
     void setPos(const QPoint& point, qreal const scale = 1.0);
     void setButton(Qt::MouseButton btn);
 
-private:
+  private:
     Qt::MouseButton m_button;
     QPoint m_pos;
     qreal m_pressure;

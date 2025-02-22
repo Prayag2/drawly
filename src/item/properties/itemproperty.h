@@ -1,16 +1,15 @@
 #ifndef ITEMPROPERTY_H
 #define ITEMPROPERTY_H
 
-class ItemProperty
-{
-public:
+class ItemProperty {
+  public:
     ItemProperty();
 
     bool active() const;
     void activate();
     void deactivate();
 
-private:
+  private:
     bool m_isActive {false};
 };
 

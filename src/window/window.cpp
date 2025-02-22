@@ -9,8 +9,7 @@
 #include "boardlayout.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QWidget(parent)
-{
+    : QWidget(parent) {
     this->m_applyCustomStyles();
 
     BoardLayout *layout = new BoardLayout(this);

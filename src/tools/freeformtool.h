@@ -4,9 +4,8 @@
 #include "drawingtool.h"
 class Freeform;
 
-class FreeformTool : public DrawingTool
-{
-public:
+class FreeformTool : public DrawingTool {
+  public:
     FreeformTool();
     ~FreeformTool() override = default;
 
@@ -15,7 +14,7 @@ public:
     void mouseMoved(ApplicationContext *context) override;
     void mouseReleased(ApplicationContext *context) override;
 
-private:
+  private:
     std::shared_ptr<Freeform> curItem {};
 };
 

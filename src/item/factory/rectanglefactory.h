@@ -5,9 +5,8 @@
 
 class Item;
 
-class RectangleFactory : public ItemFactory
-{
-public:
+class RectangleFactory : public ItemFactory {
+  public:
     RectangleFactory();
     std::shared_ptr<Item> create() const override;
 };

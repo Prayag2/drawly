@@ -8,9 +8,8 @@
 #include "properties/font.h"
 class ApplicationContext;
 
-class Item
-{
-public:
+class Item {
+  public:
     Item();
     virtual ~Item() = default;
 
@@ -25,7 +24,7 @@ public:
     void setBoundingBoxPadding(int padding);
     void setScale(qreal scale);
 
-protected:
+  protected:
     QRect m_boundingBox {};
     int m_boundingBoxPadding {};
     qreal m_scale {1};
@@ -33,7 +32,7 @@ protected:
     static bool linesIntersect(QLine a, QLine b);
     static int orientation(QPoint a, QPoint b, QPoint c);
 
-private:
+  private:
     std::unique_ptr<Stroke> m_stroke {};
     std::unique_ptr<Fill> m_fill {};
     std::unique_ptr<Font> m_font {};

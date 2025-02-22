@@ -5,8 +5,7 @@
 
 // PUBLIC
 Canvas::Canvas(QWidget *parent)
-    : QWidget{parent}
-{
+    : QWidget{parent} {
     m_sizeHint = screen()->size()*m_scale;
     m_maxSize = m_sizeHint;
     setMouseTracking(true);

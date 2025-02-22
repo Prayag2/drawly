@@ -45,17 +45,17 @@ bool Arrow::intersects(const QRect& rect) {
     QPoint d {rect.x(), rect.y()+rect.height()};
 
     return (
-        Item::linesIntersect({p, q}, {a, b}) ||
-        Item::linesIntersect({p, q}, {b, c}) ||
-        Item::linesIntersect({p, q}, {c, d}) ||
-        Item::linesIntersect({p, q}, {d, a}) ||
-        Item::linesIntersect({q, r}, {a, b}) ||
-        Item::linesIntersect({q, r}, {b, c}) ||
-        Item::linesIntersect({q, r}, {c, d}) ||
-        Item::linesIntersect({q, r}, {d, a}) ||
-        Item::linesIntersect({q, s}, {a, b}) ||
-        Item::linesIntersect({q, s}, {b, c}) ||
-        Item::linesIntersect({q, s}, {c, d}) ||
-        Item::linesIntersect({q, s}, {d, a})
-    );
+               Item::linesIntersect({p, q}, {a, b}) ||
+               Item::linesIntersect({p, q}, {b, c}) ||
+               Item::linesIntersect({p, q}, {c, d}) ||
+               Item::linesIntersect({p, q}, {d, a}) ||
+               Item::linesIntersect({q, r}, {a, b}) ||
+               Item::linesIntersect({q, r}, {b, c}) ||
+               Item::linesIntersect({q, r}, {c, d}) ||
+               Item::linesIntersect({q, r}, {d, a}) ||
+               Item::linesIntersect({q, s}, {a, b}) ||
+               Item::linesIntersect({q, s}, {b, c}) ||
+               Item::linesIntersect({q, s}, {c, d}) ||
+               Item::linesIntersect({q, s}, {d, a})
+           );
 };

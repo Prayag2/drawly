@@ -4,9 +4,8 @@
 #include "tool.h"
 class Item;
 
-class MoveTool : public Tool
-{
-public:
+class MoveTool : public Tool {
+  public:
     MoveTool();
     ~MoveTool() = default;
 
@@ -15,7 +14,7 @@ public:
     void mouseMoved(ApplicationContext *context) override;
     void mouseReleased(ApplicationContext *context) override;
 
-private:
+  private:
     bool m_isActive {false};
     QPoint m_initialOffsetPos {};
     QPoint m_initialPos {};

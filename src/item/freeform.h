@@ -3,9 +3,8 @@
 
 #include "polyline.h"
 
-class Freeform : public Polyline
-{
-public:
+class Freeform : public Polyline {
+  public:
     Freeform();
     ~Freeform() = default;
 

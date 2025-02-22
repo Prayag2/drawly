@@ -3,14 +3,13 @@
 
 #include <QWidget>
 
-class MainWindow : public QWidget
-{
+class MainWindow : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-private:
+  private:
     bool m_config_useSystemStyles {true};
     void m_applyCustomStyles();
 };

@@ -7,26 +7,25 @@
 #include <QButtonGroup>
 #include "../tools/tool.h"
 
-class Toolbar : public QFrame
-{
+class Toolbar : public QFrame {
     Q_OBJECT
-public:
+  public:
     explicit Toolbar(QWidget *parent = nullptr);
     ~Toolbar();
 
     Tool& getCurTool() const;
     void addTool(Tool *tool);
 
-signals:
+  signals:
     void toolChanged(Tool&);
 
-private:
+  private:
     QButtonGroup *m_group {};
     QHBoxLayout *m_layout {};
     QVector<Tool*> m_tools {};
     void createButtons() const;
 
-private slots:
+  private slots:
     void onToolChanged(int id);
 };
 
