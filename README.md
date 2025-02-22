@@ -13,7 +13,8 @@ The following is a list of features I'll be planning to add to it:
 ## Phase 2
 - [x] Refactor to try to adhere to SOLID principles and utilize useful design patterns
 - [x] A custom Qt layout for toolbar and properties bar
-- [ ] Make canvas infinite and add ability to move the viewport
+- [x] Make canvas infinite and add ability to move the viewport
+- [ ] Use caching techniques to optimize moving the canvas around
 - [ ] A properties bar to change the following properties:
     - [ ] Colour of strokes
     - [ ] Stroke width
