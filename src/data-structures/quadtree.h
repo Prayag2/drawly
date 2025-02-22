@@ -17,33 +17,32 @@
 class QuadTree
 {
 private:
-    QVector<Item*> m_items {};
+    QVector<std::shared_ptr<Item>> m_items {};
     QRect m_boundingBox {};
     int m_capacity {};
-    QuadTree* m_topLeft {nullptr};
-    QuadTree* m_topRight {nullptr};
-    QuadTree* m_bottomRight {nullptr};
-    QuadTree* m_bottomLeft {nullptr};
+    std::unique_ptr<QuadTree> m_topLeft {nullptr};
+    std::unique_ptr<QuadTree> m_topRight {nullptr};
+    std::unique_ptr<QuadTree> m_bottomRight {nullptr};
+    std::unique_ptr<QuadTree> m_bottomLeft {nullptr};
 public:
     QuadTree(QRect region, int capacity);
     ~QuadTree();
 
     int size() const;
     void subdivide();
-    void insertItem(Item* const item);
-    void deleteItem(Item* const item);
+    void insertItem(std::shared_ptr<Item> item);
+    void deleteItem(std::shared_ptr<Item> item);
     void deleteItems(const QRect& boundingBox);
-    QVector<Item*> getAllItems() const;
-    QVector<Item*> queryItems(const QRect& boundingBox, bool onlyBoundingBox = false) const;
-    QVector<Item*> queryConnectedItems(const QRect& boundingBox, std::optional<int> level = {}) const;
+    QVector<std::shared_ptr<Item>> getAllItems() const;
+    QVector<std::shared_ptr<Item>> queryItems(const QRect& boundingBox, bool onlyBoundingBox = false) const;
+    QVector<std::shared_ptr<Item>> queryConnectedItems(const QRect& boundingBox, std::optional<int> level = {}) const;
 
     void draw(QPainter& painter) const;
 
 private:
-    bool insert(Item* const item);
-    QImage* m_img;
-
-    void dfs(const QRect& boundingBox, QVector<Item*> items, QVector<Item*>& out, std::optional<int> level) const;
+    bool insert(std::shared_ptr<Item> item);
+    void query(const QRect& boundingBox, bool onlyBoundingBox, QVector<std::shared_ptr<Item>>& out) const;
+    void dfs(const QRect& boundingBox, QVector<std::shared_ptr<Item>> items, QVector<std::shared_ptr<Item>>& out, std::optional<int> level) const;
 };
 
 #endif // QUADTREE_H

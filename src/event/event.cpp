@@ -2,8 +2,8 @@
 
 Event::Event() {}
 
-void Event::setPos(const QPoint& point) {
-    m_pos = point;
+void Event::setPos(const QPoint& point, qreal const scale) {
+    m_pos = point*scale;
 }
 
 void Event::setButton(Qt::MouseButton btn) {

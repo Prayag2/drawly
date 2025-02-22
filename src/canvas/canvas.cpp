@@ -7,7 +7,8 @@
 Canvas::Canvas(QWidget *parent)
     : QWidget{parent}
 {
-    m_sizeHint = screen()->size();
+    m_sizeHint = screen()->size()*m_scale;
+    m_maxSize = m_sizeHint;
     setMouseTracking(true);
     m_canvas = new QImage(m_sizeHint, m_imageFormat);
     m_overlay = new QImage(m_sizeHint, m_imageFormat);
@@ -15,6 +16,8 @@ Canvas::Canvas(QWidget *parent)
 }
 
 Canvas::~Canvas() {
+    emit destroyed();
+
     delete m_canvas;
     delete m_overlay;
 }
@@ -35,37 +38,53 @@ QColor Canvas::bg() const {
     return m_bg;
 };
 
-void Canvas::setBg(const QColor& color) {
+void Canvas::setBg(const QColor& color, QImage *canvas, QImage *overlay) {
     m_bg = color;
-    m_canvas->fill(color);
-    m_overlay->fill(Qt::transparent);
+    if (canvas)
+        canvas->fill(color);
+    else
+        m_canvas->fill(color);
+
+    if (overlay)
+        overlay->fill(Qt::transparent);
+    else
+        m_overlay->fill(Qt::transparent);
+}
+
+qreal Canvas::scale() const {
+    return m_scale;
+}
+
+void Canvas::setScale(const qreal scale) {
+    if (scale == 0 || m_scale == 0) return;
+
+    m_sizeHint = (m_sizeHint*scale)/m_scale;
+
+    if (scale > m_scale) m_maxSize = m_sizeHint;
+    m_scale = scale;
+    resize();
 }
 
 // PROTECTED
 void Canvas::paintEvent(QPaintEvent *event) {
     QPainter painter {this};
+    painter.scale(1.0/m_scale, 1.0/m_scale);
     if (m_canvas) painter.drawImage(0, 0, *m_canvas);
     if (m_overlay) painter.drawImage(0, 0, *m_overlay);
 }
 
+// just a small overload
+bool operator<=(const QSize& a, const QSize& b) {
+    return a.height() <= b.height() && a.width() <= b.width();
+}
+
 void Canvas::resizeEvent(QResizeEvent *event) {
-    if (
-        size().height() <= m_sizeHint.height() ||
-        size().width() <= m_sizeHint.width()
-    ) return;
+    if (size()*m_scale <= m_maxSize) {
+        return;
+    }
 
-    QByteArray oldCanvasData {getImageData(m_canvas)};
-    QByteArray oldOverlayData {getImageData(m_canvas)};
+    resize();
 
-    delete m_canvas;
-    delete m_overlay;
-
-    m_canvas = new QImage(size(), m_imageFormat);
-    m_overlay = new QImage(size(), m_imageFormat);
-
-    setBg(bg());
-    setImageData(m_canvas, oldCanvasData);
-    setImageData(m_overlay, oldOverlayData);
     QWidget::resizeEvent(event);
 }
 
@@ -95,4 +114,35 @@ QByteArray Canvas::getImageData(QImage *const img) {
 
 void Canvas::setImageData(QImage *const img, const QByteArray& arr) {
     img->loadFromData(arr, "PNG");
+}
+
+void Canvas::resize() {
+    emit resizeStart();
+
+    if (m_canvas->paintingActive() || m_overlay->paintingActive()) {
+        return;
+    }
+
+    QSize oldSize {m_canvas->size()};
+    QSize newSize {size()*m_scale};
+    m_maxSize.setWidth(std::max(oldSize.width(), newSize.width()));
+    m_maxSize.setHeight(std::max(oldSize.height(), newSize.height()));
+
+    QImage *canvas = new QImage(m_maxSize, m_imageFormat);
+    QImage *overlay = new QImage(m_maxSize, m_imageFormat);
+    setBg(bg(), canvas, overlay);
+
+    QPainter canvasPainter {canvas}, overlayPainter {overlay};
+    canvasPainter.drawImage(0, 0, *m_canvas);
+    overlayPainter.drawImage(0, 0, *m_overlay);
+
+    delete m_canvas;
+    delete m_overlay;
+
+    m_canvas = canvas;
+    m_overlay = overlay;
+
+    canvasPainter.end();
+    overlayPainter.end();
+    emit resizeEnd();
 }

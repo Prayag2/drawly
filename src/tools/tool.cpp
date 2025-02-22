@@ -2,6 +2,6 @@
 
 Tool::Tool() {}
 
-// const QCursor& Tool::cursor() const {
-//     return m_cursor;
-// }
+const QCursor& Tool::cursor() const {
+    return m_cursor;
+}

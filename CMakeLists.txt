@@ -51,6 +51,17 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/item/ellipse.h src/item/ellipse.cpp
         src/tools/ellipsetool.h src/tools/ellipsetool.cpp
         src/item/factory/ellipsefactory.h src/item/factory/ellipsefactory.cpp
+        src/item/line.h src/item/line.cpp
+        src/item/arrow.h src/item/arrow.cpp
+        src/item/factory/linefactory.h src/item/factory/linefactory.cpp
+        src/item/factory/arrowfactory.h src/item/factory/arrowfactory.cpp
+        src/tools/arrowtool.h src/tools/arrowtool.cpp
+        src/tools/linetool.h src/tools/linetool.cpp
+        src/item/polyline.h src/item/polyline.cpp
+        src/item/freeform.h src/item/freeform.cpp
+        src/item/factory/freeformfactory.h src/item/factory/freeformfactory.cpp
+        src/tools/freeformtool.h src/tools/freeformtool.cpp
+        src/tools/erasertool.h src/tools/erasertool.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET shwet APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

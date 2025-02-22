@@ -7,7 +7,7 @@ class EllipseFactory : public ItemFactory
 {
 public:
     EllipseFactory();
-    Item* create() const override;
+    std::shared_ptr<Item> create() const override;
 };
 
 #endif // ELLIPSEFACTORY_H

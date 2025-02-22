@@ -3,6 +3,6 @@
 
 EllipseFactory::EllipseFactory() {}
 
-Item* EllipseFactory::create() const {
-    return new Ellipse();
+std::shared_ptr<Item> EllipseFactory::create() const {
+    return std::make_shared<Ellipse>();
 }

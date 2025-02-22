@@ -3,6 +3,6 @@
 
 RectangleFactory::RectangleFactory() {}
 
-Item* RectangleFactory::create() const {
-    return new Rectangle();
+std::shared_ptr<Item> RectangleFactory::create() const {
+    return std::make_shared<Rectangle>();
 }

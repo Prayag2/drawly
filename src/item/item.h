@@ -23,10 +23,15 @@ public:
     Font& font() const;
 
     void setBoundingBoxPadding(int padding);
+    void setScale(qreal scale);
 
 protected:
     QRect m_boundingBox {};
     int m_boundingBoxPadding {};
+    qreal m_scale {1};
+
+    static bool linesIntersect(QLine a, QLine b);
+    static int orientation(QPoint a, QPoint b, QPoint c);
 
 private:
     std::unique_ptr<Stroke> m_stroke {};

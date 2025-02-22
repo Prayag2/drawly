@@ -16,7 +16,7 @@
 	"OPTIONS" : [ "-name", "res" ],
 	"OUTPUT_CHECKSUM" : "F4FAE6NH3Q",
 	"OUTPUT_NAME" : "qrc_res.cpp",
-	"RCC_EXECUTABLE" : "/nix/store/4v8zscynk625j9nrcf40cxhgcc1biq09-qt-full-6.8.0/libexec/rcc",
+	"RCC_EXECUTABLE" : "/nix/store/qcvz1s10bjr2na60w3zh91pfny8y5qxr-qt-full-6.8.1/libexec/rcc",
 	"RCC_LIST_OPTIONS" : [ "--list" ],
 	"SETTINGS_FILE" : "/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles/shwet_autogen.dir/AutoRcc_res_F4FAE6NH3Q_Used.txt",
 	"SOURCE" : "/home/prayag/me/programming/in-progress/qt/shwet/src/resources/res.qrc",

@@ -4,7 +4,7 @@
 # compile CXX with /etc/profiles/per-user/prayag/bin/g++
 CXX_DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
 
-CXX_INCLUDES = -I/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/include -isystem /nix/store/4v8zscynk625j9nrcf40cxhgcc1biq09-qt-full-6.8.0/include/QtCore -isystem /nix/store/4v8zscynk625j9nrcf40cxhgcc1biq09-qt-full-6.8.0/mkspecs/linux-g++ -isystem /nix/store/4v8zscynk625j9nrcf40cxhgcc1biq09-qt-full-6.8.0/include/QtWidgets -isystem /nix/store/4v8zscynk625j9nrcf40cxhgcc1biq09-qt-full-6.8.0/include/QtGui
+CXX_INCLUDES = -I/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/include -isystem /nix/store/qcvz1s10bjr2na60w3zh91pfny8y5qxr-qt-full-6.8.1/include/QtCore -isystem /nix/store/qcvz1s10bjr2na60w3zh91pfny8y5qxr-qt-full-6.8.1/mkspecs/linux-g++ -isystem /nix/store/qcvz1s10bjr2na60w3zh91pfny8y5qxr-qt-full-6.8.1/include/QtWidgets -isystem /nix/store/qcvz1s10bjr2na60w3zh91pfny8y5qxr-qt-full-6.8.1/include/QtGui
 
-CXX_FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always -fPIC
+CXX_FLAGS = -g -std=gnu++17 -fdiagnostics-color=always -fPIC
 

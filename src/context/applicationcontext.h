@@ -19,6 +19,13 @@ public:
     Toolbar& toolbar() const;
     QPen& pen() const;
     Event& event() const;
+    QPainter& canvasPainter() const;
+    QPainter& overlayPainter() const;
+
+private slots:
+    void beginPainters();
+    void endPainters();
+    void toolChanged(Tool&);
 
 private:
     QuadTree *m_quadtree {nullptr};
@@ -26,6 +33,8 @@ private:
     Toolbar *m_toolbar {nullptr};
     QPen *m_pen {nullptr};
     Event *m_event {nullptr};
+    QPainter *m_canvasPainter {};
+    QPainter *m_overlayPainter {};
 
     int m_scale {};
     QPoint m_centerPos {};

@@ -7,7 +7,7 @@ class Polygon;
 class PolygonDrawingTool : public DrawingTool
 {
 protected:
-    Polygon* curItem;
+    std::shared_ptr<Polygon> curItem {};
 public:
     PolygonDrawingTool();
     ~PolygonDrawingTool() override = default;

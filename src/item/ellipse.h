@@ -11,6 +11,9 @@ public:
 
     void draw(QPainter& painter) const override;
     bool intersects(const QRect& rect) override;
+
+private:
+    bool onEllipse(QLine line) const;
 };
 
 #endif // ELLIPSE_H

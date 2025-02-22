@@ -11,7 +11,7 @@ public:
     const QPoint& pos() const;
     Qt::MouseButton button() const;
 
-    void setPos(const QPoint& point);
+    void setPos(const QPoint& point, qreal const scale = 1.0);
     void setButton(Qt::MouseButton btn);
 
 private:

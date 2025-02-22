@@ -44,10 +44,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /nix/store/4k2h9qsps52n1v56zq03yi67dwmxa81i-cmake-3.30.5/bin/cmake
+CMAKE_COMMAND = /nix/store/yxf0cmyfrar671zqh0ml8pcw15mxk0mh-cmake-3.30.5/bin/cmake
 
 # The command to remove a file.
-RM = /nix/store/4k2h9qsps52n1v56zq03yi67dwmxa81i-cmake-3.30.5/bin/cmake -E rm -f
+RM = /nix/store/yxf0cmyfrar671zqh0ml8pcw15mxk0mh-cmake-3.30.5/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -68,12 +68,12 @@ include CMakeFiles/shwet_autogen.dir/progress.make
 
 CMakeFiles/shwet_autogen: shwet_autogen/timestamp
 
-shwet_autogen/timestamp: /nix/store/4v8zscynk625j9nrcf40cxhgcc1biq09-qt-full-6.8.0/libexec/moc
-shwet_autogen/timestamp: /nix/store/4v8zscynk625j9nrcf40cxhgcc1biq09-qt-full-6.8.0/libexec/uic
+shwet_autogen/timestamp: /nix/store/qcvz1s10bjr2na60w3zh91pfny8y5qxr-qt-full-6.8.1/libexec/moc
+shwet_autogen/timestamp: /nix/store/qcvz1s10bjr2na60w3zh91pfny8y5qxr-qt-full-6.8.1/libexec/uic
 shwet_autogen/timestamp: CMakeFiles/shwet_autogen.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target shwet"
-	/nix/store/4k2h9qsps52n1v56zq03yi67dwmxa81i-cmake-3.30.5/bin/cmake -E cmake_autogen /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles/shwet_autogen.dir/AutogenInfo.json Debug
-	/nix/store/4k2h9qsps52n1v56zq03yi67dwmxa81i-cmake-3.30.5/bin/cmake -E touch /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/timestamp
+	/nix/store/yxf0cmyfrar671zqh0ml8pcw15mxk0mh-cmake-3.30.5/bin/cmake -E cmake_autogen /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/CMakeFiles/shwet_autogen.dir/AutogenInfo.json Debug
+	/nix/store/yxf0cmyfrar671zqh0ml8pcw15mxk0mh-cmake-3.30.5/bin/cmake -E touch /home/prayag/me/programming/in-progress/qt/shwet/build/Desktop-Debug/shwet_autogen/timestamp
 
 shwet_autogen: CMakeFiles/shwet_autogen
 shwet_autogen: shwet_autogen/timestamp

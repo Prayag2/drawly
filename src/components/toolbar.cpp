@@ -6,6 +6,8 @@ Toolbar::Toolbar(QWidget *parent)
     m_group = new QButtonGroup(this);
     m_layout = new QHBoxLayout(this);
     this->setLayout(m_layout);
+
+    QObject::connect(m_group, &QButtonGroup::idClicked, this, &Toolbar::onToolChanged);
 }
 
 Toolbar::~Toolbar() {
@@ -31,5 +33,11 @@ void Toolbar::addTool(Tool *tool) {
     m_layout->addWidget(btn);
     if (m_tools.size() == 1) {
         m_group->button(id)->setChecked(true);
+        emit toolChanged(*tool);
     }
 };
+
+// PRIVATE SLOTS
+void Toolbar::onToolChanged(int id) {
+    emit toolChanged(getCurTool());
+}
