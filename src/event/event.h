@@ -1,7 +1,6 @@
 #ifndef EVENT_H
 #define EVENT_H
-
-#include <QtTypes>
+#include <qglobal.h>
 #include <QPoint>
 
 class Event {
