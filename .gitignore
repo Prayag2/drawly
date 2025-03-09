@@ -76,3 +76,4 @@ CMakeLists.txt.user*
 build/
 archive/
 html/
+latex/
