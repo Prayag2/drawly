@@ -15,7 +15,7 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
 
 # Translation files.
-set(TS_FILES ${CMAKE_SOURCE_DIR}/translations/shwet_en_GB.ts)
+set(TS_FILES ${CMAKE_SOURCE_DIR}/translations/drawly_en_GB.ts)
 
 # Source directory.
 set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)

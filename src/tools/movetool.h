@@ -18,7 +18,6 @@ class MoveTool : public Tool {
     bool m_isActive {false};
     QPoint m_initialOffsetPos {};
     QPoint m_initialPos {};
-    QVector<std::shared_ptr<Item>> m_itemsToBeRedrawn {};
 };
 
 #endif // MOVETOOL_H

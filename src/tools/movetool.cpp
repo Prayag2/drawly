@@ -15,7 +15,6 @@ void MoveTool::mousePressed(ApplicationContext *context) {
         m_isActive = true;
         m_initialOffsetPos = context->offsetPos();
         m_initialPos = context->event().pos();
-        m_itemsToBeRedrawn = context->quadtree().getAllItems();
     }
 };
 
@@ -24,13 +23,15 @@ void MoveTool::mouseMoved(ApplicationContext *context) {
         QPoint newPoint {m_initialOffsetPos+(context->event().pos()-m_initialPos)};
         context->setOffsetPos(newPoint);
 
+        QRect viewport {newPoint*-1, context->canvas().dimensions()};
+        QVector<std::shared_ptr<Item>> dirty {context->quadtree().queryItems(viewport, true)};
+
         QPainter& painter {context->canvasPainter()};
         QPen pen {context->pen()};
         painter.setPen(pen);
 
-        // redraw all shapes (brute force, just for testing)
         context->canvas().setBg(context->canvas().bg());
-        for (const std::shared_ptr<Item> item : m_itemsToBeRedrawn) {
+        for (const std::shared_ptr<Item> item : dirty) {
             item->draw(painter, newPoint);
         }
 
