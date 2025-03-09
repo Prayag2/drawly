@@ -64,6 +64,10 @@ void Canvas::setScale(const qreal scale) {
     resize();
 }
 
+QSize Canvas::dimensions() const {
+    return size()*m_scale;
+}
+
 // PROTECTED
 void Canvas::paintEvent(QPaintEvent *event) {
     QPainter painter {this};

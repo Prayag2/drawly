@@ -14,6 +14,7 @@ class Canvas : public QWidget {
     QImage* const canvas() const;
     QImage* const overlay() const;
     QSize sizeHint() const override;
+    QSize dimensions() const;
 
     QColor bg() const;
     void setBg(const QColor& color, QImage *canvas = nullptr, QImage *overlay = nullptr);
