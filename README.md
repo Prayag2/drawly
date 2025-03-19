@@ -1,3 +1,14 @@
+# ✏️ Drawly
+Your handy, infinite, brainstorming tool.
+---
+Drawly is a work-in-progress infinite whiteboard tool, which aims to be a replacement for the web-based Excalidraw.
+
+## Note
+I currently only work on this tool during the weekends. Development is slow, but consistent. I'm planning to release an alpha version during June 2025.
+
+# Licence
+This project uses the GNU Lesser General Public Licence.
+
 # Plan
 Started: `2025-01-02 04:40PM`  
 Development is divided into phases.  

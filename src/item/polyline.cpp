@@ -8,7 +8,7 @@ void Polyline::addPoint(const QPoint& point) {
     m_boundingBox = m_boundingBox.normalized();
     int bX {m_boundingBox.x()}, bY {m_boundingBox.y()};
     int bW {m_boundingBox.width()}, bH {m_boundingBox.height()};
-    int mg {m_boundingBoxPadding + stroke().width()};
+    int mg {m_boundingBoxPadding /* + strokeWidth */};
 
     QMargins adjustments {};
 

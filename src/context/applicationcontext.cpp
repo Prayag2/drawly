@@ -1,5 +1,11 @@
 #include <QRect>
 #include "applicationcontext.h"
+#include "../components/propertybar.h"
+#include "../components/toolbar.h"
+#include "../canvas/canvas.h"
+#include "../data-structures/quadtree.h"
+#include "../event/event.h"
+#include "../tools/properties/propertymanager.h"
 #include "../tools/rectangletool.h"
 #include "../tools/ellipsetool.h"
 #include "../tools/linetool.h"
@@ -13,7 +19,9 @@ ApplicationContext::ApplicationContext(QWidget* parent)
     m_canvas = new Canvas(parent);
     m_canvas->setScale(1.25);
 
-    m_toolbar = new Toolbar(parent);
+    m_toolBar = new ToolBar(parent);
+    m_propertyBar = new PropertyBar(parent);
+    m_propertyManager = new PropertyManager(parent);
     m_pen = new QPen();
     m_quadtree = new QuadTree(QRect{{0, 0}, m_canvas->sizeHint()}, 100);
     m_event = new Event();
@@ -21,18 +29,19 @@ ApplicationContext::ApplicationContext(QWidget* parent)
     m_canvasPainter = new QPainter(m_canvas->canvas());
     m_overlayPainter = new QPainter(m_canvas->overlay());
 
-    m_toolbar->addTool(new RectangleTool());
-    m_toolbar->addTool(new EllipseTool());
-    m_toolbar->addTool(new ArrowTool());
-    m_toolbar->addTool(new LineTool());
-    m_toolbar->addTool(new FreeformTool());
-    m_toolbar->addTool(new EraserTool());
-    m_toolbar->addTool(new MoveTool());
+    m_toolBar->addTool(new RectangleTool(*m_propertyManager));
+    m_toolBar->addTool(new EllipseTool(*m_propertyManager));
+    m_toolBar->addTool(new ArrowTool(*m_propertyManager));
+    m_toolBar->addTool(new LineTool(*m_propertyManager));
+    m_toolBar->addTool(new FreeformTool());
+    m_toolBar->addTool(new EraserTool());
+    m_toolBar->addTool(new MoveTool());
 
     QObject::connect(m_canvas, &Canvas::destroyed, this, &ApplicationContext::endPainters);
     QObject::connect(m_canvas, &Canvas::resizeStart, this, &ApplicationContext::endPainters);
     QObject::connect(m_canvas, &Canvas::resizeEnd, this, &ApplicationContext::beginPainters);
-    QObject::connect(m_toolbar, &Toolbar::toolChanged, this, &ApplicationContext::toolChanged);
+    QObject::connect(m_toolBar, &ToolBar::toolChanged, this, &ApplicationContext::toolChanged);
+    QObject::connect(m_toolBar, &ToolBar::toolChanged, m_propertyBar, &PropertyBar::toolChanged);
 
     m_canvasPainter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
     m_overlayPainter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
@@ -59,8 +68,12 @@ QuadTree& ApplicationContext::quadtree() const {
     return *m_quadtree;
 }
 
-Toolbar& ApplicationContext::toolbar() const {
-    return *m_toolbar;
+ToolBar& ApplicationContext::toolBar() const {
+    return *m_toolBar;
+}
+
+PropertyBar& ApplicationContext::propertyBar() const {
+    return *m_propertyBar;
 }
 
 QPen& ApplicationContext::pen() const {

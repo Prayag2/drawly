@@ -1,23 +1,7 @@
 #include "item.h"
 
 // PUBLIC
-Item::Item() {
-    m_fill = std::make_unique<Fill>();
-    m_stroke = std::make_unique<Stroke>();
-    m_font = std::make_unique<Font>();
-}
-
-Stroke& Item::stroke() const {
-    return *m_stroke;
-}
-
-Fill& Item::fill() const {
-    return *m_fill;
-}
-
-Font& Item::font() const {
-    return *m_font;
-}
+Item::Item() {}
 
 const QRect& Item::boundingBox() const {
     return m_boundingBox;
@@ -42,4 +26,17 @@ bool Item::linesIntersect(QLine a, QLine b) {
     QPoint p {a.p1()}, q {a.p2()};
     QPoint r {b.p1()}, s {b.p2()};
     return orientation(p, q, r) != orientation(p, q, s) && orientation(r, s, p) != orientation(r, s, q);
+}
+
+ItemProperty& Item::getProperty(const ItemPropertyType propertyType) {
+    if (m_properties.find(propertyType) == m_properties.end()) {
+        throw std::logic_error("Item does not support this property.");
+    }
+    return m_properties.at(propertyType);
+}
+
+const ItemProperty& Item::getProperty(const ItemPropertyType propertyType) const {
+    // This will call the non-const version of this method.
+    // I'm doing this to avoid code duplication.
+    return const_cast<Item*>(this)->getProperty(propertyType);
 }

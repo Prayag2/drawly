@@ -8,8 +8,10 @@ class Rectangle : public Polygon {
     Rectangle();
     ~Rectangle() override = default;
 
-    void draw(QPainter& painter, const QPoint& offset) const override;
     bool intersects(const QRect& rect) override;
+
+  protected:
+    void m_draw(QPainter& painter, const QPoint& offset) const override;
 };
 
 #endif // RECTANGLE_H

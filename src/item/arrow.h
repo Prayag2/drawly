@@ -11,8 +11,10 @@ class Arrow : public Polygon {
     void setStart(QPoint start) override;
     void setEnd(QPoint end) override;
 
-    void draw(QPainter& painter, const QPoint& offset) const override;
     bool intersects(const QRect& rect) override;
+
+  protected:
+    void m_draw(QPainter& painter, const QPoint& offset) const override;
 
   private:
     QPoint m_arrowP1;

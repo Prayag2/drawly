@@ -1,13 +1,16 @@
 #ifndef APPLICATIONCONTEXT_H
 #define APPLICATIONCONTEXT_H
 
+#include <QObject>
 #include <QPoint>
 #include <QPen>
-#include "../data-structures/quadtree.h"
-#include "../canvas/canvas.h"
-#include "../data-structures/quadtree.h"
-#include "../components/toolbar.h"
-#include "../event/event.h"
+class ToolBar;
+class Tool;
+class Event;
+class QuadTree;
+class Canvas;
+class PropertyBar;
+class PropertyManager;
 
 class ApplicationContext : public QObject {
   public:
@@ -15,7 +18,8 @@ class ApplicationContext : public QObject {
     ~ApplicationContext();
     Canvas& canvas() const;
     QuadTree& quadtree() const;
-    Toolbar& toolbar() const;
+    ToolBar& toolBar() const;
+    PropertyBar& propertyBar() const;
     QPen& pen() const;
     Event& event() const;
     QPainter& canvasPainter() const;
@@ -31,7 +35,9 @@ class ApplicationContext : public QObject {
   private:
     QuadTree *m_quadtree {nullptr};
     Canvas *m_canvas {nullptr};
-    Toolbar *m_toolbar {nullptr};
+    ToolBar *m_toolBar {nullptr};
+    PropertyBar *m_propertyBar {};
+    PropertyManager *m_propertyManager {};
     QPen *m_pen {nullptr};
     Event *m_event {nullptr};
     QPainter *m_canvasPainter {};

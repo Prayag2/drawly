@@ -2,6 +2,10 @@
 #include "../item/factory/freeformfactory.h"
 #include "../context/applicationcontext.h"
 #include "../item/freeform.h"
+#include "../event/event.h"
+#include "../canvas/canvas.h"
+#include "../item/item.h"
+#include "../data-structures/quadtree.h"
 
 FreeformTool::FreeformTool() {
     m_itemFactory = std::make_unique<FreeformFactory>();

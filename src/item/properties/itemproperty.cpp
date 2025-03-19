@@ -1,15 +1,12 @@
 #include "itemproperty.h"
 
 ItemProperty::ItemProperty() {}
+ItemProperty::ItemProperty(QVariant value) : m_value {value} {}
 
-bool ItemProperty::active() const {
-    return m_isActive;
+void ItemProperty::setValue(QVariant value) {
+    m_value = value;
 }
 
-void ItemProperty::activate() {
-    m_isActive = true;
-}
-
-void ItemProperty::deactivate() {
-    m_isActive = false;
+const QVariant& ItemProperty::value() const {
+    return m_value;
 }

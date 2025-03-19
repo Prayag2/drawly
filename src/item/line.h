@@ -8,8 +8,10 @@ class Line : public Polygon {
     Line();
     ~Line() override = default;
 
-    void draw(QPainter& painter, const QPoint& offset) const override;
     bool intersects(const QRect& rect) override;
+
+private:
+    void m_draw(QPainter& painter, const QPoint& offset) const override;
 };
 
 #endif // LINE_H
