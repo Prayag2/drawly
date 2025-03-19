@@ -3,12 +3,13 @@
 
 #include "drawingtool.h"
 class Polygon;
+class PropertyManager;
 
 class PolygonDrawingTool : public DrawingTool {
   protected:
     std::shared_ptr<Polygon> curItem {};
   public:
-    PolygonDrawingTool();
+    PolygonDrawingTool(const PropertyManager& propertyManager);
     ~PolygonDrawingTool() override = default;
 
     void mousePressed(ApplicationContext *context) override;

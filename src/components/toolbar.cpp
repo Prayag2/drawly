@@ -1,25 +1,25 @@
 #include "toolbar.h"
 
-Toolbar::Toolbar(QWidget *parent)
+ToolBar::ToolBar(QWidget *parent)
     : QFrame{parent} {
     m_group = new QButtonGroup(this);
     m_layout = new QHBoxLayout(this);
     this->setLayout(m_layout);
 
-    QObject::connect(m_group, &QButtonGroup::idClicked, this, &Toolbar::onToolChanged);
+    QObject::connect(m_group, &QButtonGroup::idClicked, this, &ToolBar::onToolChanged);
 }
 
-Toolbar::~Toolbar() {
+ToolBar::~ToolBar() {
     for (Tool *tool : m_tools) {
         delete tool;
     }
 }
 
-Tool& Toolbar::getCurTool() const {
+Tool& ToolBar::curTool() const {
     return *m_tools[m_group->checkedId()];
 }
 
-void Toolbar::addTool(Tool *tool) {
+void ToolBar::addTool(Tool *tool) {
     if (tool == nullptr) return;
 
     QPushButton* btn {new QPushButton(tool->iconAlt(), this)};
@@ -37,6 +37,6 @@ void Toolbar::addTool(Tool *tool) {
 };
 
 // PRIVATE SLOTS
-void Toolbar::onToolChanged(int id) {
-    emit toolChanged(getCurTool());
+void ToolBar::onToolChanged(int id) {
+    emit toolChanged(curTool());
 }

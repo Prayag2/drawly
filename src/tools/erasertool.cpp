@@ -1,6 +1,11 @@
-#include "erasertool.h"
-#include "../context/applicationcontext.h"
 #include <QDebug>
+#include <QPainter>
+#include "erasertool.h"
+#include "../event/event.h"
+#include "../context/applicationcontext.h"
+#include "../data-structures/quadtree.h"
+#include "../item/item.h"
+#include "../canvas/canvas.h"
 
 EraserTool::EraserTool() {
     int size {20}, borderWidth {2};

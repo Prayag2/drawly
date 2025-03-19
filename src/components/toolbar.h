@@ -7,13 +7,13 @@
 #include <QButtonGroup>
 #include "../tools/tool.h"
 
-class Toolbar : public QFrame {
+class ToolBar : public QFrame {
     Q_OBJECT
   public:
-    explicit Toolbar(QWidget *parent = nullptr);
-    ~Toolbar();
+    explicit ToolBar(QWidget *parent = nullptr);
+    ~ToolBar();
 
-    Tool& getCurTool() const;
+    Tool& curTool() const;
     void addTool(Tool *tool);
 
   signals:

@@ -2,10 +2,11 @@
 #define ARROWTOOL_H
 
 #include "polygondrawingtool.h"
+class PropertyManager;
 
 class ArrowTool : public PolygonDrawingTool {
   public:
-    ArrowTool();
+    ArrowTool(const PropertyManager& propertyManager);
     ~ArrowTool() override = default;
     QString iconAlt() const override;
 };

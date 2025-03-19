@@ -1,6 +1,8 @@
 #include "polygon.h"
 
-Polygon::Polygon() {}
+Polygon::Polygon() {
+    m_properties[ItemPropertyType::StrokeWidth] = ItemProperty(1);
+}
 
 void Polygon::setStart(QPoint start) {
     m_start = start;
@@ -26,8 +28,28 @@ void Polygon::m_updateBoundingBox() {
     int maxX {std::max(m_start.x(), m_end.x())};
     int minY {std::min(m_start.y(), m_end.y())};
     int maxY {std::max(m_start.y(), m_end.y())};
-    int w {m_boundingBoxPadding + stroke().width()};
+    int w {m_boundingBoxPadding + getProperty(ItemPropertyType::StrokeWidth).value().toInt()};
 
     m_boundingBox = QRect{QPoint{minX, maxY}, QPoint{maxX, minY}}.normalized();
     m_boundingBox.adjust(-w, -w, w, w);
+}
+
+void Polygon::draw(QPainter& painter, const QPoint& offset) const {
+    QPen pen {};
+    pen.setWidth(getProperty(ItemPropertyType::StrokeWidth).value().toInt());
+    pen.setColor(Qt::black);
+    painter.setPen(pen);
+
+    m_draw(painter, offset);
+}
+
+void Polygon::erase(QPainter& painter, const QPoint& offset) const {
+    QPen pen {};
+    pen.setWidth(getProperty(ItemPropertyType::StrokeWidth).value().toInt() * 10);
+    pen.setColor(Qt::transparent);
+    painter.setPen(pen);
+
+    painter.setCompositionMode(QPainter::CompositionMode_Clear);
+    m_draw(painter, offset);
+    painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
 }

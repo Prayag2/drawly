@@ -107,7 +107,7 @@ void Canvas::mouseReleaseEvent(QMouseEvent *event) {
 };
 
 // PRIVATE
-QByteArray Canvas::getImageData(QImage *const img) {
+QByteArray Canvas::imageData(QImage *const img) {
     QByteArray arr {};
     QBuffer buffer {&arr};
     buffer.open(QBuffer::WriteOnly);

@@ -3,14 +3,14 @@
 
 Rectangle::Rectangle() {}
 
-void Rectangle::draw(QPainter& painter, const QPoint& offset) const {
+void Rectangle::m_draw(QPainter& painter, const QPoint& offset) const {
     painter.drawRect(QRect(start()+offset, end()+offset));
 }
 
 bool Rectangle::intersects(const QRect& rect) {
     if (!boundingBox().intersects(rect)) return false;
 
-    int mg {m_boundingBoxPadding + stroke().width()};
+    int mg {m_boundingBoxPadding + getProperty(ItemPropertyType::StrokeWidth).value().toInt()};
     QRect box {boundingBox().normalized().adjusted(mg, mg, -mg, -mg)};
     QPoint p {box.topLeft()};
     QPoint q {box.topRight()};

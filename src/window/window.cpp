@@ -5,6 +5,7 @@
 #include "../controller/controller.h"
 #include "../context/applicationcontext.h"
 #include "../components/toolbar.h"
+#include "../components/propertybar.h"
 #include "../canvas/canvas.h"
 #include "boardlayout.h"
 
@@ -20,7 +21,8 @@ MainWindow::MainWindow(QWidget *parent)
     context->canvas().setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     this->setLayout(layout);
-    layout->setBottomWidget(&context->toolbar());
+    layout->setBottomWidget(&context->toolBar());
+    layout->setRightWidget(&context->propertyBar());
     layout->setCentralWidget(&context->canvas());
 
     QObject::connect(&context->canvas(), &Canvas::mousePressed, controller, &Controller::mousePressed);

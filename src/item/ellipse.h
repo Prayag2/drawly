@@ -8,8 +8,10 @@ class Ellipse : public Polygon {
     Ellipse();
     virtual ~Ellipse() = default;
 
-    void draw(QPainter& painter, const QPoint& offset) const override;
     bool intersects(const QRect& rect) override;
+
+protected:
+    void m_draw(QPainter& painter, const QPoint& offset) const override;
 
   private:
     bool onEllipse(QLine line) const;

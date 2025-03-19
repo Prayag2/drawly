@@ -2,7 +2,7 @@
 
 Line::Line() {}
 
-void Line::draw(QPainter& painter, const QPoint& offset) const {
+void Line::m_draw(QPainter& painter, const QPoint& offset) const {
     painter.drawLine(start()+offset, end()+offset);
 }
 

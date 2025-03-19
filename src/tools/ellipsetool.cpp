@@ -1,7 +1,8 @@
 #include "ellipsetool.h"
 #include "../item/factory/ellipsefactory.h"
 
-EllipseTool::EllipseTool() {
+EllipseTool::EllipseTool(const PropertyManager& propertyManager)
+    : PolygonDrawingTool(propertyManager) {
     m_itemFactory = std::make_unique<EllipseFactory>();
 }
 

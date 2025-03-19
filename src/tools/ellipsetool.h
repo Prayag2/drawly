@@ -2,10 +2,11 @@
 #define ELLIPSETOOL_H
 
 #include "polygondrawingtool.h"
+class PropertyManager;
 
 class EllipseTool : public PolygonDrawingTool {
   public:
-    EllipseTool();
+    EllipseTool(const PropertyManager& propertyManager);
 
     ~EllipseTool() override = default;
 

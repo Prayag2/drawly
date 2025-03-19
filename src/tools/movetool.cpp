@@ -1,6 +1,9 @@
 #include "movetool.h"
 #include "../context/applicationcontext.h"
 #include "../item/item.h"
+#include "../event/event.h"
+#include "../canvas/canvas.h"
+#include "../data-structures/quadtree.h"
 
 MoveTool::MoveTool() {
     m_cursor = QCursor(Qt::OpenHandCursor);

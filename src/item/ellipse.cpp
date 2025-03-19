@@ -2,12 +2,12 @@
 
 Ellipse::Ellipse() {}
 
-void Ellipse::draw(QPainter& painter, const QPoint& offset) const {
+void Ellipse::m_draw(QPainter& painter, const QPoint& offset) const {
     painter.drawEllipse(QRect(start()+offset, end()+offset));
 }
 
 bool Ellipse::onEllipse(QLine line) const {
-    int sw {m_boundingBoxPadding+stroke().width()};
+    int sw {m_boundingBoxPadding + getProperty(ItemPropertyType::StrokeWidth).value().toInt()};
     int X {m_boundingBox.x() + sw}, Y {m_boundingBox.y() + sw};
     int W {m_boundingBox.width() - 2*sw}, H {m_boundingBox.height() - 2*sw};
 
