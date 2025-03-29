@@ -26,9 +26,9 @@ The following is a list of features I'll be planning to add to it:
 - [x] A custom Qt layout for toolbar and properties bar
 - [x] Make canvas infinite and add ability to move the viewport
 - [ ] Use caching techniques to optimize moving the canvas around
-- [ ] A properties bar to change the following properties:
-    - [ ] Colour of strokes
-    - [ ] Stroke width
+- [x] A properties bar to change the following properties:
+    - [x] Colour of strokes
+    - [x] Stroke width
     - [ ] Eraser size
     - [ ] Stroke style (dashed, solid, etc)
 
