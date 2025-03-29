@@ -13,6 +13,7 @@ PolygonDrawingTool::PolygonDrawingTool(const PropertyManager& propertyManager) {
     m_cursor = QCursor(Qt::CrossCursor);
 
     m_properties[ToolPropertyType::StrokeWidth] = (propertyManager.getToolProperty(ToolPropertyType::StrokeWidth));
+    m_properties[ToolPropertyType::StrokeColor] = (propertyManager.getToolProperty(ToolPropertyType::StrokeColor));
 }
 
 void PolygonDrawingTool::mousePressed(ApplicationContext *context) {
@@ -21,7 +22,8 @@ void PolygonDrawingTool::mousePressed(ApplicationContext *context) {
 
         // properties
         curItem->getProperty(ItemPropertyType::StrokeWidth).setValue(m_properties[ToolPropertyType::StrokeWidth]->value());
-        curItem->getProperty(ItemPropertyType::StrokeWidth).setValue(m_properties[ToolPropertyType::StrokeWidth]->value());
+        curItem->getProperty(ItemPropertyType::StrokeColor).setValue(m_properties[ToolPropertyType::StrokeColor]->value());
+        qDebug() << "Color is: " << m_properties[ToolPropertyType::StrokeColor]->value();
 
         curItem->setScale(context->canvas().scale());
         curItem->setBoundingBoxPadding(10 * context->canvas().scale());

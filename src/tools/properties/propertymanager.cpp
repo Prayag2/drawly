@@ -1,10 +1,12 @@
 #include "propertymanager.h"
 #include "toolstrokewidth.h"
+#include "toolstrokecolor.h"
 
 PropertyManager::PropertyManager(QWidget *parent)
     : QObject{parent}
 {
     m_properties[ToolPropertyType::StrokeWidth] = std::make_shared<ToolStrokeWidth>(parent);
+    m_properties[ToolPropertyType::StrokeColor] = std::make_shared<ToolStrokeColor>(parent);
 }
 
 std::shared_ptr<ToolProperty> PropertyManager::getToolProperty(const ToolPropertyType toolType) const {

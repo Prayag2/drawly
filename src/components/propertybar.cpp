@@ -5,8 +5,12 @@
 
 PropertyBar::PropertyBar(QWidget* parent) : QFrame{parent} {
     m_layout = new QVBoxLayout {this};
+    m_layout->addSpacing(10);
+
     this->setLayout(m_layout);
-    this->setStyleSheet("QFrame { border: 2px solid black; padding: 10px; }");
+    this->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+    this->setAutoFillBackground(true);
+    this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 }
 
 // PUBLIC SLOTS
@@ -16,10 +20,16 @@ void PropertyBar::toolChanged(Tool& tool) {
     // removing previous widgets
     QLayoutItem *item {};
     while ((item = m_layout->takeAt(0)) != nullptr) {
+        if (item->widget()) {
+            if (item->widget()->property("isWidgetLabel") == "true") delete item->widget();
+        }
         delete item;
     }
 
     for (std::shared_ptr<ToolProperty> property : properties) {
+        QLabel* widgetLabel{new QLabel{property->name(), this}};
+        widgetLabel->setProperty("isWidgetLabel", "true");
+        m_layout->addWidget(widgetLabel);
         m_layout->addWidget(&(property->widget()));
     }
 
