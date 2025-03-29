@@ -13,5 +13,5 @@ QString ToolStrokeWidth::name() const {
 };
 
 const QVariant ToolStrokeWidth::value() const {
-    return dynamic_cast<QSpinBox*>(m_widget)->value();
+    return dynamic_cast<QSpinBox*>(m_widget)->value()*2;
 }

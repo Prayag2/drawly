@@ -21,7 +21,7 @@ ApplicationContext::ApplicationContext(QWidget* parent)
 
     m_toolBar = new ToolBar(parent);
     m_propertyBar = new PropertyBar(parent);
-    m_propertyManager = new PropertyManager(parent);
+    m_propertyManager = new PropertyManager(m_propertyBar);
     m_pen = new QPen();
     m_quadtree = new QuadTree(QRect{{0, 0}, m_canvas->sizeHint()}, 100);
     m_event = new Event();

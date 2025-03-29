@@ -47,6 +47,7 @@ void BoardLayout::setLeftWidget(QWidget* const item, bool pinned) {
     }
     m_leftWidget = new QWidgetItem(item);
     m_isLeftPinned = pinned;
+    if (item) item->raise();
 }
 
 void BoardLayout::setTopWidget(QWidget* const item, bool pinned) {
@@ -55,6 +56,7 @@ void BoardLayout::setTopWidget(QWidget* const item, bool pinned) {
     }
     m_topWidget = new QWidgetItem(item);
     m_isTopPinned = pinned;
+    if (item) item->raise();
 }
 
 void BoardLayout::setRightWidget(QWidget* const item, bool pinned) {
@@ -63,6 +65,7 @@ void BoardLayout::setRightWidget(QWidget* const item, bool pinned) {
     }
     m_rightWidget = new QWidgetItem(item);
     m_isRightPinned = pinned;
+    if (item) item->raise();
 }
 
 void BoardLayout::setBottomWidget(QWidget* const item, bool pinned) {
@@ -71,6 +74,7 @@ void BoardLayout::setBottomWidget(QWidget* const item, bool pinned) {
     }
     m_bottomWidget = new QWidgetItem(item);
     m_isBottomPinned = pinned;
+    if (item) item->raise();
 }
 
 void BoardLayout::setCentralWidget(QWidget* const item) {
@@ -90,16 +94,16 @@ void BoardLayout::setGeometry(const QRect& rect) {
     }
 
     if (m_leftWidget != nullptr) {
-        m_leftWidget->setGeometry(QRect(0, 0, m_leftWidget->sizeHint().width(), rect.height()));
+        m_leftWidget->setGeometry(QRect(0, (rect.height()-m_leftWidget->sizeHint().height())/2, m_leftWidget->sizeHint().width(), m_leftWidget->sizeHint().height()));
     }
     if (m_rightWidget != nullptr) {
-        m_rightWidget->setGeometry(QRect(rect.width()-m_rightWidget->sizeHint().width(), 0, m_rightWidget->sizeHint().width(), rect.height()));
+        m_rightWidget->setGeometry(QRect(rect.width()-m_rightWidget->sizeHint().width(), (rect.height()-m_rightWidget->sizeHint().height())/2, m_rightWidget->sizeHint().width(), m_rightWidget->sizeHint().height()));
     }
     if (m_topWidget != nullptr) {
-        m_topWidget->setGeometry(QRect(0, 0, rect.width(), m_topWidget->sizeHint().height()));
+        m_topWidget->setGeometry(QRect((rect.width()-m_topWidget->sizeHint().width())/2, 0, m_topWidget->sizeHint().width(), m_topWidget->sizeHint().height()));
     }
     if (m_bottomWidget != nullptr) {
-        m_bottomWidget->setGeometry(QRect(0, rect.height()-m_bottomWidget->sizeHint().height(), rect.width(), m_bottomWidget->sizeHint().height()));
+        m_bottomWidget->setGeometry(QRect((rect.width()-m_bottomWidget->sizeHint().width())/2, rect.height()-m_bottomWidget->sizeHint().height(), m_bottomWidget->sizeHint().width(), m_bottomWidget->sizeHint().height()));
     }
 }
 

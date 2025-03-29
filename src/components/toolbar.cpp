@@ -5,6 +5,10 @@ ToolBar::ToolBar(QWidget *parent)
     m_group = new QButtonGroup(this);
     m_layout = new QHBoxLayout(this);
     this->setLayout(m_layout);
+    this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    this->setFrameShape(QFrame::StyledPanel);
+    this->setFrameShadow(QFrame::Raised);
+    this->setAutoFillBackground(true);
 
     QObject::connect(m_group, &QButtonGroup::idClicked, this, &ToolBar::onToolChanged);
 }

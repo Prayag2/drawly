@@ -3,7 +3,8 @@
 #include <QObject>
 
 enum class ToolPropertyType {
-    StrokeWidth = 0x00
+    StrokeWidth = 0x00,
+    StrokeColor = 0x02
 };
 class ToolProperty;
 

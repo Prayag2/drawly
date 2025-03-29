@@ -21,8 +21,9 @@ MainWindow::MainWindow(QWidget *parent)
     context->canvas().setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     this->setLayout(layout);
+
+    layout->setLeftWidget(&context->propertyBar());
     layout->setBottomWidget(&context->toolBar());
-    layout->setRightWidget(&context->propertyBar());
     layout->setCentralWidget(&context->canvas());
 
     QObject::connect(&context->canvas(), &Canvas::mousePressed, controller, &Controller::mousePressed);

@@ -40,6 +40,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         src/tools/properties/propertymanager.h src/tools/properties/propertymanager.cpp
         src/tools/properties/toolerasersize.h src/tools/properties/toolerasersize.cpp
+        src/tools/properties/toolstrokecolor.h src/tools/properties/toolstrokecolor.cpp
+        src/components/wrapper.h src/components/wrapper.cpp
     )
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()

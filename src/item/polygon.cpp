@@ -2,6 +2,7 @@
 
 Polygon::Polygon() {
     m_properties[ItemPropertyType::StrokeWidth] = ItemProperty(1);
+    m_properties[ItemPropertyType::StrokeColor] = ItemProperty(static_cast<int>(Qt::black));
 }
 
 void Polygon::setStart(QPoint start) {
@@ -37,7 +38,7 @@ void Polygon::m_updateBoundingBox() {
 void Polygon::draw(QPainter& painter, const QPoint& offset) const {
     QPen pen {};
     pen.setWidth(getProperty(ItemPropertyType::StrokeWidth).value().toInt());
-    pen.setColor(Qt::black);
+    pen.setColor(static_cast<Qt::GlobalColor>(getProperty(ItemPropertyType::StrokeColor).value().toInt()));
     painter.setPen(pen);
 
     m_draw(painter, offset);

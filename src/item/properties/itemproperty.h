@@ -4,7 +4,8 @@
 #include <QVariant>
 
 enum class ItemPropertyType {
-    StrokeWidth = 0x00
+    StrokeWidth = 0x00,
+    StrokeColor = 0x02,
 };
 
 class ItemProperty {

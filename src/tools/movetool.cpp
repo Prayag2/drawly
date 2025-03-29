@@ -30,8 +30,6 @@ void MoveTool::mouseMoved(ApplicationContext *context) {
         QVector<std::shared_ptr<Item>> dirty {context->quadtree().queryItems(viewport, true)};
 
         QPainter& painter {context->canvasPainter()};
-        QPen pen {context->pen()};
-        painter.setPen(pen);
 
         context->canvas().setBg(context->canvas().bg());
         for (const std::shared_ptr<Item> item : dirty) {
