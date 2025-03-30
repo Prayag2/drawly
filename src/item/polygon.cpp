@@ -35,10 +35,10 @@ void Polygon::m_updateBoundingBox() {
     m_boundingBox.adjust(-w, -w, w, w);
 }
 
-void Polygon::draw(QPainter& painter, const QPoint& offset) const {
+void Polygon::draw(QPainter& painter, const QPoint& offset) {
     QPen pen {};
     pen.setWidth(getProperty(ItemPropertyType::StrokeWidth).value().toInt());
-    pen.setColor(static_cast<Qt::GlobalColor>(getProperty(ItemPropertyType::StrokeColor).value().toInt()));
+    pen.setColor(QColor{static_cast<QRgb>(getProperty(ItemPropertyType::StrokeColor).value().toInt())});
     painter.setPen(pen);
 
     m_draw(painter, offset);
@@ -48,6 +48,8 @@ void Polygon::erase(QPainter& painter, const QPoint& offset) const {
     QPen pen {};
     pen.setWidth(getProperty(ItemPropertyType::StrokeWidth).value().toInt() * 10);
     pen.setColor(Qt::transparent);
+    pen.setJoinStyle(Qt::RoundJoin);
+    pen.setCapStyle(Qt::RoundCap);
     painter.setPen(pen);
 
     painter.setCompositionMode(QPainter::CompositionMode_Clear);

@@ -16,26 +16,18 @@
 
 ApplicationContext::ApplicationContext(QWidget* parent)
     : QObject {parent} {
+    m_fps = 120;
     m_canvas = new Canvas(parent);
     m_canvas->setScale(1.25);
 
     m_toolBar = new ToolBar(parent);
     m_propertyBar = new PropertyBar(parent);
     m_propertyManager = new PropertyManager(m_propertyBar);
-    m_pen = new QPen();
     m_quadtree = new QuadTree(QRect{{0, 0}, m_canvas->sizeHint()}, 100);
     m_event = new Event();
 
     m_canvasPainter = new QPainter(m_canvas->canvas());
     m_overlayPainter = new QPainter(m_canvas->overlay());
-
-    m_toolBar->addTool(new RectangleTool(*m_propertyManager));
-    m_toolBar->addTool(new EllipseTool(*m_propertyManager));
-    m_toolBar->addTool(new ArrowTool(*m_propertyManager));
-    m_toolBar->addTool(new LineTool(*m_propertyManager));
-    m_toolBar->addTool(new FreeformTool());
-    m_toolBar->addTool(new EraserTool());
-    m_toolBar->addTool(new MoveTool());
 
     QObject::connect(m_canvas, &Canvas::destroyed, this, &ApplicationContext::endPainters);
     QObject::connect(m_canvas, &Canvas::resizeStart, this, &ApplicationContext::endPainters);
@@ -43,17 +35,21 @@ ApplicationContext::ApplicationContext(QWidget* parent)
     QObject::connect(m_toolBar, &ToolBar::toolChanged, this, &ApplicationContext::toolChanged);
     QObject::connect(m_toolBar, &ToolBar::toolChanged, m_propertyBar, &PropertyBar::toolChanged);
 
+    m_toolBar->addTool(new FreeformTool(*m_propertyManager));
+    m_toolBar->addTool(new RectangleTool(*m_propertyManager));
+    m_toolBar->addTool(new EllipseTool(*m_propertyManager));
+    m_toolBar->addTool(new ArrowTool(*m_propertyManager));
+    m_toolBar->addTool(new LineTool(*m_propertyManager));
+    m_toolBar->addTool(new EraserTool());
+    m_toolBar->addTool(new MoveTool());
+
     m_canvasPainter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
     m_overlayPainter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 
-    pen().setCapStyle(Qt::RoundCap);
-    pen().setJoinStyle(Qt::RoundJoin);
-    pen().setWidth(2);
-    pen().setColor(Qt::black);
+    m_propertyBar->toolChanged(m_toolBar->curTool());
 }
 
 ApplicationContext::~ApplicationContext() {
-    delete m_pen;
     delete m_quadtree;
     delete m_event;
     delete m_canvasPainter;
@@ -74,10 +70,6 @@ ToolBar& ApplicationContext::toolBar() const {
 
 PropertyBar& ApplicationContext::propertyBar() const {
     return *m_propertyBar;
-}
-
-QPen& ApplicationContext::pen() const {
-    return *m_pen;
 }
 
 Event& ApplicationContext::event() const {
@@ -119,4 +111,8 @@ const QPoint& ApplicationContext::offsetPos() const {
 
 void ApplicationContext::setOffsetPos(const QPoint& pos) {
     m_offsetPos = pos;
+}
+
+int ApplicationContext::fps() const {
+    return m_fps;
 }

@@ -35,7 +35,6 @@ void EraserTool::mousePressed(ApplicationContext *context) {
 void EraserTool::mouseMoved(ApplicationContext *context) {
     if (m_isErasing) {
         QPainter& painter {context->canvasPainter()};
-        painter.setPen(context->pen());
 
         QRect eraserBoundingBox {QRect(context->event().pos()-context->offsetPos(), m_cursor.pixmap().size())};
         QVector<std::shared_ptr<Item>> toBeErased {context->quadtree().queryItems(eraserBoundingBox)};

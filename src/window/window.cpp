@@ -22,8 +22,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->setLayout(layout);
 
+    layout->setMargins(10);
     layout->setLeftWidget(&context->propertyBar());
-    layout->setBottomWidget(&context->toolBar());
+    layout->setTopWidget(&context->toolBar());
     layout->setCentralWidget(&context->canvas());
 
     QObject::connect(&context->canvas(), &Canvas::mousePressed, controller, &Controller::mousePressed);

@@ -3,10 +3,11 @@
 
 #include "drawingtool.h"
 class Freeform;
+class PropertyManager;
 
 class FreeformTool : public DrawingTool {
   public:
-    FreeformTool();
+    FreeformTool(const PropertyManager& propertyManager);
     ~FreeformTool() override = default;
 
     QString iconAlt() const override;

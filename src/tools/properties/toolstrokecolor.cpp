@@ -4,6 +4,7 @@
 #include <QPushButton>
 #include <QColor>
 
+// TODO: Use a better widget and a better way to return colors instead of button id
 ToolStrokeColor::ToolStrokeColor(QWidget* parent) {
     m_widget = new QWidget{parent};
 
@@ -11,15 +12,18 @@ ToolStrokeColor::ToolStrokeColor(QWidget* parent) {
     m_group = new QButtonGroup{m_widget};
     m_widget->setLayout(layout);
 
-    QVector<Qt::GlobalColor> colors {Qt::black, Qt::red, Qt::blue, Qt::yellow, Qt::green};
-    for (const Qt::GlobalColor color : colors) {
+    QVector<QColor> colors {QColor{255,255,255}, QColor{255,53,71}, QColor{255,187,51}, QColor{51,181,229}, QColor{0,200,81}};
+
+    for (const QColor& color : colors) {
         QPushButton* btn {new QPushButton{"", m_widget}};
         btn->setCheckable(true);
-        btn->setStyleSheet("background-color: " + QColor{color}.name());
+        btn->setStyleSheet("background-color: " + color.name());
+
         layout->addWidget(btn);
-        m_group->addButton(btn, static_cast<int>(color));
+        m_group->addButton(btn, static_cast<int>(color.rgb()));
     }
 
+    m_group->buttons()[0]->setChecked(true);
     m_widget->setStyleSheet(QString::asprintf("QPushButton {width: %dpx; height: %dpx};", 20, 20));
 }
 
@@ -28,5 +32,5 @@ QString ToolStrokeColor::name() const {
 };
 
 const QVariant ToolStrokeColor::value() const {
-    return static_cast<int>(m_group->checkedId());
+    return m_group->checkedId();
 };

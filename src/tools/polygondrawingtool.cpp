@@ -1,6 +1,5 @@
 #include "polygondrawingtool.h"
 #include "properties/propertymanager.h"
-#include "properties/toolstrokewidth.h"
 #include "../context/applicationcontext.h"
 #include "../item/properties/itemproperty.h"
 #include "../item/factory/itemfactory.h"
@@ -8,6 +7,7 @@
 #include "../canvas/canvas.h"
 #include "../data-structures/quadtree.h"
 #include "../event/event.h"
+#include "properties/toolproperty.h"
 
 PolygonDrawingTool::PolygonDrawingTool(const PropertyManager& propertyManager) {
     m_cursor = QCursor(Qt::CrossCursor);
@@ -23,7 +23,6 @@ void PolygonDrawingTool::mousePressed(ApplicationContext *context) {
         // properties
         curItem->getProperty(ItemPropertyType::StrokeWidth).setValue(m_properties[ToolPropertyType::StrokeWidth]->value());
         curItem->getProperty(ItemPropertyType::StrokeColor).setValue(m_properties[ToolPropertyType::StrokeColor]->value());
-        qDebug() << "Color is: " << m_properties[ToolPropertyType::StrokeColor]->value();
 
         curItem->setScale(context->canvas().scale());
         curItem->setBoundingBoxPadding(10 * context->canvas().scale());

@@ -8,7 +8,7 @@ PropertyBar::PropertyBar(QWidget* parent) : QFrame{parent} {
     m_layout->addSpacing(10);
 
     this->setLayout(m_layout);
-    this->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+    this->setFrameStyle(QFrame::StyledPanel | QFrame::Plain);
     this->setAutoFillBackground(true);
     this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 }
@@ -32,6 +32,9 @@ void PropertyBar::toolChanged(Tool& tool) {
         m_layout->addWidget(widgetLabel);
         m_layout->addWidget(&(property->widget()));
     }
+
+    if (properties.empty()) setVisible(false);
+    else setVisible(true);
 
     update();
 }

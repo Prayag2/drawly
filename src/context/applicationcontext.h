@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QPoint>
-#include <QPen>
+#include <QPainter>
 class ToolBar;
 class Tool;
 class Event;
@@ -20,10 +20,10 @@ class ApplicationContext : public QObject {
     QuadTree& quadtree() const;
     ToolBar& toolBar() const;
     PropertyBar& propertyBar() const;
-    QPen& pen() const;
     Event& event() const;
     QPainter& canvasPainter() const;
     QPainter& overlayPainter() const;
+    int fps() const;
     const QPoint& offsetPos() const;
     void setOffsetPos(const QPoint& pos);
 
@@ -38,11 +38,11 @@ class ApplicationContext : public QObject {
     ToolBar *m_toolBar {nullptr};
     PropertyBar *m_propertyBar {};
     PropertyManager *m_propertyManager {};
-    QPen *m_pen {nullptr};
     Event *m_event {nullptr};
     QPainter *m_canvasPainter {};
     QPainter *m_overlayPainter {};
 
+    int m_fps {};
     int m_scale {};
     QPoint m_offsetPos {}; // all `Items` are positioned relative to this point
 };
