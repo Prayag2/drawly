@@ -1,7 +1,10 @@
 # ✏️ Drawly
 Your handy, infinite, brainstorming tool.
 ---
-Drawly is a work-in-progress infinite whiteboard tool, which aims to be a replacement for the web-based Excalidraw.
+Drawly is a work-in-progress infinite whiteboard tool, which aims to be a replacement for the web-based Excalidraw.  
+---
+
+<img src="./assets/screenshot.png" style="width: 100%"/>
 
 ## Note
 I currently only work on this tool during the weekends. Development is slow, but consistent. I'm planning to release an alpha version during June 2025.
@@ -25,12 +28,11 @@ The following is a list of features I'll be planning to add to it:
 - [x] Refactor to try to adhere to SOLID principles and utilize useful design patterns
 - [x] A custom Qt layout for toolbar and properties bar
 - [x] Make canvas infinite and add ability to move the viewport
-- [ ] Use caching techniques to optimize moving the canvas around
+- [x] Use an LRU cache based uniform grid to optimize moving the canvas around (now 100% faster!!)
 - [x] A properties bar to change the following properties:
     - [x] Colour of strokes
     - [x] Stroke width
-    - [ ] Eraser size
-    - [ ] Stroke style (dashed, solid, etc)
+Phase 2 completed!!
 
 ## After Phase 2
 - [ ] Selection tool
