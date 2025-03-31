@@ -18,7 +18,7 @@ class Freeform : public Item {
   protected:
     void m_draw(QPainter& painter, const QPoint& offset) const override;
     QVector<QPoint> m_points {};
-    QVector<QPoint> m_buffer {};
+    QVector<QPoint> m_optimizedPoints {};
     int m_bufferSize {15};
 
     std::unique_ptr<QImage> m_cache {};

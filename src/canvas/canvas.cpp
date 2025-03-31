@@ -82,6 +82,8 @@ bool operator<=(const QSize& a, const QSize& b) {
 }
 
 void Canvas::resizeEvent(QResizeEvent *event) {
+    emit resizeEventCalled();
+
     if (size()*m_scale <= m_maxSize) {
         return;
     }

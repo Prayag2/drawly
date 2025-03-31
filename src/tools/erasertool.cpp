@@ -4,6 +4,7 @@
 #include "../event/event.h"
 #include "../context/applicationcontext.h"
 #include "../data-structures/quadtree.h"
+#include "../data-structures/cachegrid.h"
 #include "../item/item.h"
 #include "../canvas/canvas.h"
 
@@ -36,18 +37,23 @@ void EraserTool::mouseMoved(ApplicationContext *context) {
     if (m_isErasing) {
         QPainter& painter {context->canvasPainter()};
 
-        QRect eraserBoundingBox {QRect(context->event().pos()-context->offsetPos(), m_cursor.pixmap().size())};
+        QRect eraserBoundingBox {QRect(context->event().pos() + context->offsetPos(), m_cursor.pixmap().size())};
         QVector<std::shared_ptr<Item>> toBeErased {context->quadtree().queryItems(eraserBoundingBox)};
         QVector<QRect> dirtyRegions {};
 
         for (std::shared_ptr<Item> item : toBeErased) {
-            painter.fillRect(item->boundingBox().translated(context->offsetPos()), context->canvas().bg());
+            painter.fillRect(item->boundingBox().translated(-context->offsetPos()), context->canvas().bg());
             dirtyRegions.push_back(item->boundingBox());
             context->quadtree().deleteItem(item);
         }
 
         QVector<std::shared_ptr<Item>> dirtyShapes {};
         for (const QRect& rect : dirtyRegions) {
+            QVector<std::shared_ptr<CacheCell>> dirtyCacheCells {context->cacheGrid().queryCells(rect)};
+            for (auto dirtyCacheCell : dirtyCacheCells) {
+                dirtyCacheCell->setDirty(true);
+            }
+
             dirtyShapes += context->quadtree().queryItems(rect, true);
         }
 

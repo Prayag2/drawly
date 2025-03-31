@@ -6,8 +6,8 @@ Freeform::Freeform() {
 }
 
 void Freeform::addPoint(const QPoint& point) {
-    QPoint smoothenedPoint{optimizePoint(m_points, 4, point)};
-    int x {smoothenedPoint.x()}, y {smoothenedPoint.y()};
+    QPoint smoothenedPoint{optimizePoint(m_points, 10, point)};
+    int x {point.x()}, y {point.y()};
 
     m_boundingBox = m_boundingBox.normalized();
     int bX {m_boundingBox.x()}, bY {m_boundingBox.y()};
@@ -29,7 +29,8 @@ void Freeform::addPoint(const QPoint& point) {
     }
 
     m_boundingBox += adjustments;
-    m_points.push_back(smoothenedPoint);
+    m_optimizedPoints.push_back(smoothenedPoint);
+    m_points.push_back(point);
     m_cacheDirty = true;
 }
 
@@ -68,17 +69,19 @@ void Freeform::draw(QPainter& painter, const QPoint& offset) {
         cachePainter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
         cachePainter.fillRect(m_cache->rect(), Qt::transparent);
 
-        m_draw(cachePainter, -relativeOffset);
+        m_draw(cachePainter, relativeOffset);
+        m_cache->save("/home/prayag/image.png");
         m_cacheDirty = false;
     }
 
-    painter.drawImage(relativeOffset+offset, *m_cache);
+    painter.drawImage(relativeOffset-offset, *m_cache);
 }
 
 void Freeform::erase(QPainter& painter, const QPoint& offset) const {
     // m_draw(painter, offset);
 }
 
+// TODO: Use a better line smoothing algorithm (may as well give an option to choose from multiple algorithms)
 QPoint Freeform::optimizePoint(QVector<QPoint>& points, int bufferSize, const QPoint& newPoint) const {
     points.push_back(newPoint);
 
@@ -96,18 +99,19 @@ QPoint Freeform::optimizePoint(QVector<QPoint>& points, int bufferSize, const QP
 
 void Freeform::quickDraw(QPainter& painter, const QPoint& offset) const {
     QPen pen {};
+    pen.setJoinStyle(Qt::RoundJoin);
+    pen.setCapStyle(Qt::RoundCap);
     pen.setWidth(getProperty(ItemPropertyType::StrokeWidth).value().toInt());
     pen.setColor(QColor{static_cast<QRgb>(getProperty(ItemPropertyType::StrokeColor).value().toInt())});
     painter.setPen(pen);
 
-    if (m_points.size() > 1) {
-        painter.drawLine(m_points[m_points.size()-2]+offset,m_points.back()+offset);
+    if (m_optimizedPoints.size() > 1) {
+        painter.drawLine(m_optimizedPoints[m_optimizedPoints.size()-2]-offset,m_optimizedPoints.back()-offset);
     } else {
-        painter.drawPoint(m_points.back());
+        painter.drawPoint(m_optimizedPoints.back());
     }
 }
 
-// TODO: Use a better stroke optimizing algorithm (may as well give an option to choose from multiple algorithms)
 void Freeform::m_draw(QPainter& painter, const QPoint& offset) const {
     QPen pen {};
     pen.setJoinStyle(Qt::RoundJoin);
@@ -116,9 +120,9 @@ void Freeform::m_draw(QPainter& painter, const QPoint& offset) const {
     pen.setColor(QColor{static_cast<QRgb>(getProperty(ItemPropertyType::StrokeColor).value().toInt())});
     painter.setPen(pen);
 
-    QVector<QPoint> temp{m_points};
+    QVector<QPoint> temp{m_optimizedPoints};
     for (QPoint& point : temp) {
-        point += offset;
+        point -= offset;
     }
     painter.drawPolyline(temp);
 }

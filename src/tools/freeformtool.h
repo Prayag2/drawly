@@ -2,6 +2,7 @@
 #define FREEFORMTOOL_H
 
 #include "drawingtool.h"
+#include <QElapsedTimer>
 class Freeform;
 class PropertyManager;
 
@@ -17,6 +18,7 @@ class FreeformTool : public DrawingTool {
 
   private:
     std::shared_ptr<Freeform> curItem {};
+    QElapsedTimer m_timer{};
 };
 
 #endif // FREEFORMTOOL_H

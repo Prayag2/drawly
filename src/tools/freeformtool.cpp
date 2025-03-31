@@ -6,6 +6,7 @@
 #include "../canvas/canvas.h"
 #include "../item/item.h"
 #include "../data-structures/quadtree.h"
+#include "../data-structures/cachegrid.h"
 #include "properties/propertymanager.h"
 #include "properties/toolproperty.h"
 
@@ -25,7 +26,7 @@ void FreeformTool::mousePressed(ApplicationContext *context) {
     if (context->event().button() == Qt::LeftButton) {
         curItem = std::dynamic_pointer_cast<Freeform>(m_itemFactory->create());
         curItem->setBoundingBoxPadding(10*context->canvas().scale());
-        curItem->addPoint(context->event().pos()-context->offsetPos());
+        curItem->addPoint(context->event().pos() + context->offsetPos());
         curItem->getProperty(ItemPropertyType::StrokeWidth).setValue(m_properties[ToolPropertyType::StrokeWidth]->value());
         curItem->getProperty(ItemPropertyType::StrokeColor).setValue(m_properties[ToolPropertyType::StrokeColor]->value());
         m_isDrawing = true;
@@ -36,7 +37,7 @@ void FreeformTool::mouseMoved(ApplicationContext *context) {
     if (m_isDrawing) {
         QPainter& painter {context->overlayPainter()};
 
-        curItem->addPoint(context->event().pos()-context->offsetPos());
+        curItem->addPoint(context->event().pos() + context->offsetPos());
         curItem->quickDraw(painter, context->offsetPos());
 
         context->canvas().update();
@@ -54,6 +55,10 @@ void FreeformTool::mouseReleased(ApplicationContext *context) {
 
         curItem->draw(canvasPainter, context->offsetPos());
         context->quadtree().insertItem(curItem);
+        QVector<std::shared_ptr<CacheCell>> dirtyCacheCells {context->cacheGrid().queryCells(curItem->boundingBox())};
+        for (auto dirtyCacheCell : dirtyCacheCells) {
+            dirtyCacheCell->setDirty(true);
+        }
 
         m_isDrawing = false;
         context->canvas().update();

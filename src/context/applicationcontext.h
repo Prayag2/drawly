@@ -8,6 +8,7 @@ class ToolBar;
 class Tool;
 class Event;
 class QuadTree;
+class CacheGrid;
 class Canvas;
 class PropertyBar;
 class PropertyManager;
@@ -18,6 +19,7 @@ class ApplicationContext : public QObject {
     ~ApplicationContext();
     Canvas& canvas() const;
     QuadTree& quadtree() const;
+    CacheGrid& cacheGrid() const;
     ToolBar& toolBar() const;
     PropertyBar& propertyBar() const;
     Event& event() const;
@@ -30,20 +32,21 @@ class ApplicationContext : public QObject {
   private slots:
     void beginPainters();
     void endPainters();
+    void canvasResized();
     void toolChanged(Tool&);
 
   private:
-    QuadTree *m_quadtree {nullptr};
+    std::unique_ptr<QuadTree> m_quadtree {nullptr};
+    std::unique_ptr<CacheGrid> m_cacheGrid{nullptr};
     Canvas *m_canvas {nullptr};
+    QPainter *m_canvasPainter {};
+    QPainter *m_overlayPainter {};
     ToolBar *m_toolBar {nullptr};
     PropertyBar *m_propertyBar {};
     PropertyManager *m_propertyManager {};
     Event *m_event {nullptr};
-    QPainter *m_canvasPainter {};
-    QPainter *m_overlayPainter {};
 
     int m_fps {};
-    int m_scale {};
     QPoint m_offsetPos {}; // all `Items` are positioned relative to this point
 };
 

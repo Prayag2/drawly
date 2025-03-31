@@ -4,6 +4,7 @@
 #include "../event/event.h"
 #include "../canvas/canvas.h"
 #include "../data-structures/quadtree.h"
+#include "../data-structures/cachegrid.h"
 
 MoveTool::MoveTool() {
     m_cursor = QCursor(Qt::OpenHandCursor);
@@ -18,27 +19,41 @@ void MoveTool::mousePressed(ApplicationContext *context) {
         m_isActive = true;
         m_initialOffsetPos = context->offsetPos();
         m_initialPos = context->event().pos();
-        m_timer.restart();
     }
 };
 
 void MoveTool::mouseMoved(ApplicationContext *context) {
     if (m_isActive) {
-        if (m_timer.elapsed() < 1000/context->fps()) return; // 2ms is extra time which could be spent in processing
-        m_timer.restart();
 
         QPoint oldPoint {context->offsetPos()};
-        QPoint newPoint {m_initialOffsetPos+(context->event().pos()-m_initialPos)};
+        QPoint newPoint {m_initialOffsetPos-context->event().pos()+m_initialPos};
         context->setOffsetPos(newPoint);
-
-        QRect viewport {newPoint*-1, context->canvas().dimensions()};
-        QVector<std::shared_ptr<Item>> dirty {context->quadtree().queryItems(viewport, true)};
 
         QPainter& painter {context->canvasPainter()};
 
         context->canvas().setBg(context->canvas().bg());
-        for (const std::shared_ptr<Item> item : dirty) {
-            item->draw(painter, newPoint);
+
+        QRect viewport {newPoint, context->canvas().dimensions()};
+        QVector<std::shared_ptr<CacheCell>> visibleCells {context->cacheGrid().queryCells(viewport)};
+
+        for (auto cell : visibleCells) {
+            // UNCOMMENT TO SEE THE CACHE GRID IN ACTION!!
+            // QPen pen{}; pen.setColor(Qt::white); pen.setWidth(1);
+            // painter.setPen(pen);
+            // painter.drawRect(cell->rect().translated(-newPoint));
+            // painter.drawText(cell->rect().translated(-newPoint), QString::asprintf("(%d, %d)", cell->point().x(), cell->point().y()));
+
+            if (cell->dirty()) {
+                QVector<std::shared_ptr<Item>> intersectingItems {context->quadtree().queryItems(cell->rect(), true)};
+                if (intersectingItems.empty()) continue;
+
+                cell->image().fill(Qt::transparent);
+                for (auto intersectingItem : intersectingItems) {
+                    intersectingItem->draw(cell->painter(), cell->rect().topLeft());
+                }
+                cell->setDirty(false);
+            }
+            painter.drawImage(cell->rect().translated(-newPoint), cell->image());
         }
 
         context->canvas().update();

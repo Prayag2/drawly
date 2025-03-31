@@ -4,6 +4,7 @@
 #include "../components/toolbar.h"
 #include "../canvas/canvas.h"
 #include "../data-structures/quadtree.h"
+#include "../data-structures/cachegrid.h"
 #include "../event/event.h"
 #include "../tools/properties/propertymanager.h"
 #include "../tools/rectangletool.h"
@@ -23,7 +24,10 @@ ApplicationContext::ApplicationContext(QWidget* parent)
     m_toolBar = new ToolBar(parent);
     m_propertyBar = new PropertyBar(parent);
     m_propertyManager = new PropertyManager(m_propertyBar);
-    m_quadtree = new QuadTree(QRect{{0, 0}, m_canvas->sizeHint()}, 100);
+    m_quadtree = std::make_unique<QuadTree>(QRect{{0, 0}, m_canvas->sizeHint()}, 100);
+
+
+    m_cacheGrid = std::make_unique<CacheGrid>(100);
     m_event = new Event();
 
     m_canvasPainter = new QPainter(m_canvas->canvas());
@@ -34,6 +38,7 @@ ApplicationContext::ApplicationContext(QWidget* parent)
     QObject::connect(m_canvas, &Canvas::resizeEnd, this, &ApplicationContext::beginPainters);
     QObject::connect(m_toolBar, &ToolBar::toolChanged, this, &ApplicationContext::toolChanged);
     QObject::connect(m_toolBar, &ToolBar::toolChanged, m_propertyBar, &PropertyBar::toolChanged);
+    QObject::connect(m_canvas, &Canvas::resizeEventCalled, this, &ApplicationContext::canvasResized);
 
     m_toolBar->addTool(new FreeformTool(*m_propertyManager));
     m_toolBar->addTool(new RectangleTool(*m_propertyManager));
@@ -50,7 +55,6 @@ ApplicationContext::ApplicationContext(QWidget* parent)
 }
 
 ApplicationContext::~ApplicationContext() {
-    delete m_quadtree;
     delete m_event;
     delete m_canvasPainter;
     delete m_overlayPainter;
@@ -62,6 +66,10 @@ Canvas& ApplicationContext::canvas() const {
 
 QuadTree& ApplicationContext::quadtree() const {
     return *m_quadtree;
+}
+
+CacheGrid& ApplicationContext::cacheGrid() const {
+    return *m_cacheGrid;
 }
 
 ToolBar& ApplicationContext::toolBar() const {
@@ -115,4 +123,15 @@ void ApplicationContext::setOffsetPos(const QPoint& pos) {
 
 int ApplicationContext::fps() const {
     return m_fps;
+}
+
+void ApplicationContext::canvasResized() {
+    int width {m_canvas->dimensions().width()}, height {m_canvas->dimensions().height()};
+    qDebug() << "width: " << width << " height: " << height;
+    int cellW {CacheCell::cellSize().width()}, cellH {CacheCell::cellSize().height()};
+    int rows = std::ceil(height/static_cast<double>(cellH))+1;
+    int cols = std::ceil(width/static_cast<double>(cellW))+1;
+
+    qDebug() << "Grid Size: " << rows*cols;
+    m_cacheGrid->setSize(rows*cols);
 }

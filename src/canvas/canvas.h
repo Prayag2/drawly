@@ -26,6 +26,7 @@ class Canvas : public QWidget {
     void mousePressed(QMouseEvent *event);
     void mouseMoved(QMouseEvent *event);
     void mouseReleased(QMouseEvent *event);
+    void resizeEventCalled();
     void resizeStart();
     void resizeEnd();
     void destroyed();

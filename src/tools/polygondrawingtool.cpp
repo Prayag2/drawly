@@ -6,6 +6,7 @@
 #include "../item/polygon.h"
 #include "../canvas/canvas.h"
 #include "../data-structures/quadtree.h"
+#include "../data-structures/cachegrid.h"
 #include "../event/event.h"
 #include "properties/toolproperty.h"
 
@@ -26,7 +27,7 @@ void PolygonDrawingTool::mousePressed(ApplicationContext *context) {
 
         curItem->setScale(context->canvas().scale());
         curItem->setBoundingBoxPadding(10 * context->canvas().scale());
-        curItem->setStart(context->event().pos() - context->offsetPos());
+        curItem->setStart(context->event().pos() + context->offsetPos());
 
         m_isDrawing = true;
     }
@@ -37,7 +38,7 @@ void PolygonDrawingTool::mouseMoved(ApplicationContext *context) {
         QPainter& overlayPainter {context->overlayPainter()};
 
         curItem->erase(overlayPainter, context->offsetPos());
-        curItem->setEnd(context->event().pos() - context->offsetPos());
+        curItem->setEnd(context->event().pos() + context->offsetPos());
         curItem->draw(overlayPainter, context->offsetPos());
 
         context->canvas().update();
@@ -53,6 +54,10 @@ void PolygonDrawingTool::mouseReleased(ApplicationContext *context) {
         curItem->draw(canvasPainter, context->offsetPos());
 
         context->quadtree().insertItem(curItem);
+        QVector<std::shared_ptr<CacheCell>> dirtyCacheCells {context->cacheGrid().queryCells(curItem->boundingBox())};
+        for (auto dirtyCacheCell : dirtyCacheCells) {
+            dirtyCacheCell->setDirty(true);
+        }
 
         m_isDrawing = false;
         context->canvas().update();
