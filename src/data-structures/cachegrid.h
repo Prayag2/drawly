@@ -10,6 +10,7 @@ class CacheGrid;
 class CacheCell {
 public:
     static QSize cellSize();
+    static int counter;
 
     CacheCell(const QPoint& point);
     ~CacheCell();
