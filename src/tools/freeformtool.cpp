@@ -39,10 +39,10 @@ void FreeformTool::mouseMoved(ApplicationContext *context) {
         qDebug() << "Offset: " << context->offsetPos();
         QPainter& painter {context->overlayPainter()};
 
-        QPen pen{}; pen.setColor(Qt::white); painter.setPen(pen);
         curItem->addPoint(context->event().pos() + context->offsetPos());
         curItem->quickDraw(painter, context->offsetPos());
         // Uncomment to see the bounding box
+        // QPen pen{}; pen.setColor(Qt::white); painter.setPen(pen);
         // painter.drawRect(curItem->boundingBox().translated(-context->offsetPos()));
 
         context->canvas().update();

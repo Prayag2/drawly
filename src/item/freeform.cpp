@@ -6,13 +6,13 @@ Freeform::Freeform() {
 }
 
 void Freeform::addPoint(const QPoint& point) {
-    // QPoint smoothenedPoint{optimizePoint(m_points, 10, point)};
-    int x {point.x()}, y {point.y()};
+    QPoint smoothenedPoint{optimizePoint(m_points, 10, point)};
+    int x {smoothenedPoint.x()}, y {smoothenedPoint.y()};
 
     m_boundingBox = m_boundingBox.normalized();
     int topLeftX {m_boundingBox.topLeft().x()}, topLeftY {m_boundingBox.topLeft().y()};
     int bottomRightX {m_boundingBox.bottomRight().x()}, bottomRightY {m_boundingBox.bottomRight().y()};
-    int mg {m_boundingBoxPadding /* + strokeWidth */};
+    int mg {m_boundingBoxPadding + getProperty(ItemPropertyType::StrokeWidth).value().toInt()};
 
     if (m_optimizedPoints.empty()) {
         m_boundingBox.setLeft(x-mg);
@@ -26,7 +26,7 @@ void Freeform::addPoint(const QPoint& point) {
         m_boundingBox.setBottom(std::max(bottomRightY, y+mg));
     }
 
-    m_optimizedPoints.push_back(point);
+    m_optimizedPoints.push_back(smoothenedPoint);
     m_points.push_back(point);
     m_cacheDirty = true;
 }
