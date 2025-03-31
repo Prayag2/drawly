@@ -2,7 +2,6 @@
 Your handy, infinite, brainstorming tool.
 ---
 Drawly is a work-in-progress infinite whiteboard tool, which aims to be a replacement for the web-based Excalidraw.  
----
 
 <img src="./assets/screenshot.png" style="width: 100%"/>
 
