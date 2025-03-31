@@ -42,6 +42,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/tools/properties/toolerasersize.h src/tools/properties/toolerasersize.cpp
         src/tools/properties/toolstrokecolor.h src/tools/properties/toolstrokecolor.cpp
         src/components/wrapper.h src/components/wrapper.cpp
+        src/data-structures/cachegrid.h src/data-structures/cachegrid.cpp
     )
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()

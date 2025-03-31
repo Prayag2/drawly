@@ -4,7 +4,7 @@
 Rectangle::Rectangle() {}
 
 void Rectangle::m_draw(QPainter& painter, const QPoint& offset) const {
-    painter.drawRect(QRect(start()+offset, end()+offset));
+    painter.drawRect(QRect(start()-offset, end()-offset));
 }
 
 bool Rectangle::intersects(const QRect& rect) {

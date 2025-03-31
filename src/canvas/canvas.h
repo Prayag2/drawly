@@ -26,6 +26,7 @@ class Canvas : public QWidget {
     void mousePressed(QMouseEvent *event);
     void mouseMoved(QMouseEvent *event);
     void mouseReleased(QMouseEvent *event);
+    void resizeEventCalled();
     void resizeStart();
     void resizeEnd();
     void destroyed();
@@ -45,7 +46,7 @@ class Canvas : public QWidget {
 
     QSize m_sizeHint {500, 500};
     QSize m_maxSize {};
-    const QImage::Format m_imageFormat {QImage::Format_ARGB32};
+    const QImage::Format m_imageFormat {QImage::Format_ARGB32_Premultiplied};
 
     static QByteArray imageData(QImage* const img);
     static void setImageData(QImage *const img, const QByteArray& arr);

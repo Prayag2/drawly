@@ -29,9 +29,9 @@ void Arrow::calcArrowPoints() {
 }
 
 void Arrow::m_draw(QPainter& painter, const QPoint& offset) const {
-    painter.drawLine(start()+offset, end()+offset);
-    painter.drawLine(end()+offset, m_arrowP1+offset);
-    painter.drawLine(end()+offset, m_arrowP2+offset);
+    painter.drawLine(start()-offset, end()-offset);
+    painter.drawLine(end()-offset, m_arrowP1-offset);
+    painter.drawLine(end()-offset, m_arrowP2-offset);
 }
 
 bool Arrow::intersects(const QRect& rect) {

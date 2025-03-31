@@ -6,10 +6,16 @@
 #include "../canvas/canvas.h"
 #include "../item/item.h"
 #include "../data-structures/quadtree.h"
+#include "../data-structures/cachegrid.h"
+#include "properties/propertymanager.h"
+#include "properties/toolproperty.h"
 
-FreeformTool::FreeformTool() {
+FreeformTool::FreeformTool(const PropertyManager& propertyManager) {
     m_itemFactory = std::make_unique<FreeformFactory>();
     m_cursor = QCursor(Qt::CrossCursor);
+
+    m_properties[ToolPropertyType::StrokeWidth] = (propertyManager.getToolProperty(ToolPropertyType::StrokeWidth));
+    m_properties[ToolPropertyType::StrokeColor] = (propertyManager.getToolProperty(ToolPropertyType::StrokeColor));
 }
 
 QString FreeformTool::iconAlt() const {
@@ -20,7 +26,9 @@ void FreeformTool::mousePressed(ApplicationContext *context) {
     if (context->event().button() == Qt::LeftButton) {
         curItem = std::dynamic_pointer_cast<Freeform>(m_itemFactory->create());
         curItem->setBoundingBoxPadding(10*context->canvas().scale());
-        curItem->addPoint(context->event().pos()-context->offsetPos());
+        curItem->addPoint(context->event().pos() + context->offsetPos());
+        curItem->getProperty(ItemPropertyType::StrokeWidth).setValue(m_properties[ToolPropertyType::StrokeWidth]->value());
+        curItem->getProperty(ItemPropertyType::StrokeColor).setValue(m_properties[ToolPropertyType::StrokeColor]->value());
         m_isDrawing = true;
     }
 }
@@ -28,9 +36,8 @@ void FreeformTool::mousePressed(ApplicationContext *context) {
 void FreeformTool::mouseMoved(ApplicationContext *context) {
     if (m_isDrawing) {
         QPainter& painter {context->overlayPainter()};
-        painter.setPen(context->pen());
 
-        curItem->addPoint(context->event().pos()-context->offsetPos());
+        curItem->addPoint(context->event().pos() + context->offsetPos());
         curItem->quickDraw(painter, context->offsetPos());
 
         context->canvas().update();
@@ -46,12 +53,14 @@ void FreeformTool::mouseReleased(ApplicationContext *context) {
         overlayPainter.fillRect(context->canvas().overlay()->rect(), Qt::transparent);
         overlayPainter.setCompositionMode(QPainter::CompositionMode_SourceOver);
 
-        canvasPainter.setPen(context->pen());
         curItem->draw(canvasPainter, context->offsetPos());
         context->quadtree().insertItem(curItem);
+        QVector<std::shared_ptr<CacheCell>> dirtyCacheCells {context->cacheGrid().queryCells(curItem->boundingBox())};
+        for (auto dirtyCacheCell : dirtyCacheCells) {
+            dirtyCacheCell->setDirty(true);
+        }
 
         m_isDrawing = false;
-        qDebug() << "QuadTree size: " << context->quadtree().size();
         context->canvas().update();
     }
 }

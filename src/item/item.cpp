@@ -2,6 +2,9 @@
 
 // PUBLIC
 Item::Item() {}
+Item::~Item() {
+    qDebug() << "Item was deleted!!" << m_boundingBox;
+}
 
 const QRect& Item::boundingBox() const {
     return m_boundingBox;

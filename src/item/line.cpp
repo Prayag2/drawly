@@ -3,7 +3,7 @@
 Line::Line() {}
 
 void Line::m_draw(QPainter& painter, const QPoint& offset) const {
-    painter.drawLine(start()+offset, end()+offset);
+    painter.drawLine(start()-offset, end()-offset);
 }
 
 bool Line::intersects(const QRect& rect) {

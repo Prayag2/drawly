@@ -11,7 +11,7 @@ Canvas::Canvas(QWidget *parent)
     setMouseTracking(true);
     m_canvas = new QImage(m_sizeHint, m_imageFormat);
     m_overlay = new QImage(m_sizeHint, m_imageFormat);
-    setBg(Qt::white);
+    setBg(QColor{18, 18, 18});
 }
 
 Canvas::~Canvas() {
@@ -82,6 +82,8 @@ bool operator<=(const QSize& a, const QSize& b) {
 }
 
 void Canvas::resizeEvent(QResizeEvent *event) {
+    emit resizeEventCalled();
+
     if (size()*m_scale <= m_maxSize) {
         return;
     }

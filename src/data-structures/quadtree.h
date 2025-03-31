@@ -44,6 +44,9 @@ class QuadTree {
     void dfs(const QRect& boundingBox, QVector<std::shared_ptr<Item>> items, QVector<std::shared_ptr<Item>>& out, std::optional<int> level) const;
     void subdivide();
     void expand(const QPoint& point);
+
+    std::unique_ptr<QImage> m_cache {};
+    bool m_cacheDirty{true};
 };
 
 #endif // QUADTREE_H

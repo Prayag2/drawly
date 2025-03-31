@@ -9,10 +9,10 @@ class ApplicationContext;
 class Item {
   public:
     Item();
-    virtual ~Item() = default;
+    virtual ~Item();
 
     virtual bool intersects(const QRect& rect) = 0;
-    virtual void draw(QPainter& painter, const QPoint& offset) const = 0;
+    virtual void draw(QPainter& painter, const QPoint& offset) = 0;
     virtual void erase(QPainter& painter, const QPoint& offset) const = 0;
     const QRect& boundingBox() const;
 

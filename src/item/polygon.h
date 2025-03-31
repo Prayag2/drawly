@@ -10,7 +10,7 @@ class Polygon : public Item {
     virtual void setStart(QPoint start);
     virtual void setEnd(QPoint end);
 
-    void draw(QPainter& painter, const QPoint& offset) const override;
+    void draw(QPainter& painter, const QPoint& offset) override;
     void erase(QPainter& painter, const QPoint& offset) const override;
 
     const QPoint& start() const;

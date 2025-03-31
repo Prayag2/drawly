@@ -3,7 +3,7 @@
 Ellipse::Ellipse() {}
 
 void Ellipse::m_draw(QPainter& painter, const QPoint& offset) const {
-    painter.drawEllipse(QRect(start()+offset, end()+offset));
+    painter.drawEllipse(QRect(start()-offset, end()-offset));
 }
 
 bool Ellipse::onEllipse(QLine line) const {

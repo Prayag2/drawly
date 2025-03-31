@@ -2,6 +2,7 @@
 #define MOVETOOL_H
 
 #include "tool.h"
+#include <QElapsedTimer>
 class Item;
 
 class MoveTool : public Tool {
@@ -18,6 +19,7 @@ class MoveTool : public Tool {
     bool m_isActive {false};
     QPoint m_initialOffsetPos {};
     QPoint m_initialPos {};
+    QElapsedTimer m_timer{};
 };
 
 #endif // MOVETOOL_H

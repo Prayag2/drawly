@@ -22,6 +22,8 @@ class BoardLayout : public QLayout {
     void setRightWidget(QWidget* const item, bool pinned = false);
     void setBottomWidget(QWidget* const item, bool pinned = false);
     void setCentralWidget(QWidget* const item);
+    void setMargins(int margins);
+
   private:
     QLayoutItem *m_centralWidget {nullptr};
     QLayoutItem *m_leftWidget {nullptr};
@@ -35,6 +37,8 @@ class BoardLayout : public QLayout {
     bool m_isTopPinned {false};
     bool m_isRightPinned {false};
     bool m_isBottomPinned {false};
+
+    int m_margins {0};
 };
 
 #endif // BOARDLAYOUT_H

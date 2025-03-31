@@ -94,16 +94,16 @@ void BoardLayout::setGeometry(const QRect& rect) {
     }
 
     if (m_leftWidget != nullptr) {
-        m_leftWidget->setGeometry(QRect(0, (rect.height()-m_leftWidget->sizeHint().height())/2, m_leftWidget->sizeHint().width(), m_leftWidget->sizeHint().height()));
+        m_leftWidget->setGeometry(QRect(m_margins, (rect.height()-m_leftWidget->sizeHint().height())/2, m_leftWidget->sizeHint().width(), m_leftWidget->sizeHint().height()));
     }
     if (m_rightWidget != nullptr) {
-        m_rightWidget->setGeometry(QRect(rect.width()-m_rightWidget->sizeHint().width(), (rect.height()-m_rightWidget->sizeHint().height())/2, m_rightWidget->sizeHint().width(), m_rightWidget->sizeHint().height()));
+        m_rightWidget->setGeometry(QRect(rect.width()-m_rightWidget->sizeHint().width()-m_margins, (rect.height()-m_rightWidget->sizeHint().height())/2, m_rightWidget->sizeHint().width(), m_rightWidget->sizeHint().height()));
     }
     if (m_topWidget != nullptr) {
-        m_topWidget->setGeometry(QRect((rect.width()-m_topWidget->sizeHint().width())/2, 0, m_topWidget->sizeHint().width(), m_topWidget->sizeHint().height()));
+        m_topWidget->setGeometry(QRect((rect.width()-m_topWidget->sizeHint().width())/2, m_margins, m_topWidget->sizeHint().width(), m_topWidget->sizeHint().height()));
     }
     if (m_bottomWidget != nullptr) {
-        m_bottomWidget->setGeometry(QRect((rect.width()-m_bottomWidget->sizeHint().width())/2, rect.height()-m_bottomWidget->sizeHint().height(), m_bottomWidget->sizeHint().width(), m_bottomWidget->sizeHint().height()));
+        m_bottomWidget->setGeometry(QRect((rect.width()-m_bottomWidget->sizeHint().width())/2, rect.height()-m_bottomWidget->sizeHint().height()-m_margins, m_bottomWidget->sizeHint().width(), m_bottomWidget->sizeHint().height()));
     }
 }
 
@@ -122,4 +122,8 @@ QSize BoardLayout::sizeHint() const {
 
 QSize BoardLayout::minimumSize() const {
     return (m_centralWidget == nullptr ? QSize(10, 10) : m_centralWidget->minimumSize());
+}
+
+void BoardLayout::setMargins(int margins) {
+    m_margins = margins;
 }

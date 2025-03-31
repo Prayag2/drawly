@@ -1,6 +1,5 @@
 #include "toolstrokewidth.h"
 #include <QSpinBox>
-#include "../../item/properties/itemproperty.h"
 
 ToolStrokeWidth::ToolStrokeWidth(QWidget* parent) {
     QSpinBox* box {new QSpinBox(parent)};
@@ -13,5 +12,5 @@ QString ToolStrokeWidth::name() const {
 };
 
 const QVariant ToolStrokeWidth::value() const {
-    return dynamic_cast<QSpinBox*>(m_widget)->value()*2;
+    return dynamic_cast<QSpinBox*>(m_widget)->value();
 }
