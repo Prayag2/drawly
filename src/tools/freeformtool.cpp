@@ -35,17 +35,24 @@ void FreeformTool::mousePressed(ApplicationContext *context) {
 
 void FreeformTool::mouseMoved(ApplicationContext *context) {
     if (m_isDrawing) {
+        qDebug() << "Mouse Moved";
+        qDebug() << "Offset: " << context->offsetPos();
         QPainter& painter {context->overlayPainter()};
 
         curItem->addPoint(context->event().pos() + context->offsetPos());
         curItem->quickDraw(painter, context->offsetPos());
+        // Uncomment to see the bounding box
+        // QPen pen{}; pen.setColor(Qt::white); painter.setPen(pen);
+        // painter.drawRect(curItem->boundingBox().translated(-context->offsetPos()));
 
         context->canvas().update();
+        qDebug() << "Mouse Move End";
     }
 }
 
 void FreeformTool::mouseReleased(ApplicationContext *context) {
     if (context->event().button() == Qt::LeftButton && m_isDrawing) {
+        qDebug() << "Mouse Released";
         QPainter& overlayPainter {context->overlayPainter()};
         QPainter& canvasPainter {context->canvasPainter()};
 
@@ -62,5 +69,6 @@ void FreeformTool::mouseReleased(ApplicationContext *context) {
 
         m_isDrawing = false;
         context->canvas().update();
+        qDebug() << "Mouse Release End";
     }
 }

@@ -7,28 +7,25 @@ Freeform::Freeform() {
 
 void Freeform::addPoint(const QPoint& point) {
     QPoint smoothenedPoint{optimizePoint(m_points, 10, point)};
-    int x {point.x()}, y {point.y()};
+    int x {smoothenedPoint.x()}, y {smoothenedPoint.y()};
 
     m_boundingBox = m_boundingBox.normalized();
-    int bX {m_boundingBox.x()}, bY {m_boundingBox.y()};
-    int bW {m_boundingBox.width()}, bH {m_boundingBox.height()};
-    int mg {m_boundingBoxPadding /* + strokeWidth */};
+    int topLeftX {m_boundingBox.topLeft().x()}, topLeftY {m_boundingBox.topLeft().y()};
+    int bottomRightX {m_boundingBox.bottomRight().x()}, bottomRightY {m_boundingBox.bottomRight().y()};
+    int mg {m_boundingBoxPadding + getProperty(ItemPropertyType::StrokeWidth).value().toInt()};
 
-    QMargins adjustments {};
-
-    if (m_points.empty()) {
-        m_boundingBox.setX(x-mg);
-        m_boundingBox.setY(y-mg);
-        m_boundingBox.setWidth(2*mg);
-        m_boundingBox.setHeight(2*mg);
+    if (m_optimizedPoints.empty()) {
+        m_boundingBox.setLeft(x-mg);
+        m_boundingBox.setTop(y-mg);
+        m_boundingBox.setRight(x+2*mg);
+        m_boundingBox.setBottom(y+2*mg);
     } else {
-        if (x > bX+bW-mg) adjustments.setRight(x-bX-bW+mg);
-        if (x < bX+mg) adjustments.setLeft(bX-x+mg);
-        if (y > bY+bH-mg) adjustments.setBottom(y-bY-bH+mg);
-        if (y < bY+mg) adjustments.setTop(bY-y+mg);
+        m_boundingBox.setLeft(std::min(topLeftX, x - mg));
+        m_boundingBox.setTop(std::min(topLeftY, y - mg));
+        m_boundingBox.setRight(std::max(bottomRightX, x+mg));
+        m_boundingBox.setBottom(std::max(bottomRightY, y+mg));
     }
 
-    m_boundingBox += adjustments;
     m_optimizedPoints.push_back(smoothenedPoint);
     m_points.push_back(point);
     m_cacheDirty = true;
