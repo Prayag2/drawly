@@ -26,7 +26,6 @@ ApplicationContext::ApplicationContext(QWidget* parent)
     m_propertyManager = new PropertyManager(m_propertyBar);
     m_quadtree = std::make_unique<QuadTree>(QRect{{0, 0}, m_canvas->sizeHint()}, 100);
 
-
     m_cacheGrid = std::make_unique<CacheGrid>(100);
     m_event = new Event();
 
