@@ -19,11 +19,23 @@ void MoveTool::mousePressed(ApplicationContext *context) {
         m_isActive = true;
         m_initialOffsetPos = context->offsetPos();
         m_initialPos = context->event().pos();
+        m_timer.restart();
+        m_interval.restart();
+        counter = 0;
     }
 };
 
 void MoveTool::mouseMoved(ApplicationContext *context) {
     if (m_isActive) {
+        if (m_interval.elapsed() < 1000/context->fps()-1) return;
+        m_interval.restart();
+
+        counter++;
+        if (m_timer.elapsed() >= 1000) {
+            qDebug() << "Count: " << counter;
+            counter = 0;
+            m_timer.restart();
+        }
 
         QPoint oldPoint {context->offsetPos()};
         QPoint newPoint {m_initialOffsetPos-context->event().pos()+m_initialPos};

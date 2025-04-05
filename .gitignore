@@ -34,6 +34,7 @@ Thumbs.db
 *.rc
 /.qmake.cache
 /.qmake.stash
+.cache/
 
 # qtcreator generated files
 *.pro.user*
@@ -77,3 +78,4 @@ build/
 archive/
 html/
 latex/
+compile_commands.json

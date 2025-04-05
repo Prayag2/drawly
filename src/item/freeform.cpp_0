@@ -6,21 +6,24 @@ Freeform::Freeform() {
 }
 
 int Freeform::minPointDistance() {
-    return 0;
+    // will give an option to change it in the future
+    return 10;
 }
 
 void Freeform::addPoint(const QPoint& point) {
-    QPointF smoothenedPoint{optimizePoint(m_points, 5, point)};
-    int x = smoothenedPoint.x(), y = smoothenedPoint.y();
+    optimizePoint(point);
+    int x {point.x()}, y {point.y()};
 
     m_boundingBox = m_boundingBox.normalized();
     int topLeftX {m_boundingBox.topLeft().x()}, topLeftY {m_boundingBox.topLeft().y()};
     int bottomRightX {m_boundingBox.bottomRight().x()}, bottomRightY {m_boundingBox.bottomRight().y()};
     int mg {m_boundingBoxPadding + getProperty(ItemPropertyType::StrokeWidth).value().toInt()};
 
-    if (m_points.size() <= 1) {
-        m_boundingBox.setTopLeft({x-mg, y-mg});
-        m_boundingBox.setBottomRight({x+mg, y+mg});
+    if (m_points.empty()) {
+        m_boundingBox.setLeft(x-mg);
+        m_boundingBox.setTop(y-mg);
+        m_boundingBox.setRight(x+2*mg);
+        m_boundingBox.setBottom(y+2*mg);
     } else {
         m_boundingBox.setLeft(std::min(topLeftX, x - mg));
         m_boundingBox.setTop(std::min(topLeftY, y - mg));
@@ -28,8 +31,6 @@ void Freeform::addPoint(const QPoint& point) {
         m_boundingBox.setBottom(std::max(bottomRightY, y+mg));
     }
 
-    m_optimizedPoints.push_back(smoothenedPoint);
-    m_points.push_back(point);
     m_cacheDirty = true;
 }
 
@@ -79,19 +80,65 @@ void Freeform::erase(QPainter& painter, const QPoint& offset) const {
     // m_draw(painter, offset);
 }
 
-QPointF Freeform::optimizePoint(QVector<QPointF>& points, int bufferSize, const QPoint& newPoint) const {
-    points.push_back(newPoint);
+// TODO: Use a better line smoothing algorithm (may as well give an option to choose from multiple algorithms)
+void Freeform::optimizePoint(const QPointF& newPoint) {
+    m_points.push_back(newPoint);
 
-    int pointsSize{static_cast<int>(points.size())};
-    if (pointsSize < bufferSize) return newPoint;
+    int pointsSize{static_cast<int>(m_points.size())};
+    if (pointsSize < 10) return;
 
     QPointF sum {0,0};
-    for (int i = pointsSize-bufferSize; i < pointsSize; i++) {
-        sum += points[i];
+    for (int i = pointsSize-10; i < pointsSize; i++) {
+        sum += m_points[i];
     }
 
-    points.pop_back();
-    return sum/bufferSize;
+    m_optimizedPoints.push_back(sum/10);
+    // int n = m_points.size();
+    // if (n < 2) {
+    //     m_points.push_back(newPoint);
+    //     return;
+    // }
+
+    // QPointF P0{}, P1{}, P2{}, P3{};
+    // if (n == 2) {
+    //     P0 = m_points[0];
+    //     P1 = m_points[0];
+    //     P2 = m_points[1];
+    //     P3 = newPoint;
+    // } else {
+    //     P0 = m_points[n-3];
+    //     P1 = m_points[n-2];
+    //     P2 = m_points[n-1];
+    //     P3 = newPoint;
+    // }
+    // m_points.pop_back();
+
+    // QPointF T1 = 0.5*(P2-P0);
+    // QPointF T2 = 0.5*(P3-P1);
+
+    // int pointCount {minPointDistance()*2};
+    // double stepSize {1.0/pointCount};
+
+    // QVector<QPointF> newSegment{};
+    // newSegment.reserve(pointCount + 1);
+    // for (double t {0}; t <= 1.0; t += stepSize) {
+    //     double t2 = t * t;
+    //     double t3 = t2 * t;
+
+    //     double h1 = 2*t3 - 3*t2 + 1;
+    //     double h2 = t3 - 2*t2 + t;
+    //     double h3 = -2*t3 + 3*t2;
+    //     double h4 = t3 - t2;
+
+    //     QPointF interpolatedPoint = {h1*P1 + h2*T1 + h3*P2 + h4*T2};
+    //     newSegment.push_back(interpolatedPoint);
+    // }
+    // if (!newSegment.isEmpty()) {
+    //     newSegment.pop_back();
+    //     m_optimizedPoints.append(newSegment);
+    // }
+    // m_points.push_back(P2);
+    // m_points.push_back(P3);
 }
 
 void Freeform::quickDraw(QPainter& painter, const QPoint& offset) const {
@@ -103,9 +150,9 @@ void Freeform::quickDraw(QPainter& painter, const QPoint& offset) const {
     painter.setPen(pen);
 
     if (m_points.size() > 1) {
-        painter.drawLine(m_optimizedPoints[m_optimizedPoints.size()-2]-offset,m_optimizedPoints.back()-offset);
+        painter.drawLine(m_points[m_points.size()-2]-offset,m_points.back()-offset);
     } else {
-        painter.drawPoint(m_optimizedPoints.back());
+        painter.drawPoint(m_points.back());
     }
 }
 
@@ -118,14 +165,10 @@ void Freeform::m_draw(QPainter& painter, const QPoint& offset) const {
     painter.setPen(pen);
     painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing);
 
-    if (m_optimizedPoints.size() == 1) {
-        painter.drawPoint(m_optimizedPoints.front() - offset);
-        return;
-    }
-
     QVector<QPointF> temp{m_optimizedPoints};
     for (QPointF& point : temp) {
         point -= offset;
     }
+    qDebug() << m_points;
     painter.drawPolyline(temp);
 }

@@ -31,22 +31,28 @@ The following is a list of features I'll be planning to add to it:
 - [x] Use an LRU cache based uniform grid to optimize moving the canvas around (now 100% faster!!)
 - [x] A properties bar to change the following properties:
     - [x] Colour of strokes
-    - [x] Stroke width
+    - [x] Stroke width  
 Phase 2 completed!!
 
-## After Phase 2
-- [ ] Selection tool
-- [ ] Ability to delete selected items
-- [ ] Ability to move (translate) selected items
-- [ ] Ability to transform selected items
-- [ ] Ability to rotate selected items
+## Phase 3
+- [ ] Buttons to zoom in/out
+- [ ] Selection tool to select items and do these actions:
+    - [ ] Delete items
+    - [ ] Translate items (move)
+    - [ ] Transform items (resize)
+    - [ ] Rotate items
+- [ ] Undo/redo support
+
+## After Phase 3
 - [ ] Better freeform smoothing algorithms
-- [ ] Undo/redo operations
 - [ ] Pressure senstivity for drawing tablets
 - [ ] Shortcut keys (including pen buttons)
 - [ ] Allow snapping
 - [ ] Image support
 - [ ] Text support
 - [ ] Text formatting like bold, underline, italics, etc.
+- [ ] A "settings" page
+- [ ] Better widgets
 - [ ] UI overhaul
 - [ ] Filling shapes with a background colour
+- [ ] P2P collaboration

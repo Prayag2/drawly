@@ -70,9 +70,6 @@ QVector<std::shared_ptr<CacheCell>> CacheGrid::queryCells(const QRect& rect) {
     int cellMaxX = floor(static_cast<double>(bottomRight.x()) / CacheCell::cellSize().width());
     int cellMaxY = floor(static_cast<double>(bottomRight.y()) / CacheCell::cellSize().height());
 
-    qDebug() << "QUERYING CELLS FROM: ";
-    qDebug() << "(" << cellMinX << ", " << cellMaxX << ")";
-    qDebug() << "(" << cellMinY << ", " << cellMaxY << ")";
     QVector<std::shared_ptr<CacheCell>> out{};
     for (int row = cellMinX; row <= cellMaxX; row++) {
         for (int col = cellMinY; col <= cellMaxY; col++) {
@@ -93,8 +90,6 @@ std::shared_ptr<CacheCell> CacheGrid::cell(const QPoint& point) {
             if (auto next = temp->nextCell.lock()) {
                 next->prevCell = m_headCell;
             }
-            qDebug() << "Trying to delete cell: " << temp->point();
-            qDebug() << "Cur Size: " << m_grid.size();
             m_grid[temp->point()] = nullptr;
             m_grid.remove(temp->point());
             temp.reset();

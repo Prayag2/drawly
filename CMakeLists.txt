@@ -35,14 +35,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(${PROJECT_NAME}
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        src/tools/properties/toolproperty.h src/tools/properties/toolproperty.cpp
-        src/tools/properties/toolstrokewidth.h src/tools/properties/toolstrokewidth.cpp
-
-        src/tools/properties/propertymanager.h src/tools/properties/propertymanager.cpp
-        src/tools/properties/toolerasersize.h src/tools/properties/toolerasersize.cpp
-        src/tools/properties/toolstrokecolor.h src/tools/properties/toolstrokecolor.cpp
-        src/components/wrapper.h src/components/wrapper.cpp
-        src/data-structures/cachegrid.h src/data-structures/cachegrid.cpp
     )
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()
@@ -50,8 +42,6 @@ else()
         add_library(${PROJECT_NAME} SHARED
             ${PROJECT_SOURCES}
         )
-        # For Qt5 on Android, set the package source directory if needed:
-        # set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
         add_executable(${PROJECT_NAME}
             ${PROJECT_SOURCES}

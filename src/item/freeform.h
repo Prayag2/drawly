@@ -8,6 +8,7 @@ class Freeform : public Item {
     Freeform();
     ~Freeform() = default;
 
+    static int minPointDistance();
     void draw(QPainter& painter, const QPoint& offset) override;
     void erase(QPainter& painter, const QPoint& offset) const override;
     void quickDraw(QPainter& painter, const QPoint& offset) const;
@@ -17,15 +18,15 @@ class Freeform : public Item {
 
   protected:
     void m_draw(QPainter& painter, const QPoint& offset) const override;
-    QVector<QPoint> m_points {};
-    QVector<QPoint> m_optimizedPoints {};
+    QVector<QPointF> m_points {};
+    QVector<QPointF> m_optimizedPoints {};
     int m_bufferSize {15};
 
     std::unique_ptr<QImage> m_cache {};
     bool m_cacheDirty {true};
 
   private:
-    QPoint optimizePoint(QVector<QPoint>& points, int bufferSize, const QPoint& newPoint) const;
+    QPointF optimizePoint(QVector<QPointF>& points, int bufferSize, const QPoint& newPoint) const;
 };
 
 #endif // FREEFORM_H

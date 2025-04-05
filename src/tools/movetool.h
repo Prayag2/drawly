@@ -20,6 +20,8 @@ class MoveTool : public Tool {
     QPoint m_initialOffsetPos {};
     QPoint m_initialPos {};
     QElapsedTimer m_timer{};
+    QElapsedTimer m_interval{};
+    int counter {0};
 };
 
 #endif // MOVETOOL_H
