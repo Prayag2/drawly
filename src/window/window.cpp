@@ -6,6 +6,7 @@
 #include "../context/applicationcontext.h"
 #include "../components/toolbar.h"
 #include "../components/propertybar.h"
+#include "../components/actionbar.h"
 #include "../canvas/canvas.h"
 #include "boardlayout.h"
 
@@ -25,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     layout->setMargins(10);
     layout->setLeftWidget(&context->propertyBar());
     layout->setTopWidget(&context->toolBar());
+    layout->setBottomWidget(&context->actionBar());
     layout->setCentralWidget(&context->canvas());
 
     QObject::connect(&context->canvas(), &Canvas::mousePressed, controller, &Controller::mousePressed);

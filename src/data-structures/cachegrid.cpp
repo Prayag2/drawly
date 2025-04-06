@@ -125,3 +125,9 @@ int CacheGrid::size() const {
 void CacheGrid::setSize(int newSize) {
     m_maxSize = newSize;
 }
+
+void CacheGrid::markAllDirty() {
+    for (std::shared_ptr<CacheCell> cell : m_grid) {
+        cell->setDirty(true);
+    }
+}

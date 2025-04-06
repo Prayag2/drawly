@@ -1,5 +1,6 @@
 #include <QRect>
 #include "applicationcontext.h"
+#include "../components/actionbar.h"
 #include "../components/propertybar.h"
 #include "../components/toolbar.h"
 #include "../canvas/canvas.h"
@@ -22,6 +23,7 @@ ApplicationContext::ApplicationContext(QWidget* parent)
     m_canvas->setScale(1.25);
 
     m_toolBar = new ToolBar(parent);
+    m_actionBar = new ActionBar(parent);
     m_propertyBar = new PropertyBar(parent);
     m_propertyManager = new PropertyManager(m_propertyBar);
     m_quadtree = std::make_unique<QuadTree>(QRect{{0, 0}, m_canvas->sizeHint()}, 100);
@@ -46,6 +48,15 @@ ApplicationContext::ApplicationContext(QWidget* parent)
     m_toolBar->addTool(new LineTool(*m_propertyManager));
     m_toolBar->addTool(new EraserTool());
     m_toolBar->addTool(new MoveTool());
+
+    m_actionBar->addButton("-", 1);
+    m_actionBar->addButton("+", 2);
+    QObject::connect(&m_actionBar->button(1), &QPushButton::clicked, this, [this](){
+        setZoomFactor(-1);
+    });
+    QObject::connect(&m_actionBar->button(2), &QPushButton::clicked, this, [this](){
+        setZoomFactor(1);
+    });
 
     m_canvasPainter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
     m_overlayPainter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
@@ -79,6 +90,10 @@ PropertyBar& ApplicationContext::propertyBar() const {
     return *m_propertyBar;
 }
 
+ActionBar& ApplicationContext::actionBar() const {
+    return *m_actionBar;
+}
+
 Event& ApplicationContext::event() const {
     return *m_event;
 }
@@ -100,10 +115,12 @@ void ApplicationContext::endPainters() {
 void ApplicationContext::beginPainters() {
     if (!m_canvasPainter->isActive()) {
         m_canvasPainter->begin(m_canvas->canvas());
+        m_canvasPainter->scale(zoomFactor(), zoomFactor());
         m_canvasPainter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
     }
     if (!m_overlayPainter->isActive()) {
         m_overlayPainter->begin(m_canvas->overlay());
+        m_overlayPainter->scale(zoomFactor(), zoomFactor());
         m_overlayPainter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
     }
 }
@@ -122,6 +139,21 @@ void ApplicationContext::setOffsetPos(const QPoint& pos) {
 
 int ApplicationContext::fps() const {
     return m_fps;
+}
+
+qreal ApplicationContext::zoomFactor() const {
+    return m_zoomFactor;
+}
+
+void ApplicationContext::setZoomFactor(int diff) {
+    m_zoomFactor += diff*0.1;
+    endPainters();
+    beginPainters();
+    canvas().canvas()->fill(canvas().bg());
+    canvas().update();
+    cacheGrid().markAllDirty();
+    qDebug() << "Zoom changed to: " << m_zoomFactor;
+    qDebug() << "New offset: " << m_offsetPos;
 }
 
 void ApplicationContext::canvasResized() {
