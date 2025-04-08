@@ -34,7 +34,7 @@ The following is a list of features I'll be planning to add to it:
 Phase 2 completed!!
 
 ## Phase 3
-- [ ] Buttons to zoom in/out
+- [x] Buttons to zoom in/out
 - [ ] Selection tool to select items and do these actions:
     - [ ] Delete items
     - [ ] Translate items (move)
