@@ -11,10 +11,10 @@ class Item {
     Item();
     virtual ~Item();
 
-    virtual bool intersects(const QRect& rect) = 0;
-    virtual void draw(QPainter& painter, const QPoint& offset) = 0;
-    virtual void erase(QPainter& painter, const QPoint& offset) const = 0;
-    const QRect& boundingBox() const;
+    virtual bool intersects(const QRectF& rect) = 0;
+    virtual void draw(QPainter& painter, const QPointF& offset) = 0;
+    virtual void erase(QPainter& painter, const QPointF& offset) const = 0;
+    const QRectF& boundingBox() const;
 
     void setBoundingBoxPadding(int padding);
     void setScale(qreal scale);
@@ -23,15 +23,15 @@ class Item {
     const ItemProperty& getProperty(const ItemPropertyType propertyType) const;
 
   protected:
-    QRect m_boundingBox {};
+    QRectF m_boundingBox {};
     int m_boundingBoxPadding {};
     qreal m_scale {1};
     std::unordered_map<ItemPropertyType, ItemProperty> m_properties {};
 
-    static bool linesIntersect(QLine a, QLine b);
-    static int orientation(QPoint a, QPoint b, QPoint c);
+    static bool linesIntersect(QLineF a, QLineF b);
+    static int orientation(QPointF a, QPointF b, QPointF c);
 
-    virtual void m_draw(QPainter& painter, const QPoint& offset) const = 0;
+    virtual void m_draw(QPainter& painter, const QPointF& offset) const = 0;
 };
 
 #endif // ITEM_H

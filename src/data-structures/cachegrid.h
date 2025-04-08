@@ -40,6 +40,7 @@ public:
     CacheGrid(int maxSize);
     QVector<std::shared_ptr<CacheCell>> queryCells(const QRect& rect);
     std::shared_ptr<CacheCell> cell(const QPoint& point);
+    void markAllDirty();
     void setSize(int newSize);
     int size() const;
 

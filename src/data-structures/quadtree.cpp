@@ -1,20 +1,21 @@
 #include <QDebug>
 #include "quadtree.h"
 
-QuadTree::QuadTree(QRect region, int capacity)
+QuadTree::QuadTree(QRectF region, int capacity)
     : m_boundingBox {region}, m_capacity {capacity} {}
 
 QuadTree::~QuadTree() {}
 
 void QuadTree::subdivide() {
-    int x {m_boundingBox.x()};
-    int y {m_boundingBox.y()};
-    int halfWidth {m_boundingBox.width()/2};
-    int halfHeight {m_boundingBox.height()/2};
-    m_topLeft = std::make_unique<QuadTree>(QRect{x, y, halfWidth, halfHeight}, m_capacity);
-    m_topRight = std::make_unique<QuadTree>(QRect{x+halfWidth, y, halfWidth, halfHeight}, m_capacity);
-    m_bottomRight = std::make_unique<QuadTree>(QRect{x+halfWidth, y+halfHeight, halfWidth, halfHeight}, m_capacity);
-    m_bottomLeft = std::make_unique<QuadTree>(QRect{x, y+halfHeight, halfWidth, halfHeight}, m_capacity);
+    double x {m_boundingBox.x()};
+    double y {m_boundingBox.y()};
+    double halfWidth {m_boundingBox.width()/2};
+    double halfHeight {m_boundingBox.height()/2};
+
+    m_topLeft = std::make_unique<QuadTree>(QRectF{x, y, halfWidth, halfHeight}, m_capacity);
+    m_topRight = std::make_unique<QuadTree>(QRectF{x+halfWidth, y, halfWidth, halfHeight}, m_capacity);
+    m_bottomRight = std::make_unique<QuadTree>(QRectF{x+halfWidth, y+halfHeight, halfWidth, halfHeight}, m_capacity);
+    m_bottomLeft = std::make_unique<QuadTree>(QRectF{x, y+halfHeight, halfWidth, halfHeight}, m_capacity);
 }
 
 void QuadTree::insertItem(std::shared_ptr<Item> item) {
@@ -66,7 +67,7 @@ void QuadTree::deleteItem(std::shared_ptr<Item> const item) {
     }
 }
 
-void QuadTree::deleteItems(const QRect& boundingBox) {
+void QuadTree::deleteItems(const QRectF& boundingBox) {
     if (!m_boundingBox.intersects(boundingBox)) return;
 
     for (int i = 0; i < m_items.size();) {
@@ -96,13 +97,13 @@ QVector<std::shared_ptr<Item>> QuadTree::getAllItems() const {
     return curItems;
 }
 
-QVector<std::shared_ptr<Item>> QuadTree::queryItems(const QRect& boundingBox, bool onlyBoundingBox) const {
+QVector<std::shared_ptr<Item>> QuadTree::queryItems(const QRectF& boundingBox, bool onlyBoundingBox) const {
     QVector<std::shared_ptr<Item>> curItems {};
     query(boundingBox, onlyBoundingBox, curItems);
     return curItems;
 };
 
-void QuadTree::query(const QRect& boundingBox, bool onlyBoundingBox, QVector<std::shared_ptr<Item>>& out) const {
+void QuadTree::query(const QRectF& boundingBox, bool onlyBoundingBox, QVector<std::shared_ptr<Item>>& out) const {
     if (!m_boundingBox.intersects(boundingBox)) {
         return;
     }
@@ -126,7 +127,7 @@ void QuadTree::query(const QRect& boundingBox, bool onlyBoundingBox, QVector<std
     }
 }
 
-QVector<std::shared_ptr<Item>> QuadTree::queryConnectedItems(const QRect& boundingBox, std::optional<int> level) const {
+QVector<std::shared_ptr<Item>> QuadTree::queryConnectedItems(const QRectF& boundingBox, std::optional<int> level) const {
     // Performs DFS
     // Creates a list of all the items intersecting directly or indirectly
     // with the given bounding box
@@ -135,11 +136,11 @@ QVector<std::shared_ptr<Item>> QuadTree::queryConnectedItems(const QRect& boundi
     return output;
 };
 
-const QRect& QuadTree::boundingBox() const {
+const QRectF& QuadTree::boundingBox() const {
     return m_boundingBox;
 };
 
-void QuadTree::dfs(const QRect& boundingBox, QVector<std::shared_ptr<Item>> items, QVector<std::shared_ptr<Item>>& out, std::optional<int> level) const {
+void QuadTree::dfs(const QRectF& boundingBox, QVector<std::shared_ptr<Item>> items, QVector<std::shared_ptr<Item>>& out, std::optional<int> level) const {
     if (level.has_value() && level.value() <= 0) return;
     if (!m_boundingBox.intersects(boundingBox)) {
         return;
@@ -151,7 +152,7 @@ void QuadTree::dfs(const QRect& boundingBox, QVector<std::shared_ptr<Item>> item
         if (items[i] == nullptr) continue;
         if (items[i]->boundingBox().intersects(boundingBox)) {
             out.push_back(items[i]);
-            QRect newBox = items[i]->boundingBox();
+            QRectF newBox = items[i]->boundingBox();
             items[i] = nullptr;
             dfs(newBox, items, out, nextLevel);
         }
@@ -178,7 +179,7 @@ int QuadTree::size() const {
     return totalNodes;
 }
 
-void QuadTree::draw(QPainter& painter, const QPoint& offset) const {
+void QuadTree::draw(QPainter& painter, const QPointF& offset) const {
     painter.drawRect(m_boundingBox.translated(offset));
 
     if (m_topLeft != nullptr) {
@@ -189,15 +190,15 @@ void QuadTree::draw(QPainter& painter, const QPoint& offset) const {
     }
 }
 
-void QuadTree::expand(const QPoint& point) {
+void QuadTree::expand(const QPointF& point) {
     // This function grows the quadtree in size recursively if the
     // point lies outside of it, making it almost (until integer overflow) infinite!
     if (m_boundingBox.contains(point)) return;
 
-    int treeW {m_boundingBox.width()}, treeH {m_boundingBox.height()};
-    int x {point.x()}, y {point.y()};
-    QPoint tl {m_boundingBox.topLeft()}, tr {m_boundingBox.topRight()};
-    QPoint bl {m_boundingBox.bottomLeft()}, br {m_boundingBox.bottomRight()};
+    double treeW {m_boundingBox.width()}, treeH {m_boundingBox.height()};
+    double x {point.x()}, y {point.y()};
+    QPointF tl {m_boundingBox.topLeft()}, tr {m_boundingBox.topRight()};
+    QPointF bl {m_boundingBox.bottomLeft()}, br {m_boundingBox.bottomRight()};
 
     std::unique_ptr<QuadTree> topLeft {std::make_unique<QuadTree>(m_boundingBox, m_capacity)};
     std::unique_ptr<QuadTree> topRight {std::make_unique<QuadTree>(m_boundingBox, m_capacity)};

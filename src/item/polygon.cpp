@@ -5,37 +5,37 @@ Polygon::Polygon() {
     m_properties[ItemPropertyType::StrokeColor] = ItemProperty(static_cast<int>(Qt::black));
 }
 
-void Polygon::setStart(QPoint start) {
+void Polygon::setStart(QPointF start) {
     m_start = start;
     m_end = start;
-    m_boundingBox = QRect{start, start};
+    m_boundingBox = QRectF{start, start};
 }
 
-void Polygon::setEnd(QPoint end) {
+void Polygon::setEnd(QPointF end) {
     m_end = end;
     m_updateBoundingBox();
 }
 
-const QPoint& Polygon::start() const {
+const QPointF& Polygon::start() const {
     return m_start;
 }
 
-const QPoint& Polygon::end() const {
+const QPointF& Polygon::end() const {
     return m_end;
 }
 
 void Polygon::m_updateBoundingBox() {
-    int minX {std::min(m_start.x(), m_end.x())};
-    int maxX {std::max(m_start.x(), m_end.x())};
-    int minY {std::min(m_start.y(), m_end.y())};
-    int maxY {std::max(m_start.y(), m_end.y())};
+    double minX {std::min(m_start.x(), m_end.x())};
+    double maxX {std::max(m_start.x(), m_end.x())};
+    double minY {std::min(m_start.y(), m_end.y())};
+    double maxY {std::max(m_start.y(), m_end.y())};
     int w {m_boundingBoxPadding + getProperty(ItemPropertyType::StrokeWidth).value().toInt()};
 
-    m_boundingBox = QRect{QPoint{minX, maxY}, QPoint{maxX, minY}}.normalized();
+    m_boundingBox = QRectF{QPointF{minX, maxY}, QPointF{maxX, minY}}.normalized();
     m_boundingBox.adjust(-w, -w, w, w);
 }
 
-void Polygon::draw(QPainter& painter, const QPoint& offset) {
+void Polygon::draw(QPainter& painter, const QPointF& offset) {
     QPen pen {};
     pen.setWidth(getProperty(ItemPropertyType::StrokeWidth).value().toInt());
     pen.setColor(QColor{static_cast<QRgb>(getProperty(ItemPropertyType::StrokeColor).value().toInt())});
@@ -44,7 +44,7 @@ void Polygon::draw(QPainter& painter, const QPoint& offset) {
     m_draw(painter, offset);
 }
 
-void Polygon::erase(QPainter& painter, const QPoint& offset) const {
+void Polygon::erase(QPainter& painter, const QPointF& offset) const {
     QPen pen {};
     pen.setWidth(getProperty(ItemPropertyType::StrokeWidth).value().toInt() * 10);
     pen.setColor(Qt::transparent);

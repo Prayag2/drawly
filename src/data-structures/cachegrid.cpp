@@ -12,13 +12,11 @@ CacheCell::CacheCell(const QPoint& point) : m_point{point} {
     m_painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
 
     CacheCell::counter++;
-    // qDebug() << "Cell constructed: " << point << ", Counter: " << CacheCell::counter;
     m_dirty = true;
 }
 
 CacheCell::~CacheCell() {
     CacheCell::counter--;
-    // qDebug() << "Cell deleted: " << m_point << ", Counter: " << CacheCell::counter;
 }
 
 const QPoint& CacheCell::point() const {
@@ -35,7 +33,7 @@ QImage& CacheCell::image() const {
 
 QRect CacheCell::rect() const {
     int cellW {CacheCell::cellSize().width()}, cellH {CacheCell::cellSize().height()};
-    QPoint cellPos {point().x()*cellW, point().y()*cellH};
+    QPoint cellPos {point().x() * cellW, point().y()*cellH};
     return {cellPos.x(), cellPos.y(), cellW, cellH};
 }
 
@@ -124,4 +122,11 @@ int CacheGrid::size() const {
 
 void CacheGrid::setSize(int newSize) {
     m_maxSize = newSize;
+}
+
+void CacheGrid::markAllDirty() {
+    for (auto cell : m_grid) {
+        qDebug() << "Cell: " << cell->point();
+        cell->setDirty(true);
+    }
 }
