@@ -30,8 +30,8 @@ class ApplicationContext : public QObject {
     QPainter& overlayPainter() const;
 
     int fps() const;
-    const QPoint& offsetPos() const;
-    void setOffsetPos(const QPoint& pos);
+    const QPointF& offsetPos() const;
+    void setOffsetPos(const QPointF& pos);
     qreal zoomFactor() const;
     void setZoomFactor(int diff);
 
@@ -53,10 +53,10 @@ class ApplicationContext : public QObject {
     PropertyManager *m_propertyManager {};
     Event *m_event {nullptr};
 
-    qreal m_zoomFactor {0.8};
+    qreal m_zoomFactor {1};
 
     int m_fps {};
-    QPoint m_offsetPos {}; // all `Items` are positioned relative to this point
+    QPointF m_offsetPos {}; // all `Items` are positioned relative to this point
 };
 
 #endif // APPLICATIONCONTEXT_H

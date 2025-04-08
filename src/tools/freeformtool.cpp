@@ -35,24 +35,31 @@ QString FreeformTool::iconAlt() const {
     return "󰽉";
 };
 
+// TODO: Place this overload somewhere else
+inline QRect operator/(const QRect& rect, double amount) {
+    return QRect{rect.topLeft() / amount, rect.size() / amount};
+}
+
 void FreeformTool::mousePressed(ApplicationContext *context) {
     if (context->event().button() == Qt::LeftButton) {
         curItem = std::dynamic_pointer_cast<Freeform>(m_itemFactory->create());
-        curItem->setBoundingBoxPadding(10*context->canvas().scale());
-        m_lastPoint = context->event().pos() + context->offsetPos();
-        curItem->addPoint(m_lastPoint);
         curItem->getProperty(ItemPropertyType::StrokeWidth).setValue(m_properties[ToolPropertyType::StrokeWidth]->value());
         curItem->getProperty(ItemPropertyType::StrokeColor).setValue(m_properties[ToolPropertyType::StrokeColor]->value());
+        curItem->setBoundingBoxPadding(10*context->canvas().scale());
+
+        m_lastPoint = context->event().pos() / context->zoomFactor() + context->offsetPos();
+        curItem->addPoint(m_lastPoint);
+
         m_isDrawing = true;
     }
 }
 
 void FreeformTool::mouseMoved(ApplicationContext *context) {
     if (m_isDrawing) {
-        QPoint curPoint {context->event().pos() + context->offsetPos()};
+        QPointF curPoint {context->event().pos() / context->zoomFactor() + context->offsetPos()};
 
         // distance between the two points
-        int dist {static_cast<int>(std::sqrt(std::pow(m_lastPoint.x()-curPoint.x(), 2)+std::pow(m_lastPoint.y()-curPoint.y(), 2)))};
+        double dist {std::sqrt(std::pow(m_lastPoint.x() - curPoint.x(), 2) + std::pow(m_lastPoint.y() - curPoint.y(), 2))};
 
         if (dist < Freeform::minPointDistance() * context->canvas().scale()) return;
 
@@ -77,15 +84,11 @@ void FreeformTool::mouseReleased(ApplicationContext *context) {
 
         curItem->draw(canvasPainter, context->offsetPos());
         context->quadtree().insertItem(curItem);
+        context->cacheGrid().markAllDirty();
 
         // Uncomment to see the bounding box
         // QPen pen{}; pen.setColor(Qt::white); canvasPainter.setPen(pen);
         // canvasPainter.drawRect(curItem->boundingBox().translated(-context->offsetPos()));
-
-        QVector<std::shared_ptr<CacheCell>> dirtyCacheCells {context->cacheGrid().queryCells(curItem->boundingBox())};
-        for (auto dirtyCacheCell : dirtyCacheCells) {
-            dirtyCacheCell->setDirty(true);
-        }
 
         m_isDrawing = false;
         context->canvas().update();

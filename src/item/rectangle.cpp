@@ -3,24 +3,24 @@
 
 Rectangle::Rectangle() {}
 
-void Rectangle::m_draw(QPainter& painter, const QPoint& offset) const {
-    painter.drawRect(QRect(start()-offset, end()-offset));
+void Rectangle::m_draw(QPainter& painter, const QPointF& offset) const {
+    painter.drawRect(QRectF(start() - offset, end() - offset));
 }
 
-bool Rectangle::intersects(const QRect& rect) {
+bool Rectangle::intersects(const QRectF& rect) {
     if (!boundingBox().intersects(rect)) return false;
 
     int mg {m_boundingBoxPadding + getProperty(ItemPropertyType::StrokeWidth).value().toInt()};
-    QRect box {boundingBox().normalized().adjusted(mg, mg, -mg, -mg)};
-    QPoint p {box.topLeft()};
-    QPoint q {box.topRight()};
-    QPoint r {box.bottomRight()};
-    QPoint s {box.bottomLeft()};
+    QRectF box {boundingBox().normalized().adjusted(mg, mg, -mg, -mg)};
+    QPointF p {box.topLeft()};
+    QPointF q {box.topRight()};
+    QPointF r {box.bottomRight()};
+    QPointF s {box.bottomLeft()};
 
-    QPoint a {rect.topLeft()};
-    QPoint b {rect.topRight()};
-    QPoint c {rect.bottomRight()};
-    QPoint d {rect.bottomLeft()};
+    QPointF a {rect.topLeft()};
+    QPointF b {rect.topRight()};
+    QPointF c {rect.bottomRight()};
+    QPointF d {rect.bottomLeft()};
 
     return (
                Item::linesIntersect({p, q}, {a, b}) ||

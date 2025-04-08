@@ -2,7 +2,7 @@
 #define QUADTREE_H
 
 #include <QVector>
-#include <QRect>
+#include <QRectF>
 #include <QPainter>
 #include "../item/item.h"
 
@@ -17,33 +17,33 @@
 class QuadTree {
   private:
     QVector<std::shared_ptr<Item>> m_items {};
-    QRect m_boundingBox {};
+    QRectF m_boundingBox {};
     int m_capacity {};
     std::unique_ptr<QuadTree> m_topLeft {nullptr};
     std::unique_ptr<QuadTree> m_topRight {nullptr};
     std::unique_ptr<QuadTree> m_bottomRight {nullptr};
     std::unique_ptr<QuadTree> m_bottomLeft {nullptr};
   public:
-    QuadTree(QRect region, int capacity);
+    QuadTree(QRectF region, int capacity);
     ~QuadTree();
 
     int size() const;
     void insertItem(std::shared_ptr<Item> item);
     void deleteItem(std::shared_ptr<Item> item);
-    void deleteItems(const QRect& boundingBox);
+    void deleteItems(const QRectF& boundingBox);
     QVector<std::shared_ptr<Item>> getAllItems() const;
-    QVector<std::shared_ptr<Item>> queryItems(const QRect& boundingBox, bool onlyBoundingBox = false) const;
-    QVector<std::shared_ptr<Item>> queryConnectedItems(const QRect& boundingBox, std::optional<int> level = {}) const;
+    QVector<std::shared_ptr<Item>> queryItems(const QRectF& boundingBox, bool onlyBoundingBox = false) const;
+    QVector<std::shared_ptr<Item>> queryConnectedItems(const QRectF& boundingBox, std::optional<int> level = {}) const;
 
-    void draw(QPainter& painter, const QPoint& offset) const;
-    const QRect& boundingBox() const;
+    void draw(QPainter& painter, const QPointF& offset) const;
+    const QRectF& boundingBox() const;
 
   private:
     bool insert(std::shared_ptr<Item> item);
-    void query(const QRect& boundingBox, bool onlyBoundingBox, QVector<std::shared_ptr<Item>>& out) const;
-    void dfs(const QRect& boundingBox, QVector<std::shared_ptr<Item>> items, QVector<std::shared_ptr<Item>>& out, std::optional<int> level) const;
+    void query(const QRectF& boundingBox, bool onlyBoundingBox, QVector<std::shared_ptr<Item>>& out) const;
+    void dfs(const QRectF& boundingBox, QVector<std::shared_ptr<Item>> items, QVector<std::shared_ptr<Item>>& out, std::optional<int> level) const;
     void subdivide();
-    void expand(const QPoint& point);
+    void expand(const QPointF& point);
 
     std::unique_ptr<QImage> m_cache {};
     bool m_cacheDirty{true};

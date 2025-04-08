@@ -2,19 +2,19 @@
 
 Arrow::Arrow() {}
 
-void Arrow::setStart(QPoint start) {
+void Arrow::setStart(QPointF start) {
     Polygon::setStart(start);
     calcArrowPoints();
 }
 
-void Arrow::setEnd(QPoint end) {
+void Arrow::setEnd(QPointF end) {
     Polygon::setEnd(end);
     calcArrowPoints();
 }
 
 void Arrow::calcArrowPoints() {
-    int x1 {start().x()}, x2 {end().x()};
-    int y1 {start().y()}, y2 {end().y()};
+    double x1 {start().x()}, x2 {end().x()};
+    double y1 {start().y()}, y2 {end().y()};
 
     qreal angle {std::atan2(y2-y1, x2-x1)};
     qreal arrowLength {std::sqrt(std::pow(y2-y1, 2)+std::pow(x2-x1,2))};
@@ -28,21 +28,21 @@ void Arrow::calcArrowPoints() {
                        y2 - arrowSize * std::sin(angle + (M_PI / 180) * 30));
 }
 
-void Arrow::m_draw(QPainter& painter, const QPoint& offset) const {
-    painter.drawLine(start()-offset, end()-offset);
-    painter.drawLine(end()-offset, m_arrowP1-offset);
-    painter.drawLine(end()-offset, m_arrowP2-offset);
+void Arrow::m_draw(QPainter& painter, const QPointF& offset) const {
+    painter.drawLine(start() - offset, end() - offset);
+    painter.drawLine(end() - offset, m_arrowP1 - offset);
+    painter.drawLine(end() - offset, m_arrowP2 - offset);
 }
 
-bool Arrow::intersects(const QRect& rect) {
+bool Arrow::intersects(const QRectF& rect) {
     if (!boundingBox().intersects(rect)) return false;
 
     // TODO: Use better techniques to detect collision
-    QPoint p {start()}, q {end()}, r {m_arrowP1}, s {m_arrowP2};
-    QPoint a {rect.x(), rect.y()};
-    QPoint b {rect.x()+rect.width(), rect.y()};
-    QPoint c {rect.x()+rect.width(), rect.y()+rect.height()};
-    QPoint d {rect.x(), rect.y()+rect.height()};
+    QPointF p {start()}, q {end()}, r {m_arrowP1}, s {m_arrowP2};
+    QPointF a {rect.x(), rect.y()};
+    QPointF b {rect.x()+rect.width(), rect.y()};
+    QPointF c {rect.x()+rect.width(), rect.y()+rect.height()};
+    QPointF d {rect.x(), rect.y()+rect.height()};
 
     return (
                Item::linesIntersect({p, q}, {a, b}) ||

@@ -17,8 +17,8 @@ class MoveTool : public Tool {
 
   private:
     bool m_isActive {false};
-    QPoint m_initialOffsetPos {};
-    QPoint m_initialPos {};
+    QPointF m_initialOffsetPos {};
+    QPointF m_initialPos {};
     QElapsedTimer m_timer{};
     QElapsedTimer m_interval{};
     int counter {0};

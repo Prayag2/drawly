@@ -8,17 +8,17 @@ class Arrow : public Polygon {
     Arrow();
     ~Arrow() override = default;
 
-    void setStart(QPoint start) override;
-    void setEnd(QPoint end) override;
+    void setStart(QPointF start) override;
+    void setEnd(QPointF end) override;
 
-    bool intersects(const QRect& rect) override;
+    bool intersects(const QRectF& rect) override;
 
   protected:
-    void m_draw(QPainter& painter, const QPoint& offset) const override;
+    void m_draw(QPainter& painter, const QPointF& offset) const override;
 
   private:
-    QPoint m_arrowP1;
-    QPoint m_arrowP2;
+    QPointF m_arrowP1;
+    QPointF m_arrowP2;
 
     int m_maxArrowSize {15}; // hardcoded for now
 

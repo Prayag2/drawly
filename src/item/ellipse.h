@@ -8,13 +8,13 @@ class Ellipse : public Polygon {
     Ellipse();
     virtual ~Ellipse() = default;
 
-    bool intersects(const QRect& rect) override;
+    bool intersects(const QRectF& rect) override;
 
 protected:
-    void m_draw(QPainter& painter, const QPoint& offset) const override;
+    void m_draw(QPainter& painter, const QPointF& offset) const override;
 
   private:
-    bool onEllipse(QLine line) const;
+    bool onEllipse(QLineF line) const;
 };
 
 #endif // ELLIPSE_H

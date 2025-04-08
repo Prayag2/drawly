@@ -1,4 +1,5 @@
 #include <QRect>
+#include <memory>
 #include "applicationcontext.h"
 #include "../components/actionbar.h"
 #include "../components/propertybar.h"
@@ -129,11 +130,11 @@ void ApplicationContext::toolChanged(Tool& tool) {
     m_canvas->setCursor(tool.cursor());
 }
 
-const QPoint& ApplicationContext::offsetPos() const {
+const QPointF& ApplicationContext::offsetPos() const {
     return m_offsetPos;
 }
 
-void ApplicationContext::setOffsetPos(const QPoint& pos) {
+void ApplicationContext::setOffsetPos(const QPointF& pos) {
     m_offsetPos = pos;
 }
 
@@ -146,14 +147,28 @@ qreal ApplicationContext::zoomFactor() const {
 }
 
 void ApplicationContext::setZoomFactor(int diff) {
-    m_zoomFactor += diff*0.1;
+    if (diff < 0 && m_zoomFactor <= 0.2) return;
+    qDebug() << "Zoom: " << m_zoomFactor;
+
+    qreal oldZoomFactor = m_zoomFactor;
+    m_zoomFactor += diff * 0.1;
+
+    QSize viewport {canvas().dimensions()};
+    m_offsetPos.setX(m_offsetPos.x() + viewport.width() / (2 * oldZoomFactor) - viewport.width() / (2 * m_zoomFactor));
+    m_offsetPos.setY(m_offsetPos.y() + viewport.height() / (2 * oldZoomFactor) - viewport.height() / (2 * m_zoomFactor));
+
     endPainters();
     beginPainters();
-    canvas().canvas()->fill(canvas().bg());
-    canvas().update();
+    canvas().setBg(canvas().bg());
+
+    QRect scaledViewport {offsetPos().toPoint(), canvas().dimensions() / m_zoomFactor};
     cacheGrid().markAllDirty();
-    qDebug() << "Zoom changed to: " << m_zoomFactor;
-    qDebug() << "New offset: " << m_offsetPos;
+
+    QVector<std::shared_ptr<Item>> items {quadtree().queryItems(scaledViewport, true)};
+    for (auto item : items) {
+        item->draw(canvasPainter(), m_offsetPos);
+    }
+    canvas().update();
 }
 
 void ApplicationContext::canvasResized() {

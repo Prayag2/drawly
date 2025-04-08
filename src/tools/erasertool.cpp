@@ -27,6 +27,11 @@ QString EraserTool::iconAlt() const {
     return "";
 }
 
+// TODO: Place this overload somewhere else
+inline QRect operator/(const QRect& rect, double amount) {
+    return QRect{rect.topLeft() / amount, rect.size() / amount};
+}
+
 void EraserTool::mousePressed(ApplicationContext *context) {
     if (context->event().button() == Qt::LeftButton) {
         m_isErasing = true;
@@ -37,9 +42,9 @@ void EraserTool::mouseMoved(ApplicationContext *context) {
     if (m_isErasing) {
         QPainter& painter {context->canvasPainter()};
 
-        QRect eraserBoundingBox {QRect(context->event().pos() + context->offsetPos(), m_cursor.pixmap().size())};
+        QRect eraserBoundingBox {context->event().pos() / context->zoomFactor() + context->offsetPos().toPoint(), m_cursor.pixmap().size() / context->zoomFactor()};
         QVector<std::shared_ptr<Item>> toBeErased {context->quadtree().queryItems(eraserBoundingBox)};
-        QVector<QRect> dirtyRegions {};
+        QVector<QRectF> dirtyRegions {};
 
         for (std::shared_ptr<Item> item : toBeErased) {
             painter.fillRect(item->boundingBox().translated(-context->offsetPos()), context->canvas().bg());
@@ -48,12 +53,7 @@ void EraserTool::mouseMoved(ApplicationContext *context) {
         }
 
         QVector<std::shared_ptr<Item>> dirtyShapes {};
-        for (const QRect& rect : dirtyRegions) {
-            QVector<std::shared_ptr<CacheCell>> dirtyCacheCells {context->cacheGrid().queryCells(rect)};
-            for (auto dirtyCacheCell : dirtyCacheCells) {
-                dirtyCacheCell->setDirty(true);
-            }
-
+        for (const QRectF& rect : dirtyRegions) {
             dirtyShapes += context->quadtree().queryItems(rect, true);
         }
 
@@ -67,5 +67,6 @@ void EraserTool::mouseMoved(ApplicationContext *context) {
 void EraserTool::mouseReleased(ApplicationContext *context) {
     if (context->event().button() == Qt::LeftButton) {
         m_isErasing = false;
+        context->cacheGrid().markAllDirty();
     }
 }

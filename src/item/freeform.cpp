@@ -9,13 +9,13 @@ int Freeform::minPointDistance() {
     return 0;
 }
 
-void Freeform::addPoint(const QPoint& point) {
+void Freeform::addPoint(const QPointF& point) {
     QPointF smoothenedPoint{optimizePoint(m_points, 5, point)};
-    int x = smoothenedPoint.x(), y = smoothenedPoint.y();
+    double x = smoothenedPoint.x(), y = smoothenedPoint.y();
 
     m_boundingBox = m_boundingBox.normalized();
-    int topLeftX {m_boundingBox.topLeft().x()}, topLeftY {m_boundingBox.topLeft().y()};
-    int bottomRightX {m_boundingBox.bottomRight().x()}, bottomRightY {m_boundingBox.bottomRight().y()};
+    double topLeftX {m_boundingBox.topLeft().x()}, topLeftY {m_boundingBox.topLeft().y()};
+    double bottomRightX {m_boundingBox.bottomRight().x()}, bottomRightY {m_boundingBox.bottomRight().y()};
     int mg {m_boundingBoxPadding + getProperty(ItemPropertyType::StrokeWidth).value().toInt()};
 
     if (m_points.size() <= 1) {
@@ -33,13 +33,13 @@ void Freeform::addPoint(const QPoint& point) {
     m_cacheDirty = true;
 }
 
-bool Freeform::intersects(const QRect& rect) {
+bool Freeform::intersects(const QRectF& rect) {
     if (!boundingBox().intersects(rect)) return false;
 
-    QPoint p {rect.topLeft()};
-    QPoint q {rect.topRight()};
-    QPoint r {rect.bottomRight()};
-    QPoint s {rect.bottomLeft()};
+    QPointF p {rect.topLeft()};
+    QPointF q {rect.topRight()};
+    QPointF r {rect.bottomRight()};
+    QPointF s {rect.bottomLeft()};
 
     qsizetype n {m_points.size()};
     for (qsizetype idx {0}; idx < n-1; idx++) {
@@ -58,8 +58,11 @@ bool Freeform::intersects(const QRect& rect) {
     return false;
 }
 
-void Freeform::draw(QPainter& painter, const QPoint& offset) {
-    QPoint relativeOffset {m_boundingBox.x(), m_boundingBox.y()};
+void Freeform::draw(QPainter& painter, const QPointF& offset) {
+    m_draw(painter, offset);
+
+    return;
+    QPointF relativeOffset {m_boundingBox.x(), m_boundingBox.y()};
     if (m_cacheDirty) {
         m_cache = std::make_unique<QImage>(m_boundingBox.width(), m_boundingBox.height(), QImage::Format_ARGB32_Premultiplied);
 
@@ -75,11 +78,11 @@ void Freeform::draw(QPainter& painter, const QPoint& offset) {
     painter.drawImage(relativeOffset-offset, *m_cache);
 }
 
-void Freeform::erase(QPainter& painter, const QPoint& offset) const {
+void Freeform::erase(QPainter& painter, const QPointF& offset) const {
     // m_draw(painter, offset);
 }
 
-QPointF Freeform::optimizePoint(QVector<QPointF>& points, int bufferSize, const QPoint& newPoint) const {
+QPointF Freeform::optimizePoint(QVector<QPointF>& points, int bufferSize, const QPointF& newPoint) const {
     points.push_back(newPoint);
 
     int pointsSize{static_cast<int>(points.size())};
@@ -94,7 +97,7 @@ QPointF Freeform::optimizePoint(QVector<QPointF>& points, int bufferSize, const 
     return sum/bufferSize;
 }
 
-void Freeform::quickDraw(QPainter& painter, const QPoint& offset) const {
+void Freeform::quickDraw(QPainter& painter, const QPointF& offset) const {
     QPen pen {};
     pen.setJoinStyle(Qt::RoundJoin);
     pen.setCapStyle(Qt::RoundCap);
@@ -109,7 +112,7 @@ void Freeform::quickDraw(QPainter& painter, const QPoint& offset) const {
     }
 }
 
-void Freeform::m_draw(QPainter& painter, const QPoint& offset) const {
+void Freeform::m_draw(QPainter& painter, const QPointF& offset) const {
     QPen pen {};
     pen.setJoinStyle(Qt::RoundJoin);
     pen.setCapStyle(Qt::RoundCap);

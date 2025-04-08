@@ -2,18 +2,18 @@
 
 Line::Line() {}
 
-void Line::m_draw(QPainter& painter, const QPoint& offset) const {
-    painter.drawLine(start()-offset, end()-offset);
+void Line::m_draw(QPainter& painter, const QPointF& offset) const {
+    painter.drawLine(start() - offset, end() - offset);
 }
 
-bool Line::intersects(const QRect& rect) {
+bool Line::intersects(const QRectF& rect) {
     if (!boundingBox().intersects(rect)) return false;
 
-    QPoint x {start()}, y {end()};
-    QPoint a {rect.x(), rect.y()};
-    QPoint b {rect.x()+rect.width(), rect.y()};
-    QPoint c {rect.x()+rect.width(), rect.y()+rect.height()};
-    QPoint d {rect.x(), rect.y()+rect.height()};
+    QPointF x {start()}, y {end()};
+    QPointF a {rect.x(), rect.y()};
+    QPointF b {rect.x()+rect.width(), rect.y()};
+    QPointF c {rect.x()+rect.width(), rect.y()+rect.height()};
+    QPointF d {rect.x(), rect.y()+rect.height()};
 
     if (Polygon::orientation(x, y, a) != Polygon::orientation(x, y, b) && Polygon::orientation(a, b, x) != Polygon::orientation(a, b, y))
         return true;

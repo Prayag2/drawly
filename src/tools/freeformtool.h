@@ -18,7 +18,7 @@ class FreeformTool : public DrawingTool {
 
   private:
     std::shared_ptr<Freeform> curItem {};
-    QPoint m_lastPoint {};
+    QPointF m_lastPoint {};
 };
 
 #endif // FREEFORMTOOL_H

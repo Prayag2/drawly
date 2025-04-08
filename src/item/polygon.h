@@ -7,18 +7,18 @@ class Polygon : public Item {
   public:
     Polygon();
 
-    virtual void setStart(QPoint start);
-    virtual void setEnd(QPoint end);
+    virtual void setStart(QPointF start);
+    virtual void setEnd(QPointF end);
 
-    void draw(QPainter& painter, const QPoint& offset) override;
-    void erase(QPainter& painter, const QPoint& offset) const override;
+    void draw(QPainter& painter, const QPointF& offset) override;
+    void erase(QPainter& painter, const QPointF& offset) const override;
 
-    const QPoint& start() const;
-    const QPoint& end() const;
+    const QPointF& start() const;
+    const QPointF& end() const;
 
   private:
-    QPoint m_start {};
-    QPoint m_end {};
+    QPointF m_start {};
+    QPointF m_end {};
 
     void m_updateBoundingBox();
 };
