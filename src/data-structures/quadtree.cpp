@@ -1,8 +1,22 @@
 #include <QDebug>
+#include <cstdlib>
+#include <memory>
+#include <unordered_map>
+#include "orderedlist.h"
 #include "quadtree.h"
+#include "../item/item.h"
 
 QuadTree::QuadTree(QRectF region, int capacity)
-    : m_boundingBox {region}, m_capacity {capacity} {}
+    : m_boundingBox {region}, m_capacity {capacity} {
+        if (m_orderedList == nullptr) {
+            m_orderedList = std::make_shared<OrderedList>();
+        }
+    }
+
+QuadTree::QuadTree(QRectF region, int capacity, std::shared_ptr<OrderedList> orderedList)
+    : m_boundingBox {region}, m_capacity {capacity} {
+        m_orderedList = orderedList;
+    }
 
 QuadTree::~QuadTree() {}
 
@@ -12,10 +26,15 @@ void QuadTree::subdivide() {
     double halfWidth {m_boundingBox.width()/2};
     double halfHeight {m_boundingBox.height()/2};
 
-    m_topLeft = std::make_unique<QuadTree>(QRectF{x, y, halfWidth, halfHeight}, m_capacity);
-    m_topRight = std::make_unique<QuadTree>(QRectF{x+halfWidth, y, halfWidth, halfHeight}, m_capacity);
-    m_bottomRight = std::make_unique<QuadTree>(QRectF{x+halfWidth, y+halfHeight, halfWidth, halfHeight}, m_capacity);
-    m_bottomLeft = std::make_unique<QuadTree>(QRectF{x, y+halfHeight, halfWidth, halfHeight}, m_capacity);
+    QRectF topLeftRect {x, y, halfWidth, halfHeight};
+    QRectF topRightRect {x+halfWidth, y, halfWidth, halfHeight};
+    QRectF bottomRightRect {x+halfWidth, y+halfHeight, halfWidth, halfHeight};
+    QRectF bottomLeftRect {x, y+halfHeight, halfWidth, halfHeight};
+
+    m_topLeft = std::make_unique<QuadTree>(topLeftRect, m_capacity, m_orderedList);
+    m_topRight = std::make_unique<QuadTree>(topRightRect, m_capacity, m_orderedList);
+    m_bottomRight = std::make_unique<QuadTree>(bottomRightRect, m_capacity, m_orderedList);
+    m_bottomLeft = std::make_unique<QuadTree>(bottomLeftRect, m_capacity, m_orderedList);
 }
 
 void QuadTree::insertItem(std::shared_ptr<Item> item) {
@@ -33,6 +52,7 @@ bool QuadTree::insert(std::shared_ptr<Item> item) {
 
     if (m_items.size() < m_capacity) {
         m_items.push_back(item);
+        m_orderedList->insert(item);
         return true;
     }
 
@@ -56,6 +76,8 @@ void QuadTree::deleteItem(std::shared_ptr<Item> const item) {
     auto it = std::find(m_items.begin(), m_items.end(), item);
     if (it != m_items.end()) {
         m_items.erase(it);
+        m_orderedList->remove(item);
+        return;
     }
 
     // If the node is subdivided, attempt to delete the item from children
@@ -73,6 +95,7 @@ void QuadTree::deleteItems(const QRectF& boundingBox) {
     for (int i = 0; i < m_items.size();) {
         if (boundingBox.intersects(m_items[i]->boundingBox())) {
             m_items.erase(m_items.begin()+i);
+            m_orderedList->remove(m_items[i]);
         } else {
             i++;
         }
@@ -99,31 +122,47 @@ QVector<std::shared_ptr<Item>> QuadTree::getAllItems() const {
 
 QVector<std::shared_ptr<Item>> QuadTree::queryItems(const QRectF& boundingBox, bool onlyBoundingBox) const {
     QVector<std::shared_ptr<Item>> curItems {};
-    query(boundingBox, onlyBoundingBox, curItems);
+    std::unordered_map<std::shared_ptr<Item>, bool> itemAlreadyPushed {};
+
+    // look for matches and store the result in curItems
+    query(boundingBox, onlyBoundingBox, curItems, itemAlreadyPushed);
+
+    // sort based on z-index
+    std::sort(curItems.begin(), curItems.end(), [&](auto& firstItem, auto& secondItem){
+        return m_orderedList->zIndex(firstItem) < m_orderedList->zIndex(secondItem);
+    });
+
     return curItems;
 };
 
-void QuadTree::query(const QRectF& boundingBox, bool onlyBoundingBox, QVector<std::shared_ptr<Item>>& out) const {
+void QuadTree::query(
+    const QRectF& boundingBox,
+    bool onlyBoundingBox,
+    QVector<std::shared_ptr<Item>>& out,
+    std::unordered_map<std::shared_ptr<Item>, bool>& itemAlreadyPushed
+) const {
     if (!m_boundingBox.intersects(boundingBox)) {
         return;
     }
 
     for (const std::shared_ptr<Item>& item : m_items) {
-        if (
-            item->boundingBox().intersects(boundingBox)
-        ) {
+        if (item->boundingBox().intersects(boundingBox)) {
             if (onlyBoundingBox || item->intersects(boundingBox)) {
-                out.push_back(item);
+                // using the hash map because multiple nodes may have a pointer to the same item
+                if (!itemAlreadyPushed[item]) {
+                    out.push_back(item);
+                    itemAlreadyPushed[item] = true;
+                }
             }
         }
     }
 
     // if this node has sub-regions
     if (m_topLeft != nullptr) {
-        m_topLeft->query(boundingBox, onlyBoundingBox, out);
-        m_topRight->query(boundingBox, onlyBoundingBox, out);
-        m_bottomRight->query(boundingBox, onlyBoundingBox, out);
-        m_bottomLeft->query(boundingBox, onlyBoundingBox, out);
+        m_topLeft->query(boundingBox, onlyBoundingBox, out, itemAlreadyPushed);
+        m_topRight->query(boundingBox, onlyBoundingBox, out, itemAlreadyPushed);
+        m_bottomRight->query(boundingBox, onlyBoundingBox, out, itemAlreadyPushed);
+        m_bottomLeft->query(boundingBox, onlyBoundingBox, out, itemAlreadyPushed);
     }
 }
 
@@ -200,10 +239,10 @@ void QuadTree::expand(const QPointF& point) {
     QPointF tl {m_boundingBox.topLeft()}, tr {m_boundingBox.topRight()};
     QPointF bl {m_boundingBox.bottomLeft()}, br {m_boundingBox.bottomRight()};
 
-    std::unique_ptr<QuadTree> topLeft {std::make_unique<QuadTree>(m_boundingBox, m_capacity)};
-    std::unique_ptr<QuadTree> topRight {std::make_unique<QuadTree>(m_boundingBox, m_capacity)};
-    std::unique_ptr<QuadTree> bottomRight {std::make_unique<QuadTree>(m_boundingBox, m_capacity)};
-    std::unique_ptr<QuadTree> bottomLeft {std::make_unique<QuadTree>(m_boundingBox, m_capacity)};
+    std::unique_ptr<QuadTree> topLeft {std::make_unique<QuadTree>(m_boundingBox, m_capacity, m_orderedList)};
+    std::unique_ptr<QuadTree> topRight {std::make_unique<QuadTree>(m_boundingBox, m_capacity, m_orderedList)};
+    std::unique_ptr<QuadTree> bottomRight {std::make_unique<QuadTree>(m_boundingBox, m_capacity, m_orderedList)};
+    std::unique_ptr<QuadTree> bottomLeft {std::make_unique<QuadTree>(m_boundingBox, m_capacity, m_orderedList)};
     std::unique_ptr<QuadTree> cur {};
 
     if (x < tl.x() || y < tl.y()) {

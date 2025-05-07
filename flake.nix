@@ -16,7 +16,10 @@
                 cmake
                 bear
             ];
-            shellHook = "which zsh >/dev/null && exec zsh";
+          shellHook = ''
+            which zsh >/dev/null && exec zsh
+            export CPLUS_INCLUDE_PATH=${pkgs.qt6.qtbase}/include:${pkgs.qt6.qtbase}/include/QtCore:${pkgs.qt6.qtbase}/include/QtWidgets:${pkgs.qt6.qtbase}/include/QtGui:$CPLUS_INCLUDE_PATH
+          '';
         };
     };
 }

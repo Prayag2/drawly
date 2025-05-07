@@ -33,16 +33,17 @@ inline QRectF operator/(const QRectF& rect, double amount) {
 
 void MoveTool::mouseMoved(ApplicationContext *context) {
     if (m_isActive) {
-        if (m_interval.elapsed() < 1000/context->fps()-1) return;
-        m_interval.restart();
+        // if (m_interval.elapsed() < 1000/context->fps()-1) return;
+        // m_interval.restart();
 
-        counter++;
-        if (m_timer.elapsed() >= 1000) {
-            counter = 0;
-            m_timer.restart();
-        }
+        // counter++;
+        // if (m_timer.elapsed() >= 1000) {
+        //     counter = 0;
+        //     m_timer.restart();
+        // }
 
         QPointF newPoint {m_initialOffsetPos * context->zoomFactor() - context->event().pos() + m_initialPos};
+        QPoint roundedPoint {static_cast<int>(std::round(newPoint.x())), static_cast<int>(std::round(newPoint.y()))};
 
         context->setOffsetPos(newPoint / context->zoomFactor());
         context->canvas().setBg(context->canvas().bg());
@@ -55,8 +56,8 @@ void MoveTool::mouseMoved(ApplicationContext *context) {
             // UNCOMMENT TO SEE THE CACHE GRID IN ACTION!!
             // QPen pen{}; pen.setColor(Qt::white); pen.setWidth(1);
             // painter.setPen(pen);
-            // painter.drawRect(cell->rect().toRectF().translated(-newPoint) / context->zoomFactor());
-            // painter.drawText(cell->rect().toRectF().translated(-newPoint) / context->zoomFactor(), QString::asprintf("(%d, %d)", cell->point().x(), cell->point().y()));
+            // painter.drawRect(cell->rect().toRectF().translated(-roundedPoint) / context->zoomFactor());
+            // painter.drawText(cell->rect().toRectF().translated(-roundedPoint) / context->zoomFactor(), QString::asprintf("(%d, %d)", cell->point().x(), cell->point().y()));
 
             if (cell->dirty()) {
                 cell->image().fill(Qt::transparent);
@@ -70,12 +71,16 @@ void MoveTool::mouseMoved(ApplicationContext *context) {
                 cell->painter().resetTransform();
                 cell->painter().scale(context->zoomFactor(), context->zoomFactor());
                 for (auto intersectingItem : intersectingItems) {
-                    intersectingItem->draw(cell->painter(), cell->rect().topLeft() / context->zoomFactor());
+                    QPointF p {cell->rect().toRectF().topLeft() / context->zoomFactor()};
+                    intersectingItem->draw(cell->painter(), p);
                 }
             }
-            painter.drawImage(cell->rect().toRectF().translated(-newPoint) / context->zoomFactor(), cell->image());
+            painter.drawImage(cell->rect().toRectF().translated(-roundedPoint) / context->zoomFactor(), cell->image());
         }
 
+        QPen p; p.setColor(Qt::white);
+        painter.setPen(p);
+        context->quadtree().draw(painter, -context->offsetPos());
         context->canvas().update();
     }
 };

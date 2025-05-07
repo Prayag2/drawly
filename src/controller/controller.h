@@ -17,6 +17,7 @@ class Controller : public QObject {
     void mousePressed(QMouseEvent *event);
     void mouseMoved(QMouseEvent *event);
     void mouseReleased(QMouseEvent *event);
+    void wheel(QWheelEvent *event);
 
   private:
     ApplicationContext *m_context {};

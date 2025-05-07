@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(&context->canvas(), &Canvas::mousePressed, controller, &Controller::mousePressed);
     QObject::connect(&context->canvas(), &Canvas::mouseMoved, controller, &Controller::mouseMoved);
     QObject::connect(&context->canvas(), &Canvas::mouseReleased, controller, &Controller::mouseReleased);
+    QObject::connect(&context->canvas(), &Canvas::wheel, controller, &Controller::wheel);
 }
 
 MainWindow::~MainWindow() {}
