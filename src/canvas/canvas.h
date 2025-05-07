@@ -26,6 +26,7 @@ class Canvas : public QWidget {
     void mousePressed(QMouseEvent *event);
     void mouseMoved(QMouseEvent *event);
     void mouseReleased(QMouseEvent *event);
+    void wheel(QWheelEvent *event);
     void resizeEventCalled();
     void resizeStart();
     void resizeEnd();
@@ -37,6 +38,7 @@ class Canvas : public QWidget {
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
+    void wheelEvent(QWheelEvent *event) override;
 
   private:
     qreal m_scale {1.0}; // default scale is 1

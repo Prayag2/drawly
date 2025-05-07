@@ -108,6 +108,11 @@ void Canvas::mouseReleaseEvent(QMouseEvent *event) {
     QWidget::mouseReleaseEvent(event);
 };
 
+void Canvas::wheelEvent(QWheelEvent *event) {
+    emit wheel(event);
+    QWidget::wheelEvent(event);
+}
+
 // PRIVATE
 QByteArray Canvas::imageData(QImage *const img) {
     QByteArray arr {};

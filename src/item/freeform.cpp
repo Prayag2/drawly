@@ -59,9 +59,7 @@ bool Freeform::intersects(const QRectF& rect) {
 }
 
 void Freeform::draw(QPainter& painter, const QPointF& offset) {
-    m_draw(painter, offset);
-
-    return;
+    // m_draw(painter, offset);
     QPointF relativeOffset {m_boundingBox.x(), m_boundingBox.y()};
     if (m_cacheDirty) {
         m_cache = std::make_unique<QImage>(m_boundingBox.width(), m_boundingBox.height(), QImage::Format_ARGB32_Premultiplied);

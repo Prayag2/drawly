@@ -16,6 +16,7 @@
 #include "../tools/freeformtool.h"
 #include "../tools/erasertool.h"
 #include "../tools/movetool.h"
+#include "../item/item.h"
 
 ApplicationContext::ApplicationContext(QWidget* parent)
     : QObject {parent} {
@@ -27,7 +28,7 @@ ApplicationContext::ApplicationContext(QWidget* parent)
     m_actionBar = new ActionBar(parent);
     m_propertyBar = new PropertyBar(parent);
     m_propertyManager = new PropertyManager(m_propertyBar);
-    m_quadtree = std::make_unique<QuadTree>(QRect{{0, 0}, m_canvas->sizeHint()}, 100);
+    m_quadtree = std::make_unique<QuadTree>(QRect{{0, 0}, m_canvas->sizeHint()}, 100); // just an arbitrary capacity for now
 
     m_cacheGrid = std::make_unique<CacheGrid>(100);
     m_event = new Event();
