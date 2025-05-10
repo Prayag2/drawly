@@ -4,17 +4,17 @@
 #include "tool.h"
 
 class EraserTool : public Tool {
-  public:
+public:
     EraserTool();
     ~EraserTool() override = default;
 
     QString iconAlt() const override;
-    void mousePressed(ApplicationContext *context) override;
-    void mouseMoved(ApplicationContext *context) override;
-    void mouseReleased(ApplicationContext *context) override;
+    void mousePressed(ApplicationContext* context) override;
+    void mouseMoved(ApplicationContext* context) override;
+    void mouseReleased(ApplicationContext* context) override;
 
-  private:
-    bool m_isErasing {false};
+private:
+    bool m_isErasing{false};
 };
 
-#endif // ERASERTOOL_H
+#endif  // ERASERTOOL_H

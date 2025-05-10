@@ -7,18 +7,18 @@ class Freeform;
 class PropertyManager;
 
 class FreeformTool : public DrawingTool {
-  public:
+public:
     FreeformTool(const PropertyManager& propertyManager);
     ~FreeformTool() override = default;
 
     QString iconAlt() const override;
-    void mousePressed(ApplicationContext *context) override;
-    void mouseMoved(ApplicationContext *context) override;
-    void mouseReleased(ApplicationContext *context) override;
+    void mousePressed(ApplicationContext* context) override;
+    void mouseMoved(ApplicationContext* context) override;
+    void mouseReleased(ApplicationContext* context) override;
 
-  private:
-    std::shared_ptr<Freeform> curItem {};
-    QPointF m_lastPoint {};
+private:
+    std::shared_ptr<Freeform> curItem{};
+    QPointF m_lastPoint{};
 };
 
-#endif // FREEFORMTOOL_H
+#endif  // FREEFORMTOOL_H

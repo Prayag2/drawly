@@ -5,9 +5,9 @@
 class Item;
 
 class ItemFactory {
-  public:
+public:
     ItemFactory();
     virtual std::shared_ptr<Item> create() const = 0;
 };
 
-#endif // ITEMFACTORY_H
+#endif  // ITEMFACTORY_H

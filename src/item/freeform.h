@@ -4,7 +4,7 @@
 #include "item.h"
 
 class Freeform : public Item {
-  public:
+public:
     Freeform();
     ~Freeform() = default;
 
@@ -16,17 +16,17 @@ class Freeform : public Item {
 
     virtual void addPoint(const QPointF& point);
 
-  protected:
+protected:
     void m_draw(QPainter& painter, const QPointF& offset) const override;
-    QVector<QPointF> m_points {};
-    QVector<QPointF> m_optimizedPoints {};
-    int m_bufferSize {15};
+    QVector<QPointF> m_points{};
+    QVector<QPointF> m_optimizedPoints{};
+    int m_bufferSize{15};
 
-    std::unique_ptr<QImage> m_cache {};
-    bool m_cacheDirty {true};
+    std::unique_ptr<QImage> m_cache{};
+    bool m_cacheDirty{true};
 
-  private:
+private:
     QPointF optimizePoint(QVector<QPointF>& points, int bufferSize, const QPointF& newPoint) const;
 };
 
-#endif // FREEFORM_H
+#endif  // FREEFORM_H

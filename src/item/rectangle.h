@@ -4,14 +4,14 @@
 #include "polygon.h"
 
 class Rectangle : public Polygon {
-  public:
+public:
     Rectangle();
     ~Rectangle() override = default;
 
     bool intersects(const QRectF& rect) override;
 
-  protected:
+protected:
     void m_draw(QPainter& painter, const QPointF& offset) const override;
 };
 
-#endif // RECTANGLE_H
+#endif  // RECTANGLE_H

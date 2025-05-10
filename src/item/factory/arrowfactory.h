@@ -4,9 +4,9 @@
 #include "itemfactory.h"
 
 class ArrowFactory : public ItemFactory {
-  public:
+public:
     ArrowFactory();
     std::shared_ptr<Item> create() const override;
 };
 
-#endif // ARROWFACTORY_H
+#endif  // ARROWFACTORY_H

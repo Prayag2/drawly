@@ -1,26 +1,27 @@
-#include <QRect>
-#include <memory>
 #include "applicationcontext.h"
+
+#include "../canvas/canvas.h"
+#include "../common/renderitems.h"
 #include "../components/actionbar.h"
 #include "../components/propertybar.h"
 #include "../components/toolbar.h"
-#include "../canvas/canvas.h"
-#include "../data-structures/quadtree.h"
 #include "../data-structures/cachegrid.h"
+#include "../data-structures/quadtree.h"
 #include "../event/event.h"
+#include "../item/item.h"
+#include "../tools/arrowtool.h"
+#include "../tools/ellipsetool.h"
+#include "../tools/erasertool.h"
+#include "../tools/freeformtool.h"
+#include "../tools/linetool.h"
+#include "../tools/movetool.h"
 #include "../tools/properties/propertymanager.h"
 #include "../tools/rectangletool.h"
-#include "../tools/ellipsetool.h"
-#include "../tools/linetool.h"
-#include "../tools/arrowtool.h"
-#include "../tools/freeformtool.h"
-#include "../tools/erasertool.h"
-#include "../tools/movetool.h"
-#include "../item/item.h"
+#include "coordinatetransformer.h"
+#include <QRect>
+#include <memory>
 
-ApplicationContext::ApplicationContext(QWidget* parent)
-    : QObject {parent} {
-    m_fps = 120;
+ApplicationContext::ApplicationContext(QWidget* parent) : QObject{parent} {
     m_canvas = new Canvas(parent);
     m_canvas->setScale(1.25);
 
@@ -28,8 +29,10 @@ ApplicationContext::ApplicationContext(QWidget* parent)
     m_actionBar = new ActionBar(parent);
     m_propertyBar = new PropertyBar(parent);
     m_propertyManager = new PropertyManager(m_propertyBar);
-    m_quadtree = std::make_unique<QuadTree>(QRect{{0, 0}, m_canvas->sizeHint()}, 100); // just an arbitrary capacity for now
+    m_quadtree = std::make_unique<QuadTree>(QRect{{0, 0}, m_canvas->sizeHint()},
+                                            100);  // just an arbitrary capacity for now
 
+    m_coordinateTransformer = std::make_unique<CoordinateTransformer>(this);
     m_cacheGrid = std::make_unique<CacheGrid>(100);
     m_event = new Event();
 
@@ -41,7 +44,8 @@ ApplicationContext::ApplicationContext(QWidget* parent)
     QObject::connect(m_canvas, &Canvas::resizeEnd, this, &ApplicationContext::beginPainters);
     QObject::connect(m_toolBar, &ToolBar::toolChanged, this, &ApplicationContext::toolChanged);
     QObject::connect(m_toolBar, &ToolBar::toolChanged, m_propertyBar, &PropertyBar::toolChanged);
-    QObject::connect(m_canvas, &Canvas::resizeEventCalled, this, &ApplicationContext::canvasResized);
+    QObject::connect(m_canvas, &Canvas::resizeEventCalled, this,
+                     &ApplicationContext::canvasResized);
 
     m_toolBar->addTool(new FreeformTool(*m_propertyManager));
     m_toolBar->addTool(new RectangleTool(*m_propertyManager));
@@ -53,12 +57,10 @@ ApplicationContext::ApplicationContext(QWidget* parent)
 
     m_actionBar->addButton("-", 1);
     m_actionBar->addButton("+", 2);
-    QObject::connect(&m_actionBar->button(1), &QPushButton::clicked, this, [this](){
-        setZoomFactor(-1);
-    });
-    QObject::connect(&m_actionBar->button(2), &QPushButton::clicked, this, [this](){
-        setZoomFactor(1);
-    });
+    QObject::connect(&m_actionBar->button(1), &QPushButton::clicked, this,
+                     [this]() { setZoomFactor(-1); });
+    QObject::connect(&m_actionBar->button(2), &QPushButton::clicked, this,
+                     [this]() { setZoomFactor(1); });
 
     m_canvasPainter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
     m_overlayPainter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
@@ -108,6 +110,10 @@ QPainter& ApplicationContext::overlayPainter() const {
     return *m_overlayPainter;
 }
 
+CoordinateTransformer& ApplicationContext::coordinateTransformer() const {
+    return *m_coordinateTransformer;
+}
+
 // PRIVATE SLOTS
 void ApplicationContext::endPainters() {
     if (m_canvasPainter->isActive()) m_canvasPainter->end();
@@ -139,46 +145,40 @@ void ApplicationContext::setOffsetPos(const QPointF& pos) {
     m_offsetPos = pos;
 }
 
-int ApplicationContext::fps() const {
-    return m_fps;
-}
-
 qreal ApplicationContext::zoomFactor() const {
     return m_zoomFactor;
 }
 
 void ApplicationContext::setZoomFactor(int diff) {
-    if (diff < 0 && m_zoomFactor <= 0.2) return;
-    qDebug() << "Zoom: " << m_zoomFactor;
+    // zoom out limit is 0.1
+    if (diff < 0 && m_zoomFactor - 0.1 <= 1e-9) return;
 
     qreal oldZoomFactor = m_zoomFactor;
     m_zoomFactor += diff * 0.1;
 
-    QSize viewport {canvas().dimensions()};
-    m_offsetPos.setX(m_offsetPos.x() + viewport.width() / (2 * oldZoomFactor) - viewport.width() / (2 * m_zoomFactor));
-    m_offsetPos.setY(m_offsetPos.y() + viewport.height() / (2 * oldZoomFactor) - viewport.height() / (2 * m_zoomFactor));
+    qDebug() << "Zoom: " << m_zoomFactor;
 
+    QSize viewport{canvas().dimensions()};
+    m_offsetPos.setX(m_offsetPos.x() + viewport.width() / (2 * oldZoomFactor) -
+                     viewport.width() / (2 * m_zoomFactor));
+    m_offsetPos.setY(m_offsetPos.y() + viewport.height() / (2 * oldZoomFactor) -
+                     viewport.height() / (2 * m_zoomFactor));
+
+    // changes scale
     endPainters();
     beginPainters();
-    canvas().setBg(canvas().bg());
 
-    QRect scaledViewport {offsetPos().toPoint(), canvas().dimensions() / m_zoomFactor};
     cacheGrid().markAllDirty();
+    Common::renderItems(this);
 
-    QVector<std::shared_ptr<Item>> items {quadtree().queryItems(scaledViewport, true)};
-    for (auto item : items) {
-        item->draw(canvasPainter(), m_offsetPos);
-    }
     canvas().update();
 }
 
 void ApplicationContext::canvasResized() {
-    int width {m_canvas->dimensions().width()}, height {m_canvas->dimensions().height()};
-    qDebug() << "width: " << width << " height: " << height;
-    int cellW {CacheCell::cellSize().width()}, cellH {CacheCell::cellSize().height()};
-    int rows = std::ceil(height/static_cast<double>(cellH))+1;
-    int cols = std::ceil(width/static_cast<double>(cellW))+1;
+    int width{m_canvas->dimensions().width()}, height{m_canvas->dimensions().height()};
+    int cellW{CacheCell::cellSize().width()}, cellH{CacheCell::cellSize().height()};
+    int rows{static_cast<int>(std::ceil(height / static_cast<double>(cellH)) + 1)};
+    int cols{static_cast<int>(std::ceil(width / static_cast<double>(cellW)) + 1)};
 
-    qDebug() << "Grid Size: " << rows*cols;
-    m_cacheGrid->setSize(rows*cols);
+    m_cacheGrid->setSize(rows * cols);
 }

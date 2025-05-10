@@ -1,13 +1,13 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include <QRect>
-#include <QPainter>
 #include "properties/itemproperty.h"
+#include <QPainter>
+#include <QRect>
 class ApplicationContext;
 
 class Item {
-  public:
+public:
     Item();
     virtual ~Item();
 
@@ -22,11 +22,11 @@ class Item {
     ItemProperty& getProperty(const ItemPropertyType propertyType);
     const ItemProperty& getProperty(const ItemPropertyType propertyType) const;
 
-  protected:
-    QRectF m_boundingBox {};
-    int m_boundingBoxPadding {};
-    qreal m_scale {1};
-    std::unordered_map<ItemPropertyType, ItemProperty> m_properties {};
+protected:
+    QRectF m_boundingBox{};
+    int m_boundingBoxPadding{};
+    qreal m_scale{1};
+    std::unordered_map<ItemPropertyType, ItemProperty> m_properties{};
 
     static bool linesIntersect(QLineF a, QLineF b);
     static int orientation(QPointF a, QPointF b, QPointF c);
@@ -34,4 +34,4 @@ class Item {
     virtual void m_draw(QPainter& painter, const QPointF& offset) const = 0;
 };
 
-#endif // ITEM_H
+#endif  // ITEM_H

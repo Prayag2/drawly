@@ -9,15 +9,15 @@ enum class ItemPropertyType {
 };
 
 class ItemProperty {
-  public:
+public:
     ItemProperty();
     ItemProperty(QVariant value);
 
     void setValue(QVariant value);
     const QVariant& value() const;
 
-  private:
-    QVariant m_value {};
+private:
+    QVariant m_value{};
 };
 
-#endif // ITEMPROPERTY_H
+#endif  // ITEMPROPERTY_H

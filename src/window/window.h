@@ -6,11 +6,12 @@
 class MainWindow : public QWidget {
     Q_OBJECT
 
-  public:
-    MainWindow(QWidget *parent = nullptr);
+public:
+    MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
-  private:
-    bool m_config_useSystemStyles {true};
+
+private:
+    bool m_config_useSystemStyles{true};
     void m_applyCustomStyles();
 };
-#endif // MAINWINDOW_H
+#endif  // MAINWINDOW_H

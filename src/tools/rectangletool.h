@@ -5,11 +5,11 @@
 class PropertyManager;
 
 class RectangleTool : public PolygonDrawingTool {
-  public:
+public:
     RectangleTool(const PropertyManager& propertyManager);
     ~RectangleTool() override = default;
 
     QString iconAlt() const override;
 };
 
-#endif // RECTANGLETOOL_H
+#endif  // RECTANGLETOOL_H

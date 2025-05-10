@@ -4,7 +4,7 @@
 #include "item.h"
 
 class Polygon : public Item {
-  public:
+public:
     Polygon();
 
     virtual void setStart(QPointF start);
@@ -16,11 +16,11 @@ class Polygon : public Item {
     const QPointF& start() const;
     const QPointF& end() const;
 
-  private:
-    QPointF m_start {};
-    QPointF m_end {};
+private:
+    QPointF m_start{};
+    QPointF m_end{};
 
     void m_updateBoundingBox();
 };
 
-#endif // POLYGON_H
+#endif  // POLYGON_H

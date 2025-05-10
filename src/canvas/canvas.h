@@ -1,14 +1,14 @@
 #ifndef CANVAS_H
 #define CANVAS_H
 
-#include <QWidget>
 #include <QPainter>
+#include <QWidget>
 
 class Canvas : public QWidget {
     Q_OBJECT
 
-  public:
-    explicit Canvas(QWidget *parent = nullptr);
+public:
+    explicit Canvas(QWidget* parent = nullptr);
     ~Canvas();
 
     QImage* const canvas() const;
@@ -17,42 +17,42 @@ class Canvas : public QWidget {
     QSize dimensions() const;
 
     QColor bg() const;
-    void setBg(const QColor& color, QImage *canvas = nullptr, QImage *overlay = nullptr);
+    void setBg(const QColor& color, QImage* canvas = nullptr, QImage* overlay = nullptr);
 
     qreal scale() const;
     void setScale(const qreal scale);
 
-  signals:
-    void mousePressed(QMouseEvent *event);
-    void mouseMoved(QMouseEvent *event);
-    void mouseReleased(QMouseEvent *event);
-    void wheel(QWheelEvent *event);
+signals:
+    void mousePressed(QMouseEvent* event);
+    void mouseMoved(QMouseEvent* event);
+    void mouseReleased(QMouseEvent* event);
+    void wheel(QWheelEvent* event);
     void resizeEventCalled();
     void resizeStart();
     void resizeEnd();
     void destroyed();
 
-  protected:
-    void paintEvent(QPaintEvent *event) override;
-    void resizeEvent(QResizeEvent *event) override;
-    void mousePressEvent(QMouseEvent *event) override;
-    void mouseMoveEvent(QMouseEvent *event) override;
-    void mouseReleaseEvent(QMouseEvent *event) override;
-    void wheelEvent(QWheelEvent *event) override;
+protected:
+    void paintEvent(QPaintEvent* event) override;
+    void resizeEvent(QResizeEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
+    void wheelEvent(QWheelEvent* event) override;
 
-  private:
-    qreal m_scale {1.0}; // default scale is 1
-    QImage *m_canvas {};
-    QImage *m_overlay {};
-    QColor m_bg {};
+private:
+    qreal m_scale{1.0};  // default scale is 1
+    QImage* m_canvas{};
+    QImage* m_overlay{};
+    QColor m_bg{};
 
-    QSize m_sizeHint {500, 500};
-    QSize m_maxSize {};
-    const QImage::Format m_imageFormat {QImage::Format_ARGB32_Premultiplied};
+    QSize m_sizeHint{500, 500};
+    QSize m_maxSize{};
+    const QImage::Format m_imageFormat{QImage::Format_ARGB32_Premultiplied};
 
     static QByteArray imageData(QImage* const img);
-    static void setImageData(QImage *const img, const QByteArray& arr);
+    static void setImageData(QImage* const img, const QByteArray& arr);
     void resize();
 };
 
-#endif // CANVAS_H
+#endif  // CANVAS_H

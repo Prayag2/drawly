@@ -1,10 +1,11 @@
-#include <QLabel>
 #include "propertybar.h"
-#include "../tools/tool.h"
+
 #include "../tools/properties/toolproperty.h"
+#include "../tools/tool.h"
+#include <QLabel>
 
 PropertyBar::PropertyBar(QWidget* parent) : QFrame{parent} {
-    m_layout = new QVBoxLayout {this};
+    m_layout = new QVBoxLayout{this};
     m_layout->addSpacing(10);
 
     this->setLayout(m_layout);
@@ -15,10 +16,10 @@ PropertyBar::PropertyBar(QWidget* parent) : QFrame{parent} {
 
 // PUBLIC SLOTS
 void PropertyBar::toolChanged(Tool& tool) {
-    QVector<std::shared_ptr<ToolProperty>> properties {tool.properties()};
+    QVector<std::shared_ptr<ToolProperty>> properties{tool.properties()};
 
     // removing previous widgets
-    QLayoutItem *item {};
+    QLayoutItem* item{};
     while ((item = m_layout->takeAt(0)) != nullptr) {
         if (item->widget()) {
             if (item->widget()->property("isWidgetLabel") == "true") delete item->widget();
@@ -33,8 +34,10 @@ void PropertyBar::toolChanged(Tool& tool) {
         m_layout->addWidget(&(property->widget()));
     }
 
-    if (properties.empty()) setVisible(false);
-    else setVisible(true);
+    if (properties.empty())
+        setVisible(false);
+    else
+        setVisible(true);
 
     update();
 }

@@ -1,32 +1,32 @@
 #ifndef TOOLBAR_H
 #define TOOLBAR_H
 
-#include <QHBoxLayout>
-#include <QFrame>
-#include <QPushButton>
-#include <QButtonGroup>
 #include "../tools/tool.h"
+#include <QButtonGroup>
+#include <QFrame>
+#include <QHBoxLayout>
+#include <QPushButton>
 
 class ToolBar : public QFrame {
     Q_OBJECT
-  public:
-    explicit ToolBar(QWidget *parent = nullptr);
+public:
+    explicit ToolBar(QWidget* parent = nullptr);
     ~ToolBar();
 
     Tool& curTool() const;
-    void addTool(Tool *tool);
+    void addTool(Tool* tool);
 
-  signals:
+signals:
     void toolChanged(Tool&);
 
-  private:
-    QButtonGroup *m_group {};
-    QHBoxLayout *m_layout {};
-    QVector<Tool*> m_tools {};
+private:
+    QButtonGroup* m_group{};
+    QHBoxLayout* m_layout{};
+    QVector<Tool*> m_tools{};
     void createButtons() const;
 
-  private slots:
+private slots:
     void onToolChanged(int id);
 };
 
-#endif // TOOLBAR_H
+#endif  // TOOLBAR_H

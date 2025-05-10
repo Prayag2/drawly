@@ -4,7 +4,7 @@
 #include "polygon.h"
 
 class Arrow : public Polygon {
-  public:
+public:
     Arrow();
     ~Arrow() override = default;
 
@@ -13,16 +13,16 @@ class Arrow : public Polygon {
 
     bool intersects(const QRectF& rect) override;
 
-  protected:
+protected:
     void m_draw(QPainter& painter, const QPointF& offset) const override;
 
-  private:
+private:
     QPointF m_arrowP1;
     QPointF m_arrowP2;
 
-    int m_maxArrowSize {15}; // hardcoded for now
+    int m_maxArrowSize{15};  // hardcoded for now
 
     void calcArrowPoints();
 };
 
-#endif // ARROW_H
+#endif  // ARROW_H

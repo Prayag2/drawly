@@ -6,9 +6,9 @@
 class Item;
 
 class RectangleFactory : public ItemFactory {
-  public:
+public:
     RectangleFactory();
     std::shared_ptr<Item> create() const override;
 };
 
-#endif // RECTANGLEFACTORY_H
+#endif  // RECTANGLEFACTORY_H

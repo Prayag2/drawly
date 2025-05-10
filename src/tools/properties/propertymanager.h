@@ -2,20 +2,16 @@
 #define PROPERTYMANAGER_H
 #include <QObject>
 
-enum class ToolPropertyType {
-    StrokeWidth = 0x00,
-    StrokeColor = 0x02
-};
+enum class ToolPropertyType { StrokeWidth = 0x00, StrokeColor = 0x02 };
 class ToolProperty;
 
-class PropertyManager : public QObject
-{
+class PropertyManager : public QObject {
 public:
-    explicit PropertyManager(QWidget *parent = nullptr);
+    explicit PropertyManager(QWidget* parent = nullptr);
     std::shared_ptr<ToolProperty> getToolProperty(const ToolPropertyType toolType) const;
 
 private:
-    std::unordered_map<ToolPropertyType, std::shared_ptr<ToolProperty>> m_properties {};
+    std::unordered_map<ToolPropertyType, std::shared_ptr<ToolProperty>> m_properties{};
 };
 
-#endif // PROPERTYMANAGER_H
+#endif  // PROPERTYMANAGER_H

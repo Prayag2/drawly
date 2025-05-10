@@ -1,8 +1,8 @@
 #ifndef CACHEGRID_H
 #define CACHEGRID_H
+#include <QHash>
 #include <QImage>
 #include <QPoint>
-#include <QHash>
 
 class CacheGrid;
 
@@ -24,18 +24,17 @@ public:
 
 private:
     QPoint m_point{};
-    std::unique_ptr<QImage> m_image {nullptr};
-    std::unique_ptr<QPainter> m_painter {};
-    std::weak_ptr<CacheCell> nextCell {};
-    std::weak_ptr<CacheCell> prevCell {};
+    std::unique_ptr<QImage> m_image{nullptr};
+    std::unique_ptr<QPainter> m_painter{};
+    std::weak_ptr<CacheCell> nextCell{};
+    std::weak_ptr<CacheCell> prevCell{};
     bool m_dirty{};
 
     // CacheGrid can access private members
     friend CacheGrid;
 };
 
-class CacheGrid
-{
+class CacheGrid {
 public:
     CacheGrid(int maxSize);
     QVector<std::shared_ptr<CacheCell>> queryCells(const QRect& rect);
@@ -46,12 +45,12 @@ public:
 
 private:
     QHash<QPoint, std::shared_ptr<CacheCell>> m_grid{};
-    std::shared_ptr<CacheCell> m_headCell {std::make_shared<CacheCell>(QPoint{0,0})};
-    std::shared_ptr<CacheCell> m_tailCell {std::make_shared<CacheCell>(QPoint{0,0})};
+    std::shared_ptr<CacheCell> m_headCell{std::make_shared<CacheCell>(QPoint{0, 0})};
+    std::shared_ptr<CacheCell> m_tailCell{std::make_shared<CacheCell>(QPoint{0, 0})};
 
-    QSize m_cellSize {};
-    int m_curSize {0};
-    int m_maxSize {0};
+    QSize m_cellSize{};
+    int m_curSize{0};
+    int m_maxSize{0};
 };
 
-#endif // CACHEGRID_H
+#endif  // CACHEGRID_H

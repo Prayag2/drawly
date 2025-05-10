@@ -1,12 +1,12 @@
 #include "canvas.h"
+
 #include <QBuffer>
-#include <QScreen>
 #include <QResizeEvent>
+#include <QScreen>
 
 // PUBLIC
-Canvas::Canvas(QWidget *parent)
-    : QWidget{parent} {
-    m_sizeHint = screen()->size()*m_scale;
+Canvas::Canvas(QWidget* parent) : QWidget{parent} {
+    m_sizeHint = screen()->size() * m_scale;
     m_maxSize = m_sizeHint;
     setMouseTracking(true);
     m_canvas = new QImage(m_sizeHint, m_imageFormat);
@@ -37,7 +37,7 @@ QColor Canvas::bg() const {
     return m_bg;
 };
 
-void Canvas::setBg(const QColor& color, QImage *canvas, QImage *overlay) {
+void Canvas::setBg(const QColor& color, QImage* canvas, QImage* overlay) {
     m_bg = color;
     if (canvas)
         canvas->fill(color);
@@ -57,7 +57,7 @@ qreal Canvas::scale() const {
 void Canvas::setScale(const qreal scale) {
     if (scale == 0 || m_scale == 0) return;
 
-    m_sizeHint = (m_sizeHint*scale)/m_scale;
+    m_sizeHint = (m_sizeHint * scale) / m_scale;
 
     if (scale > m_scale) m_maxSize = m_sizeHint;
     m_scale = scale;
@@ -65,13 +65,13 @@ void Canvas::setScale(const qreal scale) {
 }
 
 QSize Canvas::dimensions() const {
-    return size()*m_scale;
+    return size() * m_scale;
 }
 
 // PROTECTED
-void Canvas::paintEvent(QPaintEvent *event) {
-    QPainter painter {this};
-    painter.scale(1.0/m_scale, 1.0/m_scale);
+void Canvas::paintEvent(QPaintEvent* event) {
+    QPainter painter{this};
+    painter.scale(1.0 / m_scale, 1.0 / m_scale);
     if (m_canvas) painter.drawImage(0, 0, *m_canvas);
     if (m_overlay) painter.drawImage(0, 0, *m_overlay);
 }
@@ -81,10 +81,10 @@ bool operator<=(const QSize& a, const QSize& b) {
     return a.height() <= b.height() && a.width() <= b.width();
 }
 
-void Canvas::resizeEvent(QResizeEvent *event) {
+void Canvas::resizeEvent(QResizeEvent* event) {
     emit resizeEventCalled();
 
-    if (size()*m_scale <= m_maxSize) {
+    if (size() * m_scale <= m_maxSize) {
         return;
     }
 
@@ -93,36 +93,36 @@ void Canvas::resizeEvent(QResizeEvent *event) {
     QWidget::resizeEvent(event);
 }
 
-void Canvas::mousePressEvent(QMouseEvent *event) {
+void Canvas::mousePressEvent(QMouseEvent* event) {
     emit mousePressed(event);
     QWidget::mousePressEvent(event);
 }
 
-void Canvas::mouseMoveEvent(QMouseEvent *event) {
+void Canvas::mouseMoveEvent(QMouseEvent* event) {
     emit mouseMoved(event);
     QWidget::mouseMoveEvent(event);
 };
 
-void Canvas::mouseReleaseEvent(QMouseEvent *event) {
+void Canvas::mouseReleaseEvent(QMouseEvent* event) {
     emit mouseReleased(event);
     QWidget::mouseReleaseEvent(event);
 };
 
-void Canvas::wheelEvent(QWheelEvent *event) {
+void Canvas::wheelEvent(QWheelEvent* event) {
     emit wheel(event);
     QWidget::wheelEvent(event);
 }
 
 // PRIVATE
-QByteArray Canvas::imageData(QImage *const img) {
-    QByteArray arr {};
-    QBuffer buffer {&arr};
+QByteArray Canvas::imageData(QImage* const img) {
+    QByteArray arr{};
+    QBuffer buffer{&arr};
     buffer.open(QBuffer::WriteOnly);
     img->save(&buffer, "PNG");
     return arr;
 }
 
-void Canvas::setImageData(QImage *const img, const QByteArray& arr) {
+void Canvas::setImageData(QImage* const img, const QByteArray& arr) {
     img->loadFromData(arr, "PNG");
 }
 
@@ -133,16 +133,16 @@ void Canvas::resize() {
         return;
     }
 
-    QSize oldSize {m_canvas->size()};
-    QSize newSize {size()*m_scale};
+    QSize oldSize{m_canvas->size()};
+    QSize newSize{size() * m_scale};
     m_maxSize.setWidth(std::max(oldSize.width(), newSize.width()));
     m_maxSize.setHeight(std::max(oldSize.height(), newSize.height()));
 
-    QImage *canvas {new QImage(m_maxSize, m_imageFormat)};
-    QImage *overlay {new QImage(m_maxSize, m_imageFormat)};
+    QImage* canvas{new QImage(m_maxSize, m_imageFormat)};
+    QImage* overlay{new QImage(m_maxSize, m_imageFormat)};
     setBg(bg(), canvas, overlay);
 
-    QPainter canvasPainter {canvas}, overlayPainter {overlay};
+    QPainter canvasPainter{canvas}, overlayPainter{overlay};
     canvasPainter.drawImage(0, 0, *m_canvas);
     overlayPainter.drawImage(0, 0, *m_overlay);
 

@@ -17,14 +17,14 @@ class Item;
  * And redraw only the items necessary which improves performance.
  */
 /*
- * NOTE: This is tied to the OrderedList data structure present in the same directory
+ * NOTE: This is tightly coupled with the OrderedList data structure present in the same directory
  *       and the Item class present in the `item` directory.
  */
 class QuadTree {
-   public:
+public:
     using ItemPtr = std::shared_ptr<Item>;
 
-   private:
+private:
     QVector<ItemPtr> m_items{};
     QRectF m_boundingBox{};
     int m_capacity{};
@@ -34,7 +34,7 @@ class QuadTree {
     std::unique_ptr<QuadTree> m_bottomLeft{nullptr};
     std::shared_ptr<OrderedList> m_orderedList{nullptr};
 
-   public:
+public:
     QuadTree(QRectF region, int capacity);
     QuadTree(QRectF region, int capacity, std::shared_ptr<OrderedList> orderedList);
 
@@ -43,24 +43,24 @@ class QuadTree {
     int size() const;
     void insertItem(ItemPtr item);
     void deleteItem(ItemPtr item);
-    void deleteItems(const QRectF &boundingBox);
+    void deleteItems(const QRectF& boundingBox);
 
     QVector<ItemPtr> getAllItems() const;
-    QVector<ItemPtr> queryItems(const QRectF &boundingBox, bool onlyBoundingBox = false) const;
-    QVector<ItemPtr> queryConnectedItems(const QRectF &boundingBox,
+    QVector<ItemPtr> queryItems(const QRectF& boundingBox, bool onlyBoundingBox = false) const;
+    QVector<ItemPtr> queryConnectedItems(const QRectF& boundingBox,
                                          std::optional<int> level = {}) const;
 
-    void draw(QPainter &painter, const QPointF &offset) const;
-    const QRectF &boundingBox() const;
+    void draw(QPainter& painter, const QPointF& offset) const;
+    const QRectF& boundingBox() const;
 
-   private:
+private:
     bool insert(ItemPtr item);
-    void query(const QRectF &boundingBox, bool onlyBoundingBox, QVector<ItemPtr> &out,
-               std::unordered_map<ItemPtr, bool> &itemAlreadyPushed) const;
-    void dfs(const QRectF &boundingBox, QVector<ItemPtr> items, QVector<ItemPtr> &out,
+    void query(const QRectF& boundingBox, bool onlyBoundingBox, QVector<ItemPtr>& out,
+               std::unordered_map<ItemPtr, bool>& itemAlreadyPushed) const;
+    void dfs(const QRectF& boundingBox, QVector<ItemPtr> items, QVector<ItemPtr>& out,
              std::optional<int> level) const;
     void subdivide();
-    void expand(const QPointF &point);
+    void expand(const QPointF& point);
 };
 
 #endif  // QUADTREE_H

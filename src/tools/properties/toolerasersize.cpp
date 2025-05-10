@@ -1,8 +1,9 @@
 #include "toolerasersize.h"
+
 #include <QSpinBox>
 
 ToolEraserSize::ToolEraserSize(QWidget* parent) {
-    QSpinBox* box {new QSpinBox(parent)};
+    QSpinBox* box{new QSpinBox(parent)};
     box->setRange(1, 10);
     m_widget = box;
 }

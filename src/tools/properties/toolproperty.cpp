@@ -1,6 +1,7 @@
 #include "toolproperty.h"
 
-ToolProperty::ToolProperty() {}
+ToolProperty::ToolProperty() {
+}
 
 QWidget& ToolProperty::widget() const {
     return *m_widget;

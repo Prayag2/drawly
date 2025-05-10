@@ -5,11 +5,11 @@
 
 class BoardLayout : public QLayout {
     Q_OBJECT
-  public:
-    BoardLayout(QWidget *parent = nullptr);
+public:
+    BoardLayout(QWidget* parent = nullptr);
     ~BoardLayout();
 
-    void addItem(QLayoutItem *item) override;
+    void addItem(QLayoutItem* item) override;
     QLayoutItem* itemAt(int index) const override;
     QLayoutItem* takeAt(int index) override;
     void setGeometry(const QRect& rect) override;
@@ -24,21 +24,21 @@ class BoardLayout : public QLayout {
     void setCentralWidget(QWidget* const item);
     void setMargins(int margins);
 
-  private:
-    QLayoutItem *m_centralWidget {nullptr};
-    QLayoutItem *m_leftWidget {nullptr};
-    QLayoutItem *m_topWidget {nullptr};
-    QLayoutItem *m_rightWidget {nullptr};
-    QLayoutItem *m_bottomWidget {nullptr};
+private:
+    QLayoutItem* m_centralWidget{nullptr};
+    QLayoutItem* m_leftWidget{nullptr};
+    QLayoutItem* m_topWidget{nullptr};
+    QLayoutItem* m_rightWidget{nullptr};
+    QLayoutItem* m_bottomWidget{nullptr};
 
-    std::array<QLayoutItem**, 5> m_widgets {};
+    std::array<QLayoutItem**, 5> m_widgets{};
 
-    bool m_isLeftPinned {false};
-    bool m_isTopPinned {false};
-    bool m_isRightPinned {false};
-    bool m_isBottomPinned {false};
+    bool m_isLeftPinned{false};
+    bool m_isTopPinned{false};
+    bool m_isRightPinned{false};
+    bool m_isBottomPinned{false};
 
-    int m_margins {0};
+    int m_margins{0};
 };
 
-#endif // BOARDLAYOUT_H
+#endif  // BOARDLAYOUT_H

@@ -1,3 +1,4 @@
 #include "drawingtool.h"
 
-DrawingTool::DrawingTool() {}
+DrawingTool::DrawingTool() {
+}

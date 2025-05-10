@@ -1,7 +1,9 @@
 #include "itemproperty.h"
 
-ItemProperty::ItemProperty() {}
-ItemProperty::ItemProperty(QVariant value) : m_value {value} {}
+ItemProperty::ItemProperty() {
+}
+ItemProperty::ItemProperty(QVariant value) : m_value{value} {
+}
 
 void ItemProperty::setValue(QVariant value) {
     m_value = value;

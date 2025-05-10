@@ -1,22 +1,22 @@
 #ifndef ORDEREDLIST_H
 #define ORDEREDLIST_H
 
+#include <list>
 #include <memory>
 #include <unordered_map>
-#include <list>
 class Item;
 
-// Keeps track z-index of every item
+// Keeps track of the z-index of every item
 class OrderedList {
-   public:
+public:
     using ItemPtr = std::shared_ptr<Item>;
 
-   private:
+private:
     std::unordered_map<ItemPtr, std::list<ItemPtr>::iterator> m_itemIterMap;
     std::list<ItemPtr> m_itemList;
     std::unordered_map<ItemPtr, int> m_zIndex;
 
-   public:
+public:
     void insert(ItemPtr item);
     void remove(ItemPtr item);
 
@@ -29,4 +29,4 @@ class OrderedList {
     int zIndex(ItemPtr item) const;
 };
 
-#endif // ORDEREDLIST_H
+#endif  // ORDEREDLIST_H

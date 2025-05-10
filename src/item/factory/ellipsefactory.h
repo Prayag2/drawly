@@ -4,9 +4,9 @@
 #include "itemfactory.h"
 
 class EllipseFactory : public ItemFactory {
-  public:
+public:
     EllipseFactory();
     std::shared_ptr<Item> create() const override;
 };
 
-#endif // ELLIPSEFACTORY_H
+#endif  // ELLIPSEFACTORY_H

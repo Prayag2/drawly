@@ -1,0 +1,40 @@
+BasedOnStyle: Google  # or LLVM, WebKit, Mozilla — pick one as base
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+AccessModifierOffset: -4
+
+ColumnLimit: 100
+AllowShortFunctionsOnASingleLine: InlineOnly
+
+SortIncludes: true
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex:           '^<.*\.h>'
+    Priority:        1
+    SortPriority:    1
+  - Regex:           '^".*\.h"'
+    Priority:        2
+    SortPriority:    2
+
+SpaceBeforeParens: ControlStatements
+BreakBeforeBraces: Attach
+BraceWrapping:
+  AfterClass: true
+  AfterControlStatement: true
+  AfterEnum: true
+  AfterFunction: true
+  AfterNamespace: true
+  AfterStruct: true
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+
+AlignTrailingComments: true
+
+DerivePointerAlignment: false
+PointerAlignment: Left
+
+ReflowComments: true
+FixNamespaceComments: true
+BreakConstructorInitializers: BeforeColon
