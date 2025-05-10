@@ -1,12 +1,14 @@
 #include "cachegrid.h"
-#include <QPainter>
+
 #include <QDebug>
+#include <QPainter>
 
 int CacheCell::counter = 0;
 
 CacheCell::CacheCell(const QPoint& point) : m_point{point} {
     m_image = std::make_unique<QImage>(CacheCell::cellSize(), QImage::Format_ARGB32_Premultiplied);
     m_image->fill(Qt::transparent);
+
     m_painter = std::make_unique<QPainter>(m_image.get());
     m_painter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
     m_painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
@@ -32,8 +34,8 @@ QImage& CacheCell::image() const {
 }
 
 QRect CacheCell::rect() const {
-    int cellW {CacheCell::cellSize().width()}, cellH {CacheCell::cellSize().height()};
-    QPoint cellPos {point().x() * cellW, point().y()*cellH};
+    int cellW{CacheCell::cellSize().width()}, cellH{CacheCell::cellSize().height()};
+    QPoint cellPos{point().x() * cellW, point().y() * cellH};
     return {cellPos.x(), cellPos.y(), cellW, cellH};
 }
 
@@ -47,7 +49,7 @@ QPainter& CacheCell::painter() const {
 
 QSize CacheCell::cellSize() {
     // TODO: don't hardcode me OwO
-    return {512,512};
+    return {512, 512};
 }
 
 CacheGrid::CacheGrid(int maxSize) {
@@ -55,7 +57,7 @@ CacheGrid::CacheGrid(int maxSize) {
     m_tailCell->prevCell = m_headCell;
 
     if (maxSize == 0) {
-        throw std::logic_error("maxSize can not be zero for the LRU cache grid");
+        throw std::logic_error("maxSize can not be zero for the cache grid");
     }
     m_maxSize = maxSize;
 }
@@ -79,7 +81,7 @@ QVector<std::shared_ptr<CacheCell>> CacheGrid::queryCells(const QRect& rect) {
 }
 
 std::shared_ptr<CacheCell> CacheGrid::cell(const QPoint& point) {
-    std::shared_ptr<CacheCell> cur {};
+    std::shared_ptr<CacheCell> cur{};
     if (!m_grid.contains(point) || !m_grid[point]) {
         if (m_curSize == m_maxSize) {
             // deleting least recently used cell
@@ -126,7 +128,6 @@ void CacheGrid::setSize(int newSize) {
 
 void CacheGrid::markAllDirty() {
     for (auto cell : m_grid) {
-        qDebug() << "Cell: " << cell->point();
         cell->setDirty(true);
     }
 }

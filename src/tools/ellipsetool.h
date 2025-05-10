@@ -5,7 +5,7 @@
 class PropertyManager;
 
 class EllipseTool : public PolygonDrawingTool {
-  public:
+public:
     EllipseTool(const PropertyManager& propertyManager);
 
     ~EllipseTool() override = default;
@@ -13,4 +13,4 @@ class EllipseTool : public PolygonDrawingTool {
     QString iconAlt() const override;
 };
 
-#endif // ELLIPSETOOL_H
+#endif  // ELLIPSETOOL_H

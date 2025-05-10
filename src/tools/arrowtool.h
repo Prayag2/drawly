@@ -5,10 +5,10 @@
 class PropertyManager;
 
 class ArrowTool : public PolygonDrawingTool {
-  public:
+public:
     ArrowTool(const PropertyManager& propertyManager);
     ~ArrowTool() override = default;
     QString iconAlt() const override;
 };
 
-#endif // ARROWTOOL_H
+#endif  // ARROWTOOL_H

@@ -6,22 +6,19 @@
 class Item;
 
 class MoveTool : public Tool {
-  public:
+public:
     MoveTool();
     ~MoveTool() = default;
 
     QString iconAlt() const override;
-    void mousePressed(ApplicationContext *context) override;
-    void mouseMoved(ApplicationContext *context) override;
-    void mouseReleased(ApplicationContext *context) override;
+    void mousePressed(ApplicationContext* context) override;
+    void mouseMoved(ApplicationContext* context) override;
+    void mouseReleased(ApplicationContext* context) override;
 
-  private:
-    bool m_isActive {false};
-    QPointF m_initialOffsetPos {};
-    QPointF m_initialPos {};
-    QElapsedTimer m_timer{};
-    QElapsedTimer m_interval{};
-    int counter {0};
+private:
+    bool m_isActive{false};
+    QPointF m_initialOffsetPos{};
+    QPointF m_initialPos{};
 };
 
-#endif // MOVETOOL_H
+#endif  // MOVETOOL_H

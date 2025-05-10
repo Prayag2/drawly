@@ -2,21 +2,21 @@
 #define ACTIONBAR_H
 
 #include <QFrame>
-#include <QPushButton>
 #include <QHBoxLayout>
 #include <QHash>
+#include <QPushButton>
 
 class ActionBar : public QFrame {
-Q_OBJECT
-    public:
-        ActionBar(QWidget *parent = nullptr);
+    Q_OBJECT
+public:
+    ActionBar(QWidget* parent = nullptr);
 
-        void addButton(const QString& text, int id);
-        QPushButton& button(int id);
+    void addButton(const QString& text, int id);
+    QPushButton& button(int id);
 
-    private:
-        QHash<int, QPushButton*> m_map {};
-        QHBoxLayout* m_layout {};
+private:
+    QHash<int, QPushButton*> m_map{};
+    QHBoxLayout* m_layout{};
 };
 
-#endif // ACTIONBAR_H
+#endif  // ACTIONBAR_H

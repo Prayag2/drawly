@@ -1,6 +1,7 @@
-#include <stdexcept>
-#include <QDebug>
 #include "orderedlist.h"
+
+#include <QDebug>
+#include <stdexcept>
 
 bool OrderedList::hasItem(ItemPtr item) const {
     if (m_itemIterMap.find(item) == m_itemIterMap.end()) {
@@ -74,7 +75,7 @@ void OrderedList::sendBackward(ItemPtr item) {
         return;
     }
 
-    // swap with previous 
+    // swap with previous
     auto prevIterator = std::prev(iterator);
     m_itemList.splice(prevIterator, m_itemList, iterator);
 
@@ -104,7 +105,7 @@ void OrderedList::bringToFront(ItemPtr item) {
     }
 
     auto iterator = m_itemIterMap[item];
-    if (iterator == m_itemList.end()) {
+    if (iterator == std::prev(m_itemList.end())) {
         return;
     }
 
@@ -119,4 +120,3 @@ int OrderedList::zIndex(ItemPtr item) const {
     }
     return m_zIndex.at(item);
 }
-

@@ -4,9 +4,9 @@
 #include "itemfactory.h"
 
 class FreeformFactory : public ItemFactory {
-  public:
+public:
     FreeformFactory();
     std::shared_ptr<Item> create() const override;
 };
 
-#endif // FREEFORMFACTORY_H
+#endif  // FREEFORMFACTORY_H

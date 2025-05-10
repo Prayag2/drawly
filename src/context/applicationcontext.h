@@ -2,8 +2,8 @@
 #define APPLICATIONCONTEXT_H
 
 #include <QObject>
-#include <QPoint>
 #include <QPainter>
+#include <QPoint>
 class ToolBar;
 class ActionBar;
 class Tool;
@@ -13,10 +13,11 @@ class CacheGrid;
 class Canvas;
 class PropertyBar;
 class PropertyManager;
+class CoordinateTransformer;
 
 class ApplicationContext : public QObject {
-  public:
-    ApplicationContext(QWidget *parent = nullptr);
+public:
+    ApplicationContext(QWidget* parent = nullptr);
     ~ApplicationContext();
 
     Canvas& canvas() const;
@@ -28,35 +29,35 @@ class ApplicationContext : public QObject {
     Event& event() const;
     QPainter& canvasPainter() const;
     QPainter& overlayPainter() const;
+    CoordinateTransformer& coordinateTransformer() const;
 
-    int fps() const;
     const QPointF& offsetPos() const;
     void setOffsetPos(const QPointF& pos);
     qreal zoomFactor() const;
     void setZoomFactor(int diff);
 
-  private slots:
+private slots:
     void beginPainters();
     void endPainters();
     void canvasResized();
     void toolChanged(Tool&);
 
-  private:
-    std::unique_ptr<QuadTree> m_quadtree {nullptr};
+private:
+    std::unique_ptr<QuadTree> m_quadtree{nullptr};
     std::unique_ptr<CacheGrid> m_cacheGrid{nullptr};
-    Canvas *m_canvas {nullptr};
-    QPainter *m_canvasPainter {};
-    QPainter *m_overlayPainter {};
-    ToolBar *m_toolBar {nullptr};
-    PropertyBar *m_propertyBar {};
-    ActionBar *m_actionBar {};
-    PropertyManager *m_propertyManager {};
-    Event *m_event {nullptr};
+    std::unique_ptr<CoordinateTransformer> m_coordinateTransformer{nullptr};
+    Canvas* m_canvas{nullptr};
+    QPainter* m_canvasPainter{};
+    QPainter* m_overlayPainter{};
+    ToolBar* m_toolBar{nullptr};
+    PropertyBar* m_propertyBar{};
+    ActionBar* m_actionBar{};
+    PropertyManager* m_propertyManager{};
+    Event* m_event{nullptr};
 
-    qreal m_zoomFactor {1};
+    qreal m_zoomFactor{1};
 
-    int m_fps {};
-    QPointF m_offsetPos {}; // all `Items` are positioned relative to this point
+    QPointF m_offsetPos{};  // all `Items` are positioned relative to this point
 };
 
-#endif // APPLICATIONCONTEXT_H
+#endif  // APPLICATIONCONTEXT_H

@@ -4,7 +4,7 @@
 #include "polygon.h"
 
 class Line : public Polygon {
-  public:
+public:
     Line();
     ~Line() override = default;
 
@@ -14,4 +14,4 @@ private:
     void m_draw(QPainter& painter, const QPointF& offset) const override;
 };
 
-#endif // LINE_H
+#endif  // LINE_H

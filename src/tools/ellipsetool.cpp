@@ -1,4 +1,5 @@
 #include "ellipsetool.h"
+
 #include "../item/factory/ellipsefactory.h"
 
 EllipseTool::EllipseTool(const PropertyManager& propertyManager)

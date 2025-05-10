@@ -1,19 +1,19 @@
 #ifndef DRAWINGTOOL_H
 #define DRAWINGTOOL_H
 
-#include "tool.h"
 #include "../item/factory/itemfactory.h"
+#include "tool.h"
 
 class DrawingTool : public Tool {
-  protected:
-    std::unique_ptr<ItemFactory> m_itemFactory {};
+protected:
+    std::unique_ptr<ItemFactory> m_itemFactory{};
 
-  public:
+public:
     DrawingTool();
     ~DrawingTool() override = default;
 
-  protected:
-    bool m_isDrawing {false};
+protected:
+    bool m_isDrawing{false};
 };
 
-#endif // DRAWINGTOOL_H
+#endif  // DRAWINGTOOL_H

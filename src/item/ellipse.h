@@ -4,7 +4,7 @@
 #include "polygon.h"
 
 class Ellipse : public Polygon {
-  public:
+public:
     Ellipse();
     virtual ~Ellipse() = default;
 
@@ -13,8 +13,8 @@ class Ellipse : public Polygon {
 protected:
     void m_draw(QPainter& painter, const QPointF& offset) const override;
 
-  private:
+private:
     bool onEllipse(QLineF line) const;
 };
 
-#endif // ELLIPSE_H
+#endif  // ELLIPSE_H

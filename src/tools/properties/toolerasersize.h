@@ -3,12 +3,11 @@
 
 #include "toolproperty.h"
 
-class ToolEraserSize : public ToolProperty
-{
+class ToolEraserSize : public ToolProperty {
 public:
-    ToolEraserSize(QWidget *parent = nullptr);
+    ToolEraserSize(QWidget* parent = nullptr);
     QString name() const override;
     const QVariant value() const override;
 };
 
-#endif // TOOLERASERSIZE_H
+#endif  // TOOLERASERSIZE_H

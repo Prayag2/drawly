@@ -1,3 +1,4 @@
 #include "itemfactory.h"
 
-ItemFactory::ItemFactory() {}
+ItemFactory::ItemFactory() {
+}

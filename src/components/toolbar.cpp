@@ -1,7 +1,6 @@
 #include "toolbar.h"
 
-ToolBar::ToolBar(QWidget *parent)
-    : QFrame{parent} {
+ToolBar::ToolBar(QWidget* parent) : QFrame{parent} {
     m_group = new QButtonGroup(this);
     m_layout = new QHBoxLayout(this);
     this->setLayout(m_layout);
@@ -14,7 +13,7 @@ ToolBar::ToolBar(QWidget *parent)
 }
 
 ToolBar::~ToolBar() {
-    for (Tool *tool : m_tools) {
+    for (Tool* tool : m_tools) {
         delete tool;
     }
 }
@@ -23,13 +22,13 @@ Tool& ToolBar::curTool() const {
     return *m_tools[m_group->checkedId()];
 }
 
-void ToolBar::addTool(Tool *tool) {
+void ToolBar::addTool(Tool* tool) {
     if (tool == nullptr) return;
 
-    QPushButton* btn {new QPushButton(tool->iconAlt(), this)};
+    QPushButton* btn{new QPushButton(tool->iconAlt(), this)};
     btn->setCheckable(true);
 
-    int id {static_cast<int>(m_tools.size())};
+    int id{static_cast<int>(m_tools.size())};
 
     m_tools.push_back(tool);
     m_group->addButton(btn, id);

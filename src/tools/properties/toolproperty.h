@@ -4,8 +4,7 @@
 #include <QWidget>
 class ItemProperty;
 
-class ToolProperty
-{
+class ToolProperty {
 public:
     ToolProperty();
     virtual QString name() const = 0;
@@ -14,7 +13,7 @@ public:
     QWidget& widget() const;
 
 protected:
-    QWidget* m_widget {};
+    QWidget* m_widget{};
 };
 
-#endif // TOOLPROPERTY_H
+#endif  // TOOLPROPERTY_H
