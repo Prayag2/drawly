@@ -2,6 +2,7 @@
 #define ERASERTOOL_H
 
 #include "tool.h"
+class Item;
 
 class EraserTool : public Tool {
 public:
@@ -15,6 +16,8 @@ public:
 
 private:
     bool m_isErasing{false};
+
+    QVector<std::shared_ptr<Item>> m_toBeErased;
 };
 
 #endif  // ERASERTOOL_H

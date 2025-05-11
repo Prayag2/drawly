@@ -22,7 +22,7 @@ ToolStrokeColor::ToolStrokeColor(QWidget* parent) {
         btn->setStyleSheet("background-color: " + color.name());
 
         layout->addWidget(btn);
-        m_group->addButton(btn, static_cast<int>(color.rgb()));
+        m_group->addButton(btn, color.rgba());
     }
 
     m_group->buttons()[0]->setChecked(true);
@@ -34,5 +34,6 @@ QString ToolStrokeColor::name() const {
 };
 
 const QVariant ToolStrokeColor::value() const {
+    // FIXME: Don't use id to return the colour
     return m_group->checkedId();
 };

@@ -86,16 +86,18 @@ void FreeformTool::mouseMoved(ApplicationContext* context) {
 
 void FreeformTool::mouseReleased(ApplicationContext* context) {
     if (context->event().button() == Qt::LeftButton && m_isDrawing) {
+        auto& transformer{context->coordinateTransformer()};
+
         QPainter& overlayPainter{context->overlayPainter()};
-        QPainter& canvasPainter{context->canvasPainter()};
 
         overlayPainter.setCompositionMode(QPainter::CompositionMode_Clear);
         overlayPainter.fillRect(context->canvas().overlay()->rect(), Qt::transparent);
         overlayPainter.setCompositionMode(QPainter::CompositionMode_SourceOver);
 
-        curItem->draw(canvasPainter, context->offsetPos());
         context->quadtree().insertItem(curItem);
-        context->cacheGrid().markAllDirty();
+
+        context->cacheGrid().markDirty(transformer.toView(curItem->boundingBox()).toRect());
+        Common::renderItems(context);
 
         m_isDrawing = false;
         context->canvas().update();

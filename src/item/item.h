@@ -13,7 +13,8 @@ public:
 
     virtual bool intersects(const QRectF& rect) = 0;
     virtual void draw(QPainter& painter, const QPointF& offset) = 0;
-    virtual void erase(QPainter& painter, const QPointF& offset) const = 0;
+    virtual void erase(QPainter& painter, const QPointF& offset, QColor color = Qt::transparent) const = 0;
+
     const QRectF& boundingBox() const;
 
     void setBoundingBoxPadding(int padding);

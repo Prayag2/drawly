@@ -72,6 +72,7 @@ QSize Canvas::dimensions() const {
 void Canvas::paintEvent(QPaintEvent* event) {
     QPainter painter{this};
     painter.scale(1.0 / m_scale, 1.0 / m_scale);
+
     if (m_canvas) painter.drawImage(0, 0, *m_canvas);
     if (m_overlay) painter.drawImage(0, 0, *m_overlay);
 }

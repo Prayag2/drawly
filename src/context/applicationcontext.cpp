@@ -123,7 +123,6 @@ void ApplicationContext::endPainters() {
 void ApplicationContext::beginPainters() {
     if (!m_canvasPainter->isActive()) {
         m_canvasPainter->begin(m_canvas->canvas());
-        m_canvasPainter->scale(zoomFactor(), zoomFactor());
         m_canvasPainter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
     }
     if (!m_overlayPainter->isActive()) {
