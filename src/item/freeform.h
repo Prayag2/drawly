@@ -10,7 +10,7 @@ public:
 
     static int minPointDistance();
     void draw(QPainter& painter, const QPointF& offset) override;
-    void erase(QPainter& painter, const QPointF& offset) const override;
+    void erase(QPainter& painter, const QPointF& offset, QColor color = Qt::transparent) const override;
     void quickDraw(QPainter& painter, const QPointF& offset) const;
     bool intersects(const QRectF& rect) override;
 
@@ -21,9 +21,6 @@ protected:
     QVector<QPointF> m_points{};
     QVector<QPointF> m_optimizedPoints{};
     int m_bufferSize{15};
-
-    std::unique_ptr<QImage> m_cache{};
-    bool m_cacheDirty{true};
 
 private:
     QPointF optimizePoint(QVector<QPointF>& points, int bufferSize, const QPointF& newPoint) const;

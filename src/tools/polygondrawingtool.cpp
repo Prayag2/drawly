@@ -1,6 +1,7 @@
 #include "polygondrawingtool.h"
 
 #include "../canvas/canvas.h"
+#include "../common/renderitems.h"
 #include "../context/applicationcontext.h"
 #include "../context/coordinatetransformer.h"
 #include "../data-structures/cachegrid.h"
@@ -63,13 +64,13 @@ void PolygonDrawingTool::mouseReleased(ApplicationContext* context) {
         auto& transformer{context->coordinateTransformer()};
 
         QPainter& overlayPainter{context->overlayPainter()};
-        QPainter& canvasPainter{context->canvasPainter()};
 
         curItem->erase(overlayPainter, context->offsetPos());
-        curItem->draw(canvasPainter, context->offsetPos());
 
         context->quadtree().insertItem(curItem);
-        context->cacheGrid().markAllDirty();
+
+        context->cacheGrid().markDirty(transformer.toView(curItem->boundingBox()).toRect());
+        Common::renderItems(context);
 
         m_isDrawing = false;
         context->canvas().update();

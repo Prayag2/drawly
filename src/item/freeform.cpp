@@ -1,8 +1,9 @@
 #include "freeform.h"
+#include "properties/itemproperty.h"
 
 Freeform::Freeform() {
     m_properties[ItemPropertyType::StrokeWidth] = ItemProperty(1);
-    m_properties[ItemPropertyType::StrokeColor] = ItemProperty(static_cast<int>(Qt::black));
+    m_properties[ItemPropertyType::StrokeColor] = ItemProperty(QColor(Qt::black).rgba());
 }
 
 int Freeform::minPointDistance() {
@@ -31,7 +32,6 @@ void Freeform::addPoint(const QPointF& point) {
 
     m_optimizedPoints.push_back(smoothenedPoint);
     m_points.push_back(point);
-    m_cacheDirty = true;
 }
 
 bool Freeform::intersects(const QRectF& rect) {
@@ -56,26 +56,36 @@ bool Freeform::intersects(const QRectF& rect) {
 }
 
 void Freeform::draw(QPainter& painter, const QPointF& offset) {
-    // m_draw(painter, offset);
-    QPointF relativeOffset{m_boundingBox.x(), m_boundingBox.y()};
-    if (m_cacheDirty) {
-        m_cache = std::make_unique<QImage>(m_boundingBox.width(), m_boundingBox.height(),
-                                           QImage::Format_ARGB32_Premultiplied);
+    QPen pen{};
 
-        QPainter cachePainter{m_cache.get()};
-        cachePainter.setCompositionMode(QPainter::CompositionMode_Source);
-        cachePainter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
-        cachePainter.fillRect(m_cache->rect(), Qt::transparent);
+    pen.setJoinStyle(Qt::RoundJoin);
+    pen.setCapStyle(Qt::RoundCap);
+    pen.setWidth(getProperty(ItemPropertyType::StrokeWidth).value().toInt());
+    pen.setColor(
+        QColor::fromRgba(getProperty(ItemPropertyType::StrokeColor).value().toUInt()));
+    qDebug() << "Variant: " << getProperty(ItemPropertyType::StrokeColor).value();
+    qDebug() << "Color is: " << pen.color();
 
-        m_draw(cachePainter, relativeOffset);
-        m_cacheDirty = false;
-    }
+    painter.setPen(pen);
+    painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing);
 
-    painter.drawImage(relativeOffset - offset, *m_cache);
+    m_draw(painter, offset);
 }
 
-void Freeform::erase(QPainter& painter, const QPointF& offset) const {
-    // m_draw(painter, offset);
+void Freeform::erase(QPainter& painter, const QPointF& offset, QColor color) const {
+    QPen pen{};
+
+    pen.setJoinStyle(Qt::RoundJoin);
+    pen.setCapStyle(Qt::RoundCap);
+    pen.setWidth(getProperty(ItemPropertyType::StrokeWidth).value().toInt());
+    pen.setColor(color);
+
+    painter.setPen(pen);
+    painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing);
+
+    painter.setCompositionMode(QPainter::CompositionMode_Source);
+    m_draw(painter, offset);
+    painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
 }
 
 QPointF Freeform::optimizePoint(QVector<QPointF>& points, int bufferSize,
@@ -112,15 +122,6 @@ void Freeform::quickDraw(QPainter& painter, const QPointF& offset) const {
 }
 
 void Freeform::m_draw(QPainter& painter, const QPointF& offset) const {
-    QPen pen{};
-    pen.setJoinStyle(Qt::RoundJoin);
-    pen.setCapStyle(Qt::RoundCap);
-    pen.setWidth(getProperty(ItemPropertyType::StrokeWidth).value().toInt());
-    pen.setColor(
-        QColor{static_cast<QRgb>(getProperty(ItemPropertyType::StrokeColor).value().toInt())});
-    painter.setPen(pen);
-    painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing);
-
     if (m_optimizedPoints.size() == 1) {
         painter.drawPoint(m_optimizedPoints.front() - offset);
         return;

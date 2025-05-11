@@ -80,6 +80,13 @@ QVector<std::shared_ptr<CacheCell>> CacheGrid::queryCells(const QRect& rect) {
     return out;
 }
 
+void CacheGrid::markDirty(const QRect& rect) {
+    QVector<std::shared_ptr<CacheCell>> dirtyCells{queryCells(rect)};
+    for (std::shared_ptr<CacheCell> cell : dirtyCells) {
+        cell->setDirty(true);
+    }
+}
+
 std::shared_ptr<CacheCell> CacheGrid::cell(const QPoint& point) {
     std::shared_ptr<CacheCell> cur{};
     if (!m_grid.contains(point) || !m_grid[point]) {

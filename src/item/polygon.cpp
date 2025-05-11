@@ -2,7 +2,7 @@
 
 Polygon::Polygon() {
     m_properties[ItemPropertyType::StrokeWidth] = ItemProperty(1);
-    m_properties[ItemPropertyType::StrokeColor] = ItemProperty(static_cast<int>(Qt::black));
+    m_properties[ItemPropertyType::StrokeColor] = ItemProperty(QColor(Qt::black).rgba());
 }
 
 void Polygon::setStart(QPointF start) {
@@ -37,23 +37,24 @@ void Polygon::m_updateBoundingBox() {
 
 void Polygon::draw(QPainter& painter, const QPointF& offset) {
     QPen pen{};
+
     pen.setWidth(getProperty(ItemPropertyType::StrokeWidth).value().toInt());
     pen.setColor(
-        QColor{static_cast<QRgb>(getProperty(ItemPropertyType::StrokeColor).value().toInt())});
+        QColor::fromRgba(getProperty(ItemPropertyType::StrokeColor).value().toUInt()));
+
     painter.setPen(pen);
 
     m_draw(painter, offset);
 }
 
-void Polygon::erase(QPainter& painter, const QPointF& offset) const {
+void Polygon::erase(QPainter& painter, const QPointF& offset, QColor color) const {
     QPen pen{};
+
     pen.setWidth(getProperty(ItemPropertyType::StrokeWidth).value().toInt() * 10);
-    pen.setColor(Qt::transparent);
-    pen.setJoinStyle(Qt::RoundJoin);
-    pen.setCapStyle(Qt::RoundCap);
+    pen.setColor(color);
     painter.setPen(pen);
 
-    painter.setCompositionMode(QPainter::CompositionMode_Clear);
+    painter.setCompositionMode(QPainter::CompositionMode_Source);
     m_draw(painter, offset);
     painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
 }

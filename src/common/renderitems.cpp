@@ -40,8 +40,6 @@ void Common::renderItems(ApplicationContext* context) {
             }
         }
 
-        painter.resetTransform();
         painter.drawImage(cell->rect().translated(-viewOffset.toPoint()), cell->image());
-        painter.scale(context->zoomFactor(), context->zoomFactor());
     }
 }

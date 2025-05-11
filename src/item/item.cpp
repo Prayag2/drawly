@@ -1,10 +1,11 @@
 #include "item.h"
 
 // PUBLIC
-Item::Item() {
-}
+Item::Item() {}
+
 Item::~Item() {
-    qDebug() << "Item was deleted!!" << m_boundingBox;
+    // TODO: Implement a basic logging system
+    qDebug() << "Item deleted: " << m_boundingBox;
 }
 
 const QRectF& Item::boundingBox() const {

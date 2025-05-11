@@ -11,7 +11,7 @@ public:
     virtual void setEnd(QPointF end);
 
     void draw(QPainter& painter, const QPointF& offset) override;
-    void erase(QPainter& painter, const QPointF& offset) const override;
+    void erase(QPainter& painter, const QPointF& offset, QColor color = Qt::transparent) const override;
 
     const QPointF& start() const;
     const QPointF& end() const;
