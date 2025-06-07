@@ -3,6 +3,7 @@
 
 #include <QMouseEvent>
 #include <QObject>
+#include <QDateTime>
 class ApplicationContext;
 
 class Controller : public QObject {
@@ -22,6 +23,7 @@ public slots:
 
 private:
     ApplicationContext* m_context{};
+    qint64 m_lastTime{};
 };
 
 #endif  // CONTROLLER_H

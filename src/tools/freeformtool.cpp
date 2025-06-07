@@ -109,3 +109,7 @@ void FreeformTool::mouseReleased(ApplicationContext* context) {
         context->canvas().update();
     }
 }
+
+const bool FreeformTool::lowFpsTolerant() const {
+    return false;
+}

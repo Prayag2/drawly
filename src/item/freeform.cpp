@@ -124,6 +124,8 @@ void Freeform::quickDraw(QPainter& painter, const QPointF& offset) const {
 }
 
 void Freeform::m_draw(QPainter& painter, const QPointF& offset) const {
+    painter.setCompositionMode(QPainter::CompositionMode_Source);
+
     qsizetype pointSize{m_points.size()};
     for (qsizetype index = 0; index < pointSize; index++) {
         QPen pen{painter.pen()};
@@ -136,6 +138,8 @@ void Freeform::m_draw(QPainter& painter, const QPointF& offset) const {
             painter.drawLine(m_points[index - 1] - offset, m_points[index] - offset);
         }
     }
+
+    painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
 }
 
 int Freeform::size() const {

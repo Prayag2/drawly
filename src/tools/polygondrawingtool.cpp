@@ -76,3 +76,7 @@ void PolygonDrawingTool::mouseReleased(ApplicationContext* context) {
         context->canvas().update();
     }
 };
+
+const bool PolygonDrawingTool::lowFpsTolerant() const {
+    return true;
+}

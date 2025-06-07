@@ -3,7 +3,6 @@
 
 #include "tool.h"
 #include <QElapsedTimer>
-#include <QDateTime>
 class Item;
 
 class MoveTool : public Tool {
@@ -15,12 +14,12 @@ public:
     void mousePressed(ApplicationContext* context) override;
     void mouseMoved(ApplicationContext* context) override;
     void mouseReleased(ApplicationContext* context) override;
+    const bool lowFpsTolerant() const override;
 
 private:
     bool m_isActive{false};
     QPointF m_initialOffsetPos{};
     QPointF m_initialPos{};
-    qint64 m_lastTime{};
 };
 
 #endif  // MOVETOOL_H
