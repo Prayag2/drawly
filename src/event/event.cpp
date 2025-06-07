@@ -11,6 +11,14 @@ void Event::setButton(Qt::MouseButton btn) {
     m_button = btn;
 }
 
+void Event::setPressure(qreal pressure) {
+    m_pressure = pressure;
+}
+
+qreal Event::pressure() const {
+    return m_pressure;
+}
+
 const QPoint& Event::pos() const {
     return m_pos;
 };

@@ -35,6 +35,7 @@ public:
     void setOffsetPos(const QPointF& pos);
     qreal zoomFactor() const;
     void setZoomFactor(int diff);
+    const int fps() const;
 
 private slots:
     void beginPainters();

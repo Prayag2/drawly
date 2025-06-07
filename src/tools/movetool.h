@@ -3,6 +3,7 @@
 
 #include "tool.h"
 #include <QElapsedTimer>
+#include <QDateTime>
 class Item;
 
 class MoveTool : public Tool {
@@ -19,6 +20,7 @@ private:
     bool m_isActive{false};
     QPointF m_initialOffsetPos{};
     QPointF m_initialPos{};
+    qint64 m_lastTime{};
 };
 
 #endif  // MOVETOOL_H

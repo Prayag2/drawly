@@ -47,15 +47,17 @@ void EraserTool::mouseMoved(ApplicationContext* context) {
         QRect worldEraserBoundingBox{transformer.toWorld(eraserBoundingBox).toRect()};
         worldEraserBoundingBox.translate(context->offsetPos().toPoint());
 
-        m_toBeErased += context->quadtree().queryItems(worldEraserBoundingBox);
+        QVector<std::shared_ptr<Item>> toBeErased = context->quadtree().queryItems(worldEraserBoundingBox);
 
         // nothing to be erased
-        if (m_toBeErased.empty()) {
+        if (toBeErased.empty()) {
             return;
         }
 
-        for (std::shared_ptr<Item> item : m_toBeErased) {
-            item->getProperty(ItemPropertyType::StrokeColor).setValue(QColor(255, 255, 255, 50).rgba());
+        // m_toBeErased.insert(toBeErased.begin(), toBeErased.end());
+        for (std::shared_ptr<Item> item : toBeErased) {
+            // item->getProperty(ItemPropertyType::StrokeColor).setValue(QColor(255, 255, 255, 50).rgba());
+            context->quadtree().deleteItem(item);
             context->cacheGrid().markDirty(transformer.toView(item->boundingBox()).toRect());
         }
 
@@ -66,15 +68,15 @@ void EraserTool::mouseMoved(ApplicationContext* context) {
 
 void EraserTool::mouseReleased(ApplicationContext* context) {
     if (context->event().button() == Qt::LeftButton) {
-        auto& transformer = context->coordinateTransformer();
+        // auto& transformer = context->coordinateTransformer();
 
-        for (std::shared_ptr<Item> item : m_toBeErased) {
-            context->quadtree().deleteItem(item);
-            context->cacheGrid().markDirty(transformer.toView(item->boundingBox()).toRect());
-        }
+        // for (std::shared_ptr<Item> item : m_toBeErased) {
+        //     context->quadtree().deleteItem(item);
+        //     context->cacheGrid().markDirty(transformer.toView(item->boundingBox()).toRect());
+        // }
 
-        Common::renderItems(context);
-        context->canvas().update();
+        // Common::renderItems(context);
+        // context->canvas().update();
 
         m_isErasing = false;
     }

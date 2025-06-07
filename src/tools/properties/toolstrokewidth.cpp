@@ -3,9 +3,10 @@
 #include <QSpinBox>
 
 ToolStrokeWidth::ToolStrokeWidth(QWidget* parent) {
+    // TODO: Remove magic numbers
     QSpinBox* box{new QSpinBox(parent)};
     box->setRange(1, 10);
-    box->setValue(4);
+    box->setValue(6);
     m_widget = box;
 }
 

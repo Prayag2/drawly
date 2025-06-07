@@ -13,6 +13,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Find Qt (Qt6 preferred, fallback to Qt5) with required components.
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS OpenGLWidgets)
 
 # Translation files.
 set(TS_FILES ${CMAKE_SOURCE_DIR}/translations/drawly_en_GB.ts)
@@ -51,6 +52,7 @@ else()
 endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::OpenGLWidgets)
 
 # Set bundle properties for macOS / iOS.
 if(${QT_VERSION} VERSION_LESS 6.1.0)
