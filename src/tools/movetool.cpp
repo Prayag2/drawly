@@ -20,18 +20,23 @@ void MoveTool::mousePressed(ApplicationContext* context) {
 
         m_initialOffsetPos = context->offsetPos();
         m_initialPos = context->event().pos();
+        m_lastTime = QDateTime::currentMSecsSinceEpoch();
     }
 };
 
 void MoveTool::mouseMoved(ApplicationContext* context) {
     if (m_isActive) {
+        qint64 curTime = QDateTime::currentMSecsSinceEpoch();
+        if (curTime - m_lastTime < 1000 / context->fps()) return;
+
         QPointF newPoint{m_initialOffsetPos * context->zoomFactor() - context->event().pos() +
                          m_initialPos};
-        context->setOffsetPos(newPoint / context->zoomFactor());
 
+        context->setOffsetPos(newPoint / context->zoomFactor());
         Common::renderItems(context);
 
         context->canvas().update();
+        m_lastTime = QDateTime::currentMSecsSinceEpoch();
     }
 };
 

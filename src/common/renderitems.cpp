@@ -21,6 +21,9 @@ void Common::renderItems(ApplicationContext* context) {
 
     QPainter& painter{context->canvasPainter()};
     for (auto cell : visibleCells) {
+        // QPen pen; pen.setColor(Qt::white); painter.setPen(pen);
+        // painter.drawRect(cell->rect().translated(-viewOffset.toPoint()));
+
         if (cell->dirty()) {
             cell->image().fill(Qt::transparent);
             cell->setDirty(false);

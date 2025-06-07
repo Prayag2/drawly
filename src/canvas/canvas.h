@@ -26,6 +26,7 @@ signals:
     void mousePressed(QMouseEvent* event);
     void mouseMoved(QMouseEvent* event);
     void mouseReleased(QMouseEvent* event);
+    void tablet(QTabletEvent* event);
     void wheel(QWheelEvent* event);
     void resizeEventCalled();
     void resizeStart();
@@ -38,6 +39,7 @@ protected:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
+    void tabletEvent(QTabletEvent* event) override;
     void wheelEvent(QWheelEvent* event) override;
 
 private:

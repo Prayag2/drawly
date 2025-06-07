@@ -12,6 +12,7 @@ Canvas::Canvas(QWidget* parent) : QWidget{parent} {
     m_canvas = new QImage(m_sizeHint, m_imageFormat);
     m_overlay = new QImage(m_sizeHint, m_imageFormat);
     setBg(QColor{18, 18, 18});
+    setTabletTracking(true);
 }
 
 Canvas::~Canvas() {
@@ -108,6 +109,11 @@ void Canvas::mouseReleaseEvent(QMouseEvent* event) {
     emit mouseReleased(event);
     QWidget::mouseReleaseEvent(event);
 };
+
+void Canvas::tabletEvent(QTabletEvent* event) {
+    emit tablet(event);
+    QWidget::tabletEvent(event);
+}
 
 void Canvas::wheelEvent(QWheelEvent* event) {
     emit wheel(event);

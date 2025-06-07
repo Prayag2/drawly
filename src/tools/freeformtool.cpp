@@ -54,7 +54,7 @@ void FreeformTool::mousePressed(ApplicationContext* context) {
         m_lastPoint =
             context->coordinateTransformer().toWorld(context->event().pos()) + context->offsetPos();
 
-        curItem->addPoint(m_lastPoint);
+        curItem->addPoint(m_lastPoint, context->event().pressure());
 
         m_isDrawing = true;
     }
@@ -62,6 +62,7 @@ void FreeformTool::mousePressed(ApplicationContext* context) {
 
 void FreeformTool::mouseMoved(ApplicationContext* context) {
     if (m_isDrawing) {
+        qDebug() << "Pressure is: " << context->event().pressure();
         auto& transformer{context->coordinateTransformer()};
 
         QPointF curPoint{transformer.toWorld(context->event().pos()) + context->offsetPos()};
@@ -77,7 +78,7 @@ void FreeformTool::mouseMoved(ApplicationContext* context) {
         QPainter& painter{context->overlayPainter()};
 
         m_lastPoint = curPoint;
-        curItem->addPoint(m_lastPoint);
+        curItem->addPoint(m_lastPoint, context->event().pressure());
         curItem->quickDraw(painter, context->offsetPos());
 
         context->canvas().update();
@@ -94,9 +95,14 @@ void FreeformTool::mouseReleased(ApplicationContext* context) {
         overlayPainter.fillRect(context->canvas().overlay()->rect(), Qt::transparent);
         overlayPainter.setCompositionMode(QPainter::CompositionMode_SourceOver);
 
-        context->quadtree().insertItem(curItem);
+        QVector<std::shared_ptr<Item>> itemsAfterSplitting{curItem->split()};
+        for (auto item : itemsAfterSplitting) {
+            overlayPainter.drawRect(item->boundingBox());
+            context->quadtree().insertItem(item);
+            context->cacheGrid().markDirty(transformer.toView(item->boundingBox()).toRect());
+        }
+        curItem.reset();
 
-        context->cacheGrid().markDirty(transformer.toView(curItem->boundingBox()).toRect());
         Common::renderItems(context);
 
         m_isDrawing = false;

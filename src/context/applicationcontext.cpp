@@ -20,6 +20,7 @@
 #include "coordinatetransformer.h"
 #include <QRect>
 #include <memory>
+#include <QScreen>
 
 ApplicationContext::ApplicationContext(QWidget* parent) : QObject{parent} {
     m_canvas = new Canvas(parent);
@@ -173,11 +174,20 @@ void ApplicationContext::setZoomFactor(int diff) {
     canvas().update();
 }
 
+const int ApplicationContext::fps() const {
+    QScreen* screen{QGuiApplication::primaryScreen()};
+    if (screen) {
+        return screen->refreshRate();
+    }
+
+    return 60;
+}
+
 void ApplicationContext::canvasResized() {
     int width{m_canvas->dimensions().width()}, height{m_canvas->dimensions().height()};
     int cellW{CacheCell::cellSize().width()}, cellH{CacheCell::cellSize().height()};
     int rows{static_cast<int>(std::ceil(height / static_cast<double>(cellH)) + 1)};
     int cols{static_cast<int>(std::ceil(width / static_cast<double>(cellW)) + 1)};
 
-    m_cacheGrid->setSize(rows * cols);
+    m_cacheGrid->setSize(9 * rows * cols);
 }

@@ -22,6 +22,10 @@ void Controller::mousePressed(QMouseEvent* event) {
     m_context->event().setPos(event->pos(), m_context->canvas().scale());
     m_context->event().setButton(event->button());
     m_context->toolBar().curTool().mousePressed(m_context);
+
+    if (event->type() != QEvent::TabletPress) {
+        m_context->event().setPressure(1.0);
+    }
 }
 
 void Controller::mouseMoved(QMouseEvent* event) {
@@ -34,6 +38,11 @@ void Controller::mouseReleased(QMouseEvent* event) {
     m_context->event().setPos(event->pos(), m_context->canvas().scale());
     m_context->event().setButton(event->button());
     m_context->toolBar().curTool().mouseReleased(m_context);
+}
+
+void Controller::tablet(QTabletEvent* event) {
+    // TODO: Remove magic numbers
+    m_context->event().setPressure(event->pressure() / 1.60 + 0.375);
 }
 
 void Controller::wheel(QWheelEvent* event) {

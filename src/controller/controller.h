@@ -17,6 +17,7 @@ public slots:
     void mousePressed(QMouseEvent* event);
     void mouseMoved(QMouseEvent* event);
     void mouseReleased(QMouseEvent* event);
+    void tablet(QTabletEvent* event);
     void wheel(QWheelEvent* event);
 
 private:
