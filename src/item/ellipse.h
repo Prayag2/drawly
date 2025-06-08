@@ -9,6 +9,7 @@ public:
     virtual ~Ellipse() = default;
 
     bool intersects(const QRectF& rect) override;
+    bool intersects(const QLineF& rect) override;
 
 protected:
     void m_draw(QPainter& painter, const QPointF& offset) const override;

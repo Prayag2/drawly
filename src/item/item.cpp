@@ -1,7 +1,8 @@
 #include "item.h"
 
 // PUBLIC
-Item::Item() {}
+Item::Item() {
+}
 
 Item::~Item() {
     // TODO: Implement a basic logging system
@@ -18,21 +19,6 @@ void Item::setBoundingBoxPadding(int padding) {
 
 void Item::setScale(qreal scale) {
     m_scale = scale;
-}
-
-int Item::orientation(QPointF a, QPointF b, QPointF c) {
-    QPointF ab{b.x() - a.x(), b.y() - a.y()};
-    QPointF ac{c.x() - a.x(), c.y() - a.y()};
-
-    int orient{static_cast<int>(ab.x() * ac.y() - ac.x() * ab.y())};
-    return (orient == 0 ? 0 : (orient < 0 ? -1 : 1));
-}
-
-bool Item::linesIntersect(QLineF a, QLineF b) {
-    QPointF p{a.p1()}, q{a.p2()};
-    QPointF r{b.p1()}, s{b.p2()};
-    return orientation(p, q, r) != orientation(p, q, s) &&
-           orientation(r, s, p) != orientation(r, s, q);
 }
 
 ItemProperty& Item::getProperty(const ItemPropertyType propertyType) {

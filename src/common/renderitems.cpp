@@ -9,6 +9,7 @@
 #include <QPointF>
 #include <QRectF>
 
+// TODO: Optimize this to improve performance
 void Common::renderItems(ApplicationContext* context) {
     auto& transformer{context->coordinateTransformer()};
 
@@ -20,6 +21,7 @@ void Common::renderItems(ApplicationContext* context) {
         context->cacheGrid().queryCells(viewViewport.toRect())};
 
     QPainter& painter{context->canvasPainter()};
+    QPainter& overlayPainter{context->overlayPainter()};
     for (auto cell : visibleCells) {
         // QPen pen; pen.setColor(Qt::white); painter.setPen(pen);
         // painter.drawRect(cell->rect().translated(-viewOffset.toPoint()));
@@ -42,7 +44,6 @@ void Common::renderItems(ApplicationContext* context) {
                 intersectingItem->draw(cell->painter(), topLeftPoint);
             }
         }
-
         painter.drawImage(cell->rect().translated(-viewOffset.toPoint()), cell->image());
     }
 }

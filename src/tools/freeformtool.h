@@ -15,6 +15,7 @@ public:
     void mousePressed(ApplicationContext* context) override;
     void mouseMoved(ApplicationContext* context) override;
     void mouseReleased(ApplicationContext* context) override;
+    const bool lowFpsTolerant() const override;
 
 private:
     std::shared_ptr<Freeform> curItem{};

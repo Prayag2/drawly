@@ -1,6 +1,7 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+#include <QDateTime>
 #include <QMouseEvent>
 #include <QObject>
 class ApplicationContext;
@@ -22,6 +23,7 @@ public slots:
 
 private:
     ApplicationContext* m_context{};
+    qint64 m_lastTime{};
 };
 
 #endif  // CONTROLLER_H

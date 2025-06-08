@@ -1,5 +1,6 @@
 #include "rectangle.h"
 
+#include "../common/utils.h"
 #include <QDebug>
 
 Rectangle::Rectangle() {
@@ -12,8 +13,7 @@ void Rectangle::m_draw(QPainter& painter, const QPointF& offset) const {
 bool Rectangle::intersects(const QRectF& rect) {
     if (!boundingBox().intersects(rect)) return false;
 
-    int mg{m_boundingBoxPadding + getProperty(ItemPropertyType::StrokeWidth).value().toInt()};
-    QRectF box{boundingBox().normalized().adjusted(mg, mg, -mg, -mg)};
+    QRectF box{start(), end()};
     QPointF p{box.topLeft()};
     QPointF q{box.topRight()};
     QPointF r{box.bottomRight()};
@@ -24,12 +24,25 @@ bool Rectangle::intersects(const QRectF& rect) {
     QPointF c{rect.bottomRight()};
     QPointF d{rect.bottomLeft()};
 
-    return (Item::linesIntersect({p, q}, {a, b}) || Item::linesIntersect({p, q}, {b, c}) ||
-            Item::linesIntersect({p, q}, {c, d}) || Item::linesIntersect({p, q}, {d, a}) ||
-            Item::linesIntersect({q, r}, {a, b}) || Item::linesIntersect({q, r}, {b, c}) ||
-            Item::linesIntersect({q, r}, {c, d}) || Item::linesIntersect({q, r}, {d, a}) ||
-            Item::linesIntersect({r, s}, {a, b}) || Item::linesIntersect({r, s}, {b, c}) ||
-            Item::linesIntersect({r, s}, {c, d}) || Item::linesIntersect({r, s}, {d, a}) ||
-            Item::linesIntersect({p, s}, {a, b}) || Item::linesIntersect({p, s}, {b, c}) ||
-            Item::linesIntersect({p, s}, {c, d}) || Item::linesIntersect({p, s}, {d, a}));
+    return (Common::intersects(QLineF{p, q}, QLineF{a, b}) ||
+            Common::intersects(QLineF{p, q}, QLineF{b, c}) ||
+            Common::intersects(QLineF{p, q}, QLineF{c, d}) ||
+            Common::intersects(QLineF{p, q}, QLineF{d, a}) ||
+            Common::intersects(QLineF{q, r}, QLineF{a, b}) ||
+            Common::intersects(QLineF{q, r}, QLineF{b, c}) ||
+            Common::intersects(QLineF{q, r}, QLineF{c, d}) ||
+            Common::intersects(QLineF{q, r}, QLineF{d, a}) ||
+            Common::intersects(QLineF{r, s}, QLineF{a, b}) ||
+            Common::intersects(QLineF{r, s}, QLineF{b, c}) ||
+            Common::intersects(QLineF{r, s}, QLineF{c, d}) ||
+            Common::intersects(QLineF{r, s}, QLineF{d, a}) ||
+            Common::intersects(QLineF{p, s}, QLineF{a, b}) ||
+            Common::intersects(QLineF{p, s}, QLineF{b, c}) ||
+            Common::intersects(QLineF{p, s}, QLineF{c, d}) ||
+            Common::intersects(QLineF{p, s}, QLineF{d, a}));
 };
+
+bool Rectangle::intersects(const QLineF& line) {
+    QRectF box{start(), end()};
+    return Common::intersects(box, line);
+}

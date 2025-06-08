@@ -46,21 +46,24 @@ public:
     void deleteItems(const QRectF& boundingBox);
 
     QVector<ItemPtr> getAllItems() const;
-    QVector<ItemPtr> queryItems(const QRectF& boundingBox, bool onlyBoundingBox = false) const;
-    QVector<ItemPtr> queryConnectedItems(const QRectF& boundingBox,
-                                         std::optional<int> level = {}) const;
+
+    template <typename Shape>
+    QVector<ItemPtr> queryItems(const Shape& shape, bool onlyBoundingBox = false) const;
 
     void draw(QPainter& painter, const QPointF& offset) const;
     const QRectF& boundingBox() const;
 
 private:
     bool insert(ItemPtr item);
-    void query(const QRectF& boundingBox, bool onlyBoundingBox, QVector<ItemPtr>& out,
+
+    template <typename Shape>
+    void query(const Shape& shape, bool onlyBoundingBox, QVector<ItemPtr>& out,
                std::unordered_map<ItemPtr, bool>& itemAlreadyPushed) const;
-    void dfs(const QRectF& boundingBox, QVector<ItemPtr> items, QVector<ItemPtr>& out,
-             std::optional<int> level) const;
+
     void subdivide();
     void expand(const QPointF& point);
 };
+
+#include "quadtree.ipp"
 
 #endif  // QUADTREE_H

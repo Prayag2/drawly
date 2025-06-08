@@ -12,10 +12,15 @@ public:
     Freeform(const Freeform& freeform);
 
     static int minPointDistance();
+
     void draw(QPainter& painter, const QPointF& offset) override;
-    void erase(QPainter& painter, const QPointF& offset, QColor color = Qt::transparent) const override;
+    void erase(QPainter& painter, const QPointF& offset,
+               QColor color = Qt::transparent) const override;
     void quickDraw(QPainter& painter, const QPointF& offset) const;
+
     bool intersects(const QRectF& rect) override;
+    bool intersects(const QLineF& rect) override;
+
     QVector<std::shared_ptr<Item>> split() const;
     int size() const;
     int maxSize() const;

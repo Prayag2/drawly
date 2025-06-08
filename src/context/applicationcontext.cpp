@@ -19,8 +19,8 @@
 #include "../tools/rectangletool.h"
 #include "coordinatetransformer.h"
 #include <QRect>
-#include <memory>
 #include <QScreen>
+#include <memory>
 
 ApplicationContext::ApplicationContext(QWidget* parent) : QObject{parent} {
     m_canvas = new Canvas(parent);

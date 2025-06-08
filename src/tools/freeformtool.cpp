@@ -81,7 +81,9 @@ void FreeformTool::mouseMoved(ApplicationContext* context) {
         curItem->addPoint(m_lastPoint, context->event().pressure());
         curItem->quickDraw(painter, context->offsetPos());
 
-        context->canvas().update();
+        QRectF dirtyBox{transformer.toView(curItem->boundingBox().translated(-context->offsetPos()))};
+        QRectF updateRegion{dirtyBox.topLeft() / context->canvas().scale(), dirtyBox.size()};
+        context->canvas().update(updateRegion.toRect());
     }
 }
 
@@ -97,7 +99,6 @@ void FreeformTool::mouseReleased(ApplicationContext* context) {
 
         QVector<std::shared_ptr<Item>> itemsAfterSplitting{curItem->split()};
         for (auto item : itemsAfterSplitting) {
-            overlayPainter.drawRect(item->boundingBox());
             context->quadtree().insertItem(item);
             context->cacheGrid().markDirty(transformer.toView(item->boundingBox()).toRect());
         }
@@ -108,4 +109,8 @@ void FreeformTool::mouseReleased(ApplicationContext* context) {
         m_isDrawing = false;
         context->canvas().update();
     }
+}
+
+const bool FreeformTool::lowFpsTolerant() const {
+    return false;
 }

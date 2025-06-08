@@ -1,5 +1,6 @@
 #include "quadtree.h"
 
+#include "../common/utils.h"
 #include "../item/item.h"
 #include "orderedlist.h"
 #include <QDebug>
@@ -121,90 +122,8 @@ QVector<std::shared_ptr<Item>> QuadTree::getAllItems() const {
     return curItems;
 }
 
-QVector<std::shared_ptr<Item>> QuadTree::queryItems(const QRectF& boundingBox,
-                                                    bool onlyBoundingBox) const {
-    QVector<std::shared_ptr<Item>> curItems{};
-    std::unordered_map<std::shared_ptr<Item>, bool> itemAlreadyPushed{};
-
-    // look for matches and store the result in curItems
-    query(boundingBox, onlyBoundingBox, curItems, itemAlreadyPushed);
-
-    // sort based on z-index
-    std::sort(curItems.begin(), curItems.end(), [&](auto& firstItem, auto& secondItem) {
-        return m_orderedList->zIndex(firstItem) < m_orderedList->zIndex(secondItem);
-    });
-
-    return curItems;
-};
-
-void QuadTree::query(const QRectF& boundingBox, bool onlyBoundingBox,
-                     QVector<std::shared_ptr<Item>>& out,
-                     std::unordered_map<std::shared_ptr<Item>, bool>& itemAlreadyPushed) const {
-    if (!m_boundingBox.intersects(boundingBox)) {
-        return;
-    }
-
-    for (const std::shared_ptr<Item>& item : m_items) {
-        if (item->boundingBox().intersects(boundingBox)) {
-            if (onlyBoundingBox || item->intersects(boundingBox)) {
-                // using the hash map because multiple nodes may have a pointer to the same item
-                if (!itemAlreadyPushed[item]) {
-                    out.push_back(item);
-                    itemAlreadyPushed[item] = true;
-                }
-            }
-        }
-    }
-
-    // if this node has sub-regions
-    if (m_topLeft != nullptr) {
-        m_topLeft->query(boundingBox, onlyBoundingBox, out, itemAlreadyPushed);
-        m_topRight->query(boundingBox, onlyBoundingBox, out, itemAlreadyPushed);
-        m_bottomRight->query(boundingBox, onlyBoundingBox, out, itemAlreadyPushed);
-        m_bottomLeft->query(boundingBox, onlyBoundingBox, out, itemAlreadyPushed);
-    }
-}
-
-QVector<std::shared_ptr<Item>> QuadTree::queryConnectedItems(const QRectF& boundingBox,
-                                                             std::optional<int> level) const {
-    // Performs DFS
-    // Creates a list of all the items intersecting directly or indirectly
-    // with the given bounding box
-    QVector<std::shared_ptr<Item>> output{};
-    dfs(boundingBox, m_items, output, level);
-    return output;
-};
-
 const QRectF& QuadTree::boundingBox() const {
     return m_boundingBox;
-};
-
-void QuadTree::dfs(const QRectF& boundingBox, QVector<std::shared_ptr<Item>> items,
-                   QVector<std::shared_ptr<Item>>& out, std::optional<int> level) const {
-    if (level.has_value() && level.value() <= 0) return;
-    if (!m_boundingBox.intersects(boundingBox)) {
-        return;
-    }
-
-    std::optional<int> nextLevel{level.has_value() ? level.value() - 1 : level};
-    int N = items.size();
-    for (int i = 0; i < N; i++) {
-        if (items[i] == nullptr) continue;
-        if (items[i]->boundingBox().intersects(boundingBox)) {
-            out.push_back(items[i]);
-            QRectF newBox = items[i]->boundingBox();
-            items[i] = nullptr;
-            dfs(newBox, items, out, nextLevel);
-        }
-    }
-
-    // if this node has sub-regions
-    if (m_topLeft != nullptr) {
-        m_topLeft->dfs(boundingBox, m_topLeft->m_items, out, nextLevel);
-        m_topRight->dfs(boundingBox, m_topRight->m_items, out, nextLevel);
-        m_bottomRight->dfs(boundingBox, m_bottomRight->m_items, out, nextLevel);
-        m_bottomLeft->dfs(boundingBox, m_bottomLeft->m_items, out, nextLevel);
-    }
 };
 
 int QuadTree::size() const {

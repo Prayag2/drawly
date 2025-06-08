@@ -19,6 +19,8 @@ void Controller::setContext(ApplicationContext* context) {
 }
 
 void Controller::mousePressed(QMouseEvent* event) {
+    if (event->pos() == QPoint{0, 0}) return;
+
     m_context->event().setPos(event->pos(), m_context->canvas().scale());
     m_context->event().setButton(event->button());
     m_context->toolBar().curTool().mousePressed(m_context);
@@ -26,12 +28,21 @@ void Controller::mousePressed(QMouseEvent* event) {
     if (event->type() != QEvent::TabletPress) {
         m_context->event().setPressure(1.0);
     }
+    m_lastTime = QDateTime::currentMSecsSinceEpoch();
 }
 
 void Controller::mouseMoved(QMouseEvent* event) {
     m_context->event().setPos(event->pos(), m_context->canvas().scale());
     m_context->event().setButton(event->button());
+
+    qint64 curTime = QDateTime::currentMSecsSinceEpoch();
+    if (curTime - m_lastTime < 1000 / m_context->fps()) {
+        if (m_context->toolBar().curTool().lowFpsTolerant()) return;
+    }
+
     m_context->toolBar().curTool().mouseMoved(m_context);
+
+    m_lastTime = QDateTime::currentMSecsSinceEpoch();
 }
 
 void Controller::mouseReleased(QMouseEvent* event) {

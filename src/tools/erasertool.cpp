@@ -13,19 +13,7 @@
 #include <QPainter>
 
 EraserTool::EraserTool() {
-    int size{20}, borderWidth{2};
-    QBitmap eraserShape{size, size};
-    QPen eraserPen{};
-    eraserPen.setWidth(borderWidth);
-    eraserPen.setColor(Qt::black);
-    eraserPen.setJoinStyle(Qt::MiterJoin);
-
-    QPainter eraserPainter{&eraserShape};
-    eraserPainter.setPen(eraserPen);
-
-    eraserPainter.drawRect(borderWidth / 2, borderWidth / 2, size - borderWidth,
-                           size - borderWidth);
-    m_cursor = QCursor(eraserShape, 0, 0);
+    m_cursor = QCursor(Qt::CrossCursor);
 }
 
 QString EraserTool::iconAlt() const {
@@ -39,45 +27,78 @@ void EraserTool::mousePressed(ApplicationContext* context) {
 };
 
 void EraserTool::mouseMoved(ApplicationContext* context) {
+    auto& transformer = context->coordinateTransformer();
+
+    QPainter& overlayPainter{context->overlayPainter()};
+
+    // Erase previous box
+    overlayPainter.save();
+    overlayPainter.setCompositionMode(QPainter::CompositionMode_Source);
+    overlayPainter.fillRect(transformer.toWorld(m_lastRect.adjusted(-10, -10, 10, 10)), Qt::transparent);
+    overlayPainter.restore();
+
+    // TODO: Adjustable eraser size, remove magic numbers
+    QRect curRect{context->event().pos() - QPoint{8, 8}, QSize{20, 20}};
+    QRectF worldEraserRect{transformer.toWorld(curRect)};
+
+    QRectF updateRegion{curRect.united(m_lastRect)};
+    double scale{context->canvas().scale()};
+    updateRegion.translate(updateRegion.topLeft() * (1 - scale) / scale);
+
+    bool requiresFullUpdate{false};
     if (m_isErasing) {
-        auto& transformer = context->coordinateTransformer();
-        QRect eraserBoundingBox{context->event().pos(),
-                                m_cursor.pixmap().size() * context->canvas().scale()};
+        QVector<std::shared_ptr<Item>> toBeErased =
+            context->quadtree().queryItems(worldEraserRect.translated(context->offsetPos().toPoint()));
 
-        QRect worldEraserBoundingBox{transformer.toWorld(eraserBoundingBox).toRect()};
-        worldEraserBoundingBox.translate(context->offsetPos().toPoint());
+        for (std::shared_ptr<Item> item : toBeErased) {
+            if (m_toBeErased.count(item) > 0) continue;
+            requiresFullUpdate = true;
 
-        QVector<std::shared_ptr<Item>> toBeErased = context->quadtree().queryItems(worldEraserBoundingBox);
+            // TODO: Remove magic numbers
+            item->getProperty(ItemPropertyType::StrokeColor)
+                .setValue(QColor(255, 255, 255, 50).rgba());
 
-        // nothing to be erased
-        if (toBeErased.empty()) {
-            return;
+            QRectF dirtyBox{transformer.toView(item->boundingBox().translated(-context->offsetPos()))};
+            dirtyBox.translate(dirtyBox.topLeft() * (1 - scale) / scale);
+            updateRegion |= dirtyBox;
+
+            m_toBeErased.insert(item);
+            context->cacheGrid().markDirty(transformer.toView(item->boundingBox()).toRect());
         }
 
-        // m_toBeErased.insert(toBeErased.begin(), toBeErased.end());
-        for (std::shared_ptr<Item> item : toBeErased) {
-            // item->getProperty(ItemPropertyType::StrokeColor).setValue(QColor(255, 255, 255, 50).rgba());
+        Common::renderItems(context);
+
+        overlayPainter.fillRect(worldEraserRect, QColor(255, 0, 0, 150));
+    }
+
+    // Draw eraser box
+    overlayPainter.save();
+    QPen pen{Qt::red, 2.0 / context->zoomFactor()};
+    overlayPainter.setPen(pen);
+    overlayPainter.drawRect(worldEraserRect);
+    overlayPainter.restore();
+
+    context->canvas().update(updateRegion.toRect().adjusted(-20, -20, 20, 20));
+    m_lastRect = curRect;
+}
+
+void EraserTool::mouseReleased(ApplicationContext* context) {
+    if (context->event().button() == Qt::LeftButton) {
+        auto& transformer = context->coordinateTransformer();
+
+        for (std::shared_ptr<Item> item : m_toBeErased) {
             context->quadtree().deleteItem(item);
             context->cacheGrid().markDirty(transformer.toView(item->boundingBox()).toRect());
         }
 
         Common::renderItems(context);
         context->canvas().update();
+
+        m_toBeErased.clear();
+        m_isErasing = false;
     }
 }
 
-void EraserTool::mouseReleased(ApplicationContext* context) {
-    if (context->event().button() == Qt::LeftButton) {
-        // auto& transformer = context->coordinateTransformer();
-
-        // for (std::shared_ptr<Item> item : m_toBeErased) {
-        //     context->quadtree().deleteItem(item);
-        //     context->cacheGrid().markDirty(transformer.toView(item->boundingBox()).toRect());
-        // }
-
-        // Common::renderItems(context);
-        // context->canvas().update();
-
-        m_isErasing = false;
-    }
+const bool EraserTool::lowFpsTolerant() const {
+    return false;
 }

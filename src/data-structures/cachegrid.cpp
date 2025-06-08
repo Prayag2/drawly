@@ -49,7 +49,7 @@ QPainter& CacheCell::painter() const {
 
 QSize CacheCell::cellSize() {
     // TODO: don't hardcode me OwO
-    return {64, 64};
+    return {512, 512};
 }
 
 CacheGrid::CacheGrid(int maxSize) {

@@ -14,9 +14,11 @@ public:
     void mousePressed(ApplicationContext* context) override;
     void mouseMoved(ApplicationContext* context) override;
     void mouseReleased(ApplicationContext* context) override;
+    const bool lowFpsTolerant() const override;
 
 private:
     bool m_isErasing{false};
+    QRect m_lastRect{};
 
     std::unordered_set<std::shared_ptr<Item>> m_toBeErased;
 };
