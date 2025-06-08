@@ -1,67 +1,41 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <QLineF>
 #include <QRectF>
 
-inline QRectF operator/(const QRectF& rect, double amount) {
-    return QRectF{rect.topLeft() / amount, rect.size() / amount};
-}
-
 namespace Common {
-inline QPoint unscalePoint(const QPointF& point, qreal zoomFactor) {
-    return point.toPoint() * zoomFactor;
+inline int orientation(QPointF a, QPointF b, QPointF c) {
+    QPointF ab{b.x() - a.x(), b.y() - a.y()};
+    QPointF ac{c.x() - a.x(), c.y() - a.y()};
+
+    int orient{static_cast<int>(ab.x() * ac.y() - ac.x() * ab.y())};
+    return (orient == 0 ? 0 : (orient < 0 ? -1 : 1));
 }
 
-inline QPointF unscalePointF(const QPointF& point, qreal zoomFactor) {
-    return point * zoomFactor;
+inline bool intersects(const QRectF& rectA, const QRectF& rectB) {
+    return rectA.intersects(rectB);
 }
 
-inline QPoint unscalePoint(const QPoint& point, qreal zoomFactor) {
-    return unscalePoint(point.toPointF(), zoomFactor);
+inline bool intersects(const QLineF& a, const QLineF& b) {
+    QPointF p{a.p1()}, q{a.p2()};
+    QPointF r{b.p1()}, s{b.p2()};
+    return orientation(p, q, r) != orientation(p, q, s) &&
+           orientation(r, s, p) != orientation(r, s, q);
 }
 
-inline QRect unscaleRect(const QRectF& rect, qreal zoomFactor) {
-    QSize boxSize{rect.size().toSize() * zoomFactor};
+inline bool intersects(const QRectF& rect, const QLineF& line) {
+    QLineF left{rect.topLeft(), rect.bottomLeft()};
+    QLineF top{rect.topLeft(), rect.topRight()};
+    QLineF right{rect.topRight(), rect.bottomRight()};
+    QLineF bottom{rect.bottomRight(), rect.bottomLeft()};
 
-    return QRect{unscalePoint(rect.topLeft(), zoomFactor), boxSize};
+    return (intersects(line, left) || intersects(line, top) || intersects(line, right) ||
+            intersects(line, bottom));
 }
 
-inline QRect unscaleRect(const QRect& rect, qreal zoomFactor) {
-    return unscaleRect(rect.toRectF(), zoomFactor);
-}
-
-inline QRectF unscaleRectF(const QRectF& rect, qreal zoomFactor) {
-    QSize boxSize{rect.size().toSize() * zoomFactor};
-
-    return QRectF{unscalePointF(rect.topLeft(), zoomFactor), boxSize};
-}
-
-inline QPoint scalePoint(const QPointF& point, qreal zoomFactor) {
-    return point.toPoint() / zoomFactor;
-}
-
-inline QPointF scalePointF(const QPointF& point, qreal zoomFactor) {
-    return point / zoomFactor;
-}
-
-inline QPoint scalePoint(const QPoint& point, qreal zoomFactor) {
-    return scalePoint(point.toPointF(), zoomFactor);
-}
-
-inline QRect scaleRect(const QRectF& rect, qreal zoomFactor) {
-    QSize boxSize{rect.size().toSize() / zoomFactor};
-
-    return QRect{scalePoint(rect.topLeft(), zoomFactor), boxSize};
-}
-
-inline QRect scaleRect(const QRect& rect, qreal zoomFactor) {
-    return scaleRect(rect.toRectF(), zoomFactor);
-}
-
-inline QRectF scaleRectF(const QRectF& rect, qreal zoomFactor) {
-    QSize boxSize{rect.size().toSize() * zoomFactor};
-
-    return QRectF{scalePointF(rect.topLeft(), zoomFactor), boxSize};
+inline bool intersects(const QRectF& rect, const QPointF& point) {
+    return rect.contains(point);
 }
 };  // namespace Common
 

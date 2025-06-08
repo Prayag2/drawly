@@ -47,3 +47,7 @@ bool Ellipse::intersects(const QRectF& rect) {
     QPointF d{rect.bottomLeft()};
     return onEllipse({a, b}) || onEllipse({b, c}) || onEllipse({c, d}) || onEllipse({d, a});
 };
+
+bool Ellipse::intersects(const QLineF& line) {
+    return onEllipse(line);
+}

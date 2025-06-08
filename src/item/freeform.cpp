@@ -1,4 +1,6 @@
 #include "freeform.h"
+
+#include "../common/utils.h"
 #include "properties/itemproperty.h"
 #include <memory>
 
@@ -54,12 +56,22 @@ bool Freeform::intersects(const QRectF& rect) {
     for (qsizetype idx{0}; idx < pointsSize - 1; idx++) {
         QLine l{m_points[idx].toPoint(), m_points[idx + 1].toPoint()};
 
-        if (Item::linesIntersect(l, {p, q}) || Item::linesIntersect(l, {q, r}) ||
-            Item::linesIntersect(l, {r, s}) || Item::linesIntersect(l, {s, q}) ||
+        if (Common::intersects(l, QLineF{p, q}) || Common::intersects(l, QLineF{q, r}) ||
+            Common::intersects(l, QLineF{r, s}) || Common::intersects(l, QLineF{s, q}) ||
             rect.contains(m_points[idx].toPoint()) || rect.contains(m_points[idx + 1].toPoint()))
             return true;
     }
 
+    return false;
+}
+
+bool Freeform::intersects(const QLineF& line) {
+    qsizetype pointSize{m_points.size()};
+    for (qsizetype index{1}; index < pointSize; index++) {
+        if (Common::intersects(QLineF{m_points[index - 1], m_points[index]}, line)) {
+            return true;
+        }
+    }
     return false;
 }
 
@@ -69,8 +81,7 @@ void Freeform::draw(QPainter& painter, const QPointF& offset) {
     pen.setJoinStyle(Qt::RoundJoin);
     pen.setCapStyle(Qt::RoundCap);
     pen.setWidth(getProperty(ItemPropertyType::StrokeWidth).value().toInt());
-    pen.setColor(
-        QColor::fromRgba(getProperty(ItemPropertyType::StrokeColor).value().toUInt()));
+    pen.setColor(QColor::fromRgba(getProperty(ItemPropertyType::StrokeColor).value().toUInt()));
 
     painter.setPen(pen);
     painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing);
@@ -116,8 +127,7 @@ void Freeform::quickDraw(QPainter& painter, const QPointF& offset) const {
     painter.setPen(pen);
 
     if (m_points.size() > 1) {
-        painter.drawLine(m_points[m_points.size() - 2] - offset,
-                         m_points.back() - offset);
+        painter.drawLine(m_points[m_points.size() - 2] - offset, m_points.back() - offset);
     } else {
         painter.drawPoint(m_points.back());
     }
@@ -129,7 +139,8 @@ void Freeform::m_draw(QPainter& painter, const QPointF& offset) const {
     qsizetype pointSize{m_points.size()};
     for (qsizetype index = 0; index < pointSize; index++) {
         QPen pen{painter.pen()};
-        pen.setWidthF(getProperty(ItemPropertyType::StrokeWidth).value().toInt() * m_pressures[index]);
+        pen.setWidthF(getProperty(ItemPropertyType::StrokeWidth).value().toInt() *
+                      m_pressures[index]);
         painter.setPen(pen);
 
         if (index == 0) {

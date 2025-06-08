@@ -19,6 +19,8 @@ void Controller::setContext(ApplicationContext* context) {
 }
 
 void Controller::mousePressed(QMouseEvent* event) {
+    if (event->pos() == QPoint{0, 0}) return;
+
     m_context->event().setPos(event->pos(), m_context->canvas().scale());
     m_context->event().setButton(event->button());
     m_context->toolBar().curTool().mousePressed(m_context);

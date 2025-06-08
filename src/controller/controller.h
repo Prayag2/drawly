@@ -1,9 +1,9 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+#include <QDateTime>
 #include <QMouseEvent>
 #include <QObject>
-#include <QDateTime>
 class ApplicationContext;
 
 class Controller : public QObject {

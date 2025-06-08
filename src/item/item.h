@@ -12,8 +12,11 @@ public:
     virtual ~Item();
 
     virtual bool intersects(const QRectF& rect) = 0;
+    virtual bool intersects(const QLineF& rect) = 0;
+
     virtual void draw(QPainter& painter, const QPointF& offset) = 0;
-    virtual void erase(QPainter& painter, const QPointF& offset, QColor color = Qt::transparent) const = 0;
+    virtual void erase(QPainter& painter, const QPointF& offset,
+                       QColor color = Qt::transparent) const = 0;
 
     const QRectF& boundingBox() const;
 
@@ -28,9 +31,6 @@ protected:
     int m_boundingBoxPadding{};
     qreal m_scale{1};
     std::unordered_map<ItemPropertyType, ItemProperty> m_properties{};
-
-    static bool linesIntersect(QLineF a, QLineF b);
-    static int orientation(QPointF a, QPointF b, QPointF c);
 
     virtual void m_draw(QPainter& painter, const QPointF& offset) const = 0;
 };

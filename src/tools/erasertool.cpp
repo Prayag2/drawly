@@ -13,19 +13,6 @@
 #include <QPainter>
 
 EraserTool::EraserTool() {
-    // int size{20}, borderWidth{2};
-    // QBitmap eraserShape{size, size};
-    // QPen eraserPen{};
-    // eraserPen.setWidth(borderWidth);
-    // eraserPen.setColor(Qt::black);
-    // eraserPen.setJoinStyle(Qt::MiterJoin);
-
-    // QPainter eraserPainter{&eraserShape};
-    // eraserPainter.setPen(eraserPen);
-
-    // eraserPainter.drawRect(borderWidth / 2, borderWidth / 2, size - borderWidth,
-    //                        size - borderWidth);
-    // m_cursor = QCursor(eraserShape, 0, 0);
     m_cursor = QCursor(Qt::CrossCursor);
 }
 
@@ -40,47 +27,59 @@ void EraserTool::mousePressed(ApplicationContext* context) {
 };
 
 void EraserTool::mouseMoved(ApplicationContext* context) {
+    auto& transformer = context->coordinateTransformer();
+
     QPainter& overlayPainter{context->overlayPainter()};
-    QPen pen; pen.setWidth(2); pen.setColor(Qt::red); overlayPainter.setPen(pen);
 
+    // Erase previous box
+    overlayPainter.save();
     overlayPainter.setCompositionMode(QPainter::CompositionMode_Source);
-    overlayPainter.fillRect(m_lastRect.adjusted(-10, -10, 10, 10), Qt::transparent);
-    overlayPainter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+    overlayPainter.fillRect(transformer.toWorld(m_lastRect.adjusted(-10, -10, 10, 10)), Qt::transparent);
+    overlayPainter.restore();
 
-    // TODO: Adjustable eraser size
-    m_lastRect = QRect{context->event().pos() - QPoint{8, 8}, QSize{20, 20}};
-    overlayPainter.drawRect(m_lastRect);
-    context->canvas().update();
+    // TODO: Adjustable eraser size, remove magic numbers
+    QRect curRect{context->event().pos() - QPoint{8, 8}, QSize{20, 20}};
+    QRectF worldEraserRect{transformer.toWorld(curRect)};
 
+    QRectF updateRegion{curRect.united(m_lastRect)};
+    double scale{context->canvas().scale()};
+    updateRegion.translate(updateRegion.topLeft() * (1 - scale) / scale);
+
+    bool requiresFullUpdate{false};
     if (m_isErasing) {
-        overlayPainter.fillRect(m_lastRect, QColor(255, 0, 0, 150));
-        context->canvas().update();
-
-        auto& transformer = context->coordinateTransformer();
-        QRect worldEraserBoundingBox{transformer.toWorld(m_lastRect).toRect()};
-        worldEraserBoundingBox.translate(context->offsetPos().toPoint());
-
-        QVector<std::shared_ptr<Item>> toBeErased = context->quadtree().queryItems(worldEraserBoundingBox);
-
-        // nothing to be erased
-        if (toBeErased.empty()) {
-            return;
-        }
+        QVector<std::shared_ptr<Item>> toBeErased =
+            context->quadtree().queryItems(worldEraserRect.translated(context->offsetPos().toPoint()));
 
         for (std::shared_ptr<Item> item : toBeErased) {
             if (m_toBeErased.count(item) > 0) continue;
-            item->getProperty(ItemPropertyType::StrokeColor).setValue(QColor(255, 255, 255, 50).rgba());
-            m_toBeErased.insert(item);
+            requiresFullUpdate = true;
 
-            // context->quadtree().deleteItem(item);
+            // TODO: Remove magic numbers
+            item->getProperty(ItemPropertyType::StrokeColor)
+                .setValue(QColor(255, 255, 255, 50).rgba());
+
+            QRectF dirtyBox{transformer.toView(item->boundingBox().translated(-context->offsetPos()))};
+            dirtyBox.translate(dirtyBox.topLeft() * (1 - scale) / scale);
+            updateRegion |= dirtyBox;
+
+            m_toBeErased.insert(item);
             context->cacheGrid().markDirty(transformer.toView(item->boundingBox()).toRect());
         }
 
         Common::renderItems(context);
+
+        overlayPainter.fillRect(worldEraserRect, QColor(255, 0, 0, 150));
     }
 
-    overlayPainter.drawRect(m_lastRect);
-    context->canvas().update();
+    // Draw eraser box
+    overlayPainter.save();
+    QPen pen{Qt::red, 2.0 / context->zoomFactor()};
+    overlayPainter.setPen(pen);
+    overlayPainter.drawRect(worldEraserRect);
+    overlayPainter.restore();
+
+    context->canvas().update(updateRegion.toRect().adjusted(-20, -20, 20, 20));
+    m_lastRect = curRect;
 }
 
 void EraserTool::mouseReleased(ApplicationContext* context) {
@@ -95,10 +94,11 @@ void EraserTool::mouseReleased(ApplicationContext* context) {
         Common::renderItems(context);
         context->canvas().update();
 
+        m_toBeErased.clear();
         m_isErasing = false;
     }
 }
 
 const bool EraserTool::lowFpsTolerant() const {
-    return true;
+    return false;
 }

@@ -39,8 +39,7 @@ void Polygon::draw(QPainter& painter, const QPointF& offset) {
     QPen pen{};
 
     pen.setWidth(getProperty(ItemPropertyType::StrokeWidth).value().toInt());
-    pen.setColor(
-        QColor::fromRgba(getProperty(ItemPropertyType::StrokeColor).value().toUInt()));
+    pen.setColor(QColor::fromRgba(getProperty(ItemPropertyType::StrokeColor).value().toUInt()));
 
     painter.setPen(pen);
 
