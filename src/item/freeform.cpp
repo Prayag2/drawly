@@ -190,3 +190,11 @@ QVector<std::shared_ptr<Item>> Freeform::split() const {
 
     return items;
 }
+
+void Freeform::translate(const QPointF& amount) {
+    for (QPointF& point : m_points) {
+        point += amount;
+    }
+
+    m_boundingBox.translate(amount);
+};

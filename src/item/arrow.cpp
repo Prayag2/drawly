@@ -66,3 +66,10 @@ bool Arrow::intersects(const QLineF& line) {
             Common::intersects(QLineF{end(), m_arrowP1}, line) ||
             Common::intersects(QLineF{end(), m_arrowP2}, line));
 }
+
+void Arrow::translate(const QPointF& amount) {
+    m_arrowP1 += amount;
+    m_arrowP2 += amount;
+
+    Polygon::translate(amount);
+};

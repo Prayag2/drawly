@@ -21,6 +21,8 @@ public:
     bool intersects(const QRectF& rect) override;
     bool intersects(const QLineF& rect) override;
 
+    void translate(const QPointF& amount) override;
+
     QVector<std::shared_ptr<Item>> split() const;
     int size() const;
     int maxSize() const;

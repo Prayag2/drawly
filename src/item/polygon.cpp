@@ -57,3 +57,10 @@ void Polygon::erase(QPainter& painter, const QPointF& offset, QColor color) cons
     m_draw(painter, offset);
     painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
 }
+
+void Polygon::translate(const QPointF& amount) {
+    m_start += amount;
+    m_end += amount;
+
+    m_updateBoundingBox();
+};
