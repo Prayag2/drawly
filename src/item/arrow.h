@@ -14,6 +14,8 @@ public:
     bool intersects(const QRectF& rect) override;
     bool intersects(const QLineF& rect) override;
 
+    void translate(const QPointF& amount) override;
+
 protected:
     void m_draw(QPainter& painter, const QPointF& offset) const override;
 

@@ -18,6 +18,8 @@ public:
     virtual void erase(QPainter& painter, const QPointF& offset,
                        QColor color = Qt::transparent) const = 0;
 
+    virtual void translate(const QPointF& amount) = 0;
+
     const QRectF& boundingBox() const;
 
     void setBoundingBoxPadding(int padding);

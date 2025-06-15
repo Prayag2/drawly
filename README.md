@@ -31,20 +31,21 @@ The following is a list of features I'll be planning to add to it:
 - [x] A properties bar to change the following properties:
     - [x] Colour of strokes
     - [x] Stroke width  
+  
 Phase 2 completed!!
 
 ## Phase 3
 - [x] Buttons to zoom in/out
-- [ ] Selection tool to select items and do these actions:
+- [x] Selection tool to select items and do these actions:
+    - [x] Translate items (move)
     - [ ] Delete items
-    - [ ] Translate items (move)
     - [ ] Transform items (resize)
     - [ ] Rotate items
 - [ ] Undo/redo support
 
 ## After Phase 3
+- [x] Pressure senstivity for drawing tablets
 - [ ] Better freeform smoothing algorithms
-- [ ] Pressure senstivity for drawing tablets
 - [ ] Shortcut keys (including pen buttons)
 - [ ] Allow snapping
 - [ ] Image support

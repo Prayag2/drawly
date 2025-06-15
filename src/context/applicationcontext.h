@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QPainter>
 #include <QPoint>
+#include <memory>
+#include <unordered_set>
 class ToolBar;
 class ActionBar;
 class Tool;
@@ -14,6 +16,7 @@ class Canvas;
 class PropertyBar;
 class PropertyManager;
 class CoordinateTransformer;
+class Item;
 
 class ApplicationContext : public QObject {
 public:
@@ -30,6 +33,8 @@ public:
     QPainter& canvasPainter() const;
     QPainter& overlayPainter() const;
     CoordinateTransformer& coordinateTransformer() const;
+    std::unordered_set<std::shared_ptr<Item>>& selectedItems();
+    QRectF selectionBox() const;
 
     const QPointF& offsetPos() const;
     void setOffsetPos(const QPointF& pos);
@@ -47,6 +52,8 @@ private:
     std::unique_ptr<QuadTree> m_quadtree{nullptr};
     std::unique_ptr<CacheGrid> m_cacheGrid{nullptr};
     std::unique_ptr<CoordinateTransformer> m_coordinateTransformer{nullptr};
+    std::unordered_set<std::shared_ptr<Item>> m_selectedItems{};
+
     Canvas* m_canvas{nullptr};
     QPainter* m_canvasPainter{};
     QPainter* m_overlayPainter{};

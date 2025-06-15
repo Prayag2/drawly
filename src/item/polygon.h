@@ -14,6 +14,8 @@ public:
     void erase(QPainter& painter, const QPointF& offset,
                QColor color = Qt::transparent) const override;
 
+    void translate(const QPointF& amount) override;
+
     const QPointF& start() const;
     const QPointF& end() const;
 

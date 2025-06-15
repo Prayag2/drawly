@@ -62,7 +62,6 @@ void FreeformTool::mousePressed(ApplicationContext* context) {
 
 void FreeformTool::mouseMoved(ApplicationContext* context) {
     if (m_isDrawing) {
-        qDebug() << "Pressure is: " << context->event().pressure();
         auto& transformer{context->coordinateTransformer()};
 
         QPointF curPoint{transformer.toWorld(context->event().pos()) + context->offsetPos()};

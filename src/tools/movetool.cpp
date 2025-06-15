@@ -31,12 +31,14 @@ void MoveTool::mouseMoved(ApplicationContext* context) {
         context->setOffsetPos(newPoint / context->zoomFactor());
         Common::renderItems(context);
 
+        context->canvas().setCursor(Qt::ClosedHandCursor);
         context->canvas().update();
     }
 };
 
 void MoveTool::mouseReleased(ApplicationContext* context) {
     if (context->event().button() == Qt::LeftButton) {
+        context->canvas().setCursor(Qt::OpenHandCursor);
         m_isActive = false;
     }
 };

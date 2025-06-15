@@ -87,6 +87,10 @@ void EraserTool::mouseReleased(ApplicationContext* context) {
         auto& transformer = context->coordinateTransformer();
 
         for (std::shared_ptr<Item> item : m_toBeErased) {
+            if (context->selectedItems().count(item) > 0) {
+                context->selectedItems().erase(item);
+            }
+
             context->quadtree().deleteItem(item);
             context->cacheGrid().markDirty(transformer.toView(item->boundingBox()).toRect());
         }

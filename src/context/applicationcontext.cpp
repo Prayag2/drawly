@@ -10,6 +10,7 @@
 #include "../event/event.h"
 #include "../item/item.h"
 #include "../tools/arrowtool.h"
+#include "../tools/selectiontool.h"
 #include "../tools/ellipsetool.h"
 #include "../tools/erasertool.h"
 #include "../tools/freeformtool.h"
@@ -48,6 +49,7 @@ ApplicationContext::ApplicationContext(QWidget* parent) : QObject{parent} {
     QObject::connect(m_canvas, &Canvas::resizeEventCalled, this,
                      &ApplicationContext::canvasResized);
 
+    m_toolBar->addTool(new SelectionTool());
     m_toolBar->addTool(new FreeformTool(*m_propertyManager));
     m_toolBar->addTool(new RectangleTool(*m_propertyManager));
     m_toolBar->addTool(new EllipseTool(*m_propertyManager));
@@ -115,6 +117,18 @@ CoordinateTransformer& ApplicationContext::coordinateTransformer() const {
     return *m_coordinateTransformer;
 }
 
+std::unordered_set<std::shared_ptr<Item>>& ApplicationContext::selectedItems() {
+    return m_selectedItems;
+}
+
+QRectF ApplicationContext::selectionBox() const {
+    QRectF selectionBox;
+    for (auto item : m_selectedItems) {
+        selectionBox |= item->boundingBox();
+    }
+    return selectionBox;
+}
+
 // PRIVATE SLOTS
 void ApplicationContext::endPainters() {
     if (m_canvasPainter->isActive()) m_canvasPainter->end();
@@ -135,6 +149,10 @@ void ApplicationContext::beginPainters() {
 
 void ApplicationContext::toolChanged(Tool& tool) {
     m_canvas->setCursor(tool.cursor());
+    m_selectedItems.clear();
+
+    Common::renderItems(this);
+    canvas().update();
 }
 
 const QPointF& ApplicationContext::offsetPos() const {

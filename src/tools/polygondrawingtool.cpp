@@ -22,11 +22,6 @@ PolygonDrawingTool::PolygonDrawingTool(const PropertyManager& propertyManager) {
         (propertyManager.getToolProperty(ToolPropertyType::StrokeColor));
 }
 
-// TODO: Place this overload somewhere else
-inline QRect operator/(const QRect& rect, double amount) {
-    return QRect{rect.topLeft() / amount, rect.size() / amount};
-}
-
 void PolygonDrawingTool::mousePressed(ApplicationContext* context) {
     if (context->event().button() == Qt::LeftButton) {
         auto& transformer{context->coordinateTransformer()};
