@@ -56,3 +56,6 @@ Phase 2 completed!!
 - [ ] UI overhaul
 - [ ] Filling shapes with a background colour
 - [ ] P2P collaboration
+
+## ⚠️ Note
+You are strictly prohibited from modifying, copying, or distributing this project in any form or to any party until further notice.
