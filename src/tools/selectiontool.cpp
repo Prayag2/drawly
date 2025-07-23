@@ -1,13 +1,14 @@
-#include <QPainter>
 #include "selectiontool.h"
-#include "../common/renderitems.h"
+
 #include "../canvas/canvas.h"
-#include "../data-structures/cachegrid.h"
+#include "../common/renderitems.h"
 #include "../context/applicationcontext.h"
 #include "../context/coordinatetransformer.h"
+#include "../data-structures/cachegrid.h"
+#include "../data-structures/quadtree.h"
 #include "../event/event.h"
 #include "../item/item.h"
-#include "../data-structures/quadtree.h"
+#include <QPainter>
 #include <memory>
 
 SelectionTool::SelectionTool() {
@@ -52,11 +53,10 @@ void SelectionTool::mouseMoved(ApplicationContext* context) {
         QRectF selectionBox{m_startPoint, curPoint};
         QRectF worldSelectionBox{transformer.viewToWorld(selectionBox)};
 
-        QVector<std::shared_ptr<Item>> intersectingItems{
-            context->quadtree().queryItems(worldSelectionBox, [](std::shared_ptr<Item> item, const QRectF& rect){
+        QVector<std::shared_ptr<Item>> intersectingItems{context->quadtree().queryItems(
+            worldSelectionBox, [](std::shared_ptr<Item> item, const QRectF& rect) {
                 return rect.contains(item->boundingBox());
-            })
-        };
+            })};
 
         selectedItems = std::unordered_set(intersectingItems.begin(), intersectingItems.end());
 

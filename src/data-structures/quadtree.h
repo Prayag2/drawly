@@ -1,12 +1,12 @@
 #ifndef QUADTREE_H
 #define QUADTREE_H
 
+#include "../item/item.h"
 #include <QPainter>
 #include <QRectF>
 #include <QVector>
 #include <memory>
 #include <unordered_map>
-#include "../item/item.h"
 
 class OrderedList;
 

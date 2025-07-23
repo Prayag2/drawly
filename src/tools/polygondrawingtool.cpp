@@ -71,7 +71,7 @@ void PolygonDrawingTool::mouseReleased(ApplicationContext* context) {
         context->cacheGrid().markDirty(transformer.worldToGrid(curItem->boundingBox()).toRect());
 
         m_isDrawing = false;
-        
+
         context->markForRender();
         context->markForUpdate();
     }

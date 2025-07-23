@@ -42,8 +42,7 @@ void EraserTool::mouseMoved(ApplicationContext* context) {
     QRectF worldEraserRect{transformer.viewToWorld(curRect)};
 
     if (m_isErasing) {
-        QVector<std::shared_ptr<Item>> toBeErased =
-            context->quadtree().queryItems(worldEraserRect);
+        QVector<std::shared_ptr<Item>> toBeErased = context->quadtree().queryItems(worldEraserRect);
 
         for (std::shared_ptr<Item> item : toBeErased) {
             if (m_toBeErased.count(item) > 0) continue;

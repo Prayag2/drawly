@@ -4,9 +4,9 @@
 #include <QObject>
 #include <QPainter>
 #include <QPoint>
+#include <QTimer>
 #include <memory>
 #include <unordered_set>
-#include <QTimer>
 class ToolBar;
 class ActionBar;
 class Tool;

@@ -10,7 +10,6 @@
 #include "../event/event.h"
 #include "../item/item.h"
 #include "../tools/arrowtool.h"
-#include "../tools/selectiontool.h"
 #include "../tools/ellipsetool.h"
 #include "../tools/erasertool.h"
 #include "../tools/freeformtool.h"
@@ -18,6 +17,7 @@
 #include "../tools/movetool.h"
 #include "../tools/properties/propertymanager.h"
 #include "../tools/rectangletool.h"
+#include "../tools/selectiontool.h"
 #include "coordinatetransformer.h"
 #include <QRect>
 #include <QScreen>
@@ -64,16 +64,15 @@ ApplicationContext::ApplicationContext(QWidget* parent) : QObject{parent} {
                      [this]() { setZoomFactor(-1); });
     QObject::connect(&m_actionBar->button(2), &QPushButton::clicked, this,
                      [this]() { setZoomFactor(1); });
-    QObject::connect(&m_actionBar->button(3), &QPushButton::clicked, this,
-                     [this]() { 
-                        if (m_canvas->bg() == QColor{18, 18, 18}) {
-                            m_canvas->setBg(QColor{233, 225, 203}); 
-                        } else {
-                            m_canvas->setBg(QColor{18, 18, 18}); 
-                        }
-                     });
+    QObject::connect(&m_actionBar->button(3), &QPushButton::clicked, this, [this]() {
+        if (m_canvas->bg() == QColor{18, 18, 18}) {
+            m_canvas->setBg(QColor{233, 225, 203});
+        } else {
+            m_canvas->setBg(QColor{18, 18, 18});
+        }
+    });
 
-    QObject::connect(&m_frameTimer, &QTimer::timeout, m_canvas, [&](){
+    QObject::connect(&m_frameTimer, &QTimer::timeout, m_canvas, [&]() {
         if (m_needsReRender) {
             Common::renderCanvas(this);
             m_needsReRender = false;

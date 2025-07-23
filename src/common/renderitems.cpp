@@ -32,10 +32,8 @@ void Common::renderCanvas(ApplicationContext* context) {
             cell->image().fill(Qt::transparent);
             cell->setDirty(false);
 
-            QVector<std::shared_ptr<Item>> intersectingItems{
-                context->quadtree().queryItems(transformer.gridToWorld(cell->rect()), [](auto a, auto b){
-                    return true;
-                })};
+            QVector<std::shared_ptr<Item>> intersectingItems{context->quadtree().queryItems(
+                transformer.gridToWorld(cell->rect()), [](auto a, auto b) { return true; })};
 
             if (intersectingItems.empty()) continue;
 
@@ -68,7 +66,8 @@ void Common::renderCanvas(ApplicationContext* context) {
         selectionBox |= curBox;
     }
 
-    pen.setStyle(Qt::DashLine); canvasPainter.setPen(pen);
+    pen.setStyle(Qt::DashLine);
+    canvasPainter.setPen(pen);
     canvasPainter.drawRect(selectionBox);
     canvasPainter.restore();
 
@@ -77,7 +76,8 @@ void Common::renderCanvas(ApplicationContext* context) {
     pen.setStyle(Qt::SolidLine); overlayPainter.setPen(pen);
     overlayPainter.setBrush(Qt::white);
 
-    QRectF handle{-5/context->zoomFactor(), -5/context->zoomFactor(), 10/context->zoomFactor(), 10/context->zoomFactor()}; handle.translate(-context->offsetPos());
+    QRectF handle{-5/context->zoomFactor(), -5/context->zoomFactor(), 10/context->zoomFactor(),
+    10/context->zoomFactor()}; handle.translate(-context->offsetPos());
     overlayPainter.drawEllipse(handle.translated(selectionBox.topLeft()));
     overlayPainter.drawEllipse(handle.translated(selectionBox.topRight()));
     overlayPainter.drawEllipse(handle.translated(selectionBox.bottomRight()));
