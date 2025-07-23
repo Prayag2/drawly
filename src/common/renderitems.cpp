@@ -11,17 +11,19 @@
 #include <memory>
 
 // TODO: Optimize this to improve performance
-void Common::renderItems(ApplicationContext* context) {
+void Common::renderCanvas(ApplicationContext* context) {
     auto& transformer{context->coordinateTransformer()};
 
-    QPointF viewOffset{transformer.toView(context->offsetPos())};
-    QRectF viewViewport(viewOffset, context->canvas().dimensions());
+    context->canvas().canvas()->fill(context->canvas().bg());
 
-    context->canvas().setBg(context->canvas().bg());
+    QPointF gridOffset{transformer.worldToGrid(context->offsetPos())};
+    QRectF gridViewport(gridOffset, context->canvas().dimensions());
+
     QVector<std::shared_ptr<CacheCell>> visibleCells{
-        context->cacheGrid().queryCells(viewViewport.toRect())};
+        context->cacheGrid().queryCells(gridViewport.toRect())};
 
-    QPainter& painter{context->canvasPainter()};
+    QPainter& canvasPainter{context->canvasPainter()};
+
     for (auto cell : visibleCells) {
         // QPen pen; pen.setColor(Qt::white); painter.setPen(pen);
         // painter.drawRect(cell->rect().translated(-viewOffset.toPoint()));
@@ -31,7 +33,7 @@ void Common::renderItems(ApplicationContext* context) {
             cell->setDirty(false);
 
             QVector<std::shared_ptr<Item>> intersectingItems{
-                context->quadtree().queryItems(transformer.toWorld(cell->rect()), [](auto a, auto b){
+                context->quadtree().queryItems(transformer.gridToWorld(cell->rect()), [](auto a, auto b){
                     return true;
                 })};
 
@@ -40,14 +42,14 @@ void Common::renderItems(ApplicationContext* context) {
             cell->painter().resetTransform();
             cell->painter().scale(context->zoomFactor(), context->zoomFactor());
 
-            QPointF topLeftPoint{transformer.toWorld(cell->rect().topLeft())};
+            QPointF topLeftPoint{transformer.gridToWorld(cell->rect().topLeft())};
 
             for (auto intersectingItem : intersectingItems) {
                 intersectingItem->draw(cell->painter(), topLeftPoint);
             }
         }
 
-        painter.drawImage(cell->rect().translated(-viewOffset.toPoint()), cell->image());
+        canvasPainter.drawImage(cell->rect().translated(-gridOffset.toPoint()), cell->image());
     }
 
     QRectF selectionBox{};
@@ -56,22 +58,21 @@ void Common::renderItems(ApplicationContext* context) {
     if (selectedItems.empty()) return;
 
     // render a box around selected items
-    QPainter& overlayPainter{context->overlayPainter()};
-    overlayPainter.save();
-    QPen pen{QColor{67, 135, 244}}; pen.setWidth(1/context->zoomFactor());
-    overlayPainter.setPen(pen);
+    canvasPainter.save();
+    QPen pen{QColor{67, 135, 244}};
+    canvasPainter.setPen(pen);
 
     for (auto item : selectedItems) {
-        overlayPainter.drawRect(item->boundingBox().translated(-context->offsetPos()));
-        selectionBox |= item->boundingBox().normalized();
+        QRectF curBox{transformer.worldToView(item->boundingBox()).normalized()};
+        canvasPainter.drawRect(curBox);
+        selectionBox |= curBox;
     }
 
-    pen.setStyle(Qt::DotLine); overlayPainter.setPen(pen);
-    overlayPainter.drawRect(selectionBox.translated(-context->offsetPos()));
-    overlayPainter.restore();
+    pen.setStyle(Qt::DashLine); canvasPainter.setPen(pen);
+    canvasPainter.drawRect(selectionBox);
+    canvasPainter.restore();
 
     /* TODO: Implement resizing
-    // TODO: Remove magic number
     overlayPainter.save();
     pen.setStyle(Qt::SolidLine); overlayPainter.setPen(pen);
     overlayPainter.setBrush(Qt::white);

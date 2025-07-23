@@ -29,10 +29,12 @@ void MoveTool::mouseMoved(ApplicationContext* context) {
                          m_initialPos};
 
         context->setOffsetPos(newPoint / context->zoomFactor());
-        Common::renderItems(context);
 
         context->canvas().setCursor(Qt::ClosedHandCursor);
-        context->canvas().update();
+
+        // context->canvas().update();
+        context->markForRender();
+        context->markForUpdate();
     }
 };
 

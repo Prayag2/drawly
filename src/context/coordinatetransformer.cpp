@@ -5,50 +5,146 @@
 
 CoordinateTransformer::CoordinateTransformer(ApplicationContext* context) : m_context{context} {};
 
-QPointF CoordinateTransformer::toView(QPointF point) {
-    return point * m_context->zoomFactor();
+QPointF CoordinateTransformer::worldToView(QPointF point) {
+    return (point - m_context->offsetPos()) * m_context->zoomFactor();
 }
 
-QSizeF CoordinateTransformer::toView(QSizeF size) {
+QSizeF CoordinateTransformer::worldToView(QSizeF size) {
     return size * m_context->zoomFactor();
 }
 
-QRectF CoordinateTransformer::toView(QRectF rect) {
-    return {toView(rect.topLeft()), toView(rect.size())};
+QRectF CoordinateTransformer::worldToView(QRectF rect) {
+    return {worldToView(rect.topLeft()), worldToView(rect.size())};
 }
 
-QPointF CoordinateTransformer::toWorld(QPointF point) {
-    return point / m_context->zoomFactor();
+QPointF CoordinateTransformer::viewToWorld(QPointF point) {
+    return point / m_context->zoomFactor() + m_context->offsetPos();
 }
 
-QSizeF CoordinateTransformer::toWorld(QSizeF size) {
+QSizeF CoordinateTransformer::viewToWorld(QSizeF size) {
     return size / m_context->zoomFactor();
 }
 
-QRectF CoordinateTransformer::toWorld(QRectF rect) {
-    return {toWorld(rect.topLeft()), toWorld(rect.size())};
+QRectF CoordinateTransformer::viewToWorld(QRectF rect) {
+    return {viewToWorld(rect.topLeft()), viewToWorld(rect.size())};
 }
 
-QPointF CoordinateTransformer::toView(QPoint point) {
-    return toView(point.toPointF());
+QPoint CoordinateTransformer::worldToView(QPoint point) {
+    return worldToView(point.toPointF()).toPoint();
 }
 
-QSizeF CoordinateTransformer::toView(QSize size) {
-    return toView(size.toSizeF());
+QSize CoordinateTransformer::worldToView(QSize size) {
+    return worldToView(size.toSizeF()).toSize();
 }
 
-QRectF CoordinateTransformer::toView(QRect rect) {
-    return toView(rect.toRectF());
+QRect CoordinateTransformer::worldToView(QRect rect) {
+    return worldToView(rect.toRectF()).toRect();
 }
 
-QPointF CoordinateTransformer::toWorld(QPoint point) {
-    return toWorld(point.toPointF());
+QPoint CoordinateTransformer::viewToWorld(QPoint point) {
+    return viewToWorld(point.toPointF()).toPoint();
 }
 
-QSizeF CoordinateTransformer::toWorld(QSize size) {
-    return toWorld(size.toSizeF());
+QSize CoordinateTransformer::viewToWorld(QSize size) {
+    return viewToWorld(size.toSizeF()).toSize();
 }
 
-QRectF CoordinateTransformer::toWorld(QRect rect) {
-    return toWorld(rect.toRectF());
+QRect CoordinateTransformer::viewToWorld(QRect rect) {
+    return viewToWorld(rect.toRectF()).toRect();
+}
+
+QPointF CoordinateTransformer::worldToGrid(QPointF point) {
+    return point * m_context->zoomFactor();
+}
+
+QSizeF CoordinateTransformer::worldToGrid(QSizeF size) {
+    return size * m_context->zoomFactor();
+}
+
+QRectF CoordinateTransformer::worldToGrid(QRectF rect) {
+    return {worldToGrid(rect.topLeft()), worldToGrid(rect.size())};
+}
+
+QPointF CoordinateTransformer::gridToWorld(QPointF point) {
+    return point / m_context->zoomFactor();
+}
+
+QSizeF CoordinateTransformer::gridToWorld(QSizeF size) {
+    return size / m_context->zoomFactor();
+}
+
+QRectF CoordinateTransformer::gridToWorld(QRectF rect) {
+    return {gridToWorld(rect.topLeft()), gridToWorld(rect.size())};
+}
+
+QPoint CoordinateTransformer::worldToGrid(QPoint point) {
+    return worldToGrid(point.toPointF()).toPoint();
+}
+
+QSize CoordinateTransformer::worldToGrid(QSize size) {
+    return worldToGrid(size.toSizeF()).toSize();
+}
+
+QRect CoordinateTransformer::worldToGrid(QRect rect) {
+    return worldToGrid(rect.toRectF()).toRect();
+}
+
+QPoint CoordinateTransformer::gridToWorld(QPoint point) {
+    return gridToWorld(point.toPointF()).toPoint();
+}
+
+QSize CoordinateTransformer::gridToWorld(QSize size) {
+    return gridToWorld(size.toSizeF()).toSize();
+}
+
+QRect CoordinateTransformer::gridToWorld(QRect rect) {
+    return gridToWorld(rect.toRectF()).toRect();
+}
+
+QPointF CoordinateTransformer::viewToGrid(QPointF point) {
+    return point + m_context->offsetPos();
+}
+
+QSizeF CoordinateTransformer::viewToGrid(QSizeF size) {
+    return size;
+}
+
+QRectF CoordinateTransformer::viewToGrid(QRectF rect) {
+    return QRectF{viewToGrid(rect.topLeft()), viewToGrid(rect.bottomRight())};
+}
+
+QPointF CoordinateTransformer::gridToView(QPointF point) {
+    return point - m_context->offsetPos();
+}
+
+QSizeF CoordinateTransformer::gridToView(QSizeF size) {
+    return size;
+}
+
+QRectF CoordinateTransformer::gridToView(QRectF rect) {
+    return QRectF{gridToView(rect.topLeft()), gridToView(rect.bottomRight())};
+}
+
+QPoint CoordinateTransformer::viewToGrid(QPoint point) {
+    return viewToGrid(point.toPointF()).toPoint();
+}
+
+QSize CoordinateTransformer::viewToGrid(QSize size) {
+    return viewToGrid(size.toSizeF()).toSize();
+}
+
+QRect CoordinateTransformer::viewToGrid(QRect rect) {
+    return viewToGrid(rect.toRectF()).toRect();
+}
+
+QPoint CoordinateTransformer::gridToView(QPoint point) {
+    return gridToView(point.toPointF()).toPoint();
+}
+
+QSize CoordinateTransformer::gridToView(QSize size) {
+    return gridToView(size.toSizeF()).toSize();
+}
+
+QRect CoordinateTransformer::gridToView(QRect rect) {
+    return gridToView(rect.toRectF()).toRect();
 }

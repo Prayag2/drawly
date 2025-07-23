@@ -90,18 +90,8 @@ void Freeform::draw(QPainter& painter, const QPointF& offset) {
 }
 
 void Freeform::erase(QPainter& painter, const QPointF& offset, QColor color) const {
-    QPen pen{};
-
-    pen.setJoinStyle(Qt::RoundJoin);
-    pen.setCapStyle(Qt::RoundCap);
-    pen.setWidth(getProperty(ItemPropertyType::StrokeWidth).value().toInt());
-    pen.setColor(color);
-
-    painter.setPen(pen);
-    painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing);
-
     painter.setCompositionMode(QPainter::CompositionMode_Source);
-    m_draw(painter, offset);
+    painter.fillRect(boundingBox().translated(-offset), Qt::transparent);
     painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
 }
 
@@ -135,13 +125,20 @@ void Freeform::quickDraw(QPainter& painter, const QPointF& offset) const {
 
 void Freeform::m_draw(QPainter& painter, const QPointF& offset) const {
     painter.setCompositionMode(QPainter::CompositionMode_Source);
+    int strokeWidth{getProperty(ItemPropertyType::StrokeWidth).value().toInt()};
+    double currentWidth{strokeWidth * 1.0};
 
     qsizetype pointSize{m_points.size()};
     for (qsizetype index = 0; index < pointSize; index++) {
-        QPen pen{painter.pen()};
-        pen.setWidthF(getProperty(ItemPropertyType::StrokeWidth).value().toInt() *
-                      m_pressures[index]);
-        painter.setPen(pen);
+        double newWidth{strokeWidth * m_pressures[index]};
+
+        if (abs(newWidth - currentWidth) >= 1e-3) {
+            QPen pen{painter.pen()};
+            pen.setWidthF(newWidth);
+            painter.setPen(pen);
+
+            currentWidth = newWidth;
+        }
 
         if (index == 0) {
             painter.drawPoint(m_points.front() - offset);

@@ -13,6 +13,7 @@ public:
 
     QImage* const canvas() const;
     QImage* const overlay() const;
+    QImage* const widget() const;
     QSize sizeHint() const override;
     QSize dimensions() const;
 
@@ -33,6 +34,9 @@ signals:
     void resizeEnd();
     void destroyed();
 
+public slots:
+    void triggerUpdate();
+
 protected:
     void paintEvent(QPaintEvent* event) override;
     void resizeEvent(QResizeEvent* event) override;
@@ -46,6 +50,7 @@ private:
     qreal m_scale{1.0};  // default scale is 1
     QImage* m_canvas{};
     QImage* m_overlay{};
+    QImage* m_widget{};
     QColor m_bg{};
 
     QSize m_sizeHint{500, 500};

@@ -6,6 +6,7 @@
 #include <QPoint>
 #include <memory>
 #include <unordered_set>
+#include <QTimer>
 class ToolBar;
 class ActionBar;
 class Tool;
@@ -32,9 +33,14 @@ public:
     Event& event() const;
     QPainter& canvasPainter() const;
     QPainter& overlayPainter() const;
+
     CoordinateTransformer& coordinateTransformer() const;
     std::unordered_set<std::shared_ptr<Item>>& selectedItems();
     QRectF selectionBox() const;
+
+    void markForRender();
+    void markForUpdate();
+    void markForUpdate(const QRect& region);
 
     const QPointF& offsetPos() const;
     void setOffsetPos(const QPointF& pos);
@@ -57,11 +63,17 @@ private:
     Canvas* m_canvas{nullptr};
     QPainter* m_canvasPainter{};
     QPainter* m_overlayPainter{};
+
     ToolBar* m_toolBar{nullptr};
     PropertyBar* m_propertyBar{};
     ActionBar* m_actionBar{};
     PropertyManager* m_propertyManager{};
     Event* m_event{nullptr};
+
+    QTimer m_frameTimer;
+    bool m_needsReRender{false};
+    bool m_needsUpdate{false};
+    QRect m_updateRegion{};
 
     qreal m_zoomFactor{1};
 
