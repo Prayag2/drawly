@@ -10,7 +10,6 @@
 #include "../event/event.h"
 #include "../item/item.h"
 #include "../tools/arrowtool.h"
-#include "../tools/selectiontool.h"
 #include "../tools/ellipsetool.h"
 #include "../tools/erasertool.h"
 #include "../tools/freeformtool.h"
@@ -18,6 +17,7 @@
 #include "../tools/movetool.h"
 #include "../tools/properties/propertymanager.h"
 #include "../tools/rectangletool.h"
+#include "../tools/selectiontool.h"
 #include "coordinatetransformer.h"
 #include <QRect>
 #include <QScreen>
@@ -25,7 +25,6 @@
 
 ApplicationContext::ApplicationContext(QWidget* parent) : QObject{parent} {
     m_canvas = new Canvas(parent);
-    m_canvas->setScale(1.25);
 
     m_toolBar = new ToolBar(parent);
     m_actionBar = new ActionBar(parent);
@@ -60,13 +59,39 @@ ApplicationContext::ApplicationContext(QWidget* parent) : QObject{parent} {
 
     m_actionBar->addButton("-", 1);
     m_actionBar->addButton("+", 2);
+    m_actionBar->addButton("󰖨", 3);
     QObject::connect(&m_actionBar->button(1), &QPushButton::clicked, this,
                      [this]() { setZoomFactor(-1); });
     QObject::connect(&m_actionBar->button(2), &QPushButton::clicked, this,
                      [this]() { setZoomFactor(1); });
+    QObject::connect(&m_actionBar->button(3), &QPushButton::clicked, this, [this]() {
+        if (m_canvas->bg() == QColor{18, 18, 18}) {
+            m_canvas->setBg(QColor{233, 225, 203});
+        } else {
+            m_canvas->setBg(QColor{18, 18, 18});
+        }
+    });
 
-    m_canvasPainter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
-    m_overlayPainter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    QObject::connect(&m_frameTimer, &QTimer::timeout, m_canvas, [&]() {
+        if (m_needsReRender) {
+            Common::renderCanvas(this);
+            m_needsReRender = false;
+        }
+
+        if (m_needsUpdate) {
+            if (m_updateRegion.width() == 0 || m_updateRegion.height() == 0) {
+                m_canvas->update();
+            } else {
+                m_canvas->update(m_updateRegion);
+            }
+
+            m_updateRegion.setWidth(0);
+            m_updateRegion.setHeight(0);
+            m_needsUpdate = false;
+        }
+    });
+
+    m_frameTimer.start(1000 / fps());
 
     m_propertyBar->toolChanged(m_toolBar->curTool());
 }
@@ -74,7 +99,6 @@ ApplicationContext::ApplicationContext(QWidget* parent) : QObject{parent} {
 ApplicationContext::~ApplicationContext() {
     delete m_event;
     delete m_canvasPainter;
-    delete m_overlayPainter;
 }
 
 Canvas& ApplicationContext::canvas() const {
@@ -136,14 +160,14 @@ void ApplicationContext::endPainters() {
 }
 
 void ApplicationContext::beginPainters() {
+    QPainter::RenderHints renderHints{QPainter::Antialiasing | QPainter::SmoothPixmapTransform};
     if (!m_canvasPainter->isActive()) {
         m_canvasPainter->begin(m_canvas->canvas());
-        m_canvasPainter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+        m_canvasPainter->setRenderHints(renderHints);
     }
     if (!m_overlayPainter->isActive()) {
         m_overlayPainter->begin(m_canvas->overlay());
-        m_overlayPainter->scale(zoomFactor(), zoomFactor());
-        m_overlayPainter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+        m_overlayPainter->setRenderHints(renderHints);
     }
 }
 
@@ -151,7 +175,7 @@ void ApplicationContext::toolChanged(Tool& tool) {
     m_canvas->setCursor(tool.cursor());
     m_selectedItems.clear();
 
-    Common::renderItems(this);
+    Common::renderCanvas(this);
     canvas().update();
 }
 
@@ -187,13 +211,13 @@ void ApplicationContext::setZoomFactor(int diff) {
     beginPainters();
 
     cacheGrid().markAllDirty();
-    Common::renderItems(this);
+    Common::renderCanvas(this);
 
     canvas().update();
 }
 
 const int ApplicationContext::fps() const {
-    QScreen* screen{QGuiApplication::primaryScreen()};
+    QScreen* screen{m_canvas->screen()};
     if (screen) {
         return screen->refreshRate();
     }
@@ -207,5 +231,18 @@ void ApplicationContext::canvasResized() {
     int rows{static_cast<int>(std::ceil(height / static_cast<double>(cellH)) + 1)};
     int cols{static_cast<int>(std::ceil(width / static_cast<double>(cellW)) + 1)};
 
-    m_cacheGrid->setSize(9 * rows * cols);
+    // m_cacheGrid->setSize(9 * rows * cols);
+}
+
+void ApplicationContext::markForRender() {
+    m_needsReRender = true;
+}
+
+void ApplicationContext::markForUpdate() {
+    m_needsUpdate = true;
+}
+
+void ApplicationContext::markForUpdate(const QRect& region) {
+    m_needsUpdate = true;
+    m_updateRegion = region;
 }

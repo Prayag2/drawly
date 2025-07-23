@@ -1,13 +1,14 @@
-#include <QPainter>
 #include "selectiontool.h"
-#include "../common/renderitems.h"
+
 #include "../canvas/canvas.h"
-#include "../data-structures/cachegrid.h"
+#include "../common/renderitems.h"
 #include "../context/applicationcontext.h"
 #include "../context/coordinatetransformer.h"
+#include "../data-structures/cachegrid.h"
+#include "../data-structures/quadtree.h"
 #include "../event/event.h"
 #include "../item/item.h"
-#include "../data-structures/quadtree.h"
+#include <QPainter>
 #include <memory>
 
 SelectionTool::SelectionTool() {
@@ -22,73 +23,78 @@ QString SelectionTool::iconAlt() const {
 void SelectionTool::mousePressed(ApplicationContext* context) {
     if (context->event().button() == Qt::LeftButton) {
         auto& transformer = context->coordinateTransformer();
-        QPointF worldPos{transformer.toWorld(context->event().pos()) + context->offsetPos()};
+        QPointF curPoint{context->event().pos()};
 
-        if (context->selectionBox().contains(worldPos)) {
+        if (context->selectionBox().contains(transformer.viewToWorld(curPoint))) {
             m_isMoving = true;
-            m_lastPos = worldPos;
+            m_lastPos = curPoint;
         } else {
             m_isSelecting = true;
-            m_startPoint = worldPos;
+            m_startPoint = curPoint;
             context->selectedItems().clear();
 
-            Common::renderItems(context);
-            context->canvas().update();
+            context->markForRender();
+            context->markForUpdate();
         }
     }
 };
 
 void SelectionTool::mouseMoved(ApplicationContext* context) {
     auto& transformer = context->coordinateTransformer();
-    QPointF worldPos{transformer.toWorld(context->event().pos()) + context->offsetPos()};
+
+    QPointF curPoint{context->event().pos()};
+    QPointF worldPoint{transformer.viewToWorld(curPoint)};
+
+    context->canvas().overlay()->fill(Qt::transparent);
+
     std::unordered_set<std::shared_ptr<Item>>& selectedItems{context->selectedItems()};
 
     if (m_isSelecting) {
-        QRectF selectionBox{m_startPoint, worldPos};
+        QRectF selectionBox{m_startPoint, curPoint};
+        QRectF worldSelectionBox{transformer.viewToWorld(selectionBox)};
 
-        QVector<std::shared_ptr<Item>> intersectingItems{
-            context->quadtree().queryItems(selectionBox, [](std::shared_ptr<Item> item, const QRectF& rect){
+        QVector<std::shared_ptr<Item>> intersectingItems{context->quadtree().queryItems(
+            worldSelectionBox, [](std::shared_ptr<Item> item, const QRectF& rect) {
                 return rect.contains(item->boundingBox());
-            })
-        };
+            })};
 
         selectedItems = std::unordered_set(intersectingItems.begin(), intersectingItems.end());
 
-        Common::renderItems(context);
-
         QPainter& overlayPainter{context->overlayPainter()};
         overlayPainter.save();
-        QPen pen{QColor{67, 135, 244, 200}}; overlayPainter.setPen(pen);
+        QPen pen{QColor{67, 135, 244, 200}};
+        overlayPainter.setPen(pen);
 
-        QRectF selectionBoxView{selectionBox.translated(-context->offsetPos())};
-        overlayPainter.drawRect(selectionBoxView);
-        overlayPainter.fillRect(selectionBoxView, QColor{67, 135, 244, 50});
+        overlayPainter.drawRect(selectionBox);
+        overlayPainter.fillRect(selectionBox, QColor{67, 135, 244, 50});
+
         overlayPainter.restore();
 
-        context->canvas().update();
+        context->markForUpdate();
         return;
     }
 
     if (m_isMoving) {
         context->canvas().setCursor(Qt::ClosedHandCursor);
 
+        QPointF displacement{worldPoint - transformer.viewToWorld(m_lastPos)};
         for (auto item : selectedItems) {
             QRectF oldBoundingBox{item->boundingBox()};
 
-            context->cacheGrid().markDirty(transformer.toView(item->boundingBox()).toRect());
-            item->translate(worldPos - m_lastPos);
-            context->cacheGrid().markDirty(transformer.toView(item->boundingBox()).toRect());
+            context->cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
+            item->translate(displacement);
+            context->cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
 
             context->quadtree().updateItem(item, oldBoundingBox);
         }
 
-        m_lastPos = worldPos;
-        Common::renderItems(context);
-        context->canvas().update();
+        m_lastPos = curPoint;
+        context->markForRender();
+        context->markForUpdate();
         return;
     }
 
-    if (context->selectionBox().contains(worldPos)) {
+    if (context->selectionBox().contains(worldPoint)) {
         context->canvas().setCursor(Qt::OpenHandCursor);
     } else {
         context->canvas().setCursor(Qt::ArrowCursor);
@@ -100,8 +106,10 @@ void SelectionTool::mouseReleased(ApplicationContext* context) {
         m_isSelecting = false;
         m_isMoving = false;
 
-        Common::renderItems(context);
-        context->canvas().update();
+        // clearing the overlay
+        context->canvas().overlay()->fill(Qt::transparent);
+        context->markForRender();
+        context->markForUpdate();
     }
 };
 

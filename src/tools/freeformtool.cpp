@@ -51,10 +51,14 @@ void FreeformTool::mousePressed(ApplicationContext* context) {
             .setValue(m_properties[ToolPropertyType::StrokeColor]->value());
         curItem->setBoundingBoxPadding(10 * context->canvas().scale());
 
-        m_lastPoint =
-            context->coordinateTransformer().toWorld(context->event().pos()) + context->offsetPos();
+        m_lastPoint = context->event().pos();
 
-        curItem->addPoint(m_lastPoint, context->event().pressure());
+        auto& transformer{context->coordinateTransformer()};
+        curItem->addPoint(transformer.viewToWorld(m_lastPoint), context->event().pressure());
+
+        auto& painter{context->overlayPainter()};
+        painter.save();
+        painter.scale(context->zoomFactor(), context->zoomFactor());
 
         m_isDrawing = true;
     }
@@ -64,25 +68,21 @@ void FreeformTool::mouseMoved(ApplicationContext* context) {
     if (m_isDrawing) {
         auto& transformer{context->coordinateTransformer()};
 
-        QPointF curPoint{transformer.toWorld(context->event().pos()) + context->offsetPos()};
+        QPointF curPoint{context->event().pos()};
 
         // distance between the two points in the "view" coordinate system
-        QPointF viewCurPoint{context->event().pos()};
-        QPointF viewLastPoint{transformer.toView(m_lastPoint - context->offsetPos())};
-        double dist{std::sqrt(std::pow(viewLastPoint.x() - viewCurPoint.x(), 2) +
-                              std::pow(viewLastPoint.y() - viewCurPoint.y(), 2))};
+        double dist{std::sqrt(std::pow(m_lastPoint.x() - curPoint.x(), 2) +
+                              std::pow(m_lastPoint.y() - curPoint.y(), 2))};
 
         if (dist < Freeform::minPointDistance()) return;
 
         QPainter& painter{context->overlayPainter()};
 
-        m_lastPoint = curPoint;
-        curItem->addPoint(m_lastPoint, context->event().pressure());
+        curItem->addPoint(transformer.viewToWorld(curPoint), context->event().pressure());
         curItem->quickDraw(painter, context->offsetPos());
 
-        QRectF dirtyBox{transformer.toView(curItem->boundingBox().translated(-context->offsetPos()))};
-        QRectF updateRegion{dirtyBox.topLeft() / context->canvas().scale(), dirtyBox.size()};
-        context->canvas().update(updateRegion.toRect());
+        m_lastPoint = curPoint;
+        context->markForUpdate();
     }
 }
 
@@ -91,22 +91,20 @@ void FreeformTool::mouseReleased(ApplicationContext* context) {
         auto& transformer{context->coordinateTransformer()};
 
         QPainter& overlayPainter{context->overlayPainter()};
-
-        overlayPainter.setCompositionMode(QPainter::CompositionMode_Clear);
-        overlayPainter.fillRect(context->canvas().overlay()->rect(), Qt::transparent);
-        overlayPainter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+        context->canvas().overlay()->fill(Qt::transparent);
+        overlayPainter.restore();
 
         QVector<std::shared_ptr<Item>> itemsAfterSplitting{curItem->split()};
         for (auto item : itemsAfterSplitting) {
             context->quadtree().insertItem(item);
-            context->cacheGrid().markDirty(transformer.toView(item->boundingBox()).toRect());
+            context->cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
         }
+
         curItem.reset();
 
-        Common::renderItems(context);
-
         m_isDrawing = false;
-        context->canvas().update();
+        context->markForRender();
+        context->markForUpdate();
     }
 }
 

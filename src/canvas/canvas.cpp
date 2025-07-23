@@ -8,11 +8,14 @@
 Canvas::Canvas(QWidget* parent) : QWidget{parent} {
     m_sizeHint = screen()->size() * m_scale;
     m_maxSize = m_sizeHint;
-    setMouseTracking(true);
+
     m_canvas = new QImage(m_sizeHint, m_imageFormat);
     m_overlay = new QImage(m_sizeHint, m_imageFormat);
+
     setBg(QColor{18, 18, 18});
+
     setTabletTracking(true);
+    setMouseTracking(true);
 }
 
 Canvas::~Canvas() {
@@ -32,6 +35,10 @@ QImage* const Canvas::canvas() const {
 
 QImage* const Canvas::overlay() const {
     return m_overlay;
+}
+
+QImage* const Canvas::widget() const {
+    return m_widget;
 }
 
 QColor Canvas::bg() const {
@@ -86,6 +93,7 @@ bool operator<=(const QSize& a, const QSize& b) {
 void Canvas::resizeEvent(QResizeEvent* event) {
     emit resizeEventCalled();
 
+    setScale(devicePixelRatioF());
     if (size() * m_scale <= m_maxSize) {
         return;
     }
@@ -162,4 +170,8 @@ void Canvas::resize() {
     canvasPainter.end();
     overlayPainter.end();
     emit resizeEnd();
+}
+
+void Canvas::triggerUpdate() {
+    this->update();
 }

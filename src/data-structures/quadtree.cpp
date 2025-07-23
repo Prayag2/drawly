@@ -101,10 +101,11 @@ void QuadTree::updateItem(std::shared_ptr<Item> item, const QRectF& oldBoundingB
 }
 
 void QuadTree::update(std::shared_ptr<Item> item, const QRectF& oldBoundingBox, bool inserted) {
-    if (!m_boundingBox.intersects(oldBoundingBox) && !m_boundingBox.intersects(item->boundingBox())) {
+    if (!m_boundingBox.intersects(oldBoundingBox) &&
+        !m_boundingBox.intersects(item->boundingBox())) {
         return;
     }
-    
+
     if (m_boundingBox.intersects(oldBoundingBox)) {
         auto it = std::find(m_items.begin(), m_items.end(), item);
         if (it != m_items.end()) {
@@ -116,7 +117,8 @@ void QuadTree::update(std::shared_ptr<Item> item, const QRectF& oldBoundingBox, 
         if (m_items.size() < m_capacity) {
             m_items.push_back(item);
             inserted = true;
-        } else if (m_topLeft == nullptr) subdivide();
+        } else if (m_topLeft == nullptr)
+            subdivide();
     }
 
     if (m_topLeft != nullptr) {

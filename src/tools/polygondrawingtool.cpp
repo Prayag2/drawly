@@ -35,7 +35,11 @@ void PolygonDrawingTool::mousePressed(ApplicationContext* context) {
 
         curItem->setScale(context->canvas().scale());
         curItem->setBoundingBoxPadding(10 * context->canvas().scale());
-        curItem->setStart(transformer.toWorld(context->event().pos()) + context->offsetPos());
+        curItem->setStart(transformer.viewToWorld(context->event().pos()));
+
+        QPainter& painter{context->overlayPainter()};
+        painter.save();
+        painter.scale(context->zoomFactor(), context->zoomFactor());
 
         m_isDrawing = true;
     }
@@ -47,10 +51,10 @@ void PolygonDrawingTool::mouseMoved(ApplicationContext* context) {
         QPainter& overlayPainter{context->overlayPainter()};
 
         curItem->erase(overlayPainter, context->offsetPos());
-        curItem->setEnd(transformer.toWorld(context->event().pos()) + context->offsetPos());
+        curItem->setEnd(transformer.viewToWorld(context->event().pos()));
         curItem->draw(overlayPainter, context->offsetPos());
 
-        context->canvas().update();
+        context->markForUpdate();
     }
 };
 
@@ -58,17 +62,18 @@ void PolygonDrawingTool::mouseReleased(ApplicationContext* context) {
     if (context->event().button() == Qt::LeftButton && m_isDrawing) {
         auto& transformer{context->coordinateTransformer()};
 
-        QPainter& overlayPainter{context->overlayPainter()};
-
-        curItem->erase(overlayPainter, context->offsetPos());
-
         context->quadtree().insertItem(curItem);
 
-        context->cacheGrid().markDirty(transformer.toView(curItem->boundingBox()).toRect());
-        Common::renderItems(context);
+        QPainter& overlayPainter{context->overlayPainter()};
+        context->canvas().overlay()->fill(Qt::transparent);
+        overlayPainter.restore();
+
+        context->cacheGrid().markDirty(transformer.worldToGrid(curItem->boundingBox()).toRect());
 
         m_isDrawing = false;
-        context->canvas().update();
+
+        context->markForRender();
+        context->markForUpdate();
     }
 };
 

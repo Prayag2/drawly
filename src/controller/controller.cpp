@@ -35,11 +35,6 @@ void Controller::mouseMoved(QMouseEvent* event) {
     m_context->event().setPos(event->pos(), m_context->canvas().scale());
     m_context->event().setButton(event->button());
 
-    qint64 curTime = QDateTime::currentMSecsSinceEpoch();
-    if (curTime - m_lastTime < 1000 / m_context->fps()) {
-        if (m_context->toolBar().curTool().lowFpsTolerant()) return;
-    }
-
     m_context->toolBar().curTool().mouseMoved(m_context);
 
     m_lastTime = QDateTime::currentMSecsSinceEpoch();
@@ -58,6 +53,6 @@ void Controller::tablet(QTabletEvent* event) {
 
 void Controller::wheel(QWheelEvent* event) {
     m_context->setOffsetPos(m_context->offsetPos() - event->pixelDelta() / m_context->zoomFactor());
-    Common::renderItems(m_context);
-    m_context->canvas().update();
+    Common::renderCanvas(m_context);
+    // m_context->canvas().update();
 }
