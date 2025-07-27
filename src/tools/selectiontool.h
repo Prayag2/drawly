@@ -13,7 +13,7 @@ public:
     void mousePressed(ApplicationContext* context) override;
     void mouseMoved(ApplicationContext* context) override;
     void mouseReleased(ApplicationContext* context) override;
-    const bool lowFpsTolerant() const override;
+    ToolID id() const override;
 
 protected:
     bool m_isSelecting{false};

@@ -1,6 +1,7 @@
 #include "applicationcontext.h"
 
 #include "../canvas/canvas.h"
+#include "../common/constants.h"
 #include "../common/renderitems.h"
 #include "../components/actionbar.h"
 #include "../components/propertybar.h"
@@ -44,7 +45,6 @@ ApplicationContext::ApplicationContext(QWidget* parent) : QObject{parent} {
     QObject::connect(m_canvas, &Canvas::resizeStart, this, &ApplicationContext::endPainters);
     QObject::connect(m_canvas, &Canvas::resizeEnd, this, &ApplicationContext::beginPainters);
     QObject::connect(m_toolBar, &ToolBar::toolChanged, this, &ApplicationContext::toolChanged);
-    QObject::connect(m_toolBar, &ToolBar::toolChanged, m_propertyBar, &PropertyBar::toolChanged);
     QObject::connect(m_canvas, &Canvas::resizeEventCalled, this,
                      &ApplicationContext::canvasResized);
 
@@ -54,8 +54,10 @@ ApplicationContext::ApplicationContext(QWidget* parent) : QObject{parent} {
     m_toolBar->addTool(new EllipseTool(*m_propertyManager));
     m_toolBar->addTool(new ArrowTool(*m_propertyManager));
     m_toolBar->addTool(new LineTool(*m_propertyManager));
-    m_toolBar->addTool(new EraserTool());
+    m_toolBar->addTool(new EraserTool(*m_propertyManager));
     m_toolBar->addTool(new MoveTool());
+
+    QObject::connect(m_toolBar, &ToolBar::toolChanged, m_propertyBar, &PropertyBar::toolChanged);
 
     m_actionBar->addButton("-", 1);
     m_actionBar->addButton("+", 2);
@@ -64,12 +66,16 @@ ApplicationContext::ApplicationContext(QWidget* parent) : QObject{parent} {
                      [this]() { setZoomFactor(-1); });
     QObject::connect(&m_actionBar->button(2), &QPushButton::clicked, this,
                      [this]() { setZoomFactor(1); });
+
     QObject::connect(&m_actionBar->button(3), &QPushButton::clicked, this, [this]() {
-        if (m_canvas->bg() == QColor{18, 18, 18}) {
-            m_canvas->setBg(QColor{233, 225, 203});
+        if (m_canvas->bg() == Drawly::lightBackgroundColor) {
+            m_canvas->setBg(Drawly::darkBackgroundColor);
         } else {
-            m_canvas->setBg(QColor{18, 18, 18});
+            m_canvas->setBg(Drawly::lightBackgroundColor);
         }
+
+        markForRender();
+        markForUpdate();
     });
 
     QObject::connect(&m_frameTimer, &QTimer::timeout, m_canvas, [&]() {
@@ -91,9 +97,9 @@ ApplicationContext::ApplicationContext(QWidget* parent) : QObject{parent} {
         }
     });
 
-    m_frameTimer.start(1000 / fps());
-
     m_propertyBar->toolChanged(m_toolBar->curTool());
+
+    m_frameTimer.start(1000 / fps());
 }
 
 ApplicationContext::~ApplicationContext() {

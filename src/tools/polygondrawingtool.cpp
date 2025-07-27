@@ -77,6 +77,7 @@ void PolygonDrawingTool::mouseReleased(ApplicationContext* context) {
     }
 };
 
-const bool PolygonDrawingTool::lowFpsTolerant() const {
-    return true;
+ToolID PolygonDrawingTool::id() const {
+    return ToolID::PolygonDrawingToolID;
 }
+

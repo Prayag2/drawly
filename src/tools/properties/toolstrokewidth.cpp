@@ -7,6 +7,8 @@ ToolStrokeWidth::ToolStrokeWidth(QWidget* parent) {
     QSpinBox* box{new QSpinBox(parent)};
     box->setRange(1, 10);
     box->setValue(6);
+
+    box->hide();
     m_widget = box;
 }
 

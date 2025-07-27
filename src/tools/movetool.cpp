@@ -45,6 +45,6 @@ void MoveTool::mouseReleased(ApplicationContext* context) {
     }
 };
 
-const bool MoveTool::lowFpsTolerant() const {
-    return true;
+ToolID MoveTool::id() const {
+    return ToolID::MoveToolID;
 }

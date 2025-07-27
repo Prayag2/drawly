@@ -27,6 +27,7 @@ ToolStrokeColor::ToolStrokeColor(QWidget* parent) {
 
     m_group->buttons()[0]->setChecked(true);
     m_widget->setStyleSheet(QString::asprintf("QPushButton {width: %dpx; height: %dpx};", 20, 20));
+    m_widget->hide();
 }
 
 QString ToolStrokeColor::name() const {

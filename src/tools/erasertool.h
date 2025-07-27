@@ -2,23 +2,25 @@
 #define ERASERTOOL_H
 
 #include "tool.h"
+#include "../common/constants.h"
 #include <unordered_set>
 class Item;
+class PropertyManager;
 
 class EraserTool : public Tool {
 public:
-    EraserTool();
+    EraserTool(const PropertyManager& propertyManager);
     ~EraserTool() override = default;
 
     QString iconAlt() const override;
     void mousePressed(ApplicationContext* context) override;
     void mouseMoved(ApplicationContext* context) override;
     void mouseReleased(ApplicationContext* context) override;
-    const bool lowFpsTolerant() const override;
+    ToolID id() const override;
 
 private:
     bool m_isErasing{false};
-    QRect m_lastRect{};
+    QRectF m_lastRect{};
 
     std::unordered_set<std::shared_ptr<Item>> m_toBeErased;
 };

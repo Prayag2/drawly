@@ -22,6 +22,10 @@ Tool& ToolBar::curTool() const {
     return *m_tools[m_group->checkedId()];
 }
 
+QVector<Tool*> ToolBar::tools() const {
+    return m_tools;
+}
+
 void ToolBar::addTool(Tool* tool) {
     if (tool == nullptr) return;
 
@@ -43,3 +47,4 @@ void ToolBar::addTool(Tool* tool) {
 void ToolBar::onToolChanged(int id) {
     emit toolChanged(curTool());
 }
+

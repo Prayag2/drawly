@@ -2,7 +2,12 @@
 #define PROPERTYMANAGER_H
 #include <QObject>
 
-enum class ToolPropertyType { StrokeWidth = 0x00, StrokeColor = 0x02 };
+enum class ToolPropertyType {
+    StrokeWidth,
+    StrokeColor,
+    EraserSize
+};
+
 class ToolProperty;
 
 class PropertyManager : public QObject {

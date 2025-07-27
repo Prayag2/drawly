@@ -15,6 +15,7 @@ public:
 
     Tool& curTool() const;
     void addTool(Tool* tool);
+    QVector<Tool*> tools() const;
 
 signals:
     void toolChanged(Tool&);
