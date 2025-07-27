@@ -6,6 +6,14 @@ class ApplicationContext;
 class ToolProperty;
 enum class ToolPropertyType;
 
+enum class ToolID {
+    SelectionToolID,
+    FreeformToolID,
+    PolygonDrawingToolID,
+    EraserToolID,
+    MoveToolID
+};
+
 // INTERFACE
 class Tool {
 public:
@@ -17,7 +25,7 @@ public:
     virtual void mousePressed(ApplicationContext* context) = 0;
     virtual void mouseMoved(ApplicationContext* context) = 0;
     virtual void mouseReleased(ApplicationContext* context) = 0;
-    virtual const bool lowFpsTolerant() const = 0;
+    virtual ToolID id() const = 0;
 
     const QVector<std::shared_ptr<ToolProperty>> properties() const;
 

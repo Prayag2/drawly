@@ -2,6 +2,7 @@
 
 #include "../canvas/canvas.h"
 #include "../common/renderitems.h"
+#include "../common/constants.h"
 #include "../common/utils.h"
 #include "../context/applicationcontext.h"
 #include "../context/coordinatetransformer.h"
@@ -9,11 +10,16 @@
 #include "../data-structures/quadtree.h"
 #include "../event/event.h"
 #include "../item/item.h"
+#include "properties/propertymanager.h"
+#include "properties/toolproperty.h"
 #include <QDebug>
 #include <QPainter>
 
-EraserTool::EraserTool() {
+EraserTool::EraserTool(const PropertyManager& propertyManager) {
     m_cursor = QCursor(Qt::CrossCursor);
+
+    m_properties[ToolPropertyType::EraserSize] =
+        (propertyManager.getToolProperty(ToolPropertyType::EraserSize));
 }
 
 QString EraserTool::iconAlt() const {
@@ -35,34 +41,39 @@ void EraserTool::mouseMoved(ApplicationContext* context) {
     // Erase previous box
     overlayPainter.save();
     overlayPainter.setCompositionMode(QPainter::CompositionMode_Source);
-    overlayPainter.fillRect(m_lastRect.adjusted(-10, -10, 10, 10), Qt::transparent);
+    overlayPainter.fillRect(m_lastRect + Drawly::cleanupMargin, Qt::transparent);
 
-    // TODO: Adjustable eraser size, remove magic numbers
-    QRect curRect{context->event().pos() - QPoint{8, 8}, QSize{20, 20}};
+    const int eraserSide{m_properties[ToolPropertyType::EraserSize]->value().toInt()};
+    const QSize eraserSize{eraserSide, eraserSide};
+
+    // TODO: Adjustable eraser size
+    double eraserCenterOffset{eraserSide / 2.0 - 1};
+    QPointF eraserCenterOffsetPoint{eraserCenterOffset, eraserCenterOffset};
+
+    QRectF curRect{context->event().pos() - eraserCenterOffsetPoint, eraserSize};
     QRectF worldEraserRect{transformer.viewToWorld(curRect)};
 
     if (m_isErasing) {
-        QVector<std::shared_ptr<Item>> toBeErased = context->quadtree().queryItems(worldEraserRect);
+        QVector<std::shared_ptr<Item>> toBeErased{context->quadtree().queryItems(worldEraserRect)};
 
         for (std::shared_ptr<Item> item : toBeErased) {
             if (m_toBeErased.count(item) > 0) continue;
 
             // TODO: Remove magic numbers
-            item->getProperty(ItemPropertyType::StrokeColor)
-                .setValue(QColor(255, 255, 255, 50).rgba());
+            item->getProperty(ItemPropertyType::StrokeColor).setValue(Drawly::erasedItemColor);
 
             m_toBeErased.insert(item);
             context->cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
             context->markForRender();
         }
 
-        overlayPainter.fillRect(curRect, QColor(255, 0, 0, 150));
+        overlayPainter.fillRect(curRect, Drawly::eraserBackgroundColor);
     }
 
     context->markForUpdate();
 
     // Draw eraser box
-    QPen pen{Qt::red, 2.0};
+    QPen pen{Drawly::eraserBorderColor, Drawly::eraserBorderWidth};
     overlayPainter.setPen(pen);
     overlayPainter.drawRect(curRect);
     overlayPainter.restore();
@@ -93,6 +104,6 @@ void EraserTool::mouseReleased(ApplicationContext* context) {
     }
 }
 
-const bool EraserTool::lowFpsTolerant() const {
-    return false;
+ToolID EraserTool::id() const {
+    return ToolID::EraserToolID;
 }

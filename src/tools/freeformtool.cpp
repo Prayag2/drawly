@@ -108,6 +108,6 @@ void FreeformTool::mouseReleased(ApplicationContext* context) {
     }
 }
 
-const bool FreeformTool::lowFpsTolerant() const {
-    return false;
+ToolID FreeformTool::id() const {
+    return ToolID::FreeformToolID;
 }

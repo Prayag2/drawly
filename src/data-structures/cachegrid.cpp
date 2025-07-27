@@ -48,7 +48,6 @@ QPainter& CacheCell::painter() const {
 }
 
 QSize CacheCell::cellSize() {
-    // TODO: don't hardcode me OwO
     return {512, 512};
 }
 

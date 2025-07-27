@@ -113,6 +113,6 @@ void SelectionTool::mouseReleased(ApplicationContext* context) {
     }
 };
 
-const bool SelectionTool::lowFpsTolerant() const {
-    return true;
+ToolID SelectionTool::id() const {
+    return ToolID::SelectionToolID;
 };

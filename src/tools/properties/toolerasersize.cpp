@@ -4,7 +4,10 @@
 
 ToolEraserSize::ToolEraserSize(QWidget* parent) {
     QSpinBox* box{new QSpinBox(parent)};
-    box->setRange(1, 10);
+    box->setRange(1, 100);
+    box->setValue(30);
+
+    box->hide();
     m_widget = box;
 }
 

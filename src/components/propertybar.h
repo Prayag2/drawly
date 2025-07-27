@@ -2,8 +2,10 @@
 #define PROPERTYBAR_H
 
 #include <QFrame>
+#include <QStackedWidget>
 #include <QVBoxLayout>
 class Tool;
+enum class ToolID;
 
 class PropertyBar : public QFrame {
     Q_OBJECT
