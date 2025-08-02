@@ -23,7 +23,6 @@ public:
     const QRectF& boundingBox() const;
 
     void setBoundingBoxPadding(int padding);
-    void setScale(qreal scale);
 
     ItemProperty& getProperty(const ItemPropertyType propertyType);
     const ItemProperty& getProperty(const ItemPropertyType propertyType) const;
@@ -31,7 +30,6 @@ public:
 protected:
     QRectF m_boundingBox{};
     int m_boundingBoxPadding{};
-    qreal m_scale{1};
     std::unordered_map<ItemPropertyType, ItemProperty> m_properties{};
 
     virtual void m_draw(QPainter& painter, const QPointF& offset) const = 0;

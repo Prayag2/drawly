@@ -1,0 +1,38 @@
+#ifndef UICONTEXT_H
+#define UICONTEXT_H
+
+#include <QWidget>
+class ToolBar;
+class PropertyBar;
+class ActionBar;
+class Event;
+class PropertyManager;
+class Tool;
+class ApplicationContext;
+
+class UIContext : public QObject {
+public:
+    UIContext(ApplicationContext* context);
+    ~UIContext();
+
+    void setUIContext();
+
+    ToolBar& toolBar() const;
+    PropertyBar& propertyBar() const;
+    ActionBar& actionBar() const;
+    Event& event() const;
+
+public slots:
+    void toolChanged(Tool&);
+
+private:
+    ToolBar* m_toolBar{nullptr};
+    PropertyBar* m_propertyBar{};
+    ActionBar* m_actionBar{};
+    PropertyManager* m_propertyManager{};
+    Event* m_event{nullptr};
+
+    ApplicationContext* m_applicationContext;
+};
+
+#endif  // UICONTEXT_H

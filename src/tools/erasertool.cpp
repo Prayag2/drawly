@@ -5,6 +5,10 @@
 #include "../common/constants.h"
 #include "../common/utils.h"
 #include "../context/applicationcontext.h"
+#include "../context/uicontext.h"
+#include "../context/spatialcontext.h"
+#include "../context/selectioncontext.h"
+#include "../context/renderingcontext.h"
 #include "../context/coordinatetransformer.h"
 #include "../data-structures/cachegrid.h"
 #include "../data-structures/quadtree.h"
@@ -27,16 +31,21 @@ QString EraserTool::iconAlt() const {
 }
 
 void EraserTool::mousePressed(ApplicationContext* context) {
-    if (context->event().button() == Qt::LeftButton) {
+    Event& event{context->uiContext().event()};
+
+    if (event.button() == Qt::LeftButton) {
         m_isErasing = true;
     }
 };
 
 // FIXME: messy code
 void EraserTool::mouseMoved(ApplicationContext* context) {
-    auto& transformer = context->coordinateTransformer();
+    SpatialContext& spatialContext{context->spatialContext()};
+    RenderingContext& renderingContext{context->renderingContext()};
+    UIContext& uiContext{context->uiContext()};
+    CoordinateTransformer& transformer{spatialContext.coordinateTransformer()};
 
-    QPainter& overlayPainter{context->overlayPainter()};
+    QPainter& overlayPainter{renderingContext.overlayPainter()};
 
     // Erase previous box
     overlayPainter.save();
@@ -50,11 +59,11 @@ void EraserTool::mouseMoved(ApplicationContext* context) {
     double eraserCenterOffset{eraserSide / 2.0 - 1};
     QPointF eraserCenterOffsetPoint{eraserCenterOffset, eraserCenterOffset};
 
-    QRectF curRect{context->event().pos() - eraserCenterOffsetPoint, eraserSize};
+    QRectF curRect{uiContext.event().pos() - eraserCenterOffsetPoint, eraserSize};
     QRectF worldEraserRect{transformer.viewToWorld(curRect)};
 
     if (m_isErasing) {
-        QVector<std::shared_ptr<Item>> toBeErased{context->quadtree().queryItems(worldEraserRect)};
+        QVector<std::shared_ptr<Item>> toBeErased{spatialContext.quadtree().queryItems(worldEraserRect)};
 
         for (std::shared_ptr<Item> item : toBeErased) {
             if (m_toBeErased.count(item) > 0) continue;
@@ -63,14 +72,14 @@ void EraserTool::mouseMoved(ApplicationContext* context) {
             item->getProperty(ItemPropertyType::StrokeColor).setValue(Drawly::erasedItemColor);
 
             m_toBeErased.insert(item);
-            context->cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
-            context->markForRender();
+            spatialContext.cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
+            renderingContext.markForRender();
         }
 
         overlayPainter.fillRect(curRect, Drawly::eraserBackgroundColor);
     }
 
-    context->markForUpdate();
+    renderingContext.markForUpdate();
 
     // Draw eraser box
     QPen pen{Drawly::eraserBorderColor, Drawly::eraserBorderWidth};
@@ -78,26 +87,31 @@ void EraserTool::mouseMoved(ApplicationContext* context) {
     overlayPainter.drawRect(curRect);
     overlayPainter.restore();
 
-    context->markForUpdate();
+    renderingContext.markForUpdate();
 
     m_lastRect = curRect;
 }
 
 void EraserTool::mouseReleased(ApplicationContext* context) {
-    if (context->event().button() == Qt::LeftButton) {
-        auto& transformer = context->coordinateTransformer();
+    UIContext& uiContext{context->uiContext()};
+
+    if (uiContext.event().button() == Qt::LeftButton) {
+        SpatialContext& spatialContext{context->spatialContext()};
+        CoordinateTransformer& transformer{spatialContext.coordinateTransformer()};
+        RenderingContext& renderingContext{context->renderingContext()};
+        SelectionContext& selectionContext{context->selectionContext()};
 
         for (std::shared_ptr<Item> item : m_toBeErased) {
-            if (context->selectedItems().count(item) > 0) {
-                context->selectedItems().erase(item);
+            if (selectionContext.selectedItems().count(item) > 0) {
+                selectionContext.selectedItems().erase(item);
             }
 
-            context->quadtree().deleteItem(item);
-            context->cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
+            spatialContext.quadtree().deleteItem(item);
+            spatialContext.cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
         }
 
-        context->markForRender();
-        context->markForUpdate();
+        renderingContext.markForRender();
+        renderingContext.markForUpdate();
 
         m_toBeErased.clear();
         m_isErasing = false;

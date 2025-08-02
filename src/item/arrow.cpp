@@ -22,7 +22,7 @@ void Arrow::calcArrowPoints() {
     qreal angle{std::atan2(y2 - y1, x2 - x1)};
     qreal arrowLength{std::sqrt(std::pow(y2 - y1, 2) + std::pow(x2 - x1, 2))};
 
-    int maxArrowSize{static_cast<int>(m_maxArrowSize * m_scale)};
+    int maxArrowSize{static_cast<int>(m_maxArrowSize)};
     int arrowSize{std::min(maxArrowSize, static_cast<int>(arrowLength * 0.5))};
 
     m_arrowP1 = QPoint(x2 - arrowSize * std::cos(angle - (M_PI / 180) * 30),

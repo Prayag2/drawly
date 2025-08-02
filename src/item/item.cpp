@@ -17,10 +17,6 @@ void Item::setBoundingBoxPadding(int padding) {
     m_boundingBoxPadding = padding;
 }
 
-void Item::setScale(qreal scale) {
-    m_scale = scale;
-}
-
 ItemProperty& Item::getProperty(const ItemPropertyType propertyType) {
     if (m_properties.find(propertyType) == m_properties.end()) {
         throw std::logic_error("Item does not support this property.");

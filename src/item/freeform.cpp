@@ -177,7 +177,6 @@ QVector<std::shared_ptr<Item>> Freeform::split() const {
             std::shared_ptr<Freeform> newItem{std::make_shared<Freeform>()};
             newItem->m_properties = m_properties;
             newItem->m_boundingBoxPadding = m_boundingBoxPadding;
-            newItem->m_scale = m_scale;
 
             items.push_back(newItem);
         }

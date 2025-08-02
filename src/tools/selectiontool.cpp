@@ -3,6 +3,10 @@
 #include "../canvas/canvas.h"
 #include "../common/renderitems.h"
 #include "../context/applicationcontext.h"
+#include "../context/renderingcontext.h"
+#include "../context/selectioncontext.h"
+#include "../context/spatialcontext.h"
+#include "../context/uicontext.h"
 #include "../context/coordinatetransformer.h"
 #include "../data-structures/cachegrid.h"
 #include "../data-structures/quadtree.h"
@@ -21,46 +25,56 @@ QString SelectionTool::iconAlt() const {
 
 // TODO: Implement resizing, rotation, and deleting selected items as well
 void SelectionTool::mousePressed(ApplicationContext* context) {
-    if (context->event().button() == Qt::LeftButton) {
-        auto& transformer = context->coordinateTransformer();
-        QPointF curPoint{context->event().pos()};
+    UIContext& uiContext{context->uiContext()};
 
-        if (context->selectionBox().contains(transformer.viewToWorld(curPoint))) {
+    if (uiContext.event().button() == Qt::LeftButton) {
+        SpatialContext& spatialContext{context->spatialContext()};
+        CoordinateTransformer& transformer{spatialContext.coordinateTransformer()};
+        RenderingContext& renderingContext{context->renderingContext()};
+        SelectionContext& selectionContext{context->selectionContext()};
+
+        QPointF curPoint{uiContext.event().pos()};
+
+        if (selectionContext.selectionBox().contains(transformer.viewToWorld(curPoint))) {
             m_isMoving = true;
             m_lastPos = curPoint;
         } else {
             m_isSelecting = true;
             m_startPoint = curPoint;
-            context->selectedItems().clear();
+            selectionContext.selectedItems().clear();
 
-            context->markForRender();
-            context->markForUpdate();
+            renderingContext.markForRender();
+            renderingContext.markForUpdate();
         }
     }
 };
 
 void SelectionTool::mouseMoved(ApplicationContext* context) {
-    auto& transformer = context->coordinateTransformer();
+    SpatialContext& spatialContext{context->spatialContext()};
+    CoordinateTransformer& transformer{spatialContext.coordinateTransformer()};
+    RenderingContext& renderingContext{context->renderingContext()};
+    SelectionContext& selectionContext{context->selectionContext()};
+    UIContext& uiContext{context->uiContext()};
 
-    QPointF curPoint{context->event().pos()};
+    QPointF curPoint{uiContext.event().pos()};
     QPointF worldPoint{transformer.viewToWorld(curPoint)};
 
-    context->canvas().overlay()->fill(Qt::transparent);
+    renderingContext.canvas().overlay()->fill(Qt::transparent);
 
-    std::unordered_set<std::shared_ptr<Item>>& selectedItems{context->selectedItems()};
+    std::unordered_set<std::shared_ptr<Item>>& selectedItems{selectionContext.selectedItems()};
 
     if (m_isSelecting) {
         QRectF selectionBox{m_startPoint, curPoint};
         QRectF worldSelectionBox{transformer.viewToWorld(selectionBox)};
 
-        QVector<std::shared_ptr<Item>> intersectingItems{context->quadtree().queryItems(
+        QVector<std::shared_ptr<Item>> intersectingItems{spatialContext.quadtree().queryItems(
             worldSelectionBox, [](std::shared_ptr<Item> item, const QRectF& rect) {
                 return rect.contains(item->boundingBox());
             })};
 
         selectedItems = std::unordered_set(intersectingItems.begin(), intersectingItems.end());
 
-        QPainter& overlayPainter{context->overlayPainter()};
+        QPainter& overlayPainter{renderingContext.overlayPainter()};
         overlayPainter.save();
         QPen pen{QColor{67, 135, 244, 200}};
         overlayPainter.setPen(pen);
@@ -70,46 +84,53 @@ void SelectionTool::mouseMoved(ApplicationContext* context) {
 
         overlayPainter.restore();
 
-        context->markForUpdate();
+        renderingContext.markForUpdate();
         return;
     }
 
     if (m_isMoving) {
-        context->canvas().setCursor(Qt::ClosedHandCursor);
+        renderingContext.canvas().setCursor(Qt::ClosedHandCursor);
 
         QPointF displacement{worldPoint - transformer.viewToWorld(m_lastPos)};
         for (auto item : selectedItems) {
             QRectF oldBoundingBox{item->boundingBox()};
 
-            context->cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
+            spatialContext.cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
             item->translate(displacement);
-            context->cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
+            spatialContext.cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
 
-            context->quadtree().updateItem(item, oldBoundingBox);
+            spatialContext.quadtree().updateItem(item, oldBoundingBox);
         }
 
         m_lastPos = curPoint;
-        context->markForRender();
-        context->markForUpdate();
+        renderingContext.markForRender();
+        renderingContext.markForUpdate();
         return;
     }
 
-    if (context->selectionBox().contains(worldPoint)) {
-        context->canvas().setCursor(Qt::OpenHandCursor);
+    if (selectionContext.selectionBox().contains(worldPoint)) {
+        renderingContext.canvas().setCursor(Qt::OpenHandCursor);
     } else {
-        context->canvas().setCursor(Qt::ArrowCursor);
+        renderingContext.canvas().setCursor(Qt::ArrowCursor);
     }
 };
 
 void SelectionTool::mouseReleased(ApplicationContext* context) {
-    if (context->event().button() == Qt::LeftButton) {
+    UIContext& uiContext{context->uiContext()};
+
+    if (uiContext.event().button() == Qt::LeftButton) {
+        SpatialContext& spatialContext{context->spatialContext()};
+        CoordinateTransformer& transformer{spatialContext.coordinateTransformer()};
+        RenderingContext& renderingContext{context->renderingContext()};
+        SelectionContext& selectionContext{context->selectionContext()};
+
         m_isSelecting = false;
         m_isMoving = false;
 
         // clearing the overlay
-        context->canvas().overlay()->fill(Qt::transparent);
-        context->markForRender();
-        context->markForUpdate();
+        renderingContext.canvas().overlay()->fill(Qt::transparent);
+        renderingContext.markForRender();
+        renderingContext.markForUpdate();
     }
 };
 

@@ -5,6 +5,8 @@
 #include "../components/propertybar.h"
 #include "../components/toolbar.h"
 #include "../context/applicationcontext.h"
+#include "../context/renderingcontext.h"
+#include "../context/uicontext.h"
 #include "../controller/controller.h"
 #include "boardlayout.h"
 #include <QButtonGroup>
@@ -15,26 +17,32 @@ MainWindow::MainWindow(QWidget* parent) : QWidget(parent) {
 
     BoardLayout* layout{new BoardLayout(this)};
     Controller* controller{new Controller(this)};
+
     ApplicationContext* context{new ApplicationContext(this)};
+    context->setContexts();
+
+    RenderingContext& renderingContext{context->renderingContext()};
+    UIContext& uiContext{context->uiContext()};
 
     controller->setContext(context);
-    context->canvas().setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    renderingContext.canvas().setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
 
     this->setLayout(layout);
 
     layout->setMargins(10);
-    layout->setLeftWidget(&context->propertyBar());
-    layout->setTopWidget(&context->toolBar());
-    layout->setBottomWidget(&context->actionBar());
-    layout->setCentralWidget(&context->canvas());
+    layout->setLeftWidget(&uiContext.propertyBar());
+    layout->setTopWidget(&uiContext.toolBar());
+    layout->setBottomWidget(&uiContext.actionBar());
+    layout->setCentralWidget(&renderingContext.canvas());
 
-    QObject::connect(&context->canvas(), &Canvas::mousePressed, controller,
+    QObject::connect(&renderingContext.canvas(), &Canvas::mousePressed, controller,
                      &Controller::mousePressed);
-    QObject::connect(&context->canvas(), &Canvas::mouseMoved, controller, &Controller::mouseMoved);
-    QObject::connect(&context->canvas(), &Canvas::mouseReleased, controller,
+    QObject::connect(&renderingContext.canvas(), &Canvas::mouseMoved, controller, &Controller::mouseMoved);
+    QObject::connect(&renderingContext.canvas(), &Canvas::mouseReleased, controller,
                      &Controller::mouseReleased);
-    QObject::connect(&context->canvas(), &Canvas::tablet, controller, &Controller::tablet);
-    QObject::connect(&context->canvas(), &Canvas::wheel, controller, &Controller::wheel);
+    QObject::connect(&renderingContext.canvas(), &Canvas::tablet, controller, &Controller::tablet);
+    QObject::connect(&renderingContext.canvas(), &Canvas::wheel, controller, &Controller::wheel);
 }
 
 MainWindow::~MainWindow() {
