@@ -50,7 +50,7 @@ void EraserTool::mouseMoved(ApplicationContext* context) {
     // Erase previous box
     overlayPainter.save();
     overlayPainter.setCompositionMode(QPainter::CompositionMode_Source);
-    overlayPainter.fillRect(m_lastRect + Drawly::cleanupMargin, Qt::transparent);
+    overlayPainter.fillRect(m_lastRect + Common::cleanupMargin, Qt::transparent);
 
     const int eraserSide{m_properties[ToolPropertyType::EraserSize]->value().toInt()};
     const QSize eraserSize{eraserSide, eraserSide};
@@ -69,20 +69,20 @@ void EraserTool::mouseMoved(ApplicationContext* context) {
             if (m_toBeErased.count(item) > 0) continue;
 
             // TODO: Remove magic numbers
-            item->getProperty(ItemPropertyType::StrokeColor).setValue(Drawly::erasedItemColor);
+            item->getProperty(ItemPropertyType::StrokeColor).setValue(Common::erasedItemColor);
 
             m_toBeErased.insert(item);
             spatialContext.cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
             renderingContext.markForRender();
         }
 
-        overlayPainter.fillRect(curRect, Drawly::eraserBackgroundColor);
+        overlayPainter.fillRect(curRect, Common::eraserBackgroundColor);
     }
 
     renderingContext.markForUpdate();
 
     // Draw eraser box
-    QPen pen{Drawly::eraserBorderColor, Drawly::eraserBorderWidth};
+    QPen pen{Common::eraserBorderColor, Common::eraserBorderWidth};
     overlayPainter.setPen(pen);
     overlayPainter.drawRect(curRect);
     overlayPainter.restore();

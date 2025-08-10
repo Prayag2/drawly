@@ -1,4 +1,5 @@
 #include "renderitems.h"
+#include "constants.h"
 
 #include "../canvas/canvas.h"
 #include "../context/applicationcontext.h"
@@ -13,7 +14,7 @@
 #include <QRectF>
 #include <memory>
 
-// TODO: Optimize this to improve performance
+// TODO: Refactor this
 void Common::renderCanvas(ApplicationContext* context) {
     CoordinateTransformer& transformer{context->spatialContext().coordinateTransformer()};
     Canvas& canvas{context->renderingContext().canvas()};
@@ -64,7 +65,7 @@ void Common::renderCanvas(ApplicationContext* context) {
 
     // render a box around selected items
     canvasPainter.save();
-    QPen pen{QColor{67, 135, 244}};
+    QPen pen{Common::selectionBorderColor};
     canvasPainter.setPen(pen);
 
     for (auto item : selectedItems) {

@@ -11,7 +11,7 @@
 #include "../components/propertybar.h"
 #include "../tools/properties/propertymanager.h"
 
-#include "../tools/selectiontool.h"
+#include "../tools/selectiontool/selectiontool.h"
 #include "../tools/freeformtool.h"
 #include "../tools/rectangletool.h"
 #include "../tools/ellipsetool.h"
@@ -55,10 +55,10 @@ void UIContext::setUIContext() {
     QObject::connect(&m_actionBar->button(3), &QPushButton::clicked, this, [this]() {
         Canvas& canvas{m_applicationContext->renderingContext().canvas()};
 
-        if (canvas.bg() == Drawly::lightBackgroundColor) {
-            canvas.setBg(Drawly::darkBackgroundColor);
+        if (canvas.bg() == Common::lightBackgroundColor) {
+            canvas.setBg(Common::darkBackgroundColor);
         } else {
-            canvas.setBg(Drawly::lightBackgroundColor);
+            canvas.setBg(Common::lightBackgroundColor);
         }
 
         m_applicationContext->renderingContext().markForRender();
