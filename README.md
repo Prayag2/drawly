@@ -42,7 +42,7 @@ Phase 2 completed!!
     - [ ] Delete items (Low priority)
     - [ ] Transform items (resize) (Low priority)
     - [ ] Rotate items (Low priority)
-- [ ] Undo/redo support
+- [x] Undo/redo support
 - [ ] Saving the drawings
 - [ ] Exporting drawings to PNGs
 - [ ] Shortcut keys (including pen buttons)
@@ -56,3 +56,6 @@ Phase 2 completed!!
 - [ ] UI overhaul
 - [ ] Filling shapes with a background colour
 - [ ] Collaboration
+
+## ⚠️ Note
+You are strictly prohibited from modifying, copying, or distributing this project in any form or to any party until further notice.
