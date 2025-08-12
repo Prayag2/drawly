@@ -5,13 +5,16 @@
 #include <QColor>
 #include <QSize>
 
-namespace Drawly {
+namespace Common {
     constexpr QMargins cleanupMargin{10, 10, 10, 10};
     constexpr int defaultEraserSize{30};
 
     constexpr QColor eraserBorderColor{255, 0, 0};
     constexpr QColor eraserBackgroundColor{255, 0, 0, 50};
     constexpr int eraserBorderWidth{2};
+
+    constexpr QColor selectionBorderColor{67, 135, 244, 255};
+    constexpr QColor selectionBackgroundColor{67, 135, 244, 50};
 
     constexpr unsigned int erasedItemColor{0x6E6E6E96};
 
@@ -20,6 +23,9 @@ namespace Drawly {
 
     constexpr QColor lightForegroundColor{30, 30, 30};
     constexpr QColor darkForegroundColor{211, 211, 211};
+
+    constexpr int maxItemOpacity{255};
+    constexpr int eraseItemOpacity{50};
 };
 
 #endif // CONSTANTS_H

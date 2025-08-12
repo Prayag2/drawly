@@ -1,11 +1,9 @@
 #include "item.h"
 
 // PUBLIC
-Item::Item() {
-}
+Item::Item() {}
 
 Item::~Item() {
-    // TODO: Implement a basic logging system
     qDebug() << "Item deleted: " << m_boundingBox;
 }
 
@@ -15,10 +13,6 @@ const QRectF& Item::boundingBox() const {
 
 void Item::setBoundingBoxPadding(int padding) {
     m_boundingBoxPadding = padding;
-}
-
-void Item::setScale(qreal scale) {
-    m_scale = scale;
 }
 
 ItemProperty& Item::getProperty(const ItemPropertyType propertyType) {

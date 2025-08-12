@@ -18,13 +18,15 @@ enum class ToolID {
 class Tool {
 public:
     Tool();
-    virtual ~Tool() = default;
+    virtual ~Tool();
 
     const QCursor& cursor() const;
     virtual QString iconAlt() const = 0;
+
     virtual void mousePressed(ApplicationContext* context) = 0;
     virtual void mouseMoved(ApplicationContext* context) = 0;
     virtual void mouseReleased(ApplicationContext* context) = 0;
+
     virtual ToolID id() const = 0;
 
     const QVector<std::shared_ptr<ToolProperty>> properties() const;

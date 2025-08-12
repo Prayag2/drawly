@@ -20,6 +20,7 @@ QuadTree::QuadTree(QRectF region, int capacity, std::shared_ptr<OrderedList> ord
 }
 
 QuadTree::~QuadTree() {
+    qDebug() << "Object deleted: QuadTree";
 }
 
 void QuadTree::subdivide() {

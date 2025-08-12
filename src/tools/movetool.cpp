@@ -3,6 +3,9 @@
 #include "../canvas/canvas.h"
 #include "../common/renderitems.h"
 #include "../context/applicationcontext.h"
+#include "../context/renderingcontext.h"
+#include "../context/spatialcontext.h"
+#include "../context/uicontext.h"
 #include "../event/event.h"
 #include "../item/item.h"
 
@@ -15,32 +18,43 @@ QString MoveTool::iconAlt() const {
 }
 
 void MoveTool::mousePressed(ApplicationContext* context) {
-    if (context->event().button() == Qt::LeftButton) {
+    UIContext& uiContext{context->uiContext()};
+
+    if (uiContext.event().button() == Qt::LeftButton) {
+        SpatialContext& spatialContext{context->spatialContext()};
+
         m_isActive = true;
 
-        m_initialOffsetPos = context->offsetPos();
-        m_initialPos = context->event().pos();
+        m_initialOffsetPos = spatialContext.offsetPos();
+        m_initialPos = uiContext.event().pos();
     }
 };
 
 void MoveTool::mouseMoved(ApplicationContext* context) {
     if (m_isActive) {
-        QPointF newPoint{m_initialOffsetPos * context->zoomFactor() - context->event().pos() +
+        SpatialContext& spatialContext{context->spatialContext()};
+        RenderingContext& renderingContext{context->renderingContext()};
+        UIContext& uiContext{context->uiContext()};
+
+        qreal zoom{renderingContext.zoomFactor()};
+        QPointF newPoint{m_initialOffsetPos * zoom - uiContext.event().pos() +
                          m_initialPos};
 
-        context->setOffsetPos(newPoint / context->zoomFactor());
+        spatialContext.setOffsetPos(newPoint / zoom);
 
-        context->canvas().setCursor(Qt::ClosedHandCursor);
+        renderingContext.canvas().setCursor(Qt::ClosedHandCursor);
 
-        // context->canvas().update();
-        context->markForRender();
-        context->markForUpdate();
+        renderingContext.markForRender();
+        renderingContext.markForUpdate();
     }
 };
 
 void MoveTool::mouseReleased(ApplicationContext* context) {
-    if (context->event().button() == Qt::LeftButton) {
-        context->canvas().setCursor(Qt::OpenHandCursor);
+    UIContext& uiContext{context->uiContext()};
+    if (uiContext.event().button() == Qt::LeftButton) {
+        RenderingContext& renderingContext{context->renderingContext()};
+
+        renderingContext.canvas().setCursor(Qt::OpenHandCursor);
         m_isActive = false;
     }
 };

@@ -3,6 +3,8 @@
 
 #include <QRect>
 class ApplicationContext;
+class SpatialContext;
+class RenderingContext;
 
 /*
  * There are three coordinate systems in drawly:
@@ -12,10 +14,15 @@ class ApplicationContext;
  */
 class CoordinateTransformer {
 private:
-    ApplicationContext* m_context;
+    SpatialContext* m_spatialContext;
+    RenderingContext* m_renderingContext;
+    ApplicationContext* m_applicationContext;
 
 public:
     CoordinateTransformer(ApplicationContext* context);
+    ~CoordinateTransformer();
+
+    void setCoordinateTransformer();
 
     QPointF worldToView(QPointF point);
     QSizeF worldToView(QSizeF size);

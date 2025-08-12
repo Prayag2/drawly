@@ -1,16 +1,28 @@
 #include "coordinatetransformer.h"
 
 #include "applicationcontext.h"
+#include "spatialcontext.h"
+#include "renderingcontext.h"
 #include <cmath>
 
-CoordinateTransformer::CoordinateTransformer(ApplicationContext* context) : m_context{context} {};
+CoordinateTransformer::CoordinateTransformer(ApplicationContext* context)
+    : m_applicationContext{context} {};
+
+CoordinateTransformer::~CoordinateTransformer() {
+    qDebug() << "Object deleted: CoordinateTransformer";
+}
+
+void CoordinateTransformer::setCoordinateTransformer() {
+    m_spatialContext = &(m_applicationContext->spatialContext());
+    m_renderingContext = &(m_applicationContext->renderingContext());
+}
 
 QPointF CoordinateTransformer::worldToView(QPointF point) {
-    return (point - m_context->offsetPos()) * m_context->zoomFactor();
+    return (point - m_spatialContext->offsetPos()) * m_renderingContext->zoomFactor();
 }
 
 QSizeF CoordinateTransformer::worldToView(QSizeF size) {
-    return size * m_context->zoomFactor();
+    return size * m_renderingContext->zoomFactor();
 }
 
 QRectF CoordinateTransformer::worldToView(QRectF rect) {
@@ -18,11 +30,11 @@ QRectF CoordinateTransformer::worldToView(QRectF rect) {
 }
 
 QPointF CoordinateTransformer::viewToWorld(QPointF point) {
-    return point / m_context->zoomFactor() + m_context->offsetPos();
+    return point / m_renderingContext->zoomFactor() + m_spatialContext->offsetPos();
 }
 
 QSizeF CoordinateTransformer::viewToWorld(QSizeF size) {
-    return size / m_context->zoomFactor();
+    return size / m_renderingContext->zoomFactor();
 }
 
 QRectF CoordinateTransformer::viewToWorld(QRectF rect) {
@@ -54,11 +66,11 @@ QRect CoordinateTransformer::viewToWorld(QRect rect) {
 }
 
 QPointF CoordinateTransformer::worldToGrid(QPointF point) {
-    return point * m_context->zoomFactor();
+    return point * m_renderingContext->zoomFactor();
 }
 
 QSizeF CoordinateTransformer::worldToGrid(QSizeF size) {
-    return size * m_context->zoomFactor();
+    return size * m_renderingContext->zoomFactor();
 }
 
 QRectF CoordinateTransformer::worldToGrid(QRectF rect) {
@@ -66,11 +78,11 @@ QRectF CoordinateTransformer::worldToGrid(QRectF rect) {
 }
 
 QPointF CoordinateTransformer::gridToWorld(QPointF point) {
-    return point / m_context->zoomFactor();
+    return point / m_renderingContext->zoomFactor();
 }
 
 QSizeF CoordinateTransformer::gridToWorld(QSizeF size) {
-    return size / m_context->zoomFactor();
+    return size / m_renderingContext->zoomFactor();
 }
 
 QRectF CoordinateTransformer::gridToWorld(QRectF rect) {
@@ -102,7 +114,7 @@ QRect CoordinateTransformer::gridToWorld(QRect rect) {
 }
 
 QPointF CoordinateTransformer::viewToGrid(QPointF point) {
-    return point + m_context->offsetPos();
+    return point + m_spatialContext->offsetPos();
 }
 
 QSizeF CoordinateTransformer::viewToGrid(QSizeF size) {
@@ -114,7 +126,7 @@ QRectF CoordinateTransformer::viewToGrid(QRectF rect) {
 }
 
 QPointF CoordinateTransformer::gridToView(QPointF point) {
-    return point - m_context->offsetPos();
+    return point - m_spatialContext->offsetPos();
 }
 
 QSizeF CoordinateTransformer::gridToView(QSizeF size) {

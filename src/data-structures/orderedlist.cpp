@@ -3,6 +3,10 @@
 #include <QDebug>
 #include <stdexcept>
 
+OrderedList::~OrderedList() {
+    qDebug() << "Object deleted: OrderedList";
+}
+
 bool OrderedList::hasItem(ItemPtr item) const {
     if (m_itemIterMap.find(item) == m_itemIterMap.end()) {
         return false;

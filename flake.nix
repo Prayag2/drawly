@@ -15,6 +15,8 @@
                 qtcreator
                 cmake
                 bear
+
+                entr
             ];
           shellHook = ''
             which zsh >/dev/null && exec zsh

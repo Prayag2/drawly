@@ -3,6 +3,7 @@
 Polygon::Polygon() {
     m_properties[ItemPropertyType::StrokeWidth] = ItemProperty(1);
     m_properties[ItemPropertyType::StrokeColor] = ItemProperty(QColor(Qt::black).rgba());
+    m_properties[ItemPropertyType::Opacity] = ItemProperty(255);
 }
 
 void Polygon::setStart(QPointF start) {
@@ -38,8 +39,11 @@ void Polygon::m_updateBoundingBox() {
 void Polygon::draw(QPainter& painter, const QPointF& offset) {
     QPen pen{};
 
+    QColor color{QColor::fromRgba(getProperty(ItemPropertyType::StrokeColor).value().toUInt())};
+    color.setAlpha(getProperty(ItemPropertyType::Opacity).value().toInt());
+
     pen.setWidth(getProperty(ItemPropertyType::StrokeWidth).value().toInt());
-    pen.setColor(QColor::fromRgba(getProperty(ItemPropertyType::StrokeColor).value().toUInt()));
+    pen.setColor(color);
 
     painter.setPen(pen);
 

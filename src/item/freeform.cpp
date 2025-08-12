@@ -1,12 +1,14 @@
 #include "freeform.h"
 
 #include "../common/utils.h"
+#include "../common/constants.h"
 #include "properties/itemproperty.h"
 #include <memory>
 
 Freeform::Freeform() {
     m_properties[ItemPropertyType::StrokeWidth] = ItemProperty(1);
     m_properties[ItemPropertyType::StrokeColor] = ItemProperty(QColor(Qt::black).rgba());
+    m_properties[ItemPropertyType::Opacity] = ItemProperty(Common::maxItemOpacity);
 }
 
 int Freeform::minPointDistance() {
@@ -78,10 +80,14 @@ bool Freeform::intersects(const QLineF& line) {
 void Freeform::draw(QPainter& painter, const QPointF& offset) {
     QPen pen{};
 
+    QColor color{QColor::fromRgba(getProperty(ItemPropertyType::StrokeColor).value().toUInt())};
+    int alpha{getProperty(ItemPropertyType::Opacity).value().toInt()};
+    color.setAlpha(alpha);
+
     pen.setJoinStyle(Qt::RoundJoin);
     pen.setCapStyle(Qt::RoundCap);
     pen.setWidth(getProperty(ItemPropertyType::StrokeWidth).value().toInt());
-    pen.setColor(QColor::fromRgba(getProperty(ItemPropertyType::StrokeColor).value().toUInt()));
+    pen.setColor(color);
 
     painter.setPen(pen);
     painter.setRenderHints(QPainter::SmoothPixmapTransform | QPainter::Antialiasing);
@@ -93,6 +99,7 @@ void Freeform::erase(QPainter& painter, const QPointF& offset, QColor color) con
     painter.setCompositionMode(QPainter::CompositionMode_Source);
     painter.fillRect(boundingBox().translated(-offset), Qt::transparent);
     painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+
 }
 
 QPointF Freeform::optimizePoint(const QPointF& newPoint) {
@@ -109,11 +116,20 @@ QPointF Freeform::optimizePoint(const QPointF& newPoint) {
 
 void Freeform::quickDraw(QPainter& painter, const QPointF& offset) const {
     QPen pen{};
+
+    QColor color{static_cast<QRgb>(getProperty(ItemPropertyType::StrokeColor).value().toInt())};
+    int alpha{getProperty(ItemPropertyType::Opacity).value().toInt()};
+    color.setAlpha(alpha);
+
+    qreal penWidth{getProperty(ItemPropertyType::StrokeWidth).value().toDouble()};
+    if (alpha == Common::maxItemOpacity) {
+        penWidth *= m_pressures.back();
+    }
+
     pen.setJoinStyle(Qt::RoundJoin);
     pen.setCapStyle(Qt::RoundCap);
-    pen.setWidthF(getProperty(ItemPropertyType::StrokeWidth).value().toInt() * m_pressures.back());
-    pen.setColor(
-        QColor{static_cast<QRgb>(getProperty(ItemPropertyType::StrokeColor).value().toInt())});
+    pen.setColor(color);
+    pen.setWidthF(penWidth);
     painter.setPen(pen);
 
     if (m_points.size() > 1) {
@@ -124,9 +140,20 @@ void Freeform::quickDraw(QPainter& painter, const QPointF& offset) const {
 }
 
 void Freeform::m_draw(QPainter& painter, const QPointF& offset) const {
-    painter.setCompositionMode(QPainter::CompositionMode_Source);
     int strokeWidth{getProperty(ItemPropertyType::StrokeWidth).value().toInt()};
+    int alpha{getProperty(ItemPropertyType::Opacity).value().toInt()};
     double currentWidth{strokeWidth * 1.0};
+
+    // Intersection points are visible on translucent pressure sensitive strokes
+    // So I've disabled the use of pressure senstivity when opacity is not max, for now
+    bool canUsePressureSenstivity{alpha == Common::maxItemOpacity};
+    if (!canUsePressureSenstivity) {
+        painter.save();
+        painter.translate(-offset);
+        painter.drawPolyline(m_points);
+        painter.restore();
+        return;
+    }
 
     qsizetype pointSize{m_points.size()};
     for (qsizetype index = 0; index < pointSize; index++) {
@@ -146,8 +173,6 @@ void Freeform::m_draw(QPainter& painter, const QPointF& offset) const {
             painter.drawLine(m_points[index - 1] - offset, m_points[index] - offset);
         }
     }
-
-    painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
 }
 
 int Freeform::size() const {
@@ -177,7 +202,6 @@ QVector<std::shared_ptr<Item>> Freeform::split() const {
             std::shared_ptr<Freeform> newItem{std::make_shared<Freeform>()};
             newItem->m_properties = m_properties;
             newItem->m_boundingBoxPadding = m_boundingBoxPadding;
-            newItem->m_scale = m_scale;
 
             items.push_back(newItem);
         }
