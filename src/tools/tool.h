@@ -18,7 +18,7 @@ enum class ToolID {
 class Tool {
 public:
     Tool();
-    virtual ~Tool() = default;
+    virtual ~Tool();
 
     const QCursor& cursor() const;
     virtual QString iconAlt() const = 0;

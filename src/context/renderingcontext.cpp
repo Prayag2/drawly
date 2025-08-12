@@ -9,6 +9,11 @@
 RenderingContext::RenderingContext(ApplicationContext* context) 
     : QObject{context}, m_applicationContext(context) {}
 
+RenderingContext::~RenderingContext() {
+    qDebug() << "Object deleted: RenderingContext";
+    delete m_canvasPainter;
+}
+
 void RenderingContext::setRenderingContext() {
     m_canvas = new Canvas(m_applicationContext->parentWidget());
 
@@ -22,13 +27,11 @@ void RenderingContext::setRenderingContext() {
 
     QObject::connect(&m_frameTimer, &QTimer::timeout, m_canvas, [&]() {
         if (m_needsReRender) {
-            qDebug() << "Rendering";
             Common::renderCanvas(m_applicationContext);
             m_needsReRender = false;
         }
 
         if (m_needsUpdate) {
-            qDebug() << "Updating";
             if (m_updateRegion.width() == 0 || m_updateRegion.height() == 0) {
                 m_canvas->update();
             } else {
@@ -42,10 +45,6 @@ void RenderingContext::setRenderingContext() {
     });
 
     m_frameTimer.start(1000 / fps());
-}
-
-RenderingContext::~RenderingContext() {
-    delete m_canvasPainter;
 }
 
 Canvas& RenderingContext::canvas() const {

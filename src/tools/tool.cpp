@@ -1,6 +1,10 @@
 #include "tool.h"
+#include <QDebug>
 
-Tool::Tool() {
+Tool::Tool() {}
+
+Tool::~Tool() {
+    qDebug() << "Object deleted: Tool";
 }
 
 const QCursor& Tool::cursor() const {

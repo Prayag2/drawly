@@ -6,6 +6,7 @@
 enum class ItemPropertyType {
     StrokeWidth = 0x00,
     StrokeColor = 0x02,
+    Opacity = 0x04,
 };
 
 class ItemProperty {

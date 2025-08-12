@@ -23,6 +23,9 @@ namespace Common {
 
     constexpr QColor lightForegroundColor{30, 30, 30};
     constexpr QColor darkForegroundColor{211, 211, 211};
+
+    constexpr int maxItemOpacity{255};
+    constexpr int eraseItemOpacity{50};
 };
 
 #endif // CONSTANTS_H

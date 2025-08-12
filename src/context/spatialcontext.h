@@ -6,6 +6,7 @@ class QuadTree;
 class CacheGrid;
 class CoordinateTransformer;
 class ApplicationContext;
+class CommandHistory;
 class Canvas;
 
 class SpatialContext : public QObject {
@@ -19,6 +20,8 @@ public:
     QuadTree& quadtree() const;
     CacheGrid& cacheGrid() const;
     CoordinateTransformer& coordinateTransformer() const;
+    CommandHistory& commandHistory() const;
+
     const QPointF& offsetPos() const;
     void setOffsetPos(const QPointF& pos);
 
@@ -26,6 +29,7 @@ private:
     std::unique_ptr<QuadTree> m_quadtree{nullptr};
     std::unique_ptr<CacheGrid> m_cacheGrid{nullptr};
     std::unique_ptr<CoordinateTransformer> m_coordinateTransformer{nullptr};
+    std::unique_ptr<CommandHistory> m_commandHistory{nullptr};
 
     QPointF m_offsetPos{};  // all `Items` are positioned relative to this point
 

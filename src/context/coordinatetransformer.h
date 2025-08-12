@@ -20,6 +20,7 @@ private:
 
 public:
     CoordinateTransformer(ApplicationContext* context);
+    ~CoordinateTransformer();
 
     void setCoordinateTransformer();
 

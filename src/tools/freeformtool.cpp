@@ -13,6 +13,8 @@
 #include "../item/factory/freeformfactory.h"
 #include "../item/freeform.h"
 #include "../item/item.h"
+#include "../command/commandhistory.h"
+#include "../command/insertitemcommand.h"
 #include "properties/propertymanager.h"
 #include "properties/toolproperty.h"
 
@@ -106,6 +108,7 @@ void FreeformTool::mouseReleased(ApplicationContext* context) {
         SpatialContext& spatialContext{context->spatialContext()};
         RenderingContext& renderingContext{context->renderingContext()};
         CoordinateTransformer& transformer{spatialContext.coordinateTransformer()};
+        CommandHistory& commandHistory{spatialContext.commandHistory()};
 
         QPainter& overlayPainter{renderingContext.overlayPainter()};
         renderingContext.canvas().overlay()->fill(Qt::transparent);
@@ -113,8 +116,7 @@ void FreeformTool::mouseReleased(ApplicationContext* context) {
 
         QVector<std::shared_ptr<Item>> itemsAfterSplitting{curItem->split()};
         for (auto item : itemsAfterSplitting) {
-            spatialContext.quadtree().insertItem(item);
-            spatialContext.cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
+            commandHistory.insert(std::make_shared<InsertItemCommand>(item));
         }
 
         curItem.reset();

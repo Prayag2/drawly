@@ -37,6 +37,8 @@ private:
 class CacheGrid {
 public:
     CacheGrid(int maxSize);
+    ~CacheGrid();
+
     QVector<std::shared_ptr<CacheCell>> queryCells(const QRect& rect);
     std::shared_ptr<CacheCell> cell(const QPoint& point);
     void markDirty(const QRect& rect);

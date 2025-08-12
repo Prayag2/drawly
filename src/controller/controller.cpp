@@ -14,7 +14,10 @@
 #include "../item/item.h"
 #include "../tools/tool.h"
 
-Controller::Controller(QObject* parent) : QObject{parent} {
+Controller::Controller(QObject* parent) : QObject{parent} {}
+
+Controller::~Controller() {
+    qDebug() << "Object deleted: Controller";
 }
 
 void Controller::setContext(ApplicationContext* context) {

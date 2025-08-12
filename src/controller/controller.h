@@ -11,6 +11,7 @@ class Controller : public QObject {
 
 public:
     Controller(QObject* parent = nullptr);
+    ~Controller();
 
     void setContext(ApplicationContext* context);
 

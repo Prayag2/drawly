@@ -36,23 +36,23 @@ Phase 2 completed!!
 
 ## Phase 3
 - [x] Buttons to zoom in/out
+- [x] Pressure senstivity for drawing tablets
 - [x] Selection tool to select items and do these actions:
     - [x] Translate items (move)
-    - [ ] Delete items
-    - [ ] Transform items (resize)
-    - [ ] Rotate items
+    - [ ] Delete items (Low priority)
+    - [ ] Transform items (resize) (Low priority)
+    - [ ] Rotate items (Low priority)
 - [ ] Undo/redo support
-
-## After Phase 3
-- [x] Pressure senstivity for drawing tablets
-- [ ] Better freeform smoothing algorithms
+- [ ] Saving the drawings
+- [ ] Exporting drawings to PNGs
 - [ ] Shortcut keys (including pen buttons)
-- [ ] Allow snapping
 - [ ] Image support
 - [ ] Text support
 - [ ] Text formatting like bold, underline, italics, etc.
+- [ ] Better freeform smoothing algorithms
+- [ ] Allow snapping
 - [ ] A "settings" page
 - [ ] Better widgets
 - [ ] UI overhaul
 - [ ] Filling shapes with a background colour
-- [ ] P2P collaboration
+- [ ] Collaboration

@@ -61,6 +61,10 @@ CacheGrid::CacheGrid(int maxSize) {
     m_maxSize = maxSize;
 }
 
+CacheGrid::~CacheGrid() {
+    qDebug() << "Object deleted: CacheGrid";
+}
+
 QVector<std::shared_ptr<CacheCell>> CacheGrid::queryCells(const QRect& rect) {
     QPoint topLeft{rect.topLeft()}, bottomRight{rect.bottomRight()};
 

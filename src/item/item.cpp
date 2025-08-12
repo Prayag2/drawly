@@ -1,11 +1,9 @@
 #include "item.h"
 
 // PUBLIC
-Item::Item() {
-}
+Item::Item() {}
 
 Item::~Item() {
-    // TODO: Implement a basic logging system
     qDebug() << "Item deleted: " << m_boundingBox;
 }
 

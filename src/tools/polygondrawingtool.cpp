@@ -9,6 +9,8 @@
 #include "../context/coordinatetransformer.h"
 #include "../data-structures/cachegrid.h"
 #include "../data-structures/quadtree.h"
+#include "../command/commandhistory.h"
+#include "../command/insertitemcommand.h"
 #include "../event/event.h"
 #include "../item/factory/itemfactory.h"
 #include "../item/polygon.h"
@@ -78,14 +80,13 @@ void PolygonDrawingTool::mouseReleased(ApplicationContext* context) {
         SpatialContext& spatialContext{context->spatialContext()};
         CoordinateTransformer& transformer{spatialContext.coordinateTransformer()};
         RenderingContext& renderingContext{context->renderingContext()};
+        CommandHistory& commandHistory{spatialContext.commandHistory()};
 
-        spatialContext.quadtree().insertItem(curItem);
+        commandHistory.insert(std::make_shared<InsertItemCommand>(curItem));
 
         QPainter& overlayPainter{renderingContext.overlayPainter()};
         renderingContext.canvas().overlay()->fill(Qt::transparent);
         overlayPainter.restore();
-
-        spatialContext.cacheGrid().markDirty(transformer.worldToGrid(curItem->boundingBox()).toRect());
 
         m_isDrawing = false;
 

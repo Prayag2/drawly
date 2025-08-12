@@ -14,14 +14,16 @@ ApplicationContext::ApplicationContext(QWidget* parent)
     m_spatialContext = new SpatialContext(this);
 }
 
+ApplicationContext::~ApplicationContext() {
+    qDebug() << "Object deleted: ApplicationContext";
+}
+
 void ApplicationContext::setContexts() {
     m_renderingContext->setRenderingContext();
     m_uiContext->setUIContext();
     m_spatialContext->setSpatialContext();
     m_spatialContext->coordinateTransformer().setCoordinateTransformer();
 }
-
-ApplicationContext::~ApplicationContext() {}
 
 QWidget* ApplicationContext::parentWidget() const {
     return m_parentWidget;

@@ -267,6 +267,20 @@ enum ToolPropertyType {
 PropertyManager ..> ToolPropertyType
 PropertyManager ..> ToolProperty
 
+abstract class Command {
+    +execute(): void
+    +undo(): void
+}
+
+class InsertItemCommand extends Command
+class RemoveItemCommand extends Command
+class MoveItemCommand extends Command
+
+class UndoRedoManager
+
+UndoRedoManager ..> Command
+SpatialContext *-- UndoRedoManager
+
 class QWindow extends QObject
 class QLayout extends QObject
 class BoardLayout extends QLayout

@@ -5,7 +5,9 @@
 SelectionContext::SelectionContext(ApplicationContext* context) 
     : QObject{context}, m_applicationContext{context} {}
 
-SelectionContext::~SelectionContext() {}
+SelectionContext::~SelectionContext() {
+    qDebug() << "Object deleted: SelectionContext";
+}
 
 std::unordered_set<std::shared_ptr<Item>>& SelectionContext::selectedItems() {
     return m_selectedItems;

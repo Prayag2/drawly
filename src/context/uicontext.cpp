@@ -2,6 +2,7 @@
 #include "applicationcontext.h"
 #include "selectioncontext.h"
 #include "renderingcontext.h"
+#include "spatialcontext.h"
 
 #include "../common/renderitems.h"
 #include "../canvas/canvas.h"
@@ -10,6 +11,7 @@
 #include "../components/actionbar.h"
 #include "../components/propertybar.h"
 #include "../tools/properties/propertymanager.h"
+#include "../command/commandhistory.h"
 
 #include "../tools/selectiontool/selectiontool.h"
 #include "../tools/freeformtool.h"
@@ -22,6 +24,11 @@
 
 UIContext::UIContext(ApplicationContext* context)
     : QObject{context}, m_applicationContext{context} {}
+
+UIContext::~UIContext() {
+    delete m_event;
+    qDebug() << "Object deleted: UIContext";
+}
 
 void UIContext::setUIContext() {
     m_toolBar = new ToolBar(m_applicationContext->parentWidget());
@@ -43,6 +50,8 @@ void UIContext::setUIContext() {
     m_actionBar->addButton("-", 1);
     m_actionBar->addButton("+", 2);
     m_actionBar->addButton("󰖨", 3);
+    m_actionBar->addButton("󰕌", 4);
+    m_actionBar->addButton("󰑎", 5);
 
     QObject::connect(m_toolBar, &ToolBar::toolChanged, this, &UIContext::toolChanged);
     QObject::connect(m_toolBar, &ToolBar::toolChanged, m_propertyBar, &PropertyBar::toolChanged);
@@ -51,6 +60,18 @@ void UIContext::setUIContext() {
                      [this]() { m_applicationContext->renderingContext().setZoomFactor(-1); });
     QObject::connect(&m_actionBar->button(2), &QPushButton::clicked, this,
                      [this]() { m_applicationContext->renderingContext().setZoomFactor(1); });
+    QObject::connect(&m_actionBar->button(4), &QPushButton::clicked, this,
+                     [this]() { 
+                         m_applicationContext->spatialContext().commandHistory().undo(); 
+                         m_applicationContext->renderingContext().markForRender();
+                         m_applicationContext->renderingContext().markForUpdate();
+                     });
+    QObject::connect(&m_actionBar->button(5), &QPushButton::clicked, this,
+                     [this]() {
+                     m_applicationContext->spatialContext().commandHistory().redo();
+                     m_applicationContext->renderingContext().markForRender();
+                     m_applicationContext->renderingContext().markForUpdate();
+                     });
 
     QObject::connect(&m_actionBar->button(3), &QPushButton::clicked, this, [this]() {
         Canvas& canvas{m_applicationContext->renderingContext().canvas()};
@@ -66,10 +87,6 @@ void UIContext::setUIContext() {
     });
 
     m_propertyBar->toolChanged(m_toolBar->curTool());
-}
-
-UIContext::~UIContext() {
-    delete m_event;
 }
 
 ToolBar& UIContext::toolBar() const {

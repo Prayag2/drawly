@@ -17,6 +17,8 @@ private:
     std::unordered_map<ItemPtr, int> m_zIndex;
 
 public:
+    ~OrderedList();
+
     void insert(ItemPtr item);
     void remove(ItemPtr item);
 

@@ -8,6 +8,10 @@
 CoordinateTransformer::CoordinateTransformer(ApplicationContext* context)
     : m_applicationContext{context} {};
 
+CoordinateTransformer::~CoordinateTransformer() {
+    qDebug() << "Object deleted: CoordinateTransformer";
+}
+
 void CoordinateTransformer::setCoordinateTransformer() {
     m_spatialContext = &(m_applicationContext->spatialContext());
     m_renderingContext = &(m_applicationContext->renderingContext());

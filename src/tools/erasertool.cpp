@@ -12,6 +12,8 @@
 #include "../context/coordinatetransformer.h"
 #include "../data-structures/cachegrid.h"
 #include "../data-structures/quadtree.h"
+#include "../command/commandhistory.h"
+#include "../command/removeitemcommand.h"
 #include "../event/event.h"
 #include "../item/item.h"
 #include "properties/propertymanager.h"
@@ -69,7 +71,7 @@ void EraserTool::mouseMoved(ApplicationContext* context) {
             if (m_toBeErased.count(item) > 0) continue;
 
             // TODO: Remove magic numbers
-            item->getProperty(ItemPropertyType::StrokeColor).setValue(Common::erasedItemColor);
+            item->getProperty(ItemPropertyType::Opacity).setValue(Common::eraseItemOpacity);
 
             m_toBeErased.insert(item);
             spatialContext.cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
@@ -100,14 +102,14 @@ void EraserTool::mouseReleased(ApplicationContext* context) {
         CoordinateTransformer& transformer{spatialContext.coordinateTransformer()};
         RenderingContext& renderingContext{context->renderingContext()};
         SelectionContext& selectionContext{context->selectionContext()};
+        CommandHistory& commandHistory{spatialContext.commandHistory()};
 
         for (std::shared_ptr<Item> item : m_toBeErased) {
             if (selectionContext.selectedItems().count(item) > 0) {
                 selectionContext.selectedItems().erase(item);
             }
 
-            spatialContext.quadtree().deleteItem(item);
-            spatialContext.cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
+            commandHistory.insert(std::make_shared<RemoveItemCommand>(item));
         }
 
         renderingContext.markForRender();
