@@ -115,9 +115,7 @@ void FreeformTool::mouseReleased(ApplicationContext* context) {
         overlayPainter.restore();
 
         QVector<std::shared_ptr<Item>> itemsAfterSplitting{curItem->split()};
-        for (auto item : itemsAfterSplitting) {
-            commandHistory.insert(std::make_shared<InsertItemCommand>(item));
-        }
+        commandHistory.insert(std::make_shared<InsertItemCommand>(itemsAfterSplitting));
 
         curItem.reset();
 

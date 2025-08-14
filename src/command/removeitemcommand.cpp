@@ -7,22 +7,31 @@
 #include "../data-structures/cachegrid.h"
 #include "../item/item.h"
 
-RemoveItemCommand::RemoveItemCommand(std::shared_ptr<Item> item)
-    : ItemCommand{item} {}
+RemoveItemCommand::RemoveItemCommand(QVector<std::shared_ptr<Item>> items)
+    : ItemCommand{items} {}
 
 void RemoveItemCommand::execute(ApplicationContext* context) {
     auto& transformer{context->spatialContext().coordinateTransformer()};
-    QRect dirtyRegion{transformer.worldToGrid(m_item->boundingBox()).toRect()};
+    auto& quadtree{context->spatialContext().quadtree()};
+    auto& cacheGrid{context->spatialContext().cacheGrid()};
 
-    context->spatialContext().quadtree().deleteItem(m_item);
-    context->spatialContext().cacheGrid().markDirty(dirtyRegion);
+    for (auto& item : m_items) {
+        QRect dirtyRegion{transformer.worldToGrid(item->boundingBox()).toRect()};
+
+        quadtree.deleteItem(item);
+        cacheGrid.markDirty(dirtyRegion);
+    }
 }
 
 void RemoveItemCommand::undo(ApplicationContext* context) {
     auto& transformer{context->spatialContext().coordinateTransformer()};
-    QRect dirtyRegion{transformer.worldToGrid(m_item->boundingBox()).toRect()};
+    auto& quadtree{context->spatialContext().quadtree()};
+    auto& cacheGrid{context->spatialContext().cacheGrid()};
 
-    m_item->getProperty(ItemPropertyType::Opacity).setValue(Common::maxItemOpacity);
-    context->spatialContext().quadtree().insertItem(m_item);
-    context->spatialContext().cacheGrid().markDirty(dirtyRegion);
+    for (auto& item : m_items) {
+        QRect dirtyRegion{transformer.worldToGrid(item->boundingBox()).toRect()};
+
+        quadtree.insertItem(item);
+        cacheGrid.markDirty(dirtyRegion);
+    }
 }
