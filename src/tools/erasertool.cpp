@@ -104,13 +104,18 @@ void EraserTool::mouseReleased(ApplicationContext* context) {
         SelectionContext& selectionContext{context->selectionContext()};
         CommandHistory& commandHistory{spatialContext.commandHistory()};
 
+        QVector<std::shared_ptr<Item>> erasedItems;
         for (std::shared_ptr<Item> item : m_toBeErased) {
             if (selectionContext.selectedItems().count(item) > 0) {
                 selectionContext.selectedItems().erase(item);
             }
 
-            commandHistory.insert(std::make_shared<RemoveItemCommand>(item));
+            // reset opacity
+            item->getProperty(ItemPropertyType::Opacity).setValue(Common::maxItemOpacity);
+            erasedItems.push_back(item);
         }
+
+        commandHistory.insert(std::make_shared<RemoveItemCommand>(erasedItems));
 
         renderingContext.markForRender();
         renderingContext.markForUpdate();

@@ -5,23 +5,31 @@
 #include "../data-structures/quadtree.h"
 #include "../data-structures/cachegrid.h"
 
-InsertItemCommand::InsertItemCommand(std::shared_ptr<Item> item)
-    : ItemCommand{item} {}
+InsertItemCommand::InsertItemCommand(QVector<std::shared_ptr<Item>> items)
+    : ItemCommand{items} {}
 
 InsertItemCommand::~InsertItemCommand() {}
 
 void InsertItemCommand::execute(ApplicationContext* context) {
     auto& transformer{context->spatialContext().coordinateTransformer()};
-    QRect dirtyRegion{transformer.worldToGrid(m_item->boundingBox()).toRect()};
+    auto& quadtree{context->spatialContext().quadtree()};
+    auto& cacheGrid{context->spatialContext().cacheGrid()};
 
-    context->spatialContext().quadtree().insertItem(m_item);
-    context->spatialContext().cacheGrid().markDirty(dirtyRegion);
+    for (auto& item : m_items) {
+        QRect dirtyRegion{transformer.worldToGrid(item->boundingBox()).toRect()};
+        quadtree.insertItem(item);
+        cacheGrid.markDirty(dirtyRegion);
+    }
 }
 
 void InsertItemCommand::undo(ApplicationContext* context) {
     auto& transformer{context->spatialContext().coordinateTransformer()};
-    QRect dirtyRegion{transformer.worldToGrid(m_item->boundingBox()).toRect()};
+    auto& quadtree{context->spatialContext().quadtree()};
+    auto& cacheGrid{context->spatialContext().cacheGrid()};
 
-    context->spatialContext().quadtree().deleteItem(m_item);
-    context->spatialContext().cacheGrid().markDirty(dirtyRegion);
+    for (auto& item : m_items) {
+        QRect dirtyRegion{transformer.worldToGrid(item->boundingBox()).toRect()};
+        quadtree.deleteItem(item);
+        cacheGrid.markDirty(dirtyRegion);
+    }
 }

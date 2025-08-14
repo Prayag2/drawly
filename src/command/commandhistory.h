@@ -2,7 +2,7 @@
 #define UNDOREDOMANAGER_H
 
 #include <memory>
-#include <stack>
+#include <deque>
 #include "command.h"
 class ApplicationContext;
 
@@ -15,9 +15,11 @@ public:
     void redo();
     void insert(std::shared_ptr<Command> command);
 
+    static constexpr int maxCommands{100}; // arbitrary
+
 private:
-    std::unique_ptr<std::stack<std::shared_ptr<Command>>> m_undoStack;
-    std::unique_ptr<std::stack<std::shared_ptr<Command>>> m_redoStack;
+    std::unique_ptr<std::deque<std::shared_ptr<Command>>> m_undoStack;
+    std::unique_ptr<std::deque<std::shared_ptr<Command>>> m_redoStack;
 
     ApplicationContext* m_context;
 };

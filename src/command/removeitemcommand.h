@@ -6,7 +6,7 @@ class ApplicationContext;
 
 class RemoveItemCommand : public ItemCommand {
 public:
-    RemoveItemCommand(std::shared_ptr<Item> item);
+    RemoveItemCommand(QVector<std::shared_ptr<Item>> items);
 
     void execute(ApplicationContext* context) override;
     void undo(ApplicationContext* context) override;

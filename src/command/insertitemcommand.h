@@ -6,7 +6,7 @@ class ApplicationContext;
 
 class InsertItemCommand : public ItemCommand {
 public:
-    InsertItemCommand(std::shared_ptr<Item> item);
+    InsertItemCommand(QVector<std::shared_ptr<Item>> items);
     ~InsertItemCommand();
 
     void execute(ApplicationContext* context) override;

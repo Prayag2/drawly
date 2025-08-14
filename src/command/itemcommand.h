@@ -2,17 +2,18 @@
 #define ITEMCOMMAND_H
 
 #include <memory>
+#include <QVector>
 #include "command.h"
 class ApplicationContext;
 class Item;
 
 class ItemCommand : public Command {
 public:
-    ItemCommand(std::shared_ptr<Item> item);
+    ItemCommand(QVector<std::shared_ptr<Item>> items);
     ~ItemCommand();
 
 protected:
-    std::shared_ptr<Item> m_item;
+    QVector<std::shared_ptr<Item>> m_items;
 };
 
 #endif // ITEMCOMMAND_H
