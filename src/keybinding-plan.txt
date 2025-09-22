@@ -1,0 +1,25 @@
+Features of the keybinding manager
+- Connect/disconnect shortcuts to an Action object
+- List all Actions
+- Get the list of an Action's keybindings
+- Group Actions based on behaviour
+
+Initial thoughts:
+- Hash table to map keybindings to Actions (map A)
+- Hash table to map Actions to a set of keybindings (map B)
+- The keybind manager provides a registerAction method to insert this action in the manager, even if there are no keybindings for it, so that it can be shown in a list later as an available option.
+- To register a keybinding:
+    1. Check if there is already a connection in map A. If yes -> error
+    2. Add connection in map A
+    3. Insert this keybinding to the set in map B
+    4. Connect signal and slot
+- To deregister a keybinding:
+    1. Check if there is a connection. If no -> error
+    2. Get the associated Action object
+    3. Disconnect signal and slot
+    4. Remove mapping in map A
+    4. Remove this keybinding from this Action's set in map B
+- To list all actions
+    1. Traverse in map B to return a vector of Action objects
+- To group actions
+    1. Each action is going to have an ActionGroup enum or something. When listing all actions in the UI, they will be grouped by this enum. For human readable names, there could be a hashmap to get strings for these enums.

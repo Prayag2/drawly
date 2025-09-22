@@ -126,5 +126,5 @@ void FreeformTool::mouseReleased(ApplicationContext* context) {
 }
 
 ToolID FreeformTool::id() const {
-    return ToolID::FreeformToolID;
+    return ToolID::FreeformTool;
 }

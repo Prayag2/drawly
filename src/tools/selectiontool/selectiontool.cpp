@@ -49,5 +49,5 @@ std::shared_ptr<SelectionToolState> SelectionTool::getCurrentState(ApplicationCo
 }
 
 ToolID SelectionTool::id() const {
-    return ToolID::SelectionToolID;
+    return ToolID::SelectionTool;
 };

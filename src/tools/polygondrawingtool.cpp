@@ -96,6 +96,6 @@ void PolygonDrawingTool::mouseReleased(ApplicationContext* context) {
 };
 
 ToolID PolygonDrawingTool::id() const {
-    return ToolID::PolygonDrawingToolID;
+    return ToolID::PolygonDrawingTool;
 }
 

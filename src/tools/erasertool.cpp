@@ -126,5 +126,5 @@ void EraserTool::mouseReleased(ApplicationContext* context) {
 }
 
 ToolID EraserTool::id() const {
-    return ToolID::EraserToolID;
+    return ToolID::EraserTool;
 }

@@ -11,6 +11,7 @@
 #include "boardlayout.h"
 #include <QButtonGroup>
 #include <QFile>
+#include <QShortcut>
 
 MainWindow::MainWindow(QWidget* parent) : QWidget(parent) {
     this->m_applyCustomStyles();

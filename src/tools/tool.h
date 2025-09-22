@@ -7,11 +7,15 @@ class ToolProperty;
 enum class ToolPropertyType;
 
 enum class ToolID {
-    SelectionToolID,
-    FreeformToolID,
-    PolygonDrawingToolID,
-    EraserToolID,
-    MoveToolID
+    SelectionTool,
+    FreeformTool,
+    PolygonDrawingTool,
+    EraserTool,
+    MoveTool,
+    RectangleTool,
+    EllipseTool,
+    LineTool,
+    ArrowTool
 };
 
 // INTERFACE
