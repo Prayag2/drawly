@@ -9,6 +9,8 @@ class Event;
 class PropertyManager;
 class Tool;
 class ApplicationContext;
+class KeybindManager;
+class ActionManager;
 
 class UIContext : public QObject {
 public:
@@ -21,6 +23,8 @@ public:
     PropertyBar& propertyBar() const;
     ActionBar& actionBar() const;
     Event& event() const;
+    KeybindManager& keybindManager() const;
+    ActionManager& actionManager() const;
 
 public slots:
     void toolChanged(Tool&);
@@ -30,6 +34,8 @@ private:
     PropertyBar* m_propertyBar{};
     ActionBar* m_actionBar{};
     PropertyManager* m_propertyManager{};
+    KeybindManager* m_keybindManager{};
+    ActionManager* m_actionManager{};
     Event* m_event{nullptr};
 
     ApplicationContext* m_applicationContext;

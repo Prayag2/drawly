@@ -14,8 +14,10 @@ public:
     ~ToolBar();
 
     Tool& curTool() const;
-    void addTool(Tool* tool);
+    void addTool(Tool* tool, ToolID toolID);
     QVector<Tool*> tools() const;
+
+    void changeTool(ToolID toolID);
 
 signals:
     void toolChanged(Tool&);
@@ -23,7 +25,7 @@ signals:
 private:
     QButtonGroup* m_group{};
     QHBoxLayout* m_layout{};
-    QVector<Tool*> m_tools{};
+    std::unordered_map<int, Tool*> m_tools{};
     void createButtons() const;
 
 private slots:

@@ -60,5 +60,5 @@ void MoveTool::mouseReleased(ApplicationContext* context) {
 };
 
 ToolID MoveTool::id() const {
-    return ToolID::MoveToolID;
+    return ToolID::MoveTool;
 }

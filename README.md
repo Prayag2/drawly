@@ -43,9 +43,9 @@ Phase 2 completed!!
     - [ ] Transform items (resize) (Low priority)
     - [ ] Rotate items (Low priority)
 - [x] Undo/redo support
+- [x] Basic keybinding support
 - [ ] Saving the drawings
 - [ ] Exporting drawings to PNGs
-- [ ] Shortcut keys (including pen buttons)
 - [ ] Image support
 - [ ] Text support
 - [ ] Text formatting like bold, underline, italics, etc.

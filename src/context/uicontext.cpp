@@ -22,6 +22,9 @@
 #include "../tools/erasertool.h"
 #include "../tools/movetool.h"
 
+#include "../keybindings/keybindmanager.h"
+#include "../keybindings/actionmanager.h"
+
 UIContext::UIContext(ApplicationContext* context)
     : QObject{context}, m_applicationContext{context} {}
 
@@ -34,18 +37,20 @@ void UIContext::setUIContext() {
     m_toolBar = new ToolBar(m_applicationContext->parentWidget());
     m_actionBar = new ActionBar(m_applicationContext->parentWidget());
     m_propertyBar = new PropertyBar(m_applicationContext->parentWidget());
+    m_keybindManager = new KeybindManager(m_applicationContext->parentWidget());
+    m_actionManager = new ActionManager(m_applicationContext);
 
     m_propertyManager = new PropertyManager(m_propertyBar);
     m_event = new Event();
 
-    m_toolBar->addTool(new SelectionTool());
-    m_toolBar->addTool(new FreeformTool(*m_propertyManager));
-    m_toolBar->addTool(new RectangleTool(*m_propertyManager));
-    m_toolBar->addTool(new EllipseTool(*m_propertyManager));
-    m_toolBar->addTool(new ArrowTool(*m_propertyManager));
-    m_toolBar->addTool(new LineTool(*m_propertyManager));
-    m_toolBar->addTool(new EraserTool(*m_propertyManager));
-    m_toolBar->addTool(new MoveTool());
+    m_toolBar->addTool(new SelectionTool(), ToolID::SelectionTool);
+    m_toolBar->addTool(new FreeformTool(*m_propertyManager), ToolID::FreeformTool);
+    m_toolBar->addTool(new RectangleTool(*m_propertyManager), ToolID::RectangleTool);
+    m_toolBar->addTool(new EllipseTool(*m_propertyManager), ToolID::EllipseTool);
+    m_toolBar->addTool(new ArrowTool(*m_propertyManager), ToolID::ArrowTool);
+    m_toolBar->addTool(new LineTool(*m_propertyManager), ToolID::LineTool);
+    m_toolBar->addTool(new EraserTool(*m_propertyManager), ToolID::EraserTool);
+    m_toolBar->addTool(new MoveTool(), ToolID::MoveTool);
 
     m_actionBar->addButton("-", 1);
     m_actionBar->addButton("+", 2);
@@ -99,6 +104,14 @@ PropertyBar& UIContext::propertyBar() const {
 
 ActionBar& UIContext::actionBar() const {
     return *m_actionBar;
+}
+
+KeybindManager& UIContext::keybindManager() const {
+    return *m_keybindManager;
+}
+
+ActionManager& UIContext::actionManager() const {
+    return *m_actionManager;
 }
 
 Event& UIContext::event() const {
