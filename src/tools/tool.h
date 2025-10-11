@@ -15,7 +15,8 @@ enum class ToolID {
     RectangleTool,
     EllipseTool,
     LineTool,
-    ArrowTool
+    ArrowTool,
+    TextTool
 };
 
 // INTERFACE
@@ -30,6 +31,8 @@ public:
     virtual void mousePressed(ApplicationContext* context) = 0;
     virtual void mouseMoved(ApplicationContext* context) = 0;
     virtual void mouseReleased(ApplicationContext* context) = 0;
+    virtual void keyPressed(ApplicationContext* context) = 0;
+    virtual void keyReleased(ApplicationContext* context) = 0;
 
     virtual ToolID id() const = 0;
 

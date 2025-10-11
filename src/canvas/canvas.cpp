@@ -16,6 +16,9 @@ Canvas::Canvas(QWidget* parent) : QWidget{parent} {
 
     setTabletTracking(true);
     setMouseTracking(true);
+    setAttribute(Qt::WA_InputMethodEnabled);
+
+    setFocusPolicy(Qt::ClickFocus);
 }
 
 Canvas::~Canvas() {
@@ -118,6 +121,22 @@ void Canvas::mouseReleaseEvent(QMouseEvent* event) {
     QWidget::mouseReleaseEvent(event);
 };
 
+void Canvas::keyPressEvent(QKeyEvent* event) {
+    qDebug() << "HIIII";
+    emit keyPressed(event);
+    QWidget::keyPressEvent(event);
+}
+
+void Canvas::keyReleaseEvent(QKeyEvent* event) {
+    emit keyReleased(event);
+    QWidget::keyReleaseEvent(event);
+}
+
+void Canvas::inputMethodEvent(QInputMethodEvent* event) {
+    emit inputMethodInvoked(event);
+    QWidget::inputMethodEvent(event);
+}
+
 void Canvas::tabletEvent(QTabletEvent* event) {
     emit tablet(event);
     QWidget::tabletEvent(event);
@@ -126,6 +145,17 @@ void Canvas::tabletEvent(QTabletEvent* event) {
 void Canvas::wheelEvent(QWheelEvent* event) {
     emit wheel(event);
     QWidget::wheelEvent(event);
+}
+
+bool Canvas::event(QEvent* event) {
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *ev = dynamic_cast<QKeyEvent*>(event);
+        if (ev && (ev->key() == Qt::Key_Tab) || (ev->key() == Qt::Key_Backtab)) {
+            emit keyPressed(ev);
+            return true;
+        }
+    }
+    return QWidget::event(event);
 }
 
 // PRIVATE

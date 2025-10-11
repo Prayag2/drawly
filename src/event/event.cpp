@@ -26,3 +26,27 @@ const QPoint& Event::pos() const {
 Qt::MouseButton Event::button() const {
     return m_button;
 }
+
+QString Event::text() const {
+    return m_text;
+}
+
+int Event::key() const {
+    return m_key;
+}
+
+Qt::KeyboardModifiers Event::modifiers() const {
+    return m_modifiers;
+}
+
+void Event::setKey(int key) {
+    m_key = key;
+}
+
+void Event::setText(const QString& text) {
+    m_text = text;
+}
+
+void Event::setModifiers(Qt::KeyboardModifiers modifiers) {
+    m_modifiers = modifiers;
+}

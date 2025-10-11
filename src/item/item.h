@@ -4,7 +4,6 @@
 #include "properties/itemproperty.h"
 #include <QPainter>
 #include <QRect>
-class ApplicationContext;
 
 class Item {
 public:

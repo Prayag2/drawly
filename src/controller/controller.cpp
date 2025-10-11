@@ -71,6 +71,31 @@ void Controller::tablet(QTabletEvent* event) {
     contextEvent.setPressure(event->pressure() / 1.60 + 0.375);
 }
 
+void Controller::keyPressed(QKeyEvent* event) {
+    Event& contextEvent{m_context->uiContext().event()};
+    ToolBar& toolBar{m_context->uiContext().toolBar()};
+
+    contextEvent.setKey(event->key());
+    contextEvent.setModifiers(event->modifiers());
+    contextEvent.setText(event->text());
+
+    toolBar.curTool().keyPressed(m_context);
+}
+
+void Controller::keyReleased(QKeyEvent* event) {
+    Event& contextEvent{m_context->uiContext().event()};
+    ToolBar& toolBar{m_context->uiContext().toolBar()};
+
+    contextEvent.setKey(event->key());
+    contextEvent.setModifiers(event->modifiers());
+    contextEvent.setText(event->text());
+
+    toolBar.curTool().keyReleased(m_context);
+}
+
+void Controller::inputMethodInvoked(QInputMethodEvent* event) {
+}
+
 // FIXME: Does not work 
 void Controller::wheel(QWheelEvent* event) {
     const QPointF& offsetPos{m_context->spatialContext().offsetPos()};

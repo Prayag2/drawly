@@ -125,6 +125,14 @@ void EraserTool::mouseReleased(ApplicationContext* context) {
     }
 }
 
+void EraserTool::keyPressed(ApplicationContext* context) {
+
+}
+
+void EraserTool::keyReleased(ApplicationContext* context) {
+
+}
+
 ToolID EraserTool::id() const {
     return ToolID::EraserTool;
 }

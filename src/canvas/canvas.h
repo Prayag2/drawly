@@ -27,6 +27,9 @@ signals:
     void mousePressed(QMouseEvent* event);
     void mouseMoved(QMouseEvent* event);
     void mouseReleased(QMouseEvent* event);
+    void keyPressed(QKeyEvent* event);
+    void keyReleased(QKeyEvent* event);
+    void inputMethodInvoked(QInputMethodEvent* event);
     void tablet(QTabletEvent* event);
     void wheel(QWheelEvent* event);
     void resizeEventCalled();
@@ -43,8 +46,12 @@ protected:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
+    void keyPressEvent(QKeyEvent* event) override;
+    void keyReleaseEvent(QKeyEvent* event) override;
+    void inputMethodEvent(QInputMethodEvent* event) override;
     void tabletEvent(QTabletEvent* event) override;
     void wheelEvent(QWheelEvent* event) override;
+    bool event(QEvent* event) override;
 
 private:
     qreal m_scale{1.0};  // default scale is 1

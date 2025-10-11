@@ -21,6 +21,7 @@
 #include "../tools/linetool.h"
 #include "../tools/erasertool.h"
 #include "../tools/movetool.h"
+#include "../tools/texttool.h"
 
 #include "../keybindings/keybindmanager.h"
 #include "../keybindings/actionmanager.h"
@@ -37,7 +38,7 @@ void UIContext::setUIContext() {
     m_toolBar = new ToolBar(m_applicationContext->parentWidget());
     m_actionBar = new ActionBar(m_applicationContext->parentWidget());
     m_propertyBar = new PropertyBar(m_applicationContext->parentWidget());
-    m_keybindManager = new KeybindManager(m_applicationContext->parentWidget());
+    m_keybindManager = new KeybindManager(&m_applicationContext->renderingContext().canvas());
     m_actionManager = new ActionManager(m_applicationContext);
 
     m_propertyManager = new PropertyManager(m_propertyBar);
@@ -50,6 +51,7 @@ void UIContext::setUIContext() {
     m_toolBar->addTool(new ArrowTool(*m_propertyManager), ToolID::ArrowTool);
     m_toolBar->addTool(new LineTool(*m_propertyManager), ToolID::LineTool);
     m_toolBar->addTool(new EraserTool(*m_propertyManager), ToolID::EraserTool);
+    m_toolBar->addTool(new TextTool(*m_propertyManager), ToolID::TextTool);
     m_toolBar->addTool(new MoveTool(), ToolID::MoveTool);
 
     m_actionBar->addButton("-", 1);

@@ -1,28 +1,27 @@
-#ifndef MOVETOOL_H
-#define MOVETOOL_H
+#ifndef TEXTTOOL_H
+#define TEXTTOOL_H
 
-#include "tool.h"
-#include <QElapsedTimer>
-class Item;
+#include "drawingtool.h"
+#include "../item/text.h"
+class PropertyManager;
 
-class MoveTool : public Tool {
+class TextTool : public DrawingTool {
 public:
-    MoveTool();
-    ~MoveTool() = default;
+    TextTool(const PropertyManager& propertyManager);
+    ~TextTool() override = default;
 
-    QString iconAlt() const override;
     void mousePressed(ApplicationContext* context) override;
     void mouseMoved(ApplicationContext* context) override;
     void mouseReleased(ApplicationContext* context) override;
     void keyPressed(ApplicationContext* context) override;
     void keyReleased(ApplicationContext* context) override;
 
+
     ToolID id() const override;
+    QString iconAlt() const override;
 
 private:
-    bool m_isActive{false};
-    QPointF m_initialOffsetPos{};
-    QPointF m_initialPos{};
+    std::shared_ptr<Text> m_curItem {nullptr};
 };
 
-#endif  // MOVETOOL_H
+#endif  // TEXTTOOL_H
