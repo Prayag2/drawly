@@ -56,9 +56,9 @@ void FreeformTool::mousePressed(ApplicationContext* context) {
 
         curItem = std::dynamic_pointer_cast<Freeform>(m_itemFactory->create());
 
-        curItem->getProperty(ItemPropertyType::StrokeWidth)
+        curItem->getProperty(ItemProperty::StrokeWidth)
             .setValue(m_properties[ToolPropertyType::StrokeWidth]->value());
-        curItem->getProperty(ItemPropertyType::StrokeColor)
+        curItem->getProperty(ItemProperty::StrokeColor)
             .setValue(m_properties[ToolPropertyType::StrokeColor]->value());
         curItem->setBoundingBoxPadding(10 * renderingContext.canvas().scale());
 

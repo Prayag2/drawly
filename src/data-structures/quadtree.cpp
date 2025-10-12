@@ -178,7 +178,11 @@ int QuadTree::size() const {
 }
 
 void QuadTree::draw(QPainter& painter, const QPointF& offset) const {
-    painter.drawRect(m_boundingBox.translated(offset));
+    painter.save();
+
+    QPen pen{Qt::green}; painter.setPen(pen);
+    painter.drawRect(m_boundingBox.translated(-offset));
+    painter.restore();
 
     if (m_topLeft != nullptr) {
         m_topLeft->draw(painter, offset);

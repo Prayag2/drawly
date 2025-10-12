@@ -15,14 +15,14 @@ void Item::setBoundingBoxPadding(int padding) {
     m_boundingBoxPadding = padding;
 }
 
-ItemProperty& Item::getProperty(const ItemPropertyType propertyType) {
+ItemProperty& Item::getProperty(const ItemProperty::Type propertyType) {
     if (m_properties.find(propertyType) == m_properties.end()) {
         throw std::logic_error("Item does not support this property.");
     }
     return m_properties.at(propertyType);
 }
 
-const ItemProperty& Item::getProperty(const ItemPropertyType propertyType) const {
+const ItemProperty& Item::getProperty(const ItemProperty::Type propertyType) const {
     // This will call the non-const version of this method.
     // I'm doing this to avoid code duplication.
     return const_cast<Item*>(this)->getProperty(propertyType);

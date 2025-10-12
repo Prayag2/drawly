@@ -23,13 +23,13 @@ public:
 
     void setBoundingBoxPadding(int padding);
 
-    ItemProperty& getProperty(const ItemPropertyType propertyType);
-    const ItemProperty& getProperty(const ItemPropertyType propertyType) const;
+    ItemProperty& getProperty(const ItemProperty::Type propertyType);
+    const ItemProperty& getProperty(const ItemProperty::Type propertyType) const;
 
 protected:
     QRectF m_boundingBox{};
     int m_boundingBoxPadding{};
-    std::unordered_map<ItemPropertyType, ItemProperty> m_properties{};
+    std::unordered_map<ItemProperty::Type, ItemProperty> m_properties{};
 
     virtual void m_draw(QPainter& painter, const QPointF& offset) const = 0;
 };

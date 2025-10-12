@@ -3,13 +3,6 @@
 
 #include <QVariant>
 
-enum class ItemPropertyType {
-    StrokeWidth = 0x00,
-    StrokeColor = 0x02,
-    Opacity = 0x04,
-    FontSize = 0x06,
-};
-
 class ItemProperty {
 public:
     ItemProperty();
@@ -17,6 +10,13 @@ public:
 
     void setValue(QVariant value);
     const QVariant& value() const;
+
+    enum Type {
+        StrokeWidth = 0x00,
+        StrokeColor = 0x02,
+        Opacity = 0x04,
+        FontSize = 0x06,
+    };
 
 private:
     QVariant m_value{};

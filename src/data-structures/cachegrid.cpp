@@ -12,6 +12,7 @@ CacheCell::CacheCell(const QPoint& point) : m_point{point} {
     m_painter = std::make_unique<QPainter>(m_image.get());
     m_painter->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
     m_painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
+    m_painter->setClipRegion(m_image->rect());
 
     CacheCell::counter++;
     m_dirty = true;

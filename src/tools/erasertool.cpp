@@ -71,7 +71,7 @@ void EraserTool::mouseMoved(ApplicationContext* context) {
             if (m_toBeErased.count(item) > 0) continue;
 
             // TODO: Remove magic numbers
-            item->getProperty(ItemPropertyType::Opacity).setValue(Common::eraseItemOpacity);
+            item->getProperty(ItemProperty::Opacity).setValue(Common::eraseItemOpacity);
 
             m_toBeErased.insert(item);
             spatialContext.cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
@@ -111,7 +111,7 @@ void EraserTool::mouseReleased(ApplicationContext* context) {
             }
 
             // reset opacity
-            item->getProperty(ItemPropertyType::Opacity).setValue(Common::maxItemOpacity);
+            item->getProperty(ItemProperty::Opacity).setValue(Common::maxItemOpacity);
             erasedItems.push_back(item);
         }
 

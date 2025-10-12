@@ -9,6 +9,8 @@
 #include "../event/event.h"
 #include "../item/item.h"
 
+#include "../data-structures/quadtree.h"
+
 MoveTool::MoveTool() {
     m_cursor = QCursor(Qt::OpenHandCursor);
 }

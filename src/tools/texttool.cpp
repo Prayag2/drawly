@@ -12,6 +12,8 @@
 #include "../data-structures/cachegrid.h"
 #include "../keybindings/keybindmanager.h"
 #include "../event/event.h"
+#include <QGuiApplication>
+#include <QClipboard>
 
 TextTool::TextTool(const PropertyManager& propertyManager) {
     m_cursor = QCursor(Qt::IBeamCursor);
@@ -67,17 +69,20 @@ void TextTool::keyPressed(ApplicationContext* context) {
                 int size = m_curItem->text().size();
                 m_curItem->setCursor(std::min(size, m_curItem->cursor() + 1));
                 break;
-            }
-            case Qt::Key_Backspace: {
+            } case Qt::Key_Backspace: {
                 int cursor{std::max(0, m_curItem->cursor() - 1)};
                 m_curItem->deleteSubStr(cursor, cursor);
                 m_curItem->setCursor(cursor);
                 ev.setText("");
                 break;
+            } case Qt::Key_Up: {
+                auto [start, end] = m_curItem->getLineRange()
             }
         }
 
         m_curItem->insertText(ev.text(), context->spatialContext().offsetPos());
+        context->spatialContext().quadtree().deleteItem(m_curItem);
+        context->spatialContext().quadtree().insertItem(m_curItem);
 
         context->spatialContext().cacheGrid().markAllDirty(); // TODO: Remove this line
         context->renderingContext().markForRender();

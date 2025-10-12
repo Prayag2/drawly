@@ -2,6 +2,7 @@
 #define TEXT_H
 
 #include "item.h"
+#include <set>
 #include <QPainter>
 #include <QRect>
 
@@ -41,13 +42,21 @@ public:
     void insertText(const QString& text, const QPointF& offset);
     void deleteSubStr(int start, int end);
 
+    std::pair<int, int> getLineRange(int position) const;
+
     constexpr static int INVALID {-1};
 
 protected:
     void m_draw(QPainter& painter, const QPointF& offset) const override;
 
 private:
+    QFont getFont() const;
+    QPen getPen() const;
+
+    constexpr static int getTextFlags();
+
     QString m_text;
+    std::set<int> m_newlinePositions; // stores positions of "\n" characters
 
     int m_cursorIndex;
     int m_selectionStart;

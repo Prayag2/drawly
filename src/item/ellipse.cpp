@@ -8,7 +8,7 @@ void Ellipse::m_draw(QPainter& painter, const QPointF& offset) const {
 }
 
 bool Ellipse::onEllipse(QLineF line) const {
-    int sw{m_boundingBoxPadding + getProperty(ItemPropertyType::StrokeWidth).value().toInt()};
+    int sw{m_boundingBoxPadding + getProperty(ItemProperty::StrokeWidth).value().toInt()};
     double X{m_boundingBox.x() + sw}, Y{m_boundingBox.y() + sw};
     double W{m_boundingBox.width() - 2 * sw}, H{m_boundingBox.height() - 2 * sw};
 
