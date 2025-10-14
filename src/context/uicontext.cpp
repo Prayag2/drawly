@@ -1,33 +1,33 @@
 #include "uicontext.h"
-#include "applicationcontext.h"
-#include "selectioncontext.h"
-#include "renderingcontext.h"
-#include "spatialcontext.h"
 
-#include "../common/renderitems.h"
 #include "../canvas/canvas.h"
-#include "../event/event.h"
-#include "../components/toolbar.h"
+#include "../command/commandhistory.h"
+#include "../common/renderitems.h"
 #include "../components/actionbar.h"
 #include "../components/propertybar.h"
-#include "../tools/properties/propertymanager.h"
-#include "../command/commandhistory.h"
-
-#include "../tools/selectiontool/selectiontool.h"
-#include "../tools/freeformtool.h"
-#include "../tools/rectangletool.h"
-#include "../tools/ellipsetool.h"
-#include "../tools/arrowtool.h"
-#include "../tools/linetool.h"
-#include "../tools/erasertool.h"
-#include "../tools/movetool.h"
-#include "../tools/texttool.h"
-
-#include "../keybindings/keybindmanager.h"
+#include "../components/toolbar.h"
+#include "../event/event.h"
 #include "../keybindings/actionmanager.h"
+#include "../keybindings/keybindmanager.h"
+#include "../tools/arrowtool.h"
+#include "../tools/ellipsetool.h"
+#include "../tools/erasertool.h"
+#include "../tools/freeformtool.h"
+#include "../tools/linetool.h"
+#include "../tools/movetool.h"
+#include "../tools/properties/propertymanager.h"
+#include "../tools/rectangletool.h"
+#include "../tools/selectiontool/selectiontool.h"
+#include "../tools/texttool.h"
+#include "applicationcontext.h"
+#include "renderingcontext.h"
+#include "selectioncontext.h"
+#include "spatialcontext.h"
 
-UIContext::UIContext(ApplicationContext* context)
-    : QObject{context}, m_applicationContext{context} {}
+UIContext::UIContext(ApplicationContext *context)
+    : QObject{context},
+      m_applicationContext{context} {
+}
 
 UIContext::~UIContext() {
     delete m_event;
@@ -63,25 +63,25 @@ void UIContext::setUIContext() {
     QObject::connect(m_toolBar, &ToolBar::toolChanged, this, &UIContext::toolChanged);
     QObject::connect(m_toolBar, &ToolBar::toolChanged, m_propertyBar, &PropertyBar::toolChanged);
 
-    QObject::connect(&m_actionBar->button(1), &QPushButton::clicked, this,
-                     [this]() { m_applicationContext->renderingContext().setZoomFactor(-1); });
-    QObject::connect(&m_actionBar->button(2), &QPushButton::clicked, this,
-                     [this]() { m_applicationContext->renderingContext().setZoomFactor(1); });
-    QObject::connect(&m_actionBar->button(4), &QPushButton::clicked, this,
-                     [this]() { 
-                         m_applicationContext->spatialContext().commandHistory().undo(); 
-                         m_applicationContext->renderingContext().markForRender();
-                         m_applicationContext->renderingContext().markForUpdate();
-                     });
-    QObject::connect(&m_actionBar->button(5), &QPushButton::clicked, this,
-                     [this]() {
-                     m_applicationContext->spatialContext().commandHistory().redo();
-                     m_applicationContext->renderingContext().markForRender();
-                     m_applicationContext->renderingContext().markForUpdate();
-                     });
+    QObject::connect(&m_actionBar->button(1), &QPushButton::clicked, this, [this]() {
+        m_applicationContext->renderingContext().setZoomFactor(-1);
+    });
+    QObject::connect(&m_actionBar->button(2), &QPushButton::clicked, this, [this]() {
+        m_applicationContext->renderingContext().setZoomFactor(1);
+    });
+    QObject::connect(&m_actionBar->button(4), &QPushButton::clicked, this, [this]() {
+        m_applicationContext->spatialContext().commandHistory().undo();
+        m_applicationContext->renderingContext().markForRender();
+        m_applicationContext->renderingContext().markForUpdate();
+    });
+    QObject::connect(&m_actionBar->button(5), &QPushButton::clicked, this, [this]() {
+        m_applicationContext->spatialContext().commandHistory().redo();
+        m_applicationContext->renderingContext().markForRender();
+        m_applicationContext->renderingContext().markForUpdate();
+    });
 
     QObject::connect(&m_actionBar->button(3), &QPushButton::clicked, this, [this]() {
-        Canvas& canvas{m_applicationContext->renderingContext().canvas()};
+        Canvas &canvas{m_applicationContext->renderingContext().canvas()};
 
         if (canvas.bg() == Common::lightBackgroundColor) {
             canvas.setBg(Common::darkBackgroundColor);
@@ -96,36 +96,36 @@ void UIContext::setUIContext() {
     m_propertyBar->toolChanged(m_toolBar->curTool());
 }
 
-ToolBar& UIContext::toolBar() const {
+ToolBar &UIContext::toolBar() const {
     return *m_toolBar;
 }
 
-PropertyBar& UIContext::propertyBar() const {
+PropertyBar &UIContext::propertyBar() const {
     return *m_propertyBar;
 }
 
-ActionBar& UIContext::actionBar() const {
+ActionBar &UIContext::actionBar() const {
     return *m_actionBar;
 }
 
-KeybindManager& UIContext::keybindManager() const {
+KeybindManager &UIContext::keybindManager() const {
     return *m_keybindManager;
 }
 
-ActionManager& UIContext::actionManager() const {
+ActionManager &UIContext::actionManager() const {
     return *m_actionManager;
 }
 
-Event& UIContext::event() const {
+Event &UIContext::event() const {
     return *m_event;
 }
 
-void UIContext::toolChanged(Tool& tool) {
+void UIContext::toolChanged(Tool &tool) {
     m_applicationContext->selectionContext().selectedItems().clear();
 
     Common::renderCanvas(m_applicationContext);
 
-    Canvas& canvas{m_applicationContext->renderingContext().canvas()};
+    Canvas &canvas{m_applicationContext->renderingContext().canvas()};
     canvas.setCursor(tool.cursor());
     canvas.update();
 }

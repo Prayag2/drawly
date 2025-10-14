@@ -6,12 +6,12 @@
 
 class SelectionToolMoveState : public SelectionToolState {
 public:
-    void mouseMoved(ApplicationContext* context) override;
-    void mousePressed(ApplicationContext* context) override;
-    void mouseReleased(ApplicationContext* context) override;
+    void mouseMoved(ApplicationContext *context) override;
+    void mousePressed(ApplicationContext *context) override;
+    void mouseReleased(ApplicationContext *context) override;
 
 private:
     QPointF m_lastPos;
 };
 
-#endif // SELECTIONTOOLMOVESTATE_H
+#endif  // SELECTIONTOOLMOVESTATE_H

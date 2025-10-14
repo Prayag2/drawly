@@ -6,12 +6,13 @@
 Rectangle::Rectangle() {
 }
 
-void Rectangle::m_draw(QPainter& painter, const QPointF& offset) const {
+void Rectangle::m_draw(QPainter &painter, const QPointF &offset) const {
     painter.drawRect(QRectF(start() - offset, end() - offset));
 }
 
-bool Rectangle::intersects(const QRectF& rect) {
-    if (!boundingBox().intersects(rect)) return false;
+bool Rectangle::intersects(const QRectF &rect) {
+    if (!boundingBox().intersects(rect))
+        return false;
 
     QRectF box{start(), end()};
     QPointF p{box.topLeft()};
@@ -42,7 +43,11 @@ bool Rectangle::intersects(const QRectF& rect) {
             Common::intersects(QLineF{p, s}, QLineF{d, a}));
 };
 
-bool Rectangle::intersects(const QLineF& line) {
+bool Rectangle::intersects(const QLineF &line) {
     QRectF box{start(), end()};
     return Common::intersects(box, line);
+}
+
+Item::Type Rectangle::type() const {
+    return Item::Rectangle;
 }

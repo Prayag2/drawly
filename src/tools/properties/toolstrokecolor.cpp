@@ -5,19 +5,23 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 
-// TODO: Use a better widget and a better way to return colors instead of button id
-ToolStrokeColor::ToolStrokeColor(QWidget* parent) {
+// TODO: Use a better widget and a better way to return colors instead of button
+// id
+ToolStrokeColor::ToolStrokeColor(QWidget *parent) {
     m_widget = new QWidget{parent};
 
-    QHBoxLayout* layout{new QHBoxLayout{m_widget}};
+    QHBoxLayout *layout{new QHBoxLayout{m_widget}};
     m_group = new QButtonGroup{m_widget};
     m_widget->setLayout(layout);
 
-    QVector<QColor> colors{QColor{255, 255, 255}, QColor{0, 0, 0}, QColor{255, 53, 71},
-                           QColor{255, 187, 51}, QColor{51, 181, 229}};
+    QVector<QColor> colors{QColor{255, 255, 255},
+                           QColor{0, 0, 0},
+                           QColor{255, 53, 71},
+                           QColor{255, 187, 51},
+                           QColor{51, 181, 229}};
 
-    for (const QColor& color : colors) {
-        QPushButton* btn{new QPushButton{"", m_widget}};
+    for (const QColor &color : colors) {
+        QPushButton *btn{new QPushButton{"", m_widget}};
         btn->setCheckable(true);
         btn->setStyleSheet("background-color: " + color.name());
 

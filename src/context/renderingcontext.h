@@ -1,8 +1,8 @@
 #ifndef RENDERINGCONTEXT_H
 #define RENDERINGCONTEXT_H
 
-#include <QWidget>
 #include <QTimer>
+#include <QWidget>
 class Canvas;
 class ApplicationContext;
 
@@ -10,18 +10,18 @@ class RenderingContext : public QObject {
     Q_OBJECT
 
 public:
-    RenderingContext(ApplicationContext* context);
+    RenderingContext(ApplicationContext *context);
     ~RenderingContext();
 
     void setRenderingContext();
 
-    Canvas& canvas() const;
-    QPainter& canvasPainter() const;
-    QPainter& overlayPainter() const;
+    Canvas &canvas() const;
+    QPainter &canvasPainter() const;
+    QPainter &overlayPainter() const;
 
     void markForRender();
     void markForUpdate();
-    void markForUpdate(const QRect& region);
+    void markForUpdate(const QRect &region);
 
     qreal zoomFactor() const;
     void setZoomFactor(int diff);
@@ -34,9 +34,9 @@ private slots:
     void canvasResized();
 
 private:
-    Canvas* m_canvas{nullptr};
-    QPainter* m_canvasPainter{};
-    QPainter* m_overlayPainter{};
+    Canvas *m_canvas{nullptr};
+    QPainter *m_canvasPainter{};
+    QPainter *m_overlayPainter{};
 
     QTimer m_frameTimer;
 
@@ -46,7 +46,7 @@ private:
 
     qreal m_zoomFactor{1};
 
-    ApplicationContext* m_applicationContext;
+    ApplicationContext *m_applicationContext;
 };
 
 #endif  // RENDERINGCONTEXT_H

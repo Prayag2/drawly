@@ -8,8 +8,8 @@ class RemoveItemCommand : public ItemCommand {
 public:
     RemoveItemCommand(QVector<std::shared_ptr<Item>> items);
 
-    void execute(ApplicationContext* context) override;
-    void undo(ApplicationContext* context) override;
+    void execute(ApplicationContext *context) override;
+    void undo(ApplicationContext *context) override;
 };
 
-#endif // REMOVEITEMCOMMAND_H
+#endif  // REMOVEITEMCOMMAND_H

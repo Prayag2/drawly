@@ -10,10 +10,10 @@ public:
     virtual QString name() const = 0;
     virtual const QVariant value() const = 0;
 
-    QWidget* widget() const;
+    QWidget *widget() const;
 
 protected:
-    QWidget* m_widget{};
+    QWidget *m_widget{};
 };
 
 #endif  // TOOLPROPERTY_H

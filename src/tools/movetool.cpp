@@ -6,10 +6,9 @@
 #include "../context/renderingcontext.h"
 #include "../context/spatialcontext.h"
 #include "../context/uicontext.h"
+#include "../data-structures/quadtree.h"
 #include "../event/event.h"
 #include "../item/item.h"
-
-#include "../data-structures/quadtree.h"
 
 MoveTool::MoveTool() {
     m_cursor = QCursor(Qt::OpenHandCursor);
@@ -19,11 +18,11 @@ QString MoveTool::iconAlt() const {
     return "";
 }
 
-void MoveTool::mousePressed(ApplicationContext* context) {
-    UIContext& uiContext{context->uiContext()};
+void MoveTool::mousePressed(ApplicationContext *context) {
+    UIContext &uiContext{context->uiContext()};
 
     if (uiContext.event().button() == Qt::LeftButton) {
-        SpatialContext& spatialContext{context->spatialContext()};
+        SpatialContext &spatialContext{context->spatialContext()};
 
         m_isActive = true;
 
@@ -32,15 +31,14 @@ void MoveTool::mousePressed(ApplicationContext* context) {
     }
 };
 
-void MoveTool::mouseMoved(ApplicationContext* context) {
+void MoveTool::mouseMoved(ApplicationContext *context) {
     if (m_isActive) {
-        SpatialContext& spatialContext{context->spatialContext()};
-        RenderingContext& renderingContext{context->renderingContext()};
-        UIContext& uiContext{context->uiContext()};
+        SpatialContext &spatialContext{context->spatialContext()};
+        RenderingContext &renderingContext{context->renderingContext()};
+        UIContext &uiContext{context->uiContext()};
 
         qreal zoom{renderingContext.zoomFactor()};
-        QPointF newPoint{m_initialOffsetPos * zoom - uiContext.event().pos() +
-                         m_initialPos};
+        QPointF newPoint{m_initialOffsetPos * zoom - uiContext.event().pos() + m_initialPos};
 
         spatialContext.setOffsetPos(newPoint / zoom);
 
@@ -51,22 +49,20 @@ void MoveTool::mouseMoved(ApplicationContext* context) {
     }
 };
 
-void MoveTool::mouseReleased(ApplicationContext* context) {
-    UIContext& uiContext{context->uiContext()};
+void MoveTool::mouseReleased(ApplicationContext *context) {
+    UIContext &uiContext{context->uiContext()};
     if (uiContext.event().button() == Qt::LeftButton) {
-        RenderingContext& renderingContext{context->renderingContext()};
+        RenderingContext &renderingContext{context->renderingContext()};
 
         renderingContext.canvas().setCursor(Qt::OpenHandCursor);
         m_isActive = false;
     }
 };
 
-void MoveTool::keyPressed(ApplicationContext* context) {
-
+void MoveTool::keyPressed(ApplicationContext *context) {
 }
 
-void MoveTool::keyReleased(ApplicationContext* context) {
-
+void MoveTool::keyReleased(ApplicationContext *context) {
 }
 
 ToolID MoveTool::id() const {

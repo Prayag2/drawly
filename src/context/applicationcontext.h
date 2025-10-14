@@ -9,25 +9,25 @@ class SelectionContext;
 
 class ApplicationContext : public QObject {
 public:
-    ApplicationContext(QWidget* parent = nullptr);
+    ApplicationContext(QWidget *parent = nullptr);
     ~ApplicationContext();
 
     void setContexts();
 
-    QWidget* parentWidget() const;
+    QWidget *parentWidget() const;
 
-    RenderingContext& renderingContext() const;
-    SpatialContext& spatialContext() const;
-    UIContext& uiContext() const;
-    SelectionContext& selectionContext() const;
+    RenderingContext &renderingContext() const;
+    SpatialContext &spatialContext() const;
+    UIContext &uiContext() const;
+    SelectionContext &selectionContext() const;
 
 private:
-    QWidget* m_parentWidget;
+    QWidget *m_parentWidget;
 
-    RenderingContext* m_renderingContext{nullptr};
-    SpatialContext* m_spatialContext{nullptr};
-    UIContext* m_uiContext{nullptr};
-    SelectionContext* m_selectionContext{nullptr};
+    RenderingContext *m_renderingContext{nullptr};
+    SpatialContext *m_spatialContext{nullptr};
+    UIContext *m_uiContext{nullptr};
+    SelectionContext *m_selectionContext{nullptr};
 };
 
 #endif  // APPLICATIONCONTEXT_H

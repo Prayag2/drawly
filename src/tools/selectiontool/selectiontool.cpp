@@ -1,14 +1,14 @@
 #include "selectiontool.h"
-#include "selectiontoolstate.h"
-#include "selectiontoolmovestate.h"
-#include "selectiontoolselectstate.h"
+
 #include "../../context/applicationcontext.h"
+#include "../../context/coordinatetransformer.h"
 #include "../../context/selectioncontext.h"
 #include "../../context/spatialcontext.h"
 #include "../../context/uicontext.h"
-#include "../../context/coordinatetransformer.h"
-#include "../../context/uicontext.h"
 #include "../../event/event.h"
+#include "selectiontoolmovestate.h"
+#include "selectiontoolselectstate.h"
+#include "selectiontoolstate.h"
 
 SelectionTool::SelectionTool() {
     m_cursor = QCursor(Qt::ArrowCursor);
@@ -21,30 +21,28 @@ QString SelectionTool::iconAlt() const {
     return "󰆿";
 }
 
-void SelectionTool::mousePressed(ApplicationContext* context) {
+void SelectionTool::mousePressed(ApplicationContext *context) {
     getCurrentState(context)->mousePressed(context);
 };
 
-void SelectionTool::mouseMoved(ApplicationContext* context) {
+void SelectionTool::mouseMoved(ApplicationContext *context) {
     getCurrentState(context)->mouseMoved(context);
 };
 
-void SelectionTool::mouseReleased(ApplicationContext* context) {
+void SelectionTool::mouseReleased(ApplicationContext *context) {
     getCurrentState(context)->mouseReleased(context);
 };
 
-void SelectionTool::keyPressed(ApplicationContext* context) {
-
+void SelectionTool::keyPressed(ApplicationContext *context) {
 }
 
-void SelectionTool::keyReleased(ApplicationContext* context) {
-
+void SelectionTool::keyReleased(ApplicationContext *context) {
 }
 
-std::shared_ptr<SelectionToolState> SelectionTool::getCurrentState(ApplicationContext* context) {
-    auto& selectionContext{context->selectionContext()};
-    auto& uiContext{context->uiContext()};
-    auto& transformer{context->spatialContext().coordinateTransformer()};
+std::shared_ptr<SelectionToolState> SelectionTool::getCurrentState(ApplicationContext *context) {
+    auto &selectionContext{context->selectionContext()};
+    auto &uiContext{context->uiContext()};
+    auto &transformer{context->spatialContext().coordinateTransformer()};
 
     QPointF worldCurPos{transformer.viewToWorld(uiContext.event().pos())};
 

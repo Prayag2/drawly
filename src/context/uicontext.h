@@ -14,31 +14,31 @@ class ActionManager;
 
 class UIContext : public QObject {
 public:
-    UIContext(ApplicationContext* context);
+    UIContext(ApplicationContext *context);
     ~UIContext();
 
     void setUIContext();
 
-    ToolBar& toolBar() const;
-    PropertyBar& propertyBar() const;
-    ActionBar& actionBar() const;
-    Event& event() const;
-    KeybindManager& keybindManager() const;
-    ActionManager& actionManager() const;
+    ToolBar &toolBar() const;
+    PropertyBar &propertyBar() const;
+    ActionBar &actionBar() const;
+    Event &event() const;
+    KeybindManager &keybindManager() const;
+    ActionManager &actionManager() const;
 
 public slots:
-    void toolChanged(Tool&);
+    void toolChanged(Tool &);
 
 private:
-    ToolBar* m_toolBar{nullptr};
-    PropertyBar* m_propertyBar{};
-    ActionBar* m_actionBar{};
-    PropertyManager* m_propertyManager{};
-    KeybindManager* m_keybindManager{};
-    ActionManager* m_actionManager{};
-    Event* m_event{nullptr};
+    ToolBar *m_toolBar{nullptr};
+    PropertyBar *m_propertyBar{};
+    ActionBar *m_actionBar{};
+    PropertyManager *m_propertyManager{};
+    KeybindManager *m_keybindManager{};
+    ActionManager *m_actionManager{};
+    Event *m_event{nullptr};
 
-    ApplicationContext* m_applicationContext;
+    ApplicationContext *m_applicationContext;
 };
 
 #endif  // UICONTEXT_H

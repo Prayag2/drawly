@@ -1,9 +1,9 @@
 #include "keybindmanager.h"
 
-KeybindManager::KeybindManager(QObject* parent)
-    : QObject{parent} {}
+KeybindManager::KeybindManager(QObject *parent) : QObject{parent} {
+}
 
-void KeybindManager::addKeybinding(Action* action, const QString& sequence) {
+void KeybindManager::addKeybinding(Action *action, const QString &sequence) {
     if (m_keyToAction.find(sequence) != m_keyToAction.end())
         return;
 
@@ -13,7 +13,7 @@ void KeybindManager::addKeybinding(Action* action, const QString& sequence) {
 
     m_keyToAction[sequence] = action;
 
-    QShortcut* shortcut {m_keyToShortcut[sequence]};
+    QShortcut *shortcut{m_keyToShortcut[sequence]};
     QObject::connect(shortcut, &QShortcut::activated, action, &Action::run);
 }
 
@@ -21,13 +21,13 @@ void KeybindManager::addKeybinding(Action* action, const QString& sequence) {
 void removeKeybinding(QKeySequence sequence);
 
 void KeybindManager::disable() {
-    for (auto& keyShortcutPair : m_keyToShortcut) {
+    for (auto &keyShortcutPair : m_keyToShortcut) {
         keyShortcutPair.second->setEnabled(false);
     }
 }
 
 void KeybindManager::enable() {
-    for (auto& keyShortcutPair : m_keyToShortcut) {
+    for (auto &keyShortcutPair : m_keyToShortcut) {
         keyShortcutPair.second->setEnabled(true);
     }
 }

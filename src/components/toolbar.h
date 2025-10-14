@@ -10,22 +10,22 @@
 class ToolBar : public QFrame {
     Q_OBJECT
 public:
-    explicit ToolBar(QWidget* parent = nullptr);
+    explicit ToolBar(QWidget *parent = nullptr);
     ~ToolBar();
 
-    Tool& curTool() const;
-    void addTool(Tool* tool, ToolID toolID);
-    QVector<Tool*> tools() const;
+    Tool &curTool() const;
+    void addTool(Tool *tool, ToolID toolID);
+    QVector<Tool *> tools() const;
 
     void changeTool(ToolID toolID);
 
 signals:
-    void toolChanged(Tool&);
+    void toolChanged(Tool &);
 
 private:
-    QButtonGroup* m_group{};
-    QHBoxLayout* m_layout{};
-    std::unordered_map<int, Tool*> m_tools{};
+    QButtonGroup *m_group{};
+    QHBoxLayout *m_layout{};
+    std::unordered_map<int, Tool *> m_tools{};
     void createButtons() const;
 
 private slots:

@@ -13,17 +13,17 @@
 #include <QFile>
 #include <QShortcut>
 
-MainWindow::MainWindow(QWidget* parent) : QWidget(parent) {
+MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
     this->m_applyCustomStyles();
 
-    BoardLayout* layout{new BoardLayout(this)};
-    Controller* controller{new Controller(this)};
+    BoardLayout *layout{new BoardLayout(this)};
+    Controller *controller{new Controller(this)};
 
-    ApplicationContext* context{new ApplicationContext(this)};
+    ApplicationContext *context{new ApplicationContext(this)};
     context->setContexts();
 
-    RenderingContext& renderingContext{context->renderingContext()};
-    UIContext& uiContext{context->uiContext()};
+    RenderingContext &renderingContext{context->renderingContext()};
+    UIContext &uiContext{context->uiContext()};
 
     controller->setContext(context);
     renderingContext.canvas().setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -36,13 +36,26 @@ MainWindow::MainWindow(QWidget* parent) : QWidget(parent) {
     layout->setBottomWidget(&uiContext.actionBar());
     layout->setCentralWidget(&renderingContext.canvas());
 
-    QObject::connect(&renderingContext.canvas(), &Canvas::mousePressed, controller,
+    QObject::connect(&renderingContext.canvas(),
+                     &Canvas::mousePressed,
+                     controller,
                      &Controller::mousePressed);
-    QObject::connect(&renderingContext.canvas(), &Canvas::mouseMoved, controller, &Controller::mouseMoved);
-    QObject::connect(&renderingContext.canvas(), &Canvas::mouseReleased, controller,
+    QObject::connect(&renderingContext.canvas(),
+                     &Canvas::mouseMoved,
+                     controller,
+                     &Controller::mouseMoved);
+    QObject::connect(&renderingContext.canvas(),
+                     &Canvas::mouseReleased,
+                     controller,
                      &Controller::mouseReleased);
-    QObject::connect(&renderingContext.canvas(), &Canvas::keyPressed, controller, &Controller::keyPressed);
-    QObject::connect(&renderingContext.canvas(), &Canvas::keyReleased, controller, &Controller::keyReleased);
+    QObject::connect(&renderingContext.canvas(),
+                     &Canvas::keyPressed,
+                     controller,
+                     &Controller::keyPressed);
+    QObject::connect(&renderingContext.canvas(),
+                     &Canvas::keyReleased,
+                     controller,
+                     &Controller::keyReleased);
     QObject::connect(&renderingContext.canvas(), &Canvas::tablet, controller, &Controller::tablet);
     QObject::connect(&renderingContext.canvas(), &Canvas::wheel, controller, &Controller::wheel);
 }
@@ -51,7 +64,8 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::m_applyCustomStyles() {
-    if (this->m_config_useSystemStyles) return;
+    if (this->m_config_useSystemStyles)
+        return;
 
     QFile file(":/styles/style.qss");
     if (file.open(QFile::ReadOnly | QFile::Text)) {

@@ -25,14 +25,14 @@ public:
     Tool();
     virtual ~Tool();
 
-    const QCursor& cursor() const;
+    const QCursor &cursor() const;
     virtual QString iconAlt() const = 0;
 
-    virtual void mousePressed(ApplicationContext* context) = 0;
-    virtual void mouseMoved(ApplicationContext* context) = 0;
-    virtual void mouseReleased(ApplicationContext* context) = 0;
-    virtual void keyPressed(ApplicationContext* context) = 0;
-    virtual void keyReleased(ApplicationContext* context) = 0;
+    virtual void mousePressed(ApplicationContext *context) = 0;
+    virtual void mouseMoved(ApplicationContext *context) = 0;
+    virtual void mouseReleased(ApplicationContext *context) = 0;
+    virtual void keyPressed(ApplicationContext *context) = 0;
+    virtual void keyReleased(ApplicationContext *context) = 0;
 
     virtual ToolID id() const = 0;
 

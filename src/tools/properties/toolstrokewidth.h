@@ -5,7 +5,7 @@
 
 class ToolStrokeWidth : public ToolProperty {
 public:
-    ToolStrokeWidth(QWidget* parent = nullptr);
+    ToolStrokeWidth(QWidget *parent = nullptr);
     QString name() const override;
     const QVariant value() const override;
 };

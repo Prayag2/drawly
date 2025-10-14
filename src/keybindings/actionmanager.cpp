@@ -1,117 +1,75 @@
 #include "actionmanager.h"
-#include "keybindmanager.h"
-#include "action.h"
 
 #include "../command/commandhistory.h"
 #include "../components/toolbar.h"
-
 #include "../context/applicationcontext.h"
-#include "../context/spatialcontext.h"
 #include "../context/renderingcontext.h"
+#include "../context/spatialcontext.h"
 #include "../context/uicontext.h"
+#include "action.h"
+#include "keybindmanager.h"
 
-ActionManager::ActionManager(ApplicationContext* context)
-    : m_context{context}, QObject(context)
-{
-    KeybindManager& keybindManager {m_context->uiContext().keybindManager()};
+ActionManager::ActionManager(ApplicationContext *context) : m_context{context}, QObject(context) {
+    KeybindManager &keybindManager{m_context->uiContext().keybindManager()};
 
-    Action* undoAction {new Action{
-        "Undo",
-        "Undo last action",
-        [&](){ this->undo(); },
-        context
-    }};
+    Action *undoAction{new Action{"Undo", "Undo last action", [&]() { this->undo(); }, context}};
 
-    Action* redoAction {new Action{
-        "Redo",
-        "Redo last undone action",
-        [&](){ this->redo(); },
-        context
-    }};
+    Action *redoAction{
+        new Action{"Redo", "Redo last undone action", [&]() { this->redo(); }, context}};
 
-    Action* zoomInAction {new Action{
-        "Zoom In",
-        "Zoom in",
-        [&](){ this->zoomIn(); },
-        context
-    }};
+    Action *zoomInAction{new Action{"Zoom In", "Zoom in", [&]() { this->zoomIn(); }, context}};
 
-    Action* zoomOutAction {new Action{
-        "Zoom Out",
-        "Zoom out",
-        [&](){ this->zoomOut(); },
-        context
-    }};
+    Action *zoomOutAction{new Action{"Zoom Out", "Zoom out", [&]() { this->zoomOut(); }, context}};
 
-    Action* increaseThicknessAction {new Action{
-        "Increase Thickness",
-        "Increase brush thickness",
-        [&](){ this->increaseThickness(); },
-        context
-    }};
+    Action *increaseThicknessAction{new Action{"Increase Thickness",
+                                               "Increase brush thickness",
+                                               [&]() { this->increaseThickness(); },
+                                               context}};
 
-    Action* decreaseThicknessAction {new Action{
-        "Decrease Thickness",
-        "Decrease brush thickness",
-        [&](){ this->decreaseThickness(); },
-        context
-    }};
+    Action *decreaseThicknessAction{new Action{"Decrease Thickness",
+                                               "Decrease brush thickness",
+                                               [&]() { this->decreaseThickness(); },
+                                               context}};
 
-    Action* freeformToolAction {new Action{
-        "Freeform Tool",
-        "Switch to freeform drawing tool",
-        [&](){ this->switchToFreeformTool(); },
-        context
-    }};
+    Action *freeformToolAction{new Action{"Freeform Tool",
+                                          "Switch to freeform drawing tool",
+                                          [&]() { this->switchToFreeformTool(); },
+                                          context}};
 
-    Action* eraserToolAction {new Action{
-        "Eraser Tool",
-        "Switch to eraser tool",
-        [&](){ this->switchToEraserTool(); },
-        context
-    }};
+    Action *eraserToolAction{new Action{"Eraser Tool",
+                                        "Switch to eraser tool",
+                                        [&]() { this->switchToEraserTool(); },
+                                        context}};
 
-    Action* selectionToolAction {new Action{
-        "Selection Tool",
-        "Switch to selection tool",
-        [&](){ this->switchToSelectionTool(); },
-        context
-    }};
+    Action *selectionToolAction{new Action{"Selection Tool",
+                                           "Switch to selection tool",
+                                           [&]() { this->switchToSelectionTool(); },
+                                           context}};
 
-    Action* rectangleToolAction {new Action{
-        "Rectangle Tool",
-        "Switch to rectangle drawing tool",
-        [&](){ this->switchToRectangleTool(); },
-        context
-    }};
+    Action *rectangleToolAction{new Action{"Rectangle Tool",
+                                           "Switch to rectangle drawing tool",
+                                           [&]() { this->switchToRectangleTool(); },
+                                           context}};
 
-    Action* ellipseToolAction {new Action{
-        "Ellipse Tool",
-        "Switch to ellipse drawing tool",
-        [&](){ this->switchToEllipseTool(); },
-        context
-    }};
+    Action *ellipseToolAction{new Action{"Ellipse Tool",
+                                         "Switch to ellipse drawing tool",
+                                         [&]() { this->switchToEllipseTool(); },
+                                         context}};
 
-    Action* lineToolAction {new Action{
-        "Line Tool",
-        "Switch to line drawing tool",
-        [&](){ this->switchToLineTool(); },
-        context
-    }};
+    Action *lineToolAction{new Action{"Line Tool",
+                                      "Switch to line drawing tool",
+                                      [&]() { this->switchToLineTool(); },
+                                      context}};
 
-    Action* arrowToolAction {new Action{
-        "Arrow Tool",
-        "Switch to arrow drawing tool",
-        [&](){ this->switchToArrowTool(); },
-        context
-    }};
+    Action *arrowToolAction{new Action{"Arrow Tool",
+                                       "Switch to arrow drawing tool",
+                                       [&]() { this->switchToArrowTool(); },
+                                       context}};
 
-    Action* moveToolAction {new Action{
-        "Move Tool",
-        "Switch to move tool",
-        [&](){ this->switchToMoveTool(); },
-        context
-    }};
+    Action *moveToolAction{new Action{"Move Tool",
+                                      "Switch to move tool",
+                                      [&]() { this->switchToMoveTool(); },
+                                      context}};
 
     keybindManager.addKeybinding(undoAction, "Ctrl+Z");
     keybindManager.addKeybinding(redoAction, "Ctrl+Y");

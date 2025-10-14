@@ -5,7 +5,7 @@
 
 class ToolEraserSize : public ToolProperty {
 public:
-    ToolEraserSize(QWidget* parent = nullptr);
+    ToolEraserSize(QWidget *parent = nullptr);
     QString name() const override;
     const QVariant value() const override;
 };

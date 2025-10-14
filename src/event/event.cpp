@@ -3,7 +3,7 @@
 Event::Event() {
 }
 
-void Event::setPos(const QPoint& point, qreal const scale) {
+void Event::setPos(const QPoint &point, qreal const scale) {
     m_pos = point * scale;
 }
 
@@ -19,7 +19,7 @@ qreal Event::pressure() const {
     return m_pressure;
 }
 
-const QPoint& Event::pos() const {
+const QPoint &Event::pos() const {
     return m_pos;
 };
 
@@ -43,7 +43,7 @@ void Event::setKey(int key) {
     m_key = key;
 }
 
-void Event::setText(const QString& text) {
+void Event::setText(const QString &text) {
     m_text = text;
 }
 

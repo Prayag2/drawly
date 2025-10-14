@@ -10,23 +10,23 @@ class Controller : public QObject {
     Q_OBJECT
 
 public:
-    Controller(QObject* parent = nullptr);
+    Controller(QObject *parent = nullptr);
     ~Controller();
 
-    void setContext(ApplicationContext* context);
+    void setContext(ApplicationContext *context);
 
 public slots:
-    void mousePressed(QMouseEvent* event);
-    void mouseMoved(QMouseEvent* event);
-    void mouseReleased(QMouseEvent* event);
-    void keyPressed(QKeyEvent* event);
-    void keyReleased(QKeyEvent* event);
-    void inputMethodInvoked(QInputMethodEvent* event);
-    void tablet(QTabletEvent* event);
-    void wheel(QWheelEvent* event);
+    void mousePressed(QMouseEvent *event);
+    void mouseMoved(QMouseEvent *event);
+    void mouseReleased(QMouseEvent *event);
+    void keyPressed(QKeyEvent *event);
+    void keyReleased(QKeyEvent *event);
+    void inputMethodInvoked(QInputMethodEvent *event);
+    void tablet(QTabletEvent *event);
+    void wheel(QWheelEvent *event);
 
 private:
-    ApplicationContext* m_context{};
+    ApplicationContext *m_context{};
     qint64 m_lastTime{};
 };
 

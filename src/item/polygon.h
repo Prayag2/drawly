@@ -10,14 +10,15 @@ public:
     virtual void setStart(QPointF start);
     virtual void setEnd(QPointF end);
 
-    void draw(QPainter& painter, const QPointF& offset) override;
-    void erase(QPainter& painter, const QPointF& offset,
+    void draw(QPainter &painter, const QPointF &offset) override;
+    void erase(QPainter &painter,
+               const QPointF &offset,
                QColor color = Qt::transparent) const override;
 
-    void translate(const QPointF& amount) override;
+    void translate(const QPointF &amount) override;
 
-    const QPointF& start() const;
-    const QPointF& end() const;
+    const QPointF &start() const;
+    const QPointF &end() const;
 
 private:
     QPointF m_start{};

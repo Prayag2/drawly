@@ -1,13 +1,14 @@
 #include "text.h"
-#include "../common/utils.h"
 
+#include "../common/utils.h"
 #include <QFontMetricsF>
+#include <utility>
 
 /*
- * TODO: The current implementation is not optimal. A single character insertion costs 
- *       n operations on average, making it O(n) per character.
- *       Use a better data structure like Ropes or Gap buffers although it may be overkill
- *       for a simple whiteboard app.
+ * TODO: The current implementation is not optimal. A single character insertion
+ * costs n operations on average, making it O(n) per character. Use a better
+ * data structure like Ropes or Gap buffers although it may be overkill for a
+ * simple whiteboard app.
  */
 
 Text::Text() {
@@ -18,12 +19,13 @@ Text::Text() {
 
     m_selectionStart = INVALID;
     m_selectionEnd = INVALID;
-    m_cursorIndex = 0;
+    m_caretIndex = 0;
     m_text = "";
     m_mode = NORMAL;
 }
 
-Text::~Text() {}
+Text::~Text() {
+}
 
 void Text::createTextBox(const QPoint position) {
     m_boundingBox.setTopLeft(position);
@@ -31,15 +33,15 @@ void Text::createTextBox(const QPoint position) {
     m_boundingBox.setHeight(50);
 }
 
-bool Text::intersects(const QRectF& rect) {
+bool Text::intersects(const QRectF &rect) {
     return m_boundingBox.intersects(rect);
 }
 
-bool Text::intersects(const QLineF& line) {
+bool Text::intersects(const QLineF &line) {
     return Common::intersects(m_boundingBox, line);
 }
 
-void Text::draw(QPainter& painter, const QPointF& offset) {
+void Text::draw(QPainter &painter, const QPointF &offset) {
     painter.save();
 
     QRectF curBox{m_boundingBox.translated(-offset)};
@@ -47,7 +49,7 @@ void Text::draw(QPainter& painter, const QPointF& offset) {
     painter.setFont(getFont());
     painter.setPen(getPen());
 
-    int cur{cursor()};
+    qsizetype cur{caret()};
 
     if (mode() == EDIT) {
         QPen boundingBoxPen{Qt::blue};
@@ -56,8 +58,10 @@ void Text::draw(QPainter& painter, const QPointF& offset) {
 
         painter.drawRect(curBox);
 
+        // PERF: There is no need to scan the entire text just to place the caret
+        // This can be a lot more efficient, so feel free to open a PR
         auto [start, end] = getLineRange(cur);
-        const QString& curLine{m_text.mid(start, cur - start)};
+        const QString &curLine{m_text.mid(start, cur - start)};
 
         int lineCount{0};
         for (int pos{0}; pos < cur; pos++) {
@@ -67,36 +71,31 @@ void Text::draw(QPainter& painter, const QPointF& offset) {
 
         QFontMetrics metrics{getFont()};
 
-        int width {metrics.size(getTextFlags(), curLine).width()};
-        int lineHeight {metrics.height()};
+        int width{metrics.size(getTextFlags(), curLine).width()};
+        int lineHeight{metrics.height()};
 
-        QPointF carrotTop{
-            curBox.topLeft().x() + width,
-            curBox.topLeft().y() + lineHeight * lineCount
-        };
+        QPointF caretTop{curBox.topLeft().x() + width,
+                         curBox.topLeft().y() + lineHeight * lineCount};
 
-        QPointF carrotBottom{carrotTop.x(), carrotTop.y() + lineHeight};
+        QPointF caretBottom{caretTop.x(), caretTop.y() + lineHeight};
 
-        QLineF line{carrotTop, carrotBottom};
+        QLineF line{caretTop, caretBottom};
 
         painter.setPen(getPen());
-        painter.drawLine(carrotTop, carrotBottom);
+        painter.drawLine(caretTop, caretBottom);
     }
 
     painter.drawText(curBox, getTextFlags(), m_text);
     painter.restore();
 }
 
-void Text::erase(QPainter& painter, const QPointF& offset, QColor color) const {
-
+void Text::erase(QPainter &painter, const QPointF &offset, QColor color) const {
 }
 
-void Text::translate(const QPointF& amount) {
-
+void Text::translate(const QPointF &amount) {
 }
 
-void Text::m_draw(QPainter& painter, const QPointF& offset) const {
-
+void Text::m_draw(QPainter &painter, const QPointF &offset) const {
 }
 
 Text::Mode Text::mode() const {
@@ -107,15 +106,86 @@ void Text::setMode(Mode mode) {
     m_mode = mode;
 }
 
-int Text::cursor() const {
-    return m_cursorIndex;
+qsizetype Text::caret() const {
+    return m_caretIndex;
 }
 
-void Text::setCursor(int index) {
+qsizetype Text::caretPosInLine() const {
+    return m_caretPosInLine;
+}
+
+void Text::setCaret(qsizetype index, bool updatePosInLine) {
     if (index < 0 || index > m_text.size())
         return;
 
-    m_cursorIndex = index;
+    m_caretIndex = index;
+    if (updatePosInLine) {
+        qsizetype firstCharOfCurLine{m_text.lastIndexOf("\n", m_caretIndex - 1)};
+        m_caretPosInLine = m_caretIndex - firstCharOfCurLine;
+    }
+}
+
+int Text::getLineFromY(double yPos) const {
+    QFontMetricsF metrics{getFont()};
+    double lineHeight{metrics.height()};
+
+    if (lineHeight <= 0)
+        return 0;
+
+    const double distFromTop{std::abs(yPos - boundingBox().y())};
+    return static_cast<int>(std::ceil(distFromTop / lineHeight));
+}
+
+qsizetype Text::getIndexFromX(double xPos, int lineNumber) const {
+    QFontMetricsF metrics{getFont()};
+
+    auto [start, end] = getLineRange(lineNumber);
+    const QString line{m_text.mid(start, end - start + 1)};
+
+    const double distanceFromLeft{std::abs(xPos - boundingBox().x())};
+    const double lineWidth{
+        metrics.boundingRect(boundingBox(), getTextFlags(), line).width()};
+
+    if (distanceFromLeft > lineWidth)
+        return end;
+
+    qsizetype low{0}, high{m_text.size()}, index{0};
+    while (low <= high) {
+        double mid{low + (high - low) / 2.0};
+
+        const double prefixWidth{
+            metrics.boundingRect(boundingBox(), getTextFlags(), line.left(mid)).width()};
+
+        if (prefixWidth <= distanceFromLeft) {
+            index = mid;
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+    if (index < line.size() - 1) {
+        const double widthBefore{
+            metrics.boundingRect(boundingBox(), getTextFlags(), line.left(index)).width()};
+        const double widthAfter{
+            metrics.boundingRect(boundingBox(), getTextFlags(), line.left(index + 1)).width()};
+
+        const double midPoint{(widthBefore + widthAfter) / 2.0};
+        if (distanceFromLeft > midPoint)
+            index++;
+    }
+
+    return start + index;
+}
+
+void Text::setCaret(const QPointF &cursorPos) {
+    if (!boundingBox().contains(cursorPos))
+        return;
+
+    const int lineNumber{getLineFromY(cursorPos.y())};
+    const qsizetype index{getIndexFromX(cursorPos.x(), lineNumber)};
+
+    setCaret(index);
 }
 
 int Text::selectionStart() const {
@@ -133,32 +203,36 @@ void Text::setSelectionStart(int index) {
     m_selectionStart = index;
 }
 
-void Text::insertText(const QString& text, const QPointF& offset) {
-    int textSize(text.size());
-    int cur{cursor()};
+void Text::insertText(const QString &text, const QPointF &offset) {
+    if (text.isEmpty())
+        return;
+
+    qsizetype textSize{text.size()};
+    qsizetype cur{caret()};
 
     m_text.insert(cur, text);
-    setCursor(cur + textSize);
+    setCaret(cur + textSize);
 
+    // PERF: Some clever techniques can be used to update the bounding box instead
+    //       of using the entire string to calculate it again
     QFontMetricsF metrics{getFont()};
-    QSizeF size {metrics.size(getTextFlags(), m_text)};
+    QSizeF size{metrics.size(getTextFlags(), m_text)};
 
     m_boundingBox.setWidth(size.width());
     m_boundingBox.setHeight(size.height());
-
-    qDebug() << "New Bounding Box: " << m_boundingBox;
-    qDebug() << "Text Size: " << m_text.size();
 }
 
 void Text::deleteSubStr(int start, int end) {
     if (start < 0 || start >= m_text.size() || end < 0 || end >= m_text.size() || end < start)
         return;
 
-    auto rangeStart = m_newlinePositions.lower_bound(start);
-    auto rangeEnd = m_newlinePositions.upper_bound(end);
-    m_newlinePositions.erase(rangeStart, rangeEnd);
+    m_text.erase(m_text.begin() + start, m_text.begin() + end + 1);
 
-    m_text.erase(m_text.begin()+start, m_text.begin()+end+1);
+    QFontMetricsF metrics{getFont()};
+    QSizeF size{metrics.size(getTextFlags(), m_text)};
+
+    m_boundingBox.setWidth(size.width());
+    m_boundingBox.setHeight(size.height());
 }
 
 QFont Text::getFont() const {
@@ -179,11 +253,37 @@ QPen Text::getPen() const {
     return pen;
 }
 
-std::pair<int, int> Text::getLineRange(int position) const {
-    int cur{cursor()};
-    
-    int start = m_text.lastIndexOf("\n", cur-1);
-    int end = m_text.indexOf("\n", cur);
+std::pair<qsizetype, qsizetype> Text::getLineRange(int lineNumber) const {
+    qsizetype len{m_text.length()};
+
+    qsizetype startIndex{0};
+    for (qsizetype pos{0}; pos < len; pos++) {
+        if (lineNumber == 1)
+            break;
+
+        if (m_text[pos] == "\n") {
+            startIndex = pos + 1;
+            lineNumber--;
+        }
+    }
+
+    qsizetype endIndex{m_text.indexOf("\n", startIndex)};
+    if (endIndex == -1)
+        endIndex = len - 1;
+
+    return std::make_pair(startIndex, endIndex);
+}
+
+std::pair<qsizetype, qsizetype> Text::getLineRange(qsizetype position) const {
+    qsizetype cur{caret()};
+
+    qsizetype start{m_text.lastIndexOf("\n", cur - 1)};
+    if (start == -1)
+        start = 0;
+
+    qsizetype end{m_text.indexOf("\n", cur)};
+    if (cur == -1)
+        cur = m_text.size() - 1;
 
     return std::make_pair(start, end);
 }
@@ -199,6 +299,10 @@ void Text::setSelectionEnd(int index) {
     m_selectionEnd = index;
 }
 
-const QString& Text::text() const {
+const QString &Text::text() const {
     return m_text;
+}
+
+Item::Type Text::type() const {
+    return Item::Text;
 }

@@ -1,10 +1,10 @@
 #include "propertymanager.h"
 
+#include "toolerasersize.h"
 #include "toolstrokecolor.h"
 #include "toolstrokewidth.h"
-#include "toolerasersize.h"
 
-PropertyManager::PropertyManager(QWidget* parent) : QObject{parent} {
+PropertyManager::PropertyManager(QWidget *parent) : QObject{parent} {
     m_properties[ToolPropertyType::StrokeWidth] = std::make_shared<ToolStrokeWidth>(parent);
     m_properties[ToolPropertyType::StrokeColor] = std::make_shared<ToolStrokeColor>(parent);
     m_properties[ToolPropertyType::EraserSize] = std::make_shared<ToolEraserSize>(parent);

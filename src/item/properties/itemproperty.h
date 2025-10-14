@@ -9,7 +9,7 @@ public:
     ItemProperty(QVariant value);
 
     void setValue(QVariant value);
-    const QVariant& value() const;
+    const QVariant &value() const;
 
     enum Type {
         StrokeWidth = 0x00,

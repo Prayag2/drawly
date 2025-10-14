@@ -3,6 +3,6 @@
 ToolProperty::ToolProperty() {
 }
 
-QWidget* ToolProperty::widget() const {
+QWidget *ToolProperty::widget() const {
     return m_widget;
 }

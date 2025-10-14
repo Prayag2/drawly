@@ -2,8 +2,8 @@
 
 #include <QSpinBox>
 
-ToolEraserSize::ToolEraserSize(QWidget* parent) {
-    QSpinBox* box{new QSpinBox(parent)};
+ToolEraserSize::ToolEraserSize(QWidget *parent) {
+    QSpinBox *box{new QSpinBox(parent)};
     box->setRange(1, 100);
     box->setValue(30);
 
@@ -16,5 +16,5 @@ QString ToolEraserSize::name() const {
 };
 
 const QVariant ToolEraserSize::value() const {
-    return dynamic_cast<QSpinBox*>(m_widget)->value();
+    return dynamic_cast<QSpinBox *>(m_widget)->value();
 }

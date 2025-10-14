@@ -11,17 +11,16 @@ public:
 
     QString iconAlt() const override;
 
-    void mousePressed(ApplicationContext* context) override;
-    void mouseMoved(ApplicationContext* context) override;
-    void mouseReleased(ApplicationContext* context) override;
-    void keyPressed(ApplicationContext* context) override;
-    void keyReleased(ApplicationContext* context) override;
-
+    void mousePressed(ApplicationContext *context) override;
+    void mouseMoved(ApplicationContext *context) override;
+    void mouseReleased(ApplicationContext *context) override;
+    void keyPressed(ApplicationContext *context) override;
+    void keyReleased(ApplicationContext *context) override;
 
     ToolID id() const override;
 
 private:
-    std::shared_ptr<SelectionToolState> getCurrentState(ApplicationContext* context);
+    std::shared_ptr<SelectionToolState> getCurrentState(ApplicationContext *context);
 
     std::shared_ptr<SelectionToolState> m_moveState;
     std::shared_ptr<SelectionToolState> m_selectState;

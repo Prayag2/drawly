@@ -1,6 +1,6 @@
 #include "toolbar.h"
 
-ToolBar::ToolBar(QWidget* parent) : QFrame{parent} {
+ToolBar::ToolBar(QWidget *parent) : QFrame{parent} {
     m_group = new QButtonGroup(this);
     m_layout = new QHBoxLayout(this);
     this->setLayout(m_layout);
@@ -13,13 +13,13 @@ ToolBar::ToolBar(QWidget* parent) : QFrame{parent} {
 }
 
 ToolBar::~ToolBar() {
-    for (auto& idToolPair : m_tools) {
+    for (auto &idToolPair : m_tools) {
         delete idToolPair.second;
     }
 }
 
-Tool& ToolBar::curTool() const {
-    int curID {m_group->checkedId()};
+Tool &ToolBar::curTool() const {
+    int curID{m_group->checkedId()};
 
     if (m_tools.find(curID) == m_tools.end())
         throw std::logic_error("Trying to access non existent tool");
@@ -27,19 +27,20 @@ Tool& ToolBar::curTool() const {
     return *m_tools.at(curID);
 }
 
-QVector<Tool*> ToolBar::tools() const {
-    QVector<Tool*> result;
-    for (auto& idToolPair : m_tools) {
+QVector<Tool *> ToolBar::tools() const {
+    QVector<Tool *> result;
+    for (auto &idToolPair : m_tools) {
         result.push_back(idToolPair.second);
     }
 
     return result;
 }
 
-void ToolBar::addTool(Tool* tool, ToolID toolID) {
-    if (tool == nullptr) return;
+void ToolBar::addTool(Tool *tool, ToolID toolID) {
+    if (tool == nullptr)
+        return;
 
-    QPushButton* btn{new QPushButton(tool->iconAlt(), this)};
+    QPushButton *btn{new QPushButton(tool->iconAlt(), this)};
     btn->setCheckable(true);
 
     int id{static_cast<int>(toolID)};
@@ -64,4 +65,3 @@ void ToolBar::changeTool(ToolID toolID) {
 void ToolBar::onToolChanged(int id) {
     emit toolChanged(curTool());
 }
-

@@ -6,8 +6,8 @@ class ApplicationContext;
 
 class MoveItemCommand : public ItemCommand {
 public:
-    void execute(ApplicationContext* context) override;
-    void undo(ApplicationContext* context) override;
+    void execute(ApplicationContext *context) override;
+    void undo(ApplicationContext *context) override;
 };
 
-#endif // MOVEITEMCOMMAND_H
+#endif  // MOVEITEMCOMMAND_H

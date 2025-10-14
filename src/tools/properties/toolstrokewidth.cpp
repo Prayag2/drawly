@@ -2,9 +2,9 @@
 
 #include <QSpinBox>
 
-ToolStrokeWidth::ToolStrokeWidth(QWidget* parent) {
+ToolStrokeWidth::ToolStrokeWidth(QWidget *parent) {
     // TODO: Remove magic numbers
-    QSpinBox* box{new QSpinBox(parent)};
+    QSpinBox *box{new QSpinBox(parent)};
     box->setRange(1, 10);
     box->setValue(6);
 
@@ -17,5 +17,5 @@ QString ToolStrokeWidth::name() const {
 };
 
 const QVariant ToolStrokeWidth::value() const {
-    return dynamic_cast<QSpinBox*>(m_widget)->value();
+    return dynamic_cast<QSpinBox *>(m_widget)->value();
 }

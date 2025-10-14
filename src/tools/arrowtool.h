@@ -6,7 +6,7 @@ class PropertyManager;
 
 class ArrowTool : public PolygonDrawingTool {
 public:
-    ArrowTool(const PropertyManager& propertyManager);
+    ArrowTool(const PropertyManager &propertyManager);
     ~ArrowTool() override = default;
     QString iconAlt() const override;
 };

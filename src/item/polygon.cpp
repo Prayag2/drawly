@@ -17,11 +17,11 @@ void Polygon::setEnd(QPointF end) {
     m_updateBoundingBox();
 }
 
-const QPointF& Polygon::start() const {
+const QPointF &Polygon::start() const {
     return m_start;
 }
 
-const QPointF& Polygon::end() const {
+const QPointF &Polygon::end() const {
     return m_end;
 }
 
@@ -36,7 +36,7 @@ void Polygon::m_updateBoundingBox() {
     m_boundingBox.adjust(-w, -w, w, w);
 }
 
-void Polygon::draw(QPainter& painter, const QPointF& offset) {
+void Polygon::draw(QPainter &painter, const QPointF &offset) {
     QPen pen{};
 
     QColor color{QColor::fromRgba(getProperty(ItemProperty::StrokeColor).value().toUInt())};
@@ -50,7 +50,7 @@ void Polygon::draw(QPainter& painter, const QPointF& offset) {
     m_draw(painter, offset);
 }
 
-void Polygon::erase(QPainter& painter, const QPointF& offset, QColor color) const {
+void Polygon::erase(QPainter &painter, const QPointF &offset, QColor color) const {
     QPen pen{};
 
     pen.setWidth(getProperty(ItemProperty::StrokeWidth).value().toInt() * 10);
@@ -62,7 +62,7 @@ void Polygon::erase(QPainter& painter, const QPointF& offset, QColor color) cons
     painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
 }
 
-void Polygon::translate(const QPointF& amount) {
+void Polygon::translate(const QPointF &amount) {
     m_start += amount;
     m_end += amount;
 

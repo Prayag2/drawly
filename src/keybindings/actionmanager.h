@@ -5,9 +5,9 @@
 class ApplicationContext;
 
 class ActionManager : public QObject {
-Q_OBJECT 
+    Q_OBJECT
 public:
-    ActionManager(ApplicationContext* context);
+    ActionManager(ApplicationContext *context);
 
     void zoomIn();
     void zoomOut();
@@ -25,7 +25,7 @@ public:
     void switchToMoveTool();
 
 private:
-    ApplicationContext* m_context;
+    ApplicationContext *m_context;
 };
 
 #endif  // ACTIONMANAGER_H

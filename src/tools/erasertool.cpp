@@ -1,19 +1,19 @@
 #include "erasertool.h"
 
 #include "../canvas/canvas.h"
-#include "../common/renderitems.h"
-#include "../common/constants.h"
-#include "../common/utils.h"
-#include "../context/applicationcontext.h"
-#include "../context/uicontext.h"
-#include "../context/spatialcontext.h"
-#include "../context/selectioncontext.h"
-#include "../context/renderingcontext.h"
-#include "../context/coordinatetransformer.h"
-#include "../data-structures/cachegrid.h"
-#include "../data-structures/quadtree.h"
 #include "../command/commandhistory.h"
 #include "../command/removeitemcommand.h"
+#include "../common/constants.h"
+#include "../common/renderitems.h"
+#include "../common/utils.h"
+#include "../context/applicationcontext.h"
+#include "../context/coordinatetransformer.h"
+#include "../context/renderingcontext.h"
+#include "../context/selectioncontext.h"
+#include "../context/spatialcontext.h"
+#include "../context/uicontext.h"
+#include "../data-structures/cachegrid.h"
+#include "../data-structures/quadtree.h"
 #include "../event/event.h"
 #include "../item/item.h"
 #include "properties/propertymanager.h"
@@ -21,7 +21,7 @@
 #include <QDebug>
 #include <QPainter>
 
-EraserTool::EraserTool(const PropertyManager& propertyManager) {
+EraserTool::EraserTool(const PropertyManager &propertyManager) {
     m_cursor = QCursor(Qt::CrossCursor);
 
     m_properties[ToolPropertyType::EraserSize] =
@@ -32,8 +32,8 @@ QString EraserTool::iconAlt() const {
     return "";
 }
 
-void EraserTool::mousePressed(ApplicationContext* context) {
-    Event& event{context->uiContext().event()};
+void EraserTool::mousePressed(ApplicationContext *context) {
+    Event &event{context->uiContext().event()};
 
     if (event.button() == Qt::LeftButton) {
         m_isErasing = true;
@@ -41,13 +41,13 @@ void EraserTool::mousePressed(ApplicationContext* context) {
 };
 
 // FIXME: messy code
-void EraserTool::mouseMoved(ApplicationContext* context) {
-    SpatialContext& spatialContext{context->spatialContext()};
-    RenderingContext& renderingContext{context->renderingContext()};
-    UIContext& uiContext{context->uiContext()};
-    CoordinateTransformer& transformer{spatialContext.coordinateTransformer()};
+void EraserTool::mouseMoved(ApplicationContext *context) {
+    SpatialContext &spatialContext{context->spatialContext()};
+    RenderingContext &renderingContext{context->renderingContext()};
+    UIContext &uiContext{context->uiContext()};
+    CoordinateTransformer &transformer{spatialContext.coordinateTransformer()};
 
-    QPainter& overlayPainter{renderingContext.overlayPainter()};
+    QPainter &overlayPainter{renderingContext.overlayPainter()};
 
     // Erase previous box
     overlayPainter.save();
@@ -65,16 +65,19 @@ void EraserTool::mouseMoved(ApplicationContext* context) {
     QRectF worldEraserRect{transformer.viewToWorld(curRect)};
 
     if (m_isErasing) {
-        QVector<std::shared_ptr<Item>> toBeErased{spatialContext.quadtree().queryItems(worldEraserRect)};
+        QVector<std::shared_ptr<Item>> toBeErased{
+            spatialContext.quadtree().queryItems(worldEraserRect)};
 
         for (std::shared_ptr<Item> item : toBeErased) {
-            if (m_toBeErased.count(item) > 0) continue;
+            if (m_toBeErased.count(item) > 0)
+                continue;
 
             // TODO: Remove magic numbers
             item->getProperty(ItemProperty::Opacity).setValue(Common::eraseItemOpacity);
 
             m_toBeErased.insert(item);
-            spatialContext.cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
+            spatialContext.cacheGrid().markDirty(
+                transformer.worldToGrid(item->boundingBox()).toRect());
             renderingContext.markForRender();
         }
 
@@ -94,15 +97,15 @@ void EraserTool::mouseMoved(ApplicationContext* context) {
     m_lastRect = curRect;
 }
 
-void EraserTool::mouseReleased(ApplicationContext* context) {
-    UIContext& uiContext{context->uiContext()};
+void EraserTool::mouseReleased(ApplicationContext *context) {
+    UIContext &uiContext{context->uiContext()};
 
     if (uiContext.event().button() == Qt::LeftButton) {
-        SpatialContext& spatialContext{context->spatialContext()};
-        CoordinateTransformer& transformer{spatialContext.coordinateTransformer()};
-        RenderingContext& renderingContext{context->renderingContext()};
-        SelectionContext& selectionContext{context->selectionContext()};
-        CommandHistory& commandHistory{spatialContext.commandHistory()};
+        SpatialContext &spatialContext{context->spatialContext()};
+        CoordinateTransformer &transformer{spatialContext.coordinateTransformer()};
+        RenderingContext &renderingContext{context->renderingContext()};
+        SelectionContext &selectionContext{context->selectionContext()};
+        CommandHistory &commandHistory{spatialContext.commandHistory()};
 
         QVector<std::shared_ptr<Item>> erasedItems;
         for (std::shared_ptr<Item> item : m_toBeErased) {
@@ -125,12 +128,10 @@ void EraserTool::mouseReleased(ApplicationContext* context) {
     }
 }
 
-void EraserTool::keyPressed(ApplicationContext* context) {
-
+void EraserTool::keyPressed(ApplicationContext *context) {
 }
 
-void EraserTool::keyReleased(ApplicationContext* context) {
-
+void EraserTool::keyReleased(ApplicationContext *context) {
 }
 
 ToolID EraserTool::id() const {

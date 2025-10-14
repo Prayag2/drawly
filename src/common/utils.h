@@ -13,18 +13,18 @@ inline int orientation(QPointF a, QPointF b, QPointF c) {
     return (orient == 0 ? 0 : (orient < 0 ? -1 : 1));
 }
 
-inline bool intersects(const QRectF& rectA, const QRectF& rectB) {
+inline bool intersects(const QRectF &rectA, const QRectF &rectB) {
     return rectA.intersects(rectB);
 }
 
-inline bool intersects(const QLineF& a, const QLineF& b) {
+inline bool intersects(const QLineF &a, const QLineF &b) {
     QPointF p{a.p1()}, q{a.p2()};
     QPointF r{b.p1()}, s{b.p2()};
     return orientation(p, q, r) != orientation(p, q, s) &&
            orientation(r, s, p) != orientation(r, s, q);
 }
 
-inline bool intersects(const QRectF& rect, const QLineF& line) {
+inline bool intersects(const QRectF &rect, const QLineF &line) {
     QLineF left{rect.topLeft(), rect.bottomLeft()};
     QLineF top{rect.topLeft(), rect.topRight()};
     QLineF right{rect.topRight(), rect.bottomRight()};
@@ -34,7 +34,7 @@ inline bool intersects(const QRectF& rect, const QLineF& line) {
             intersects(line, bottom));
 }
 
-inline bool intersects(const QRectF& rect, const QPointF& point) {
+inline bool intersects(const QRectF &rect, const QPointF &point) {
     return rect.contains(point);
 }
 };  // namespace Common

@@ -1,7 +1,7 @@
 #include "freeform.h"
 
-#include "../common/utils.h"
 #include "../common/constants.h"
+#include "../common/utils.h"
 #include "properties/itemproperty.h"
 #include <memory>
 
@@ -15,7 +15,7 @@ int Freeform::minPointDistance() {
     return 0;
 }
 
-void Freeform::addPoint(const QPointF& point, const qreal pressure, bool optimize) {
+void Freeform::addPoint(const QPointF &point, const qreal pressure, bool optimize) {
     QPointF newPoint{point};
     if (optimize) {
         newPoint = optimizePoint(point);
@@ -42,8 +42,9 @@ void Freeform::addPoint(const QPointF& point, const qreal pressure, bool optimiz
     m_pressures.push_back(pressure);
 }
 
-bool Freeform::intersects(const QRectF& rect) {
-    if (!boundingBox().intersects(rect)) return false;
+bool Freeform::intersects(const QRectF &rect) {
+    if (!boundingBox().intersects(rect))
+        return false;
 
     qsizetype pointsSize{m_points.size()};
     if (pointsSize == 1) {
@@ -67,7 +68,7 @@ bool Freeform::intersects(const QRectF& rect) {
     return false;
 }
 
-bool Freeform::intersects(const QLineF& line) {
+bool Freeform::intersects(const QLineF &line) {
     qsizetype pointSize{m_points.size()};
     for (qsizetype index{1}; index < pointSize; index++) {
         if (Common::intersects(QLineF{m_points[index - 1], m_points[index]}, line)) {
@@ -77,7 +78,7 @@ bool Freeform::intersects(const QLineF& line) {
     return false;
 }
 
-void Freeform::draw(QPainter& painter, const QPointF& offset) {
+void Freeform::draw(QPainter &painter, const QPointF &offset) {
     QPen pen{};
 
     QColor color{QColor::fromRgba(getProperty(ItemProperty::StrokeColor).value().toUInt())};
@@ -95,14 +96,13 @@ void Freeform::draw(QPainter& painter, const QPointF& offset) {
     m_draw(painter, offset);
 }
 
-void Freeform::erase(QPainter& painter, const QPointF& offset, QColor color) const {
+void Freeform::erase(QPainter &painter, const QPointF &offset, QColor color) const {
     painter.setCompositionMode(QPainter::CompositionMode_Source);
     painter.fillRect(boundingBox().translated(-offset), Qt::transparent);
     painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
-
 }
 
-QPointF Freeform::optimizePoint(const QPointF& newPoint) {
+QPointF Freeform::optimizePoint(const QPointF &newPoint) {
     m_currentWindow.push_back(newPoint);
     m_currentWindowSum += newPoint;
 
@@ -114,7 +114,7 @@ QPointF Freeform::optimizePoint(const QPointF& newPoint) {
     return m_currentWindowSum / m_currentWindow.size();
 }
 
-void Freeform::quickDraw(QPainter& painter, const QPointF& offset) const {
+void Freeform::quickDraw(QPainter &painter, const QPointF &offset) const {
     QPen pen{};
 
     QColor color{static_cast<QRgb>(getProperty(ItemProperty::StrokeColor).value().toInt())};
@@ -139,13 +139,14 @@ void Freeform::quickDraw(QPainter& painter, const QPointF& offset) const {
     }
 }
 
-void Freeform::m_draw(QPainter& painter, const QPointF& offset) const {
+void Freeform::m_draw(QPainter &painter, const QPointF &offset) const {
     int strokeWidth{getProperty(ItemProperty::StrokeWidth).value().toInt()};
     int alpha{getProperty(ItemProperty::Opacity).value().toInt()};
     double currentWidth{strokeWidth * 1.0};
 
     // Intersection points are visible on translucent pressure sensitive strokes
-    // So I've disabled the use of pressure senstivity when opacity is not max, for now
+    // So I've disabled the use of pressure senstivity when opacity is not max,
+    // for now
     bool canUsePressureSenstivity{alpha == Common::maxItemOpacity};
     if (!canUsePressureSenstivity) {
         painter.save();
@@ -212,10 +213,14 @@ QVector<std::shared_ptr<Item>> Freeform::split() const {
     return items;
 }
 
-void Freeform::translate(const QPointF& amount) {
-    for (QPointF& point : m_points) {
+void Freeform::translate(const QPointF &amount) {
+    for (QPointF &point : m_points) {
         point += amount;
     }
 
     m_boundingBox.translate(amount);
 };
+
+Item::Type Freeform::type() const {
+    return Item::Freeform;
+}

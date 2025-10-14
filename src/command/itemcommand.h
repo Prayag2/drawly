@@ -1,9 +1,9 @@
 #ifndef ITEMCOMMAND_H
 #define ITEMCOMMAND_H
 
-#include <memory>
-#include <QVector>
 #include "command.h"
+#include <QVector>
+#include <memory>
 class ApplicationContext;
 class Item;
 
@@ -16,4 +16,4 @@ protected:
     QVector<std::shared_ptr<Item>> m_items;
 };
 
-#endif // ITEMCOMMAND_H
+#endif  // ITEMCOMMAND_H
