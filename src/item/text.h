@@ -36,14 +36,18 @@ public:
     void setCaret(const QPointF &cursorPos);
     qsizetype caretPosInLine() const;
 
-    int selectionStart() const;
-    int selectionEnd() const;
-    void setSelectionStart(int index);
-    void setSelectionEnd(int index);
+    qsizetype selectionStart() const;
+    qsizetype selectionEnd() const;
+    void setSelectionStart(qsizetype index);
+    void setSelectionEnd(qsizetype index);
+    const QString selectedText() const;
 
     const QString &text() const;
-    void insertText(const QString &text, const QPointF &offset);
+    void insertText(const QString &text);
     void deleteSubStr(int start, int end);
+    void deleteSelection();
+
+    bool hasSelection() const;
 
     std::pair<qsizetype, qsizetype> getLineRange(int lineNumber) const;
     std::pair<qsizetype, qsizetype> getLineRange(qsizetype position) const;
@@ -63,6 +67,8 @@ private:
 
     QString m_text;
     std::set<int> m_newlinePositions;  // stores positions of "\n" characters
+
+    void renderBoundingBox(QPainter& painter) const;
 
     qsizetype m_caretIndex;
     qsizetype m_selectionStart;

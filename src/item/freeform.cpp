@@ -26,7 +26,7 @@ void Freeform::addPoint(const QPointF &point, const qreal pressure, bool optimiz
     double topLeftX{m_boundingBox.topLeft().x()}, topLeftY{m_boundingBox.topLeft().y()};
     double bottomRightX{m_boundingBox.bottomRight().x()},
         bottomRightY{m_boundingBox.bottomRight().y()};
-    int mg{m_boundingBoxPadding + getProperty(ItemProperty::StrokeWidth).value().toInt()};
+    int mg{getProperty(ItemProperty::StrokeWidth).value().toInt()};
 
     if (m_points.size() <= 1) {
         m_boundingBox.setTopLeft({x - mg, y - mg});

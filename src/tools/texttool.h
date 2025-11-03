@@ -21,6 +21,8 @@ public:
 
 private:
     std::shared_ptr<Text> m_curItem{nullptr};
+
+    bool m_isSelecting{false};
 };
 
 #endif  // TEXTTOOL_H

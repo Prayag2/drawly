@@ -19,6 +19,8 @@ public slots:
     void mousePressed(QMouseEvent *event);
     void mouseMoved(QMouseEvent *event);
     void mouseReleased(QMouseEvent *event);
+    void mouseDoubleClick(QMouseEvent *event);
+    void mouseTripleClick(QMouseEvent *event);
     void keyPressed(QKeyEvent *event);
     void keyReleased(QKeyEvent *event);
     void inputMethodInvoked(QInputMethodEvent *event);
@@ -28,6 +30,8 @@ public slots:
 private:
     ApplicationContext *m_context{};
     qint64 m_lastTime{};
+    qint64 m_lastClickTime{};
+    int m_clickCount{}; // for double/triple clicks
 };
 
 #endif  // CONTROLLER_H

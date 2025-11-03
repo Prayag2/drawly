@@ -4,6 +4,7 @@
 #include <QColor>
 #include <QMargins>
 #include <QSize>
+#include <array>
 
 namespace Common {
 constexpr QMargins cleanupMargin{10, 10, 10, 10};
@@ -26,6 +27,18 @@ constexpr QColor darkForegroundColor{211, 211, 211};
 
 constexpr int maxItemOpacity{255};
 constexpr int eraseItemOpacity{50};
+
+constexpr double defaultTextBoxWidth{5}; // in pixels
+constexpr std::array<QChar, 38> wordSeparators{
+    '\t', '\n', '\v', '\f', '\r', ' ',   // whitespace
+    '!',  '"',  '#',  '$',  '%',  '&',  '\'', '(', ')', '*',
+    '+',  ',',  '-',  '.',  '/',  ':',  ';', '<', '=', '>',
+    '?',  '@',  '[',  '\\', ']', '^',  '_',  '`', '{', '|',
+    '}',  '~'
+};
+
+constexpr int doubleClickInterval{500}; // milliseconds
+
 };  // namespace Common
 
 #endif  // CONSTANTS_H

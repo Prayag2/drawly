@@ -1,6 +1,7 @@
 #include "controller.h"
 
 #include "../canvas/canvas.h"
+#include "../common/constants.h"
 #include "../common/renderitems.h"
 #include "../components/toolbar.h"
 #include "../context/applicationcontext.h"
@@ -13,6 +14,7 @@
 #include "../item/item.h"
 #include "../tools/tool.h"
 #include <QWheelEvent>
+#include <QDateTime>
 
 Controller::Controller(QObject *parent) : QObject{parent} {
 }
@@ -26,8 +28,17 @@ void Controller::setContext(ApplicationContext *context) {
 }
 
 void Controller::mousePressed(QMouseEvent *event) {
+    // No on really clicks in this corner and this solves a 
+    // bug on Hyprland where it would register a mouse press in this corner
     if (event->pos() == QPoint{0, 0})
         return;
+
+    qint64 lastTime{m_lastClickTime};
+    m_lastClickTime = QDateTime::currentMSecsSinceEpoch();
+    if (m_lastClickTime - lastTime <= Common::doubleClickInterval) {
+        mouseDoubleClick(event);
+        return;
+    } 
 
     Event &contextEvent{m_context->uiContext().event()};
     ToolBar &toolBar{m_context->uiContext().toolBar()};

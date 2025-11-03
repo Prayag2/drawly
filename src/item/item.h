@@ -20,7 +20,7 @@ public:
 
     virtual void translate(const QPointF &amount) = 0;
 
-    const QRectF &boundingBox() const;
+    const QRectF boundingBox() const;
 
     void setBoundingBoxPadding(int padding);
 

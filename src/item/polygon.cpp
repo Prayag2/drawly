@@ -30,7 +30,7 @@ void Polygon::m_updateBoundingBox() {
     double maxX{std::max(m_start.x(), m_end.x())};
     double minY{std::min(m_start.y(), m_end.y())};
     double maxY{std::max(m_start.y(), m_end.y())};
-    int w{m_boundingBoxPadding + getProperty(ItemProperty::StrokeWidth).value().toInt()};
+    int w{getProperty(ItemProperty::StrokeWidth).value().toInt()};
 
     m_boundingBox = QRectF{QPointF{minX, maxY}, QPointF{maxX, minY}}.normalized();
     m_boundingBox.adjust(-w, -w, w, w);

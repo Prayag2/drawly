@@ -8,8 +8,9 @@ Item::~Item() {
     qDebug() << "Item deleted: " << m_boundingBox;
 }
 
-const QRectF &Item::boundingBox() const {
-    return m_boundingBox;
+const QRectF Item::boundingBox() const {
+    int mg{m_boundingBoxPadding};
+    return m_boundingBox.adjusted(-mg, -mg, mg, mg);
 }
 
 void Item::setBoundingBoxPadding(int padding) {
