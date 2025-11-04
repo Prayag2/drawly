@@ -364,11 +364,36 @@ std::pair<qsizetype, qsizetype> Text::getLineRange(qsizetype position) const {
         start = 0;
 
     qsizetype end{m_text.indexOf("\n", position)};
-    if (position == -1)
-        position = m_text.size() - 1;
+    if (end == -1)
+        end = m_text.size() - 1;
 
     return std::make_pair(start, end);
 }
+
+qsizetype Text::getPrevBreak(qsizetype position) const {
+    for (qsizetype pos{position - 1}; pos >= 0; pos--) {
+        for (auto& sep : Common::wordSeparators) {
+            if (m_text[pos] == sep) {
+                return pos;
+            }
+        }
+    }
+
+    return 0;
+};
+
+qsizetype Text::getNextBreak(qsizetype position) const {
+    qsizetype len{m_text.length()};
+    for (qsizetype pos{position + 1}; pos < len; pos++) {
+        for (auto& sep : Common::wordSeparators) {
+            if (m_text[pos] == sep) {
+                return pos;
+            }
+        }
+    }
+
+    return len;
+};
 
 constexpr int Text::getTextFlags() {
     return (Qt::TextExpandTabs);

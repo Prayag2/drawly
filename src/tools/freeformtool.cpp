@@ -128,12 +128,6 @@ void FreeformTool::mouseReleased(ApplicationContext *context) {
     }
 }
 
-void FreeformTool::keyPressed(ApplicationContext *context) {
-}
-
-void FreeformTool::keyReleased(ApplicationContext *context) {
-}
-
 ToolID FreeformTool::id() const {
     return ToolID::FreeformTool;
 }

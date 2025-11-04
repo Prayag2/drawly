@@ -59,12 +59,6 @@ void MoveTool::mouseReleased(ApplicationContext *context) {
     }
 };
 
-void MoveTool::keyPressed(ApplicationContext *context) {
-}
-
-void MoveTool::keyReleased(ApplicationContext *context) {
-}
-
 ToolID MoveTool::id() const {
     return ToolID::MoveTool;
 }

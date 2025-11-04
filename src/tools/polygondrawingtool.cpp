@@ -96,12 +96,6 @@ void PolygonDrawingTool::mouseReleased(ApplicationContext *context) {
     }
 };
 
-void PolygonDrawingTool::keyPressed(ApplicationContext *context) {
-}
-
-void PolygonDrawingTool::keyReleased(ApplicationContext *context) {
-}
-
 ToolID PolygonDrawingTool::id() const {
     return ToolID::PolygonDrawingTool;
 }

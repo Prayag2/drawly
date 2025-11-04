@@ -37,7 +37,7 @@ constexpr std::array<QChar, 38> wordSeparators{
     '}',  '~'
 };
 
-constexpr int doubleClickInterval{500}; // milliseconds
+constexpr int doubleClickInterval{300}; // milliseconds
 
 };  // namespace Common
 

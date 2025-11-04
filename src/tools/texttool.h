@@ -15,6 +15,8 @@ public:
     void mouseReleased(ApplicationContext *context) override;
     void keyPressed(ApplicationContext *context) override;
     void keyReleased(ApplicationContext *context) override;
+    void mouseDoubleClick(ApplicationContext *context) override;
+    void mouseTripleClick(ApplicationContext *context) override;
 
     ToolID id() const override;
     QString iconAlt() const override;
@@ -23,6 +25,9 @@ private:
     std::shared_ptr<Text> m_curItem{nullptr};
 
     bool m_isSelecting{false};
+    bool m_mouseMoved{false};
+    bool m_doubleClicked{false};
+    bool m_tripleClicked{false};
 };
 
 #endif  // TEXTTOOL_H

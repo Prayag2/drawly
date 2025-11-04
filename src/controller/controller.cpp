@@ -36,9 +36,17 @@ void Controller::mousePressed(QMouseEvent *event) {
     qint64 lastTime{m_lastClickTime};
     m_lastClickTime = QDateTime::currentMSecsSinceEpoch();
     if (m_lastClickTime - lastTime <= Common::doubleClickInterval) {
-        mouseDoubleClick(event);
+        m_clickCount++;
+
+        if (m_clickCount == 2) {
+            mouseDoubleClick(event);
+        } else if (m_clickCount == 3) {
+            mouseTripleClick(event);
+        }
         return;
-    } 
+    }  else {
+        m_clickCount = 1;
+    }
 
     Event &contextEvent{m_context->uiContext().event()};
     ToolBar &toolBar{m_context->uiContext().toolBar()};
@@ -51,7 +59,28 @@ void Controller::mousePressed(QMouseEvent *event) {
     if (event->type() != QEvent::TabletPress) {
         contextEvent.setPressure(1.0);
     }
-    m_lastTime = QDateTime::currentMSecsSinceEpoch();
+}
+
+void Controller::mouseDoubleClick(QMouseEvent* event) {
+    Event &contextEvent{m_context->uiContext().event()};
+    ToolBar &toolBar{m_context->uiContext().toolBar()};
+    Canvas &canvas{m_context->renderingContext().canvas()};
+
+    contextEvent.setPos(event->pos(), canvas.scale());
+    contextEvent.setButton(event->button());
+
+    toolBar.curTool().mouseDoubleClick(m_context);
+}
+
+void Controller::mouseTripleClick(QMouseEvent* event) {
+    Event &contextEvent{m_context->uiContext().event()};
+    ToolBar &toolBar{m_context->uiContext().toolBar()};
+    Canvas &canvas{m_context->renderingContext().canvas()};
+
+    contextEvent.setPos(event->pos(), canvas.scale());
+    contextEvent.setButton(event->button());
+
+    toolBar.curTool().mouseTripleClick(m_context);
 }
 
 void Controller::mouseMoved(QMouseEvent *event) {
@@ -63,8 +92,6 @@ void Controller::mouseMoved(QMouseEvent *event) {
     contextEvent.setButton(event->button());
 
     toolBar.curTool().mouseMoved(m_context);
-
-    m_lastTime = QDateTime::currentMSecsSinceEpoch();
 }
 
 void Controller::mouseReleased(QMouseEvent *event) {

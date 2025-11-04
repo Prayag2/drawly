@@ -28,11 +28,13 @@ public:
     const QCursor &cursor() const;
     virtual QString iconAlt() const = 0;
 
-    virtual void mousePressed(ApplicationContext *context) = 0;
-    virtual void mouseMoved(ApplicationContext *context) = 0;
-    virtual void mouseReleased(ApplicationContext *context) = 0;
-    virtual void keyPressed(ApplicationContext *context) = 0;
-    virtual void keyReleased(ApplicationContext *context) = 0;
+    virtual void mousePressed(ApplicationContext *context);
+    virtual void mouseMoved(ApplicationContext *context);
+    virtual void mouseReleased(ApplicationContext *context);
+    virtual void keyPressed(ApplicationContext *context);
+    virtual void keyReleased(ApplicationContext *context);
+    virtual void mouseDoubleClick(ApplicationContext *context);
+    virtual void mouseTripleClick(ApplicationContext *context);
 
     virtual ToolID id() const = 0;
 

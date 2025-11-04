@@ -33,12 +33,6 @@ void SelectionTool::mouseReleased(ApplicationContext *context) {
     getCurrentState(context)->mouseReleased(context);
 };
 
-void SelectionTool::keyPressed(ApplicationContext *context) {
-}
-
-void SelectionTool::keyReleased(ApplicationContext *context) {
-}
-
 std::shared_ptr<SelectionToolState> SelectionTool::getCurrentState(ApplicationContext *context) {
     auto &selectionContext{context->selectionContext()};
     auto &uiContext{context->uiContext()};

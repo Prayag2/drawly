@@ -20,3 +20,12 @@ const QVector<std::shared_ptr<ToolProperty>> Tool::properties() const {
     }
     return props;
 }
+
+
+void Tool::mousePressed(ApplicationContext *context) {}
+void Tool::mouseMoved(ApplicationContext *context) {}
+void Tool::mouseReleased(ApplicationContext *context) {}
+void Tool::keyPressed(ApplicationContext *context) {}
+void Tool::keyReleased(ApplicationContext *context) {}
+void Tool::mouseDoubleClick(ApplicationContext *context) {}
+void Tool::mouseTripleClick(ApplicationContext *context) {}

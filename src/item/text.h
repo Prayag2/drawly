@@ -52,6 +52,9 @@ public:
     std::pair<qsizetype, qsizetype> getLineRange(int lineNumber) const;
     std::pair<qsizetype, qsizetype> getLineRange(qsizetype position) const;
 
+    qsizetype getPrevBreak(qsizetype pos) const;
+    qsizetype getNextBreak(qsizetype pos) const;
+
     Item::Type type() const override;
 
     constexpr static int INVALID{-1};
