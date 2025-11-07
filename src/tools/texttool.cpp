@@ -14,6 +14,8 @@
 #include "../event/event.h"
 #include "../item/factory/textfactory.h"
 #include "../keybindings/keybindmanager.h"
+#include "properties/toolproperty.h"
+#include "properties/propertymanager.h"
 #include <QClipboard>
 #include <QGuiApplication>
 
@@ -27,6 +29,11 @@
 TextTool::TextTool(const PropertyManager &propertyManager) {
     m_cursor = QCursor(Qt::CrossCursor);
     m_itemFactory = std::make_unique<TextFactory>();
+
+    m_properties[ToolProperty::StrokeColor] =
+        (propertyManager.get(ToolProperty::StrokeColor));
+    m_properties[ToolProperty::FontSize] =
+        (propertyManager.get(ToolProperty::FontSize));
 }
 
 void TextTool::mousePressed(ApplicationContext *context) {
@@ -50,6 +57,12 @@ void TextTool::mousePressed(ApplicationContext *context) {
                 m_curItem = std::dynamic_pointer_cast<Text>(m_itemFactory->create());
                 m_curItem->setBoundingBoxPadding(10 * renderingContext.canvas().scale());
                 m_curItem->createTextBox(transformer.viewToWorld(uiContext.event().pos()));
+
+                m_curItem->getProperty(ItemProperty::StrokeColor)
+                    .setValue(m_properties[ToolProperty::StrokeColor]->value());
+                m_curItem->getProperty(ItemProperty::FontSize)
+                    .setValue(m_properties[ToolProperty::FontSize]->value());
+                
                 commandHistory.insert(
                     std::make_shared<InsertItemCommand>(QVector<std::shared_ptr<Item>>{m_curItem}));
             } else {
@@ -404,7 +417,20 @@ void TextTool::keyPressed(ApplicationContext *context) {
 
                 handleDefaultCase();
                 break;
+            } case Qt::Key_X: {
+                if (ev.modifiers() & Qt::ControlModifier) {
+                    if (m_curItem->hasSelection()) {
+                        QGuiApplication::clipboard()->setText(m_curItem->selectedText());
+                        m_curItem->deleteSelection();
+                    }
+                } else {
+                    handleDefaultCase();
+                }
             } default: {
+                if (ev.modifiers() & Qt::ControlModifier) {
+                    break;
+                }
+
                 handleDefaultCase();
             }
         }

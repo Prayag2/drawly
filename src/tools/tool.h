@@ -1,10 +1,9 @@
 #ifndef TOOL_H
 #define TOOL_H
 
+#include "properties/propertymanager.h"
 #include <QCursor>
 class ApplicationContext;
-class ToolProperty;
-enum class ToolPropertyType;
 
 enum class ToolID {
     SelectionTool,
@@ -38,11 +37,11 @@ public:
 
     virtual ToolID id() const = 0;
 
-    const QVector<std::shared_ptr<ToolProperty>> properties() const;
+    virtual const QVector<std::shared_ptr<ToolProperty>> properties() const;
 
 protected:
     QCursor m_cursor{};
-    std::unordered_map<ToolPropertyType, std::shared_ptr<ToolProperty>> m_properties{};
+    std::unordered_map<ToolProperty::Type, std::shared_ptr<ToolProperty>> m_properties{};
 };
 
 #endif  // TOOL_H

@@ -15,6 +15,8 @@ public:
     void mouseMoved(ApplicationContext *context) override;
     void mouseReleased(ApplicationContext *context) override;
 
+    const QVector<std::shared_ptr<ToolProperty>> properties() const override;
+
     ToolID id() const override;
 
 private:

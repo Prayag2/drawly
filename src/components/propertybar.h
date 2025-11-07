@@ -13,7 +13,7 @@ public:
     PropertyBar(QWidget *parent = nullptr);
 
 public slots:
-    void toolChanged(Tool &);
+    void updateProperties(Tool &);
 
 private:
     QVBoxLayout *m_layout{};

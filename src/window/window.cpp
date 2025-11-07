@@ -32,8 +32,8 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 
     layout->setMargins(10);
     layout->setLeftWidget(&uiContext.propertyBar());
-    layout->setTopWidget(&uiContext.toolBar());
-    layout->setBottomWidget(&uiContext.actionBar());
+    layout->setBottomWidget(&uiContext.toolBar());
+    layout->setTopWidget(&uiContext.actionBar());
     layout->setCentralWidget(&renderingContext.canvas());
 
     QObject::connect(&renderingContext.canvas(),

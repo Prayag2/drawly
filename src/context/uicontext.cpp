@@ -61,7 +61,7 @@ void UIContext::setUIContext() {
     m_actionBar->addButton("󰑎", 5);
 
     QObject::connect(m_toolBar, &ToolBar::toolChanged, this, &UIContext::toolChanged);
-    QObject::connect(m_toolBar, &ToolBar::toolChanged, m_propertyBar, &PropertyBar::toolChanged);
+    QObject::connect(m_toolBar, &ToolBar::toolChanged, m_propertyBar, &PropertyBar::updateProperties);
 
     QObject::connect(&m_actionBar->button(1), &QPushButton::clicked, this, [this]() {
         m_applicationContext->renderingContext().setZoomFactor(-1);
@@ -93,7 +93,7 @@ void UIContext::setUIContext() {
         m_applicationContext->renderingContext().markForUpdate();
     });
 
-    m_propertyBar->toolChanged(m_toolBar->curTool());
+    m_propertyBar->updateProperties(m_toolBar->curTool());
 }
 
 ToolBar &UIContext::toolBar() const {

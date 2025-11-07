@@ -12,6 +12,8 @@ public:
 
     QWidget *widget() const;
 
+    enum Type { StrokeWidth, StrokeColor, EraserSize, FontSize };
+
 protected:
     QWidget *m_widget{};
 };

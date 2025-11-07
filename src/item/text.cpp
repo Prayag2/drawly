@@ -8,7 +8,7 @@
 /*
  * TODO: The current implementation is not optimal. A single character insertion
  * costs n operations on average, making it O(n) per character. Use a better
- * data structure like Ropes or Gap buffers although it may be overkill for a
+ * data structure like Rope or Gap buffer, although it may be overkill for a
  * simple whiteboard app.
  *
  * TODO: This file needs some refactoring as well, feel free to open a PR
@@ -54,7 +54,7 @@ void Text::draw(QPainter &painter, const QPointF &offset) {
 
     if (mode() == EDIT) {
         // Drawing the bounding box
-        QPen boundingBoxPen{Qt::blue};
+        QPen boundingBoxPen{Common::selectionBorderColor};
         boundingBoxPen.setWidth(1);
         painter.setPen(boundingBoxPen);
         painter.drawRect(boundingBox().translated(-offset));
@@ -96,7 +96,7 @@ void Text::draw(QPainter &painter, const QPointF &offset) {
             QFontMetrics metrics{getFont()};
             const int lineHeight = metrics.height();
 
-            painter.setBrush(Qt::blue);
+            painter.setBrush(Common::selectionBackgroundColor);
             painter.setPen(Qt::NoPen);
 
             qsizetype currentLineStartPos = 0;
@@ -140,6 +140,7 @@ void Text::erase(QPainter &painter, const QPointF &offset, QColor color) const {
 }
 
 void Text::translate(const QPointF &amount) {
+    m_boundingBox.translate(amount);
 }
 
 void Text::m_draw(QPainter &painter, const QPointF &offset) const {

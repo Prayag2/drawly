@@ -48,6 +48,10 @@ std::shared_ptr<SelectionToolState> SelectionTool::getCurrentState(ApplicationCo
     }
 }
 
+const QVector<std::shared_ptr<ToolProperty>> SelectionTool::properties() const {
+    return {};
+}
+
 ToolID SelectionTool::id() const {
     return ToolID::SelectionTool;
 };

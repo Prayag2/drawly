@@ -24,8 +24,8 @@
 EraserTool::EraserTool(const PropertyManager &propertyManager) {
     m_cursor = QCursor(Qt::CrossCursor);
 
-    m_properties[ToolPropertyType::EraserSize] =
-        (propertyManager.getToolProperty(ToolPropertyType::EraserSize));
+    m_properties[ToolProperty::EraserSize] =
+        (propertyManager.get(ToolProperty::EraserSize));
 }
 
 QString EraserTool::iconAlt() const {
@@ -54,7 +54,7 @@ void EraserTool::mouseMoved(ApplicationContext *context) {
     overlayPainter.setCompositionMode(QPainter::CompositionMode_Source);
     overlayPainter.fillRect(m_lastRect + Common::cleanupMargin, Qt::transparent);
 
-    const int eraserSide{m_properties[ToolPropertyType::EraserSize]->value().toInt()};
+    const int eraserSide{m_properties[ToolProperty::EraserSize]->value().toInt()};
     const QSize eraserSize{eraserSide, eraserSide};
 
     // TODO: Adjustable eraser size

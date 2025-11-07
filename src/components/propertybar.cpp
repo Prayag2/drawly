@@ -15,7 +15,7 @@ PropertyBar::PropertyBar(QWidget *parent) : QFrame{parent} {
 }
 
 // PUBLIC SLOTS
-void PropertyBar::toolChanged(Tool &tool) {
+void PropertyBar::updateProperties(Tool &tool) {
     // remove existing widgets
     QLayoutItem *curItem;
     while ((curItem = m_layout->takeAt(0)) != nullptr) {

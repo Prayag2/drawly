@@ -38,10 +38,10 @@ FreeformTool::FreeformTool(const PropertyManager &propertyManager) {
                               size - borderWidth);
     m_cursor = QCursor{cursorShape, size / 2, size / 2};
 
-    m_properties[ToolPropertyType::StrokeWidth] =
-        (propertyManager.getToolProperty(ToolPropertyType::StrokeWidth));
-    m_properties[ToolPropertyType::StrokeColor] =
-        (propertyManager.getToolProperty(ToolPropertyType::StrokeColor));
+    m_properties[ToolProperty::StrokeWidth] =
+        (propertyManager.get(ToolProperty::StrokeWidth));
+    m_properties[ToolProperty::StrokeColor] =
+        (propertyManager.get(ToolProperty::StrokeColor));
 }
 
 QString FreeformTool::iconAlt() const {
@@ -59,9 +59,9 @@ void FreeformTool::mousePressed(ApplicationContext *context) {
         curItem = std::dynamic_pointer_cast<Freeform>(m_itemFactory->create());
 
         curItem->getProperty(ItemProperty::StrokeWidth)
-            .setValue(m_properties[ToolPropertyType::StrokeWidth]->value());
+            .setValue(m_properties[ToolProperty::StrokeWidth]->value());
         curItem->getProperty(ItemProperty::StrokeColor)
-            .setValue(m_properties[ToolPropertyType::StrokeColor]->value());
+            .setValue(m_properties[ToolProperty::StrokeColor]->value());
         curItem->setBoundingBoxPadding(10 * renderingContext.canvas().scale());
 
         m_lastPoint = uiContext.event().pos();
