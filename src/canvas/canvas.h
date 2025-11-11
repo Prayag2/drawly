@@ -36,6 +36,7 @@ signals:
     void resizeStart();
     void resizeEnd();
     void destroyed();
+    void leave(QEvent *event);
 
 public slots:
     void triggerUpdate();
@@ -52,6 +53,7 @@ protected:
     void tabletEvent(QTabletEvent *event) override;
     void wheelEvent(QWheelEvent *event) override;
     bool event(QEvent *event) override;
+    void leaveEvent(QEvent *event) override;
 
 private:
     qreal m_scale{1.0};  // default scale is 1

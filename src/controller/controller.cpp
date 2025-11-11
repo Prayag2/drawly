@@ -133,6 +133,12 @@ void Controller::keyReleased(QKeyEvent *event) {
 
 void Controller::inputMethodInvoked(QInputMethodEvent *event) {
 }
+    
+void Controller::leave(QEvent *event) {
+    ToolBar &toolBar{m_context->uiContext().toolBar()};
+
+    toolBar.curTool().leave(m_context);
+}
 
 // FIXME: Does not work
 void Controller::wheel(QWheelEvent *event) {

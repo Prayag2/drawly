@@ -127,7 +127,6 @@ void Canvas::mouseReleaseEvent(QMouseEvent *event) {
 };
 
 void Canvas::keyPressEvent(QKeyEvent *event) {
-    qDebug() << "HIIII";
     emit keyPressed(event);
     QWidget::keyPressEvent(event);
 }
@@ -150,6 +149,11 @@ void Canvas::tabletEvent(QTabletEvent *event) {
 void Canvas::wheelEvent(QWheelEvent *event) {
     emit wheel(event);
     QWidget::wheelEvent(event);
+}
+
+void Canvas::leaveEvent(QEvent *event) {
+    emit leave(event);
+    QWidget::leaveEvent(event);
 }
 
 bool Canvas::event(QEvent *event) {

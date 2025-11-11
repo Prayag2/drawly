@@ -1,5 +1,6 @@
 #include "erasertool.h"
 
+#include "../canvas/canvas.h"
 #include "../command/commandhistory.h"
 #include "../command/removeitemcommand.h"
 #include "../common/constants.h"
@@ -123,6 +124,24 @@ void EraserTool::mouseReleased(ApplicationContext *context) {
         m_toBeErased.clear();
         m_isErasing = false;
     }
+}
+
+void EraserTool::leave(ApplicationContext *context) {
+    cleanup();
+};
+
+void EraserTool::cleanup() {
+    ApplicationContext *context{ApplicationContext::instance()};
+
+    auto& overlayPainter{context->renderingContext().overlayPainter()};
+    overlayPainter.save();
+
+    overlayPainter.setCompositionMode(QPainter::CompositionMode_Source);
+    overlayPainter.fillRect(m_lastRect + Common::cleanupMargin, Qt::transparent);
+
+    context->renderingContext().markForUpdate();
+
+    overlayPainter.restore();
 }
 
 ToolID EraserTool::id() const {

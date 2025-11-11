@@ -63,22 +63,7 @@ void TextTool::mousePressed(ApplicationContext *context) {
                 commandHistory.insert(
                     std::make_shared<InsertItemCommand>(QVector<std::shared_ptr<Item>>{m_curItem}));
             } else {
-                m_curItem->setMode(Text::NORMAL);
-                spatialContext.cacheGrid().markDirty(
-                    transformer.worldToGrid(m_curItem->boundingBox()).toRect());
-
-                // enable keybindings again
-                uiContext.keybindManager().enable();
-                
-                if (m_curItem->text().isEmpty()) {
-                    quadTree.deleteItem(m_curItem);
-                }
-
-                context->selectionContext().selectedItems().clear();
-
-                m_curItem = nullptr;
-                renderingContext.markForRender();
-                renderingContext.markForUpdate();
+                cleanup();
                 return;
             }
         } else {
@@ -176,6 +161,9 @@ void TextTool::mouseReleased(ApplicationContext *context) {
 };
 
 void TextTool::mouseDoubleClick(ApplicationContext *context) {
+    if (!m_curItem)
+        return;
+
     m_doubleClicked = true;
     if (!m_mouseMoved) {
         m_isSelecting = true;
@@ -200,6 +188,9 @@ void TextTool::mouseDoubleClick(ApplicationContext *context) {
 };
 
 void TextTool::mouseTripleClick(ApplicationContext *context) {
+    if (!m_curItem)
+        return;
+
     m_tripleClicked = true;
     if (!m_mouseMoved) {
         m_isSelecting = true;
@@ -226,6 +217,9 @@ void TextTool::mouseTripleClick(ApplicationContext *context) {
 
 // TODO: Refactor, refactor, refactor!
 void TextTool::keyPressed(ApplicationContext *context) {
+    if (!m_curItem)
+        return;
+
     Event &ev{context->uiContext().event()};
 
     if (ev.key() == Qt::Key_Escape) {
@@ -446,6 +440,35 @@ void TextTool::keyPressed(ApplicationContext *context) {
 }
 
 void TextTool::keyReleased(ApplicationContext *context) {
+}
+
+void TextTool::cleanup() {
+    if (!m_curItem)
+        return;
+
+    ApplicationContext *context{ApplicationContext::instance()};
+    auto& spatialContext{context->spatialContext()};
+    auto& renderingContext{context->renderingContext()};
+    auto& uiContext{context->uiContext()};
+    auto& transformer{spatialContext.coordinateTransformer()};
+    auto& quadTree{spatialContext.quadtree()};
+
+    m_curItem->setMode(Text::NORMAL);
+    spatialContext.cacheGrid().markDirty(
+        transformer.worldToGrid(m_curItem->boundingBox()).toRect());
+
+    // enable keybindings again
+    uiContext.keybindManager().enable();
+    
+    if (m_curItem->text().isEmpty()) {
+        quadTree.deleteItem(m_curItem);
+    }
+
+    context->selectionContext().selectedItems().clear();
+
+    m_curItem = nullptr;
+    renderingContext.markForRender();
+    renderingContext.markForUpdate();
 }
 
 ToolID TextTool::id() const {

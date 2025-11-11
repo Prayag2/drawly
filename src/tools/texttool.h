@@ -18,6 +18,8 @@ public:
     void mouseDoubleClick(ApplicationContext *context) override;
     void mouseTripleClick(ApplicationContext *context) override;
 
+    void cleanup() override;
+
     ToolID id() const override;
     QString iconAlt() const override;
 

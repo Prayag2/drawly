@@ -34,6 +34,9 @@ public:
     virtual void keyReleased(ApplicationContext *context);
     virtual void mouseDoubleClick(ApplicationContext *context);
     virtual void mouseTripleClick(ApplicationContext *context);
+    virtual void leave(ApplicationContext *context);
+
+    virtual void cleanup();
 
     virtual ToolID id() const = 0;
 

@@ -24,6 +24,7 @@ public slots:
     void inputMethodInvoked(QInputMethodEvent *event);
     void tablet(QTabletEvent *event);
     void wheel(QWheelEvent *event);
+    void leave(QEvent *event);
 
 private:
     ApplicationContext *m_context{};

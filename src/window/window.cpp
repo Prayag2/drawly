@@ -55,6 +55,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
                      &Controller::keyReleased);
     QObject::connect(&renderingContext.canvas(), &Canvas::tablet, controller, &Controller::tablet);
     QObject::connect(&renderingContext.canvas(), &Canvas::wheel, controller, &Controller::wheel);
+    QObject::connect(&renderingContext.canvas(), &Canvas::leave, controller, &Controller::leave);
 }
 
 MainWindow::~MainWindow() {

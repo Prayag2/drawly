@@ -39,6 +39,8 @@ private:
     ActionManager *m_actionManager{};
     Event *m_event{nullptr};
 
+    Tool* m_lastTool{nullptr}; // Used to call the cleanup function of the last tool
+
     ApplicationContext *m_applicationContext;
 };
 

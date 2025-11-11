@@ -71,14 +71,17 @@ void UIContext::setUIContext() {
     QObject::connect(&m_actionBar->button(1), &QPushButton::clicked, this, [this]() {
         m_applicationContext->renderingContext().setZoomFactor(-1);
     });
+
     QObject::connect(&m_actionBar->button(2), &QPushButton::clicked, this, [this]() {
         m_applicationContext->renderingContext().setZoomFactor(1);
     });
+
     QObject::connect(&m_actionBar->button(4), &QPushButton::clicked, this, [this]() {
         m_applicationContext->spatialContext().commandHistory().undo();
         m_applicationContext->renderingContext().markForRender();
         m_applicationContext->renderingContext().markForUpdate();
     });
+
     QObject::connect(&m_actionBar->button(5), &QPushButton::clicked, this, [this]() {
         m_applicationContext->spatialContext().commandHistory().redo();
         m_applicationContext->renderingContext().markForRender();
@@ -135,6 +138,11 @@ void UIContext::toolChanged(Tool &tool) {
     Common::renderCanvas(m_applicationContext);
 
     Canvas &canvas{m_applicationContext->renderingContext().canvas()};
+
+    if (m_lastTool != nullptr)
+        m_lastTool->cleanup();
+
+    m_lastTool = &tool;
     canvas.setCursor(tool.cursor());
     canvas.update();
 }
