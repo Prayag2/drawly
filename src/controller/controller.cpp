@@ -146,7 +146,13 @@ void Controller::wheel(QWheelEvent *event) {
     const qreal zoomFactor{m_context->renderingContext().zoomFactor()};
     Canvas &canvas{m_context->renderingContext().canvas()};
 
-    m_context->spatialContext().setOffsetPos(offsetPos - event->pixelDelta() / zoomFactor);
+    if (event->modifiers() & Qt::ControlModifier) {
+        int delta{event->angleDelta().y() > 0 ? 1 : -1};
+        m_context->renderingContext().setZoomFactor(delta);
+        return;
+    }
+
+    m_context->spatialContext().setOffsetPos(offsetPos - event->angleDelta() / zoomFactor);
     Common::renderCanvas(m_context);
 
     canvas.update();

@@ -25,7 +25,7 @@ public:
     void markForUpdate(const QRect &region);
 
     qreal zoomFactor() const;
-    void setZoomFactor(int diff);
+    void setZoomFactor(qreal diff, QPoint center = {-1, -1});
 
     const int fps() const;
 

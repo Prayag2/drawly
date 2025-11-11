@@ -43,6 +43,7 @@ void MoveTool::mouseMoved(ApplicationContext *context) {
         spatialContext.setOffsetPos(newPoint / zoom);
 
         renderingContext.canvas().setCursor(Qt::ClosedHandCursor);
+        qDebug() << "Offset: " << spatialContext.offsetPos();
 
         renderingContext.markForRender();
         renderingContext.markForUpdate();
