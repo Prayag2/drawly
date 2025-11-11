@@ -9,7 +9,7 @@ class PropertyManager;
 
 class EraserTool : public Tool {
 public:
-    EraserTool(const PropertyManager &propertyManager);
+    EraserTool();
     ~EraserTool() override = default;
 
     QString iconAlt() const override;

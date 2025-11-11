@@ -1,31 +1,28 @@
 #include "erasertool.h"
 
-#include "../canvas/canvas.h"
 #include "../command/commandhistory.h"
 #include "../command/removeitemcommand.h"
 #include "../common/constants.h"
 #include "../common/renderitems.h"
-#include "../common/utils.h"
+#include "../data-structures/cachegrid.h"
 #include "../context/applicationcontext.h"
 #include "../context/coordinatetransformer.h"
 #include "../context/renderingcontext.h"
 #include "../context/selectioncontext.h"
 #include "../context/spatialcontext.h"
 #include "../context/uicontext.h"
-#include "../data-structures/cachegrid.h"
 #include "../data-structures/quadtree.h"
 #include "../event/event.h"
 #include "../item/item.h"
-#include "properties/propertymanager.h"
-#include "properties/toolproperty.h"
+#include "../properties/widgets/propertymanager.h"
+
 #include <QDebug>
 #include <QPainter>
 
-EraserTool::EraserTool(const PropertyManager &propertyManager) {
+EraserTool::EraserTool() {
     m_cursor = QCursor(Qt::CrossCursor);
 
-    m_properties[ToolProperty::EraserSize] =
-        (propertyManager.get(ToolProperty::EraserSize));
+    m_properties = { Property::EraserSize };
 }
 
 QString EraserTool::iconAlt() const {
@@ -54,7 +51,7 @@ void EraserTool::mouseMoved(ApplicationContext *context) {
     overlayPainter.setCompositionMode(QPainter::CompositionMode_Source);
     overlayPainter.fillRect(m_lastRect + Common::cleanupMargin, Qt::transparent);
 
-    const int eraserSide{m_properties[ToolProperty::EraserSize]->value().toInt()};
+    const int eraserSide{uiContext.propertyManager().value(Property::EraserSize).value<int>()};
     const QSize eraserSize{eraserSide, eraserSide};
 
     // TODO: Adjustable eraser size
@@ -73,7 +70,7 @@ void EraserTool::mouseMoved(ApplicationContext *context) {
                 continue;
 
             // TODO: Remove magic numbers
-            item->getProperty(ItemProperty::Opacity).setValue(Common::eraseItemOpacity);
+            item->setProperty(Property::Opacity, Property{Common::eraseItemOpacity, Property::Opacity});
 
             m_toBeErased.insert(item);
             spatialContext.cacheGrid().markDirty(
@@ -114,7 +111,7 @@ void EraserTool::mouseReleased(ApplicationContext *context) {
             }
 
             // reset opacity
-            item->getProperty(ItemProperty::Opacity).setValue(Common::maxItemOpacity);
+            item->setProperty(Property::Opacity, Property{Common::maxItemOpacity, Property::Opacity});
             erasedItems.push_back(item);
         }
 

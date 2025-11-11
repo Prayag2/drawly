@@ -15,7 +15,7 @@
 #include "../tools/freeformtool.h"
 #include "../tools/linetool.h"
 #include "../tools/movetool.h"
-#include "../tools/properties/propertymanager.h"
+#include "../properties/widgets/propertymanager.h"
 #include "../tools/rectangletool.h"
 #include "../tools/selectiontool/selectiontool.h"
 #include "../tools/texttool.h"
@@ -42,16 +42,21 @@ void UIContext::setUIContext() {
     m_actionManager = new ActionManager(m_applicationContext);
 
     m_propertyManager = new PropertyManager(m_propertyBar);
+    m_propertyBar->setPropertyManager(m_propertyManager);
+
+    QObject::connect(m_propertyManager, &PropertyManager::propertyUpdated,
+                     &m_applicationContext->selectionContext(), &SelectionContext::updatePropertyOfSelectedItems);
+
     m_event = new Event();
 
     m_toolBar->addTool(new SelectionTool(), ToolID::SelectionTool);
-    m_toolBar->addTool(new FreeformTool(*m_propertyManager), ToolID::FreeformTool);
-    m_toolBar->addTool(new RectangleTool(*m_propertyManager), ToolID::RectangleTool);
-    m_toolBar->addTool(new EllipseTool(*m_propertyManager), ToolID::EllipseTool);
-    m_toolBar->addTool(new ArrowTool(*m_propertyManager), ToolID::ArrowTool);
-    m_toolBar->addTool(new LineTool(*m_propertyManager), ToolID::LineTool);
-    m_toolBar->addTool(new EraserTool(*m_propertyManager), ToolID::EraserTool);
-    m_toolBar->addTool(new TextTool(*m_propertyManager), ToolID::TextTool);
+    m_toolBar->addTool(new FreeformTool(), ToolID::FreeformTool);
+    m_toolBar->addTool(new RectangleTool(), ToolID::RectangleTool);
+    m_toolBar->addTool(new EllipseTool(), ToolID::EllipseTool);
+    m_toolBar->addTool(new ArrowTool(), ToolID::ArrowTool);
+    m_toolBar->addTool(new LineTool(), ToolID::LineTool);
+    m_toolBar->addTool(new EraserTool(), ToolID::EraserTool);
+    m_toolBar->addTool(new TextTool(), ToolID::TextTool);
     m_toolBar->addTool(new MoveTool(), ToolID::MoveTool);
 
     m_actionBar->addButton("-", 1);
@@ -114,6 +119,10 @@ KeybindManager &UIContext::keybindManager() const {
 
 ActionManager &UIContext::actionManager() const {
     return *m_actionManager;
+}
+
+PropertyManager &UIContext::propertyManager() const {
+    return *m_propertyManager;
 }
 
 Event &UIContext::event() const {

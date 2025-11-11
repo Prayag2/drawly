@@ -8,14 +8,15 @@
 #include "../context/coordinatetransformer.h"
 #include "../context/renderingcontext.h"
 #include "../context/spatialcontext.h"
+#include "../context/selectioncontext.h"
 #include "../context/uicontext.h"
 #include "../data-structures/cachegrid.h"
 #include "../data-structures/quadtree.h"
 #include "../event/event.h"
 #include "../item/factory/textfactory.h"
 #include "../keybindings/keybindmanager.h"
-#include "properties/toolproperty.h"
-#include "properties/propertymanager.h"
+#include "../properties/widgets/propertymanager.h"
+#include <memory>
 #include <QClipboard>
 #include <QGuiApplication>
 
@@ -26,14 +27,11 @@
  *        Put your heart and soul into the work you do and see yourself succeed.
  */
 
-TextTool::TextTool(const PropertyManager &propertyManager) {
+TextTool::TextTool() {
     m_cursor = QCursor(Qt::CrossCursor);
     m_itemFactory = std::make_unique<TextFactory>();
 
-    m_properties[ToolProperty::StrokeColor] =
-        (propertyManager.get(ToolProperty::StrokeColor));
-    m_properties[ToolProperty::FontSize] =
-        (propertyManager.get(ToolProperty::FontSize));
+    m_properties = { Property::StrokeColor, Property::FontSize };
 }
 
 void TextTool::mousePressed(ApplicationContext *context) {
@@ -56,12 +54,11 @@ void TextTool::mousePressed(ApplicationContext *context) {
             if (m_curItem == nullptr) {
                 m_curItem = std::dynamic_pointer_cast<Text>(m_itemFactory->create());
                 m_curItem->setBoundingBoxPadding(10 * renderingContext.canvas().scale());
-                m_curItem->createTextBox(transformer.viewToWorld(uiContext.event().pos()));
 
-                m_curItem->getProperty(ItemProperty::StrokeColor)
-                    .setValue(m_properties[ToolProperty::StrokeColor]->value());
-                m_curItem->getProperty(ItemProperty::FontSize)
-                    .setValue(m_properties[ToolProperty::FontSize]->value());
+                m_curItem->setProperty(Property::StrokeColor, uiContext.propertyManager().value(Property::StrokeColor));
+                m_curItem->setProperty(Property::FontSize, uiContext.propertyManager().value(Property::FontSize));
+
+                m_curItem->createTextBox(transformer.viewToWorld(uiContext.event().pos()));
                 
                 commandHistory.insert(
                     std::make_shared<InsertItemCommand>(QVector<std::shared_ptr<Item>>{m_curItem}));
@@ -76,6 +73,8 @@ void TextTool::mousePressed(ApplicationContext *context) {
                 if (m_curItem->text().isEmpty()) {
                     quadTree.deleteItem(m_curItem);
                 }
+
+                context->selectionContext().selectedItems().clear();
 
                 m_curItem = nullptr;
                 renderingContext.markForRender();
@@ -104,6 +103,7 @@ void TextTool::mousePressed(ApplicationContext *context) {
             m_curItem->setSelectionEnd(Text::INVALID);
         }
 
+        context->selectionContext().selectedItems() = {m_curItem};
         m_curItem->setMode(Text::EDIT);
         uiContext.keybindManager().disable();
 
@@ -145,7 +145,7 @@ void TextTool::mouseMoved(ApplicationContext *context) {
         if (m_doubleClicked) {
             if (isLeft) {
                 m_curItem->setSelectionStart(std::max(curStart, curEnd));
-                m_curItem->setSelectionEnd(m_curItem->getPrevBreak(curIndex));
+                m_curItem->setSelectionEnd(m_curItem->getPrevBreak(curIndex - 1));
             } else {
                 m_curItem->setSelectionStart(std::min(curStart, curEnd));
                 m_curItem->setSelectionEnd(m_curItem->getNextBreak(curIndex));
@@ -190,7 +190,7 @@ void TextTool::mouseDoubleClick(ApplicationContext *context) {
         int lineNumber{m_curItem->getLineFromY(worldPos.y())};
         qsizetype curIndex{m_curItem->getIndexFromX(worldPos.x(), lineNumber)};
 
-        m_curItem->setSelectionStart(m_curItem->getPrevBreak(curIndex));
+        m_curItem->setSelectionStart(m_curItem->getPrevBreak(curIndex - 1));
         m_curItem->setSelectionEnd(m_curItem->getNextBreak(curIndex));
 
         spatialContext.cacheGrid().markDirty(transformer.worldToGrid(m_curItem->boundingBox()).toRect());
@@ -264,9 +264,9 @@ void TextTool::keyPressed(ApplicationContext *context) {
 
                     if (ev.modifiers() & Qt::ShiftModifier) {
                         qsizetype pos{m_curItem->selectionEnd()};
-                        m_curItem->setSelectionEnd(m_curItem->getPrevBreak(pos == Text::INVALID ? curPos : pos));
+                        m_curItem->setSelectionEnd(m_curItem->getPrevBreak(pos == Text::INVALID ? curPos - 1 : pos - 1));
                     } else {
-                        m_curItem->setCaret(m_curItem->getPrevBreak(curPos));
+                        m_curItem->setCaret(m_curItem->getPrevBreak(curPos - 1));
                     }
                 } else if (ev.modifiers() & Qt::ShiftModifier) {
                     qsizetype selEnd{m_curItem->selectionEnd()};
@@ -318,7 +318,7 @@ void TextTool::keyPressed(ApplicationContext *context) {
                 }
 
                 if (ev.modifiers() & Qt::ControlModifier) {
-                    qsizetype prevBreak{m_curItem->getPrevBreak(caret)};
+                    qsizetype prevBreak{m_curItem->getPrevBreak(caret - 1)};
                     m_curItem->deleteSubStr(prevBreak, caret - 1);
                     m_curItem->setCaret(prevBreak);
                     break;
@@ -426,6 +426,7 @@ void TextTool::keyPressed(ApplicationContext *context) {
                 } else {
                     handleDefaultCase();
                 }
+                break;
             } default: {
                 if (ev.modifiers() & Qt::ControlModifier) {
                     break;

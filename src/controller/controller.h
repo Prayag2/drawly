@@ -13,8 +13,6 @@ public:
     Controller(QObject *parent = nullptr);
     ~Controller();
 
-    void setContext(ApplicationContext *context);
-
 public slots:
     void mousePressed(QMouseEvent *event);
     void mouseMoved(QMouseEvent *event);
@@ -32,6 +30,8 @@ private:
     qint64 m_lastTime{};
     qint64 m_lastClickTime{};
     int m_clickCount{}; // for double/triple clicks
+
+    bool m_mouseMoved{false};
 };
 
 #endif  // CONTROLLER_H

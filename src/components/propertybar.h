@@ -5,6 +5,7 @@
 #include <QStackedWidget>
 #include <QVBoxLayout>
 class Tool;
+class PropertyManager;
 enum class ToolID;
 
 class PropertyBar : public QFrame {
@@ -12,11 +13,15 @@ class PropertyBar : public QFrame {
 public:
     PropertyBar(QWidget *parent = nullptr);
 
+    void setPropertyManager(PropertyManager *manager);
+    void updateToolProperties();
+
 public slots:
     void updateProperties(Tool &);
 
 private:
     QVBoxLayout *m_layout{};
+    PropertyManager *m_propertyManager{};
 };
 
 #endif  // PROPERTYBAR_H

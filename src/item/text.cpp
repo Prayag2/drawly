@@ -15,10 +15,9 @@
  */
 
 Text::Text() {
-    m_properties[ItemProperty::StrokeWidth] = ItemProperty(1);
-    m_properties[ItemProperty::StrokeColor] = ItemProperty(QColor(Qt::white).rgba());
-    m_properties[ItemProperty::Opacity] = ItemProperty(255);
-    m_properties[ItemProperty::FontSize] = ItemProperty(18);
+    m_properties[Property::StrokeColor] = Property{QColor(Qt::white), Property::StrokeColor};
+    m_properties[Property::Opacity] = Property{255, Property::Opacity};
+    m_properties[Property::FontSize] = Property{18, Property::FontSize};
 
     m_selectionStart = INVALID;
     m_selectionEnd = INVALID;
@@ -53,11 +52,11 @@ void Text::draw(QPainter &painter, const QPointF &offset) {
     qsizetype cur{caret()};
 
     if (mode() == EDIT) {
-        // Drawing the bounding box
-        QPen boundingBoxPen{Common::selectionBorderColor};
-        boundingBoxPen.setWidth(1);
-        painter.setPen(boundingBoxPen);
-        painter.drawRect(boundingBox().translated(-offset));
+        // // Drawing the bounding box
+        // QPen boundingBoxPen{Common::selectionBorderColor};
+        // boundingBoxPen.setWidth(1);
+        // painter.setPen(boundingBoxPen);
+        // painter.drawRect(boundingBox().translated(-offset));
 
         // Drawing the caret
         // PERF: There is no need to scan the entire text just to place the caret
@@ -276,8 +275,10 @@ void Text::insertText(const QString &text) {
     m_text.insert(cur, text);
     setCaret(cur + textSize);
 
-    // PERF: Some clever techniques can be used to update the bounding box instead
-    //       of using the entire string to calculate it again
+    updateBoundingBox();
+}
+
+void Text::updateBoundingBox() {
     QFontMetricsF metrics{getFont()};
     QSizeF size{metrics.size(getTextFlags(), m_text)};
 
@@ -322,7 +323,7 @@ bool Text::hasSelection() const {
 
 QFont Text::getFont() const {
     QFont font{};
-    font.setPointSize(getProperty(ItemProperty::FontSize).value().toInt());
+    font.setPointSize(property(Property::FontSize).value<int>());
 
     return font;
 }
@@ -330,9 +331,8 @@ QFont Text::getFont() const {
 QPen Text::getPen() const {
     QPen pen{};
 
-    QColor color{QColor::fromRgba(getProperty(ItemProperty::StrokeColor).value().toUInt())};
-    color.setAlpha(getProperty(ItemProperty::Opacity).value().toInt());
-    pen.setWidth(getProperty(ItemProperty::StrokeWidth).value().toInt());
+    QColor color{property(Property::StrokeColor).value<QColor>()};
+    color.setAlpha(property(Property::Opacity).value<int>());
     pen.setColor(color);
 
     return pen;
@@ -372,12 +372,22 @@ std::pair<qsizetype, qsizetype> Text::getLineRange(qsizetype position) const {
 }
 
 qsizetype Text::getPrevBreak(qsizetype position) const {
-    for (qsizetype pos{position - 1}; pos >= 0; pos--) {
+    auto isBreak = [&](int pos){
         for (auto& sep : Common::wordSeparators) {
-            if (m_text[pos] == sep) {
-                return pos;
-            }
+            if (m_text[pos] == sep)
+                return true;
         }
+
+        return false;
+    };
+
+    while (position > 0 && isBreak(position)) {
+        position--;
+    }
+    
+    for (qsizetype pos{position - 1}; pos >= 0; pos--) {
+        if (isBreak(pos))
+            return pos + 1;
     }
 
     return 0;
@@ -406,4 +416,8 @@ const QString &Text::text() const {
 
 Item::Type Text::type() const {
     return Item::Text;
+}
+
+void Text::updateAfterProperty() {
+    updateBoundingBox();
 }

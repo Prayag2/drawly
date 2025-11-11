@@ -8,7 +8,7 @@ class PropertyManager;
 
 class FreeformTool : public DrawingTool {
 public:
-    FreeformTool(const PropertyManager &propertyManager);
+    FreeformTool();
     ~FreeformTool() override = default;
 
     QString iconAlt() const override;

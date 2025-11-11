@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <unordered_set>
+class Property;
 class Tool;
 class Item;
 class ApplicationContext;
@@ -14,6 +15,9 @@ public:
 
     std::unordered_set<std::shared_ptr<Item>> &selectedItems();
     QRectF selectionBox() const;
+
+public slots:
+    void updatePropertyOfSelectedItems(Property property);
 
 private:
     std::unordered_set<std::shared_ptr<Item>> m_selectedItems{};

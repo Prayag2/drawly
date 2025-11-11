@@ -1,17 +1,32 @@
 #include "propertybar.h"
 
-#include "../tools/properties/toolproperty.h"
+#include "toolbar.h"
+#include "../context/applicationcontext.h"
+#include "../context/uicontext.h"
+#include "../properties/widgets/propertywidget.h"
+#include "../properties/widgets/propertymanager.h"
 #include "../tools/tool.h"
 #include <QLabel>
 #include <QVBoxLayout>
+#include <stdexcept>
 
-PropertyBar::PropertyBar(QWidget *parent) : QFrame{parent} {
+PropertyBar::PropertyBar(QWidget *parent) : QFrame{parent}
+{
     this->setFrameStyle(QFrame::StyledPanel | QFrame::Plain);
     this->setAutoFillBackground(true);
     this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
     m_layout = new QVBoxLayout{this};
     setLayout(m_layout);
+}
+
+void PropertyBar::setPropertyManager(PropertyManager *manager) {
+    m_propertyManager = manager;
+}
+
+void PropertyBar::updateToolProperties() {
+    ApplicationContext *context{ApplicationContext::instance()};
+    updateProperties(context->uiContext().toolBar().curTool());
 }
 
 // PUBLIC SLOTS
@@ -32,18 +47,23 @@ void PropertyBar::updateProperties(Tool &tool) {
         delete curItem;
     }
 
-    QVector<std::shared_ptr<ToolProperty>> properties{tool.properties()};
+    QVector<Property::Type> properties{tool.properties()};
     if (properties.empty()) {
         hide();
     } else {
         show();
     }
 
-    for (std::shared_ptr<ToolProperty> property : properties) {
-        QLabel *widgetLabel{new QLabel{property->name(), this}};
-        m_layout->addWidget(widgetLabel);
-        m_layout->addWidget(property->widget());
-        property->widget()->show();
+    for (Property::Type property : properties) {
+        try {
+            const PropertyWidget& widget{m_propertyManager->widget(property)};
+            QLabel *widgetLabel{new QLabel{widget.name(), this}};
+            m_layout->addWidget(widgetLabel);
+            m_layout->addWidget(widget.widget());
+            widget.widget()->show();
+        } catch (const std::logic_error& e) {
+            // ignore this property
+        }
     }
 
     update();

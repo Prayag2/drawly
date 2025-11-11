@@ -25,6 +25,7 @@ public:
     Event &event() const;
     KeybindManager &keybindManager() const;
     ActionManager &actionManager() const;
+    PropertyManager& propertyManager() const;
 
 public slots:
     void toolChanged(Tool &);

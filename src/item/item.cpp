@@ -1,4 +1,5 @@
 #include "item.h"
+#include <algorithm>
 
 // PUBLIC
 Item::Item() {
@@ -17,15 +18,30 @@ void Item::setBoundingBoxPadding(int padding) {
     m_boundingBoxPadding = padding;
 }
 
-ItemProperty &Item::getProperty(const ItemProperty::Type propertyType) {
+const Property &Item::property(const Property::Type propertyType) const {
     if (m_properties.find(propertyType) == m_properties.end()) {
         throw std::logic_error("Item does not support this property.");
     }
+
     return m_properties.at(propertyType);
 }
 
-const ItemProperty &Item::getProperty(const ItemProperty::Type propertyType) const {
-    // This will call the non-const version of this method.
-    // I'm doing this to avoid code duplication.
-    return const_cast<Item *>(this)->getProperty(propertyType);
+const QVector<Property::Type> Item::properties() const {
+    QVector<Property::Type> result;
+
+    std::for_each(m_properties.begin(), m_properties.end(), [&](const auto& propertyPair){
+        result.push_back(propertyPair.first);
+    });
+
+    return result;
 }
+
+void Item::setProperty(const Property::Type propertyType, Property newObj) {
+    if (m_properties.find(propertyType) != m_properties.end()) {
+        m_properties[propertyType] = newObj;
+    }
+
+    updateAfterProperty();
+}
+
+void Item::updateAfterProperty() {}

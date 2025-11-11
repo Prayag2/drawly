@@ -6,7 +6,7 @@ class PropertyManager;
 
 class LineTool : public PolygonDrawingTool {
 public:
-    LineTool(const PropertyManager &propertyManager);
+    LineTool();
     ~LineTool() override = default;
     QString iconAlt() const override;
 };

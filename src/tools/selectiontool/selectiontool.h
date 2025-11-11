@@ -15,7 +15,7 @@ public:
     void mouseMoved(ApplicationContext *context) override;
     void mouseReleased(ApplicationContext *context) override;
 
-    const QVector<std::shared_ptr<ToolProperty>> properties() const override;
+    const QVector<Property::Type> properties() const override;
 
     ToolID id() const override;
 
@@ -24,6 +24,9 @@ private:
 
     std::shared_ptr<SelectionToolState> m_moveState;
     std::shared_ptr<SelectionToolState> m_selectState;
+    std::shared_ptr<SelectionToolState> m_curState;
+
+    bool m_stateLocked{false};
 };
 
 #endif  // SELECTIONTOOL_H

@@ -1,7 +1,7 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include "properties/itemproperty.h"
+#include "../properties/property.h"
 #include <QPainter>
 #include <QRect>
 
@@ -24,17 +24,21 @@ public:
 
     void setBoundingBoxPadding(int padding);
 
-    ItemProperty &getProperty(const ItemProperty::Type propertyType);
-    const ItemProperty &getProperty(const ItemProperty::Type propertyType) const;
+    const QVector<Property::Type> properties() const;
+
+    void setProperty(const Property::Type propertyType, Property newObj);
+    const Property &property(const Property::Type propertyType) const;
 
     enum Type { Freeform, Rectangle, Ellipse, Line, Arrow, Text };
 
     virtual Type type() const = 0;
 
+    virtual void updateAfterProperty();
+
 protected:
     QRectF m_boundingBox{};
     int m_boundingBoxPadding{};
-    std::unordered_map<ItemProperty::Type, ItemProperty> m_properties{};
+    std::unordered_map<Property::Type, Property> m_properties{};
 
     virtual void m_draw(QPainter &painter, const QPointF &offset) const = 0;
 };

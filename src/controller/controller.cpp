@@ -8,23 +8,18 @@
 #include "../context/renderingcontext.h"
 #include "../context/spatialcontext.h"
 #include "../context/uicontext.h"
-#include "../data-structures/cachegrid.h"
-#include "../data-structures/quadtree.h"
 #include "../event/event.h"
-#include "../item/item.h"
 #include "../tools/tool.h"
 #include <QWheelEvent>
 #include <QDateTime>
 
 Controller::Controller(QObject *parent) : QObject{parent} {
+    m_context = ApplicationContext::instance(dynamic_cast<QWidget*>(parent));
+    m_context->setContexts();
 }
 
 Controller::~Controller() {
     qDebug() << "Object deleted: Controller";
-}
-
-void Controller::setContext(ApplicationContext *context) {
-    m_context = context;
 }
 
 void Controller::mousePressed(QMouseEvent *event) {
@@ -35,7 +30,7 @@ void Controller::mousePressed(QMouseEvent *event) {
 
     qint64 lastTime{m_lastClickTime};
     m_lastClickTime = QDateTime::currentMSecsSinceEpoch();
-    if (m_lastClickTime - lastTime <= Common::doubleClickInterval) {
+    if (m_lastClickTime - lastTime <= Common::doubleClickInterval && !m_mouseMoved) {
         m_clickCount++;
 
         if (m_clickCount == 2) {
@@ -46,6 +41,7 @@ void Controller::mousePressed(QMouseEvent *event) {
         return;
     }  else {
         m_clickCount = 1;
+        m_mouseMoved = false;
     }
 
     Event &contextEvent{m_context->uiContext().event()};
@@ -84,6 +80,8 @@ void Controller::mouseTripleClick(QMouseEvent* event) {
 }
 
 void Controller::mouseMoved(QMouseEvent *event) {
+    m_mouseMoved = true;
+
     Event &contextEvent{m_context->uiContext().event()};
     ToolBar &toolBar{m_context->uiContext().toolBar()};
     Canvas &canvas{m_context->renderingContext().canvas()};

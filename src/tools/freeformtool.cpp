@@ -9,16 +9,13 @@
 #include "../context/renderingcontext.h"
 #include "../context/spatialcontext.h"
 #include "../context/uicontext.h"
-#include "../data-structures/cachegrid.h"
-#include "../data-structures/quadtree.h"
 #include "../event/event.h"
 #include "../item/factory/freeformfactory.h"
 #include "../item/freeform.h"
 #include "../item/item.h"
-#include "properties/propertymanager.h"
-#include "properties/toolproperty.h"
+#include "../properties/widgets/propertymanager.h"
 
-FreeformTool::FreeformTool(const PropertyManager &propertyManager) {
+FreeformTool::FreeformTool() {
     m_itemFactory = std::make_unique<FreeformFactory>();
 
     int size{5}, borderWidth{1};
@@ -38,10 +35,7 @@ FreeformTool::FreeformTool(const PropertyManager &propertyManager) {
                               size - borderWidth);
     m_cursor = QCursor{cursorShape, size / 2, size / 2};
 
-    m_properties[ToolProperty::StrokeWidth] =
-        (propertyManager.get(ToolProperty::StrokeWidth));
-    m_properties[ToolProperty::StrokeColor] =
-        (propertyManager.get(ToolProperty::StrokeColor));
+    m_properties = { Property::StrokeWidth, Property::StrokeColor };
 }
 
 QString FreeformTool::iconAlt() const {
@@ -58,10 +52,9 @@ void FreeformTool::mousePressed(ApplicationContext *context) {
 
         curItem = std::dynamic_pointer_cast<Freeform>(m_itemFactory->create());
 
-        curItem->getProperty(ItemProperty::StrokeWidth)
-            .setValue(m_properties[ToolProperty::StrokeWidth]->value());
-        curItem->getProperty(ItemProperty::StrokeColor)
-            .setValue(m_properties[ToolProperty::StrokeColor]->value());
+        curItem->setProperty(Property::StrokeWidth, uiContext.propertyManager().value(Property::StrokeWidth));
+        curItem->setProperty(Property::StrokeColor, uiContext.propertyManager().value(Property::StrokeColor));
+
         curItem->setBoundingBoxPadding(10 * renderingContext.canvas().scale());
 
         m_lastPoint = uiContext.event().pos();

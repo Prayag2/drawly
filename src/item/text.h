@@ -59,6 +59,8 @@ public:
 
     constexpr static int INVALID{-1};
 
+    void updateAfterProperty() override;
+
 protected:
     void m_draw(QPainter &painter, const QPointF &offset) const override;
 
@@ -72,6 +74,7 @@ private:
     std::set<int> m_newlinePositions;  // stores positions of "\n" characters
 
     void renderBoundingBox(QPainter& painter) const;
+    void updateBoundingBox();
 
     qsizetype m_caretIndex;
     qsizetype m_selectionStart;

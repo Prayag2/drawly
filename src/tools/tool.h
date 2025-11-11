@@ -1,7 +1,7 @@
 #ifndef TOOL_H
 #define TOOL_H
 
-#include "properties/propertymanager.h"
+#include "../properties/property.h"
 #include <QCursor>
 class ApplicationContext;
 
@@ -37,11 +37,11 @@ public:
 
     virtual ToolID id() const = 0;
 
-    virtual const QVector<std::shared_ptr<ToolProperty>> properties() const;
+    virtual const QVector<Property::Type> properties() const;
 
 protected:
     QCursor m_cursor{};
-    std::unordered_map<ToolProperty::Type, std::shared_ptr<ToolProperty>> m_properties{};
+    QVector<Property::Type> m_properties;
 };
 
 #endif  // TOOL_H

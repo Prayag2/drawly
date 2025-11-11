@@ -1,13 +1,15 @@
-#include "toolstrokecolor.h"
+#include "strokecolorwidget.h"
+#include "../property.h"
 
 #include <QButtonGroup>
 #include <QColor>
 #include <QHBoxLayout>
 #include <QPushButton>
 
-// TODO: Use a better widget and a better way to return colors instead of button
-// id
-ToolStrokeColor::ToolStrokeColor(QWidget *parent) {
+// TODO: Use a better widget and a better way to return colors instead of button id
+StrokeColorWidget::StrokeColorWidget(QWidget *parent)
+    : PropertyWidget{parent}
+{
     m_widget = new QWidget{parent};
 
     QHBoxLayout *layout{new QHBoxLayout{m_widget}};
@@ -32,13 +34,16 @@ ToolStrokeColor::ToolStrokeColor(QWidget *parent) {
     m_group->buttons()[0]->setChecked(true);
     m_widget->setStyleSheet(QString::asprintf("QPushButton {width: %dpx; height: %dpx};", 20, 20));
     m_widget->hide();
+
+    QObject::connect(m_group, &QButtonGroup::idClicked, this, [this](){
+        emit changed(value());
+    });
 }
 
-QString ToolStrokeColor::name() const {
+QString StrokeColorWidget::name() const {
     return "Color";
 };
 
-const QVariant ToolStrokeColor::value() const {
-    // FIXME: Don't use id to return the colour
-    return m_group->checkedId();
+const Property StrokeColorWidget::value() const {
+    return Property{QColor::fromRgba(static_cast<quint64>(m_group->checkedId())), Property::StrokeColor};
 };

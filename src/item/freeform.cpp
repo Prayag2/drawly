@@ -2,13 +2,12 @@
 
 #include "../common/constants.h"
 #include "../common/utils.h"
-#include "properties/itemproperty.h"
 #include <memory>
 
 Freeform::Freeform() {
-    m_properties[ItemProperty::StrokeWidth] = ItemProperty(1);
-    m_properties[ItemProperty::StrokeColor] = ItemProperty(QColor(Qt::black).rgba());
-    m_properties[ItemProperty::Opacity] = ItemProperty(Common::maxItemOpacity);
+    m_properties[Property::StrokeWidth] = Property{1, Property::StrokeWidth};
+    m_properties[Property::StrokeColor] = Property{QColor(Qt::black), Property::StrokeColor};
+    m_properties[Property::Opacity] = Property{Common::maxItemOpacity, Property::Opacity};
 }
 
 int Freeform::minPointDistance() {
@@ -26,7 +25,7 @@ void Freeform::addPoint(const QPointF &point, const qreal pressure, bool optimiz
     double topLeftX{m_boundingBox.topLeft().x()}, topLeftY{m_boundingBox.topLeft().y()};
     double bottomRightX{m_boundingBox.bottomRight().x()},
         bottomRightY{m_boundingBox.bottomRight().y()};
-    int mg{getProperty(ItemProperty::StrokeWidth).value().toInt()};
+    int mg{property(Property::StrokeWidth).value<int>()};
 
     if (m_points.size() <= 1) {
         m_boundingBox.setTopLeft({x - mg, y - mg});
@@ -81,13 +80,13 @@ bool Freeform::intersects(const QLineF &line) {
 void Freeform::draw(QPainter &painter, const QPointF &offset) {
     QPen pen{};
 
-    QColor color{QColor::fromRgba(getProperty(ItemProperty::StrokeColor).value().toUInt())};
-    int alpha{getProperty(ItemProperty::Opacity).value().toInt()};
+    QColor color{property(Property::StrokeColor).value<QColor>()};
+    int alpha{property(Property::Opacity).value<int>()};
     color.setAlpha(alpha);
 
     pen.setJoinStyle(Qt::RoundJoin);
     pen.setCapStyle(Qt::RoundCap);
-    pen.setWidth(getProperty(ItemProperty::StrokeWidth).value().toInt());
+    pen.setWidth(property(Property::StrokeWidth).value<int>());
     pen.setColor(color);
 
     painter.setPen(pen);
@@ -117,11 +116,11 @@ QPointF Freeform::optimizePoint(const QPointF &newPoint) {
 void Freeform::quickDraw(QPainter &painter, const QPointF &offset) const {
     QPen pen{};
 
-    QColor color{static_cast<QRgb>(getProperty(ItemProperty::StrokeColor).value().toInt())};
-    int alpha{getProperty(ItemProperty::Opacity).value().toInt()};
+    QColor color{property(Property::StrokeColor).value<QColor>()};
+    int alpha{property(Property::Opacity).value<int>()};
     color.setAlpha(alpha);
 
-    qreal penWidth{getProperty(ItemProperty::StrokeWidth).value().toDouble()};
+    qreal penWidth{property(Property::StrokeWidth).value<qreal>()};
     if (alpha == Common::maxItemOpacity) {
         penWidth *= m_pressures.back();
     }
@@ -140,8 +139,8 @@ void Freeform::quickDraw(QPainter &painter, const QPointF &offset) const {
 }
 
 void Freeform::m_draw(QPainter &painter, const QPointF &offset) const {
-    int strokeWidth{getProperty(ItemProperty::StrokeWidth).value().toInt()};
-    int alpha{getProperty(ItemProperty::Opacity).value().toInt()};
+    int strokeWidth{property(Property::StrokeWidth).value<int>()};
+    int alpha{property(Property::Opacity).value<int>()};
     double currentWidth{strokeWidth * 1.0};
 
     // Intersection points are visible on translucent pressure sensitive strokes

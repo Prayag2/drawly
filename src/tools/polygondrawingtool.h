@@ -10,7 +10,7 @@ protected:
     std::shared_ptr<Polygon> curItem{};
 
 public:
-    PolygonDrawingTool(const PropertyManager &propertyManager);
+    PolygonDrawingTool();
     ~PolygonDrawingTool() override = default;
 
     void mousePressed(ApplicationContext *context) override;

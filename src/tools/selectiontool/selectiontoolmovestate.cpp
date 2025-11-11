@@ -12,7 +12,7 @@
 #include "../../event/event.h"
 #include "../../item/item.h"
 
-void SelectionToolMoveState::mousePressed(ApplicationContext *context) {
+bool SelectionToolMoveState::mousePressed(ApplicationContext *context) {
     auto &uiContext{context->uiContext()};
     auto &renderingContext{context->renderingContext()};
 
@@ -22,6 +22,8 @@ void SelectionToolMoveState::mousePressed(ApplicationContext *context) {
         m_lastPos = uiContext.event().pos();
         m_isActive = true;
     }
+
+    return true;
 }
 
 void SelectionToolMoveState::mouseMoved(ApplicationContext *context) {
@@ -59,6 +61,10 @@ void SelectionToolMoveState::mouseMoved(ApplicationContext *context) {
     renderingContext.markForUpdate();
 }
 
-void SelectionToolMoveState::mouseReleased(ApplicationContext *context) {
+bool SelectionToolMoveState::mouseReleased(ApplicationContext *context) {
+    auto &renderingContext{context->renderingContext()};
+    renderingContext.canvas().setCursor(Qt::OpenHandCursor);
     m_isActive = false;
+
+    return false;
 }

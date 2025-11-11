@@ -7,7 +7,7 @@ class PropertyManager;
 
 class TextTool : public DrawingTool {
 public:
-    TextTool(const PropertyManager &propertyManager);
+    TextTool();
     ~TextTool() override = default;
 
     void mousePressed(ApplicationContext *context) override;

@@ -18,14 +18,11 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 
     BoardLayout *layout{new BoardLayout(this)};
     Controller *controller{new Controller(this)};
-
-    ApplicationContext *context{new ApplicationContext(this)};
-    context->setContexts();
+    ApplicationContext *context{ApplicationContext::instance()};
 
     RenderingContext &renderingContext{context->renderingContext()};
     UIContext &uiContext{context->uiContext()};
 
-    controller->setContext(context);
     renderingContext.canvas().setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     this->setLayout(layout);

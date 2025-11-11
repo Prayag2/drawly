@@ -5,6 +5,11 @@
 #include "../context/applicationcontext.h"
 #include "../context/renderingcontext.h"
 #include "../context/spatialcontext.h"
+#include "../context/selectioncontext.h"
+#include "../data-structures/quadtree.h"
+#include "../data-structures/cachegrid.h"
+#include "../context/coordinatetransformer.h"
+#include "../components/propertybar.h"
 #include "../context/uicontext.h"
 #include "action.h"
 #include "keybindmanager.h"
@@ -71,6 +76,37 @@ ActionManager::ActionManager(ApplicationContext *context) : m_context{context}, 
                                       [&]() { this->switchToMoveTool(); },
                                       context}};
 
+    Action *selectAllAction{new Action{"Select All",
+                                      "Select all items",
+                                      [&, context]() {
+                                          this->switchToSelectionTool();
+
+                                          auto allItems{context->spatialContext().quadtree().getAllItems()};
+                                          context->selectionContext().selectedItems().insert(allItems.begin(), allItems.end());
+
+                                          context->uiContext().propertyBar().updateToolProperties();
+                                          context->renderingContext().markForRender();
+                                          context->renderingContext().markForUpdate();
+                                      },
+                                      context}};
+
+    Action *deleteAction{new Action{"Delete",
+                                      "Deletes selected items",
+                                      [&, context]() { 
+                                          auto& itemsToBeDeleted{context->selectionContext().selectedItems()};
+                                          auto& transformer{context->spatialContext().coordinateTransformer()};
+                                          for (auto& item : itemsToBeDeleted) {
+                                              context->spatialContext().cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
+                                              context->spatialContext().quadtree().deleteItem(item);
+                                          }
+
+                                          context->renderingContext().markForRender();
+                                          context->renderingContext().markForUpdate();
+
+                                          context->selectionContext().selectedItems().clear();
+                                      },
+                                      context}};
+
     keybindManager.addKeybinding(undoAction, "Ctrl+Z");
     keybindManager.addKeybinding(redoAction, "Ctrl+Y");
     keybindManager.addKeybinding(zoomInAction, "Ctrl++");
@@ -85,6 +121,8 @@ ActionManager::ActionManager(ApplicationContext *context) : m_context{context}, 
     keybindManager.addKeybinding(lineToolAction, "L");
     keybindManager.addKeybinding(arrowToolAction, "A");
     keybindManager.addKeybinding(moveToolAction, "M");
+    keybindManager.addKeybinding(selectAllAction, "Ctrl+A");
+    keybindManager.addKeybinding(deleteAction, "Delete");
 }
 
 void ActionManager::undo() {

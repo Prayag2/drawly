@@ -7,10 +7,21 @@ class SpatialContext;
 class UIContext;
 class SelectionContext;
 
+/**
+ * @note: This class was made a Singleton recently, so in many places it is still accessed by passing its pointer
+ *        instead of using the `instance` method.
+ */
 class ApplicationContext : public QObject {
 public:
-    ApplicationContext(QWidget *parent = nullptr);
     ~ApplicationContext();
+
+    static ApplicationContext *instance(QWidget *parent = nullptr) {
+        if (!m_instance) {
+            m_instance = new ApplicationContext(parent);
+        }
+
+        return m_instance;
+    }
 
     void setContexts();
 
@@ -22,12 +33,19 @@ public:
     SelectionContext &selectionContext() const;
 
 private:
+    ApplicationContext(QWidget *parent = nullptr);
+
+    ApplicationContext(const ApplicationContext&) = delete;
+    ApplicationContext(ApplicationContext*) = delete;
+
     QWidget *m_parentWidget;
 
     RenderingContext *m_renderingContext{nullptr};
     SpatialContext *m_spatialContext{nullptr};
     UIContext *m_uiContext{nullptr};
     SelectionContext *m_selectionContext{nullptr};
+
+    static ApplicationContext* m_instance;
 };
 
 #endif  // APPLICATIONCONTEXT_H

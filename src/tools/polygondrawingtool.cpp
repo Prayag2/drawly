@@ -9,22 +9,15 @@
 #include "../context/renderingcontext.h"
 #include "../context/spatialcontext.h"
 #include "../context/uicontext.h"
-#include "../data-structures/cachegrid.h"
-#include "../data-structures/quadtree.h"
 #include "../event/event.h"
 #include "../item/factory/itemfactory.h"
 #include "../item/polygon.h"
-#include "../item/properties/itemproperty.h"
-#include "properties/propertymanager.h"
-#include "properties/toolproperty.h"
+#include "../properties/widgets/propertymanager.h"
 
-PolygonDrawingTool::PolygonDrawingTool(const PropertyManager &propertyManager) {
+PolygonDrawingTool::PolygonDrawingTool() {
     m_cursor = QCursor(Qt::CrossCursor);
 
-    m_properties[ToolProperty::StrokeWidth] =
-        (propertyManager.get(ToolProperty::StrokeWidth));
-    m_properties[ToolProperty::StrokeColor] =
-        (propertyManager.get(ToolProperty::StrokeColor));
+    m_properties = { Property::StrokeWidth, Property::StrokeColor };
 }
 
 void PolygonDrawingTool::mousePressed(ApplicationContext *context) {
@@ -37,10 +30,8 @@ void PolygonDrawingTool::mousePressed(ApplicationContext *context) {
 
         curItem = std::dynamic_pointer_cast<Polygon>(m_itemFactory->create());
 
-        curItem->getProperty(ItemProperty::StrokeWidth)
-            .setValue(m_properties[ToolProperty::StrokeWidth]->value());
-        curItem->getProperty(ItemProperty::StrokeColor)
-            .setValue(m_properties[ToolProperty::StrokeColor]->value());
+        curItem->setProperty(Property::StrokeWidth, uiContext.propertyManager().value(Property::StrokeWidth));
+        curItem->setProperty(Property::StrokeColor, uiContext.propertyManager().value(Property::StrokeColor));
 
         curItem->setBoundingBoxPadding(10 * renderingContext.canvas().scale());
         curItem->setStart(transformer.viewToWorld(uiContext.event().pos()));
