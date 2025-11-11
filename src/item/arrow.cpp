@@ -31,14 +31,15 @@ void Arrow::calcArrowPoints() {
                        y2 - arrowSize * std::sin(angle + (M_PI / 180) * 30));
 }
 
-void Arrow::m_draw(QPainter& painter, const QPointF& offset) const {
+void Arrow::m_draw(QPainter &painter, const QPointF &offset) const {
     painter.drawLine(start() - offset, end() - offset);
     painter.drawLine(end() - offset, m_arrowP1 - offset);
     painter.drawLine(end() - offset, m_arrowP2 - offset);
 }
 
-bool Arrow::intersects(const QRectF& rect) {
-    if (!boundingBox().intersects(rect)) return false;
+bool Arrow::intersects(const QRectF &rect) {
+    if (!boundingBox().intersects(rect))
+        return false;
 
     // TODO: Use better techniques to detect collision
     QPointF p{start()}, q{end()}, r{m_arrowP1}, s{m_arrowP2};
@@ -61,15 +62,19 @@ bool Arrow::intersects(const QRectF& rect) {
             Common::intersects(QLineF{q, s}, QLineF{d, a}));
 };
 
-bool Arrow::intersects(const QLineF& line) {
+bool Arrow::intersects(const QLineF &line) {
     return (Common::intersects(QLineF{start(), end()}, line) ||
             Common::intersects(QLineF{end(), m_arrowP1}, line) ||
             Common::intersects(QLineF{end(), m_arrowP2}, line));
 }
 
-void Arrow::translate(const QPointF& amount) {
+void Arrow::translate(const QPointF &amount) {
     m_arrowP1 += amount;
     m_arrowP2 += amount;
 
     Polygon::translate(amount);
 };
+
+Item::Type Arrow::type() const {
+    return Item::Arrow;
+}

@@ -11,19 +11,19 @@ class Canvas;
 
 class SpatialContext : public QObject {
 public:
-    SpatialContext(ApplicationContext* context);
+    SpatialContext(ApplicationContext *context);
     ~SpatialContext();
 
     void setSpatialContext();
 
     // SpatialContext
-    QuadTree& quadtree() const;
-    CacheGrid& cacheGrid() const;
-    CoordinateTransformer& coordinateTransformer() const;
-    CommandHistory& commandHistory() const;
+    QuadTree &quadtree() const;
+    CacheGrid &cacheGrid() const;
+    CoordinateTransformer &coordinateTransformer() const;
+    CommandHistory &commandHistory() const;
 
-    const QPointF& offsetPos() const;
-    void setOffsetPos(const QPointF& pos);
+    const QPointF &offsetPos() const;
+    void setOffsetPos(const QPointF &pos);
 
 private:
     std::unique_ptr<QuadTree> m_quadtree{nullptr};
@@ -33,7 +33,7 @@ private:
 
     QPointF m_offsetPos{};  // all `Items` are positioned relative to this point
 
-    ApplicationContext* m_applicationContext;
+    ApplicationContext *m_applicationContext;
 };
 
 #endif  // SPATIALCONTEXT_H

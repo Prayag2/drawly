@@ -1,35 +1,52 @@
 #include "controller.h"
 
-#include <QWheelEvent>
+#include "../canvas/canvas.h"
+#include "../common/constants.h"
+#include "../common/renderitems.h"
+#include "../components/toolbar.h"
 #include "../context/applicationcontext.h"
 #include "../context/renderingcontext.h"
 #include "../context/spatialcontext.h"
 #include "../context/uicontext.h"
-#include "../canvas/canvas.h"
-#include "../common/renderitems.h"
-#include "../components/toolbar.h"
-#include "../data-structures/cachegrid.h"
-#include "../data-structures/quadtree.h"
 #include "../event/event.h"
-#include "../item/item.h"
 #include "../tools/tool.h"
+#include <QWheelEvent>
+#include <QDateTime>
 
-Controller::Controller(QObject* parent) : QObject{parent} {}
+Controller::Controller(QObject *parent) : QObject{parent} {
+    m_context = ApplicationContext::instance(dynamic_cast<QWidget*>(parent));
+    m_context->setContexts();
+}
 
 Controller::~Controller() {
     qDebug() << "Object deleted: Controller";
 }
 
-void Controller::setContext(ApplicationContext* context) {
-    m_context = context;
-}
+void Controller::mousePressed(QMouseEvent *event) {
+    // No on really clicks in this corner and this solves a 
+    // bug on Hyprland where it would register a mouse press in this corner
+    if (event->pos() == QPoint{0, 0})
+        return;
 
-void Controller::mousePressed(QMouseEvent* event) {
-    if (event->pos() == QPoint{0, 0}) return;
+    qint64 lastTime{m_lastClickTime};
+    m_lastClickTime = QDateTime::currentMSecsSinceEpoch();
+    if (m_lastClickTime - lastTime <= Common::doubleClickInterval && !m_mouseMoved) {
+        m_clickCount++;
 
-    Event& contextEvent{m_context->uiContext().event()};
-    ToolBar& toolBar{m_context->uiContext().toolBar()};
-    Canvas& canvas{m_context->renderingContext().canvas()};
+        if (m_clickCount == 2) {
+            mouseDoubleClick(event);
+        } else if (m_clickCount == 3) {
+            mouseTripleClick(event);
+        }
+        return;
+    }  else {
+        m_clickCount = 1;
+        m_mouseMoved = false;
+    }
+
+    Event &contextEvent{m_context->uiContext().event()};
+    ToolBar &toolBar{m_context->uiContext().toolBar()};
+    Canvas &canvas{m_context->renderingContext().canvas()};
 
     contextEvent.setPos(event->pos(), canvas.scale());
     contextEvent.setButton(event->button());
@@ -38,44 +55,90 @@ void Controller::mousePressed(QMouseEvent* event) {
     if (event->type() != QEvent::TabletPress) {
         contextEvent.setPressure(1.0);
     }
-    m_lastTime = QDateTime::currentMSecsSinceEpoch();
 }
 
-void Controller::mouseMoved(QMouseEvent* event) {
-    Event& contextEvent{m_context->uiContext().event()};
-    ToolBar& toolBar{m_context->uiContext().toolBar()};
-    Canvas& canvas{m_context->renderingContext().canvas()};
+void Controller::mouseDoubleClick(QMouseEvent* event) {
+    Event &contextEvent{m_context->uiContext().event()};
+    ToolBar &toolBar{m_context->uiContext().toolBar()};
+    Canvas &canvas{m_context->renderingContext().canvas()};
+
+    contextEvent.setPos(event->pos(), canvas.scale());
+    contextEvent.setButton(event->button());
+
+    toolBar.curTool().mouseDoubleClick(m_context);
+}
+
+void Controller::mouseTripleClick(QMouseEvent* event) {
+    Event &contextEvent{m_context->uiContext().event()};
+    ToolBar &toolBar{m_context->uiContext().toolBar()};
+    Canvas &canvas{m_context->renderingContext().canvas()};
+
+    contextEvent.setPos(event->pos(), canvas.scale());
+    contextEvent.setButton(event->button());
+
+    toolBar.curTool().mouseTripleClick(m_context);
+}
+
+void Controller::mouseMoved(QMouseEvent *event) {
+    m_mouseMoved = true;
+
+    Event &contextEvent{m_context->uiContext().event()};
+    ToolBar &toolBar{m_context->uiContext().toolBar()};
+    Canvas &canvas{m_context->renderingContext().canvas()};
 
     contextEvent.setPos(event->pos(), canvas.scale());
     contextEvent.setButton(event->button());
 
     toolBar.curTool().mouseMoved(m_context);
-
-    m_lastTime = QDateTime::currentMSecsSinceEpoch();
 }
 
-void Controller::mouseReleased(QMouseEvent* event) {
-    Event& contextEvent{m_context->uiContext().event()};
-    ToolBar& toolBar{m_context->uiContext().toolBar()};
-    Canvas& canvas{m_context->renderingContext().canvas()};
+void Controller::mouseReleased(QMouseEvent *event) {
+    Event &contextEvent{m_context->uiContext().event()};
+    ToolBar &toolBar{m_context->uiContext().toolBar()};
+    Canvas &canvas{m_context->renderingContext().canvas()};
 
     contextEvent.setPos(event->pos(), canvas.scale());
     contextEvent.setButton(event->button());
     toolBar.curTool().mouseReleased(m_context);
 }
 
-void Controller::tablet(QTabletEvent* event) {
-    Event& contextEvent{m_context->uiContext().event()};
+void Controller::tablet(QTabletEvent *event) {
+    Event &contextEvent{m_context->uiContext().event()};
 
     // TODO: Remove magic numbers
     contextEvent.setPressure(event->pressure() / 1.60 + 0.375);
 }
 
-// FIXME: Does not work 
-void Controller::wheel(QWheelEvent* event) {
-    const QPointF& offsetPos{m_context->spatialContext().offsetPos()};
+void Controller::keyPressed(QKeyEvent *event) {
+    Event &contextEvent{m_context->uiContext().event()};
+    ToolBar &toolBar{m_context->uiContext().toolBar()};
+
+    contextEvent.setKey(event->key());
+    contextEvent.setModifiers(event->modifiers());
+    contextEvent.setText(event->text());
+
+    toolBar.curTool().keyPressed(m_context);
+}
+
+void Controller::keyReleased(QKeyEvent *event) {
+    Event &contextEvent{m_context->uiContext().event()};
+    ToolBar &toolBar{m_context->uiContext().toolBar()};
+
+    contextEvent.setKey(event->key());
+    contextEvent.setModifiers(event->modifiers());
+    contextEvent.setText(event->text());
+
+    toolBar.curTool().keyReleased(m_context);
+}
+
+void Controller::inputMethodInvoked(QInputMethodEvent *event) {
+}
+
+// FIXME: Does not work
+void Controller::wheel(QWheelEvent *event) {
+    const QPointF &offsetPos{m_context->spatialContext().offsetPos()};
     const qreal zoomFactor{m_context->renderingContext().zoomFactor()};
-    Canvas& canvas{m_context->renderingContext().canvas()};
+    Canvas &canvas{m_context->renderingContext().canvas()};
 
     m_context->spatialContext().setOffsetPos(offsetPos - event->pixelDelta() / zoomFactor);
     Common::renderCanvas(m_context);

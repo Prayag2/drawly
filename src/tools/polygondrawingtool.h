@@ -10,12 +10,13 @@ protected:
     std::shared_ptr<Polygon> curItem{};
 
 public:
-    PolygonDrawingTool(const PropertyManager& propertyManager);
+    PolygonDrawingTool();
     ~PolygonDrawingTool() override = default;
 
-    void mousePressed(ApplicationContext* context) override;
-    void mouseMoved(ApplicationContext* context) override;
-    void mouseReleased(ApplicationContext* context) override;
+    void mousePressed(ApplicationContext *context) override;
+    void mouseMoved(ApplicationContext *context) override;
+    void mouseReleased(ApplicationContext *context) override;
+
     ToolID id() const override;
 };
 

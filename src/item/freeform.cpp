@@ -1,21 +1,20 @@
 #include "freeform.h"
 
-#include "../common/utils.h"
 #include "../common/constants.h"
-#include "properties/itemproperty.h"
+#include "../common/utils.h"
 #include <memory>
 
 Freeform::Freeform() {
-    m_properties[ItemPropertyType::StrokeWidth] = ItemProperty(1);
-    m_properties[ItemPropertyType::StrokeColor] = ItemProperty(QColor(Qt::black).rgba());
-    m_properties[ItemPropertyType::Opacity] = ItemProperty(Common::maxItemOpacity);
+    m_properties[Property::StrokeWidth] = Property{1, Property::StrokeWidth};
+    m_properties[Property::StrokeColor] = Property{QColor(Qt::black), Property::StrokeColor};
+    m_properties[Property::Opacity] = Property{Common::maxItemOpacity, Property::Opacity};
 }
 
 int Freeform::minPointDistance() {
     return 0;
 }
 
-void Freeform::addPoint(const QPointF& point, const qreal pressure, bool optimize) {
+void Freeform::addPoint(const QPointF &point, const qreal pressure, bool optimize) {
     QPointF newPoint{point};
     if (optimize) {
         newPoint = optimizePoint(point);
@@ -26,7 +25,7 @@ void Freeform::addPoint(const QPointF& point, const qreal pressure, bool optimiz
     double topLeftX{m_boundingBox.topLeft().x()}, topLeftY{m_boundingBox.topLeft().y()};
     double bottomRightX{m_boundingBox.bottomRight().x()},
         bottomRightY{m_boundingBox.bottomRight().y()};
-    int mg{m_boundingBoxPadding + getProperty(ItemPropertyType::StrokeWidth).value().toInt()};
+    int mg{property(Property::StrokeWidth).value<int>()};
 
     if (m_points.size() <= 1) {
         m_boundingBox.setTopLeft({x - mg, y - mg});
@@ -42,8 +41,9 @@ void Freeform::addPoint(const QPointF& point, const qreal pressure, bool optimiz
     m_pressures.push_back(pressure);
 }
 
-bool Freeform::intersects(const QRectF& rect) {
-    if (!boundingBox().intersects(rect)) return false;
+bool Freeform::intersects(const QRectF &rect) {
+    if (!boundingBox().intersects(rect))
+        return false;
 
     qsizetype pointsSize{m_points.size()};
     if (pointsSize == 1) {
@@ -67,7 +67,7 @@ bool Freeform::intersects(const QRectF& rect) {
     return false;
 }
 
-bool Freeform::intersects(const QLineF& line) {
+bool Freeform::intersects(const QLineF &line) {
     qsizetype pointSize{m_points.size()};
     for (qsizetype index{1}; index < pointSize; index++) {
         if (Common::intersects(QLineF{m_points[index - 1], m_points[index]}, line)) {
@@ -77,16 +77,16 @@ bool Freeform::intersects(const QLineF& line) {
     return false;
 }
 
-void Freeform::draw(QPainter& painter, const QPointF& offset) {
+void Freeform::draw(QPainter &painter, const QPointF &offset) {
     QPen pen{};
 
-    QColor color{QColor::fromRgba(getProperty(ItemPropertyType::StrokeColor).value().toUInt())};
-    int alpha{getProperty(ItemPropertyType::Opacity).value().toInt()};
+    QColor color{property(Property::StrokeColor).value<QColor>()};
+    int alpha{property(Property::Opacity).value<int>()};
     color.setAlpha(alpha);
 
     pen.setJoinStyle(Qt::RoundJoin);
     pen.setCapStyle(Qt::RoundCap);
-    pen.setWidth(getProperty(ItemPropertyType::StrokeWidth).value().toInt());
+    pen.setWidth(property(Property::StrokeWidth).value<int>());
     pen.setColor(color);
 
     painter.setPen(pen);
@@ -95,14 +95,13 @@ void Freeform::draw(QPainter& painter, const QPointF& offset) {
     m_draw(painter, offset);
 }
 
-void Freeform::erase(QPainter& painter, const QPointF& offset, QColor color) const {
+void Freeform::erase(QPainter &painter, const QPointF &offset, QColor color) const {
     painter.setCompositionMode(QPainter::CompositionMode_Source);
     painter.fillRect(boundingBox().translated(-offset), Qt::transparent);
     painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
-
 }
 
-QPointF Freeform::optimizePoint(const QPointF& newPoint) {
+QPointF Freeform::optimizePoint(const QPointF &newPoint) {
     m_currentWindow.push_back(newPoint);
     m_currentWindowSum += newPoint;
 
@@ -114,14 +113,14 @@ QPointF Freeform::optimizePoint(const QPointF& newPoint) {
     return m_currentWindowSum / m_currentWindow.size();
 }
 
-void Freeform::quickDraw(QPainter& painter, const QPointF& offset) const {
+void Freeform::quickDraw(QPainter &painter, const QPointF &offset) const {
     QPen pen{};
 
-    QColor color{static_cast<QRgb>(getProperty(ItemPropertyType::StrokeColor).value().toInt())};
-    int alpha{getProperty(ItemPropertyType::Opacity).value().toInt()};
+    QColor color{property(Property::StrokeColor).value<QColor>()};
+    int alpha{property(Property::Opacity).value<int>()};
     color.setAlpha(alpha);
 
-    qreal penWidth{getProperty(ItemPropertyType::StrokeWidth).value().toDouble()};
+    qreal penWidth{property(Property::StrokeWidth).value<qreal>()};
     if (alpha == Common::maxItemOpacity) {
         penWidth *= m_pressures.back();
     }
@@ -139,13 +138,14 @@ void Freeform::quickDraw(QPainter& painter, const QPointF& offset) const {
     }
 }
 
-void Freeform::m_draw(QPainter& painter, const QPointF& offset) const {
-    int strokeWidth{getProperty(ItemPropertyType::StrokeWidth).value().toInt()};
-    int alpha{getProperty(ItemPropertyType::Opacity).value().toInt()};
+void Freeform::m_draw(QPainter &painter, const QPointF &offset) const {
+    int strokeWidth{property(Property::StrokeWidth).value<int>()};
+    int alpha{property(Property::Opacity).value<int>()};
     double currentWidth{strokeWidth * 1.0};
 
     // Intersection points are visible on translucent pressure sensitive strokes
-    // So I've disabled the use of pressure senstivity when opacity is not max, for now
+    // So I've disabled the use of pressure senstivity when opacity is not max,
+    // for now
     bool canUsePressureSenstivity{alpha == Common::maxItemOpacity};
     if (!canUsePressureSenstivity) {
         painter.save();
@@ -212,10 +212,14 @@ QVector<std::shared_ptr<Item>> Freeform::split() const {
     return items;
 }
 
-void Freeform::translate(const QPointF& amount) {
-    for (QPointF& point : m_points) {
+void Freeform::translate(const QPointF &amount) {
+    for (QPointF &point : m_points) {
         point += amount;
     }
 
     m_boundingBox.translate(amount);
 };
+
+Item::Type Freeform::type() const {
+    return Item::Freeform;
+}

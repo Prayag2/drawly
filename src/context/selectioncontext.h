@@ -1,24 +1,28 @@
 #ifndef SELECTIONCONTEXT_H
 #define SELECTIONCONTEXT_H
 
-#include <unordered_set>
 #include <QWidget>
+#include <unordered_set>
+class Property;
 class Tool;
 class Item;
 class ApplicationContext;
 
-class SelectionContext : public QObject{
+class SelectionContext : public QObject {
 public:
-    SelectionContext(ApplicationContext* context);
+    SelectionContext(ApplicationContext *context);
     ~SelectionContext();
 
-    std::unordered_set<std::shared_ptr<Item>>& selectedItems();
+    std::unordered_set<std::shared_ptr<Item>> &selectedItems();
     QRectF selectionBox() const;
+
+public slots:
+    void updatePropertyOfSelectedItems(Property property);
 
 private:
     std::unordered_set<std::shared_ptr<Item>> m_selectedItems{};
 
-    ApplicationContext* m_applicationContext;
+    ApplicationContext *m_applicationContext;
 };
 
 #endif  // SELECTIONCONTEXT_H

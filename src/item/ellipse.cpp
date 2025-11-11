@@ -3,12 +3,12 @@
 Ellipse::Ellipse() {
 }
 
-void Ellipse::m_draw(QPainter& painter, const QPointF& offset) const {
+void Ellipse::m_draw(QPainter &painter, const QPointF &offset) const {
     painter.drawEllipse(QRectF(start() - offset, end() - offset));
 }
 
 bool Ellipse::onEllipse(QLineF line) const {
-    int sw{m_boundingBoxPadding + getProperty(ItemPropertyType::StrokeWidth).value().toInt()};
+    int sw{m_boundingBoxPadding + property(Property::StrokeWidth).value<int>()};
     double X{m_boundingBox.x() + sw}, Y{m_boundingBox.y() + sw};
     double W{m_boundingBox.width() - 2 * sw}, H{m_boundingBox.height() - 2 * sw};
 
@@ -30,7 +30,8 @@ bool Ellipse::onEllipse(QLineF line) const {
              static_cast<long long>(y1) * y1 * as + as * k * k - 2 * y1 * k * as - as * bs};
 
     double discriminant{B * B - 4 * A * C};
-    if (discriminant < 0) return false;
+    if (discriminant < 0)
+        return false;
 
     double t1{(-B + sqrt(discriminant)) / (2.0 * A)};
     double t2{(-B - sqrt(discriminant)) / (2.0 * A)};
@@ -38,8 +39,9 @@ bool Ellipse::onEllipse(QLineF line) const {
     return (t1 >= 0.0 && t1 <= 1.0) || (t2 >= 0.0 && t2 <= 1.0);
 }
 
-bool Ellipse::intersects(const QRectF& rect) {
-    if (!boundingBox().intersects(rect)) return false;
+bool Ellipse::intersects(const QRectF &rect) {
+    if (!boundingBox().intersects(rect))
+        return false;
 
     QPointF a{rect.topLeft()};
     QPointF b{rect.topRight()};
@@ -48,6 +50,10 @@ bool Ellipse::intersects(const QRectF& rect) {
     return onEllipse({a, b}) || onEllipse({b, c}) || onEllipse({c, d}) || onEllipse({d, a});
 };
 
-bool Ellipse::intersects(const QLineF& line) {
+bool Ellipse::intersects(const QLineF &line) {
     return onEllipse(line);
+}
+
+Item::Type Ellipse::type() const {
+    return Item::Ellipse;
 }

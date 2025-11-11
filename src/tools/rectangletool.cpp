@@ -2,8 +2,7 @@
 
 #include "../item/factory/rectanglefactory.h"
 
-RectangleTool::RectangleTool(const PropertyManager& propertyManager)
-    : PolygonDrawingTool(propertyManager) {
+RectangleTool::RectangleTool() {
     m_itemFactory = std::make_unique<RectangleFactory>();
 }
 

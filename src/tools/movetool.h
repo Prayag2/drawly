@@ -11,9 +11,10 @@ public:
     ~MoveTool() = default;
 
     QString iconAlt() const override;
-    void mousePressed(ApplicationContext* context) override;
-    void mouseMoved(ApplicationContext* context) override;
-    void mouseReleased(ApplicationContext* context) override;
+    void mousePressed(ApplicationContext *context) override;
+    void mouseMoved(ApplicationContext *context) override;
+    void mouseReleased(ApplicationContext *context) override;
+
     ToolID id() const override;
 
 private:

@@ -17,8 +17,8 @@ class OrderedList;
  * And redraw only the items necessary which improves performance.
  */
 /*
- * NOTE: This is tightly coupled with the OrderedList data structure present in the same directory
- *       and the Item class present in the `item` directory.
+ * NOTE: This is tightly coupled with the OrderedList data structure present in
+ * the same directory and the Item class present in the `item` directory.
  */
 class QuadTree {
 public:
@@ -43,30 +43,32 @@ public:
     int size() const;
     void insertItem(ItemPtr item);
     void deleteItem(ItemPtr item);
-    void updateItem(ItemPtr item, const QRectF& oldBoundingBox);
-    void deleteItems(const QRectF& boundingBox);
+    void updateItem(ItemPtr item, const QRectF &oldBoundingBox);
+    void deleteItems(const QRectF &boundingBox);
 
     QVector<ItemPtr> getAllItems() const;
 
     template <typename Shape, typename QueryCondition>
-    QVector<ItemPtr> queryItems(const Shape& shape, QueryCondition condition) const;
+    QVector<ItemPtr> queryItems(const Shape &shape, QueryCondition condition) const;
 
     template <typename Shape>
-    QVector<ItemPtr> queryItems(const Shape& shape) const;
+    QVector<ItemPtr> queryItems(const Shape &shape) const;
 
-    void draw(QPainter& painter, const QPointF& offset) const;
-    const QRectF& boundingBox() const;
+    void draw(QPainter &painter, const QPointF &offset) const;
+    const QRectF &boundingBox() const;
 
 private:
     bool insert(ItemPtr item);
-    void update(ItemPtr item, const QRectF& oldBoundingBox, bool inserted);
+    void update(ItemPtr item, const QRectF &oldBoundingBox, bool inserted);
 
     template <typename Shape, typename QueryCondition>
-    void query(const Shape& shape, QueryCondition condition, QVector<ItemPtr>& out,
-               std::unordered_map<ItemPtr, bool>& itemAlreadyPushed) const;
+    void query(const Shape &shape,
+               QueryCondition condition,
+               QVector<ItemPtr> &out,
+               std::unordered_map<ItemPtr, bool> &itemAlreadyPushed) const;
 
     void subdivide();
-    void expand(const QPointF& point);
+    void expand(const QPointF &point);
 };
 
 #include "quadtree.ipp"

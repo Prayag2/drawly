@@ -8,13 +8,14 @@ class PropertyManager;
 
 class FreeformTool : public DrawingTool {
 public:
-    FreeformTool(const PropertyManager& propertyManager);
+    FreeformTool();
     ~FreeformTool() override = default;
 
     QString iconAlt() const override;
-    void mousePressed(ApplicationContext* context) override;
-    void mouseMoved(ApplicationContext* context) override;
-    void mouseReleased(ApplicationContext* context) override;
+    void mousePressed(ApplicationContext *context) override;
+    void mouseMoved(ApplicationContext *context) override;
+    void mouseReleased(ApplicationContext *context) override;
+
     ToolID id() const override;
 
 private:

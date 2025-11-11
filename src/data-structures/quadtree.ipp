@@ -6,14 +6,14 @@
 #include <unordered_map>
 
 template <typename Shape>
-QVector<std::shared_ptr<Item>> QuadTree::queryItems(const Shape& shape) const {
-    return queryItems(shape, [](std::shared_ptr<Item> item, const Shape& shape) {
+QVector<std::shared_ptr<Item>> QuadTree::queryItems(const Shape &shape) const {
+    return queryItems(shape, [](std::shared_ptr<Item> item, const Shape &shape) {
         return item->intersects(shape);
     });
 }
 
 template <typename Shape, typename QueryCondition>
-QVector<std::shared_ptr<Item>> QuadTree::queryItems(const Shape& shape,
+QVector<std::shared_ptr<Item>> QuadTree::queryItems(const Shape &shape,
                                                     QueryCondition condition) const {
     QVector<std::shared_ptr<Item>> curItems{};
     std::unordered_map<std::shared_ptr<Item>, bool> itemAlreadyPushed{};
@@ -22,7 +22,7 @@ QVector<std::shared_ptr<Item>> QuadTree::queryItems(const Shape& shape,
     query(shape, condition, curItems, itemAlreadyPushed);
 
     // sort based on z-index
-    std::sort(curItems.begin(), curItems.end(), [&](auto& firstItem, auto& secondItem) {
+    std::sort(curItems.begin(), curItems.end(), [&](auto &firstItem, auto &secondItem) {
         return m_orderedList->zIndex(firstItem) < m_orderedList->zIndex(secondItem);
     });
 
@@ -30,17 +30,19 @@ QVector<std::shared_ptr<Item>> QuadTree::queryItems(const Shape& shape,
 };
 
 template <typename Shape, typename QueryCondition>
-void QuadTree::query(const Shape& shape, QueryCondition condition,
-                     QVector<std::shared_ptr<Item>>& out,
-                     std::unordered_map<std::shared_ptr<Item>, bool>& itemAlreadyPushed) const {
+void QuadTree::query(const Shape &shape,
+                     QueryCondition condition,
+                     QVector<std::shared_ptr<Item>> &out,
+                     std::unordered_map<std::shared_ptr<Item>, bool> &itemAlreadyPushed) const {
     if (!Common::intersects(m_boundingBox, shape)) {
         return;
     }
 
-    for (const std::shared_ptr<Item>& item : m_items) {
+    for (const std::shared_ptr<Item> &item : m_items) {
         if (Common::intersects(item->boundingBox(), shape)) {
             if (condition(item, shape)) {
-                // using the hash map because multiple nodes may have a pointer to the same item
+                // using the hash map because multiple nodes may have a pointer to the
+                // same item
                 if (!itemAlreadyPushed[item]) {
                     out.push_back(item);
                     itemAlreadyPushed[item] = true;

@@ -6,7 +6,7 @@ class PropertyManager;
 
 class EllipseTool : public PolygonDrawingTool {
 public:
-    EllipseTool(const PropertyManager& propertyManager);
+    EllipseTool();
 
     ~EllipseTool() override = default;
 

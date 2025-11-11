@@ -1,21 +1,22 @@
 #include "removeitemcommand.h"
+
 #include "../common/constants.h"
 #include "../context/applicationcontext.h"
-#include "../context/spatialcontext.h"
 #include "../context/coordinatetransformer.h"
-#include "../data-structures/quadtree.h"
+#include "../context/spatialcontext.h"
 #include "../data-structures/cachegrid.h"
+#include "../data-structures/quadtree.h"
 #include "../item/item.h"
 
-RemoveItemCommand::RemoveItemCommand(QVector<std::shared_ptr<Item>> items)
-    : ItemCommand{items} {}
+RemoveItemCommand::RemoveItemCommand(QVector<std::shared_ptr<Item>> items) : ItemCommand{items} {
+}
 
-void RemoveItemCommand::execute(ApplicationContext* context) {
-    auto& transformer{context->spatialContext().coordinateTransformer()};
-    auto& quadtree{context->spatialContext().quadtree()};
-    auto& cacheGrid{context->spatialContext().cacheGrid()};
+void RemoveItemCommand::execute(ApplicationContext *context) {
+    auto &transformer{context->spatialContext().coordinateTransformer()};
+    auto &quadtree{context->spatialContext().quadtree()};
+    auto &cacheGrid{context->spatialContext().cacheGrid()};
 
-    for (auto& item : m_items) {
+    for (auto &item : m_items) {
         QRect dirtyRegion{transformer.worldToGrid(item->boundingBox()).toRect()};
 
         quadtree.deleteItem(item);
@@ -23,12 +24,12 @@ void RemoveItemCommand::execute(ApplicationContext* context) {
     }
 }
 
-void RemoveItemCommand::undo(ApplicationContext* context) {
-    auto& transformer{context->spatialContext().coordinateTransformer()};
-    auto& quadtree{context->spatialContext().quadtree()};
-    auto& cacheGrid{context->spatialContext().cacheGrid()};
+void RemoveItemCommand::undo(ApplicationContext *context) {
+    auto &transformer{context->spatialContext().coordinateTransformer()};
+    auto &quadtree{context->spatialContext().quadtree()};
+    auto &cacheGrid{context->spatialContext().cacheGrid()};
 
-    for (auto& item : m_items) {
+    for (auto &item : m_items) {
         QRect dirtyRegion{transformer.worldToGrid(item->boundingBox()).toRect()};
 
         quadtree.insertItem(item);

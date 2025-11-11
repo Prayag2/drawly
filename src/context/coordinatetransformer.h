@@ -14,12 +14,12 @@ class RenderingContext;
  */
 class CoordinateTransformer {
 private:
-    SpatialContext* m_spatialContext;
-    RenderingContext* m_renderingContext;
-    ApplicationContext* m_applicationContext;
+    SpatialContext *m_spatialContext;
+    RenderingContext *m_renderingContext;
+    ApplicationContext *m_applicationContext;
 
 public:
-    CoordinateTransformer(ApplicationContext* context);
+    CoordinateTransformer(ApplicationContext *context);
     ~CoordinateTransformer();
 
     void setCoordinateTransformer();

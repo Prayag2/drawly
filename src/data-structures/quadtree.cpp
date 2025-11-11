@@ -15,7 +15,8 @@ QuadTree::QuadTree(QRectF region, int capacity) : m_boundingBox{region}, m_capac
 }
 
 QuadTree::QuadTree(QRectF region, int capacity, std::shared_ptr<OrderedList> orderedList)
-    : m_boundingBox{region}, m_capacity{capacity} {
+    : m_boundingBox{region},
+      m_capacity{capacity} {
     m_orderedList = orderedList;
 }
 
@@ -60,13 +61,18 @@ bool QuadTree::insert(std::shared_ptr<Item> item) {
     }
 
     // subdivide if not already subdivided
-    if (m_topLeft == nullptr) subdivide();
+    if (m_topLeft == nullptr)
+        subdivide();
 
     bool inserted = false;
-    if (m_topLeft->insert(item)) inserted = true;
-    if (m_topRight->insert(item)) inserted = true;
-    if (m_bottomRight->insert(item)) inserted = true;
-    if (m_bottomLeft->insert(item)) inserted = true;
+    if (m_topLeft->insert(item))
+        inserted = true;
+    if (m_topRight->insert(item))
+        inserted = true;
+    if (m_bottomRight->insert(item))
+        inserted = true;
+    if (m_bottomLeft->insert(item))
+        inserted = true;
 
     return inserted;
 }
@@ -92,7 +98,7 @@ void QuadTree::deleteItem(std::shared_ptr<Item> const item) {
     }
 }
 
-void QuadTree::updateItem(std::shared_ptr<Item> item, const QRectF& oldBoundingBox) {
+void QuadTree::updateItem(std::shared_ptr<Item> item, const QRectF &oldBoundingBox) {
     expand(item->boundingBox().topLeft());
     expand(item->boundingBox().topRight());
     expand(item->boundingBox().bottomRight());
@@ -101,7 +107,7 @@ void QuadTree::updateItem(std::shared_ptr<Item> item, const QRectF& oldBoundingB
     update(item, oldBoundingBox, false);
 }
 
-void QuadTree::update(std::shared_ptr<Item> item, const QRectF& oldBoundingBox, bool inserted) {
+void QuadTree::update(std::shared_ptr<Item> item, const QRectF &oldBoundingBox, bool inserted) {
     if (!m_boundingBox.intersects(oldBoundingBox) &&
         !m_boundingBox.intersects(item->boundingBox())) {
         return;
@@ -130,8 +136,9 @@ void QuadTree::update(std::shared_ptr<Item> item, const QRectF& oldBoundingBox, 
     }
 }
 
-void QuadTree::deleteItems(const QRectF& boundingBox) {
-    if (!m_boundingBox.intersects(boundingBox)) return;
+void QuadTree::deleteItems(const QRectF &boundingBox) {
+    if (!m_boundingBox.intersects(boundingBox))
+        return;
 
     for (int i = 0; i < m_items.size();) {
         if (boundingBox.intersects(m_items[i]->boundingBox())) {
@@ -161,7 +168,7 @@ QVector<std::shared_ptr<Item>> QuadTree::getAllItems() const {
     return curItems;
 }
 
-const QRectF& QuadTree::boundingBox() const {
+const QRectF &QuadTree::boundingBox() const {
     return m_boundingBox;
 };
 
@@ -177,8 +184,13 @@ int QuadTree::size() const {
     return totalNodes;
 }
 
-void QuadTree::draw(QPainter& painter, const QPointF& offset) const {
-    painter.drawRect(m_boundingBox.translated(offset));
+void QuadTree::draw(QPainter &painter, const QPointF &offset) const {
+    painter.save();
+
+    QPen pen{Qt::green};
+    painter.setPen(pen);
+    painter.drawRect(m_boundingBox.translated(-offset));
+    painter.restore();
 
     if (m_topLeft != nullptr) {
         m_topLeft->draw(painter, offset);
@@ -188,10 +200,11 @@ void QuadTree::draw(QPainter& painter, const QPointF& offset) const {
     }
 }
 
-void QuadTree::expand(const QPointF& point) {
+void QuadTree::expand(const QPointF &point) {
     // This function grows the quadtree in size recursively if the
     // point lies outside of it, making it almost infinite!
-    if (m_boundingBox.contains(point)) return;
+    if (m_boundingBox.contains(point))
+        return;
 
     double treeW{m_boundingBox.width()}, treeH{m_boundingBox.height()};
     double x{point.x()}, y{point.y()};

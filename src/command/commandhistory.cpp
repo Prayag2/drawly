@@ -1,9 +1,8 @@
 #include "commandhistory.h"
+
 #include <QDebug>
 
-CommandHistory::CommandHistory(ApplicationContext* context)
-    : m_context{context}
-{
+CommandHistory::CommandHistory(ApplicationContext *context) : m_context{context} {
     m_undoStack = std::make_unique<std::deque<std::shared_ptr<Command>>>();
     m_redoStack = std::make_unique<std::deque<std::shared_ptr<Command>>>();
 }

@@ -5,18 +5,23 @@
 #include <QStackedWidget>
 #include <QVBoxLayout>
 class Tool;
+class PropertyManager;
 enum class ToolID;
 
 class PropertyBar : public QFrame {
     Q_OBJECT
 public:
-    PropertyBar(QWidget* parent = nullptr);
+    PropertyBar(QWidget *parent = nullptr);
+
+    void setPropertyManager(PropertyManager *manager);
+    void updateToolProperties();
 
 public slots:
-    void toolChanged(Tool&);
+    void updateProperties(Tool &);
 
 private:
-    QVBoxLayout* m_layout{};
+    QVBoxLayout *m_layout{};
+    PropertyManager *m_propertyManager{};
 };
 
 #endif  // PROPERTYBAR_H

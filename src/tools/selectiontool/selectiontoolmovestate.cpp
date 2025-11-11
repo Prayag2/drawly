@@ -1,19 +1,20 @@
 #include "selectiontoolmovestate.h"
+
 #include "../../canvas/canvas.h"
-#include "../../item/item.h"
 #include "../../context/applicationcontext.h"
 #include "../../context/coordinatetransformer.h"
-#include "../../context/selectioncontext.h"
 #include "../../context/renderingcontext.h"
+#include "../../context/selectioncontext.h"
 #include "../../context/spatialcontext.h"
 #include "../../context/uicontext.h"
 #include "../../data-structures/cachegrid.h"
 #include "../../data-structures/quadtree.h"
 #include "../../event/event.h"
+#include "../../item/item.h"
 
-void SelectionToolMoveState::mousePressed(ApplicationContext* context) {
-    auto& uiContext{context->uiContext()};
-    auto& renderingContext{context->renderingContext()};
+bool SelectionToolMoveState::mousePressed(ApplicationContext *context) {
+    auto &uiContext{context->uiContext()};
+    auto &renderingContext{context->renderingContext()};
 
     if (uiContext.event().button() == Qt::LeftButton) {
         renderingContext.canvas().setCursor(Qt::ClosedHandCursor);
@@ -21,21 +22,23 @@ void SelectionToolMoveState::mousePressed(ApplicationContext* context) {
         m_lastPos = uiContext.event().pos();
         m_isActive = true;
     }
+
+    return true;
 }
 
-void SelectionToolMoveState::mouseMoved(ApplicationContext* context) {
-    auto& renderingContext{context->renderingContext()};
+void SelectionToolMoveState::mouseMoved(ApplicationContext *context) {
+    auto &renderingContext{context->renderingContext()};
 
     if (!m_isActive) {
         renderingContext.canvas().setCursor(Qt::OpenHandCursor);
         return;
     }
 
-    auto& spatialContext{context->spatialContext()};
-    auto& selectionContext{context->selectionContext()};
-    auto& transformer{spatialContext.coordinateTransformer()};
-    
-    auto& selectedItems{selectionContext.selectedItems()};
+    auto &spatialContext{context->spatialContext()};
+    auto &selectionContext{context->selectionContext()};
+    auto &transformer{spatialContext.coordinateTransformer()};
+
+    auto &selectedItems{selectionContext.selectedItems()};
 
     QPointF curPos{context->uiContext().event().pos()};
 
@@ -58,6 +61,10 @@ void SelectionToolMoveState::mouseMoved(ApplicationContext* context) {
     renderingContext.markForUpdate();
 }
 
-void SelectionToolMoveState::mouseReleased(ApplicationContext* context) {
+bool SelectionToolMoveState::mouseReleased(ApplicationContext *context) {
+    auto &renderingContext{context->renderingContext()};
+    renderingContext.canvas().setCursor(Qt::OpenHandCursor);
     m_isActive = false;
+
+    return false;
 }

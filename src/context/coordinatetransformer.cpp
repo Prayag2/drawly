@@ -1,11 +1,11 @@
 #include "coordinatetransformer.h"
 
 #include "applicationcontext.h"
-#include "spatialcontext.h"
 #include "renderingcontext.h"
+#include "spatialcontext.h"
 #include <cmath>
 
-CoordinateTransformer::CoordinateTransformer(ApplicationContext* context)
+CoordinateTransformer::CoordinateTransformer(ApplicationContext *context)
     : m_applicationContext{context} {};
 
 CoordinateTransformer::~CoordinateTransformer() {

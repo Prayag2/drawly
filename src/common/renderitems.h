@@ -4,7 +4,7 @@
 class ApplicationContext;
 
 namespace Common {
-void renderCanvas(ApplicationContext* context);
+void renderCanvas(ApplicationContext *context);
 };
 
 #endif

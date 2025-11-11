@@ -12,15 +12,15 @@ public:
     static QSize cellSize();
     static int counter;
 
-    CacheCell(const QPoint& point);
+    CacheCell(const QPoint &point);
     ~CacheCell();
 
     QRect rect() const;
-    const QPoint& point() const;
+    const QPoint &point() const;
     bool dirty() const;
     void setDirty(bool dirty);
-    QImage& image() const;
-    QPainter& painter() const;
+    QImage &image() const;
+    QPainter &painter() const;
 
 private:
     QPoint m_point{};
@@ -39,9 +39,9 @@ public:
     CacheGrid(int maxSize);
     ~CacheGrid();
 
-    QVector<std::shared_ptr<CacheCell>> queryCells(const QRect& rect);
-    std::shared_ptr<CacheCell> cell(const QPoint& point);
-    void markDirty(const QRect& rect);
+    QVector<std::shared_ptr<CacheCell>> queryCells(const QRect &rect);
+    std::shared_ptr<CacheCell> cell(const QPoint &point);
+    void markDirty(const QRect &rect);
     void markAllDirty();
     void setSize(int newSize);
     int size() const;

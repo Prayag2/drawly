@@ -1,13 +1,16 @@
-#include <QScreen>
 #include "renderingcontext.h"
-#include "applicationcontext.h"
-#include "spatialcontext.h"
+
 #include "../canvas/canvas.h"
 #include "../common/renderitems.h"
 #include "../data-structures/cachegrid.h"
+#include "applicationcontext.h"
+#include "spatialcontext.h"
+#include <QScreen>
 
-RenderingContext::RenderingContext(ApplicationContext* context) 
-    : QObject{context}, m_applicationContext(context) {}
+RenderingContext::RenderingContext(ApplicationContext *context)
+    : QObject{context},
+      m_applicationContext(context) {
+}
 
 RenderingContext::~RenderingContext() {
     qDebug() << "Object deleted: RenderingContext";
@@ -47,22 +50,24 @@ void RenderingContext::setRenderingContext() {
     m_frameTimer.start(1000 / fps());
 }
 
-Canvas& RenderingContext::canvas() const {
+Canvas &RenderingContext::canvas() const {
     return *m_canvas;
 }
 
-QPainter& RenderingContext::canvasPainter() const {
+QPainter &RenderingContext::canvasPainter() const {
     return *m_canvasPainter;
 }
 
-QPainter& RenderingContext::overlayPainter() const {
+QPainter &RenderingContext::overlayPainter() const {
     return *m_overlayPainter;
 }
 
 // PRIVATE SLOTS
 void RenderingContext::endPainters() {
-    if (m_canvasPainter->isActive()) m_canvasPainter->end();
-    if (m_overlayPainter->isActive()) m_overlayPainter->end();
+    if (m_canvasPainter->isActive())
+        m_canvasPainter->end();
+    if (m_overlayPainter->isActive())
+        m_overlayPainter->end();
 }
 
 void RenderingContext::beginPainters() {
@@ -83,7 +88,8 @@ qreal RenderingContext::zoomFactor() const {
 
 void RenderingContext::setZoomFactor(int diff) {
     // zoom out limit is 0.1
-    if (diff < 0 && m_zoomFactor - 0.1 <= 1e-9) return;
+    if (diff < 0 && m_zoomFactor - 0.1 <= 1e-9)
+        return;
 
     qreal oldZoomFactor = m_zoomFactor;
     m_zoomFactor += diff * 0.1;
@@ -94,9 +100,9 @@ void RenderingContext::setZoomFactor(int diff) {
     QPointF offsetPos{m_applicationContext->spatialContext().offsetPos()};
 
     offsetPos.setX(offsetPos.x() + viewport.width() / (2 * oldZoomFactor) -
-                     viewport.width() / (2 * m_zoomFactor));
+                   viewport.width() / (2 * m_zoomFactor));
     offsetPos.setY(offsetPos.y() + viewport.height() / (2 * oldZoomFactor) -
-                     viewport.height() / (2 * m_zoomFactor));
+                   viewport.height() / (2 * m_zoomFactor));
 
     // changes scale
     endPainters();
@@ -109,7 +115,7 @@ void RenderingContext::setZoomFactor(int diff) {
 }
 
 const int RenderingContext::fps() const {
-    QScreen* screen{m_canvas->screen()};
+    QScreen *screen{m_canvas->screen()};
     if (screen) {
         return screen->refreshRate();
     }
@@ -134,7 +140,7 @@ void RenderingContext::markForUpdate() {
     m_needsUpdate = true;
 }
 
-void RenderingContext::markForUpdate(const QRect& region) {
+void RenderingContext::markForUpdate(const QRect &region) {
     m_needsUpdate = true;
     m_updateRegion = region;
 }

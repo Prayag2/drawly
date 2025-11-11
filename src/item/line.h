@@ -8,11 +8,13 @@ public:
     Line();
     ~Line() override = default;
 
-    bool intersects(const QRectF& rect) override;
-    bool intersects(const QLineF& rect) override;
+    bool intersects(const QRectF &rect) override;
+    bool intersects(const QLineF &rect) override;
+
+    Item::Type type() const override;
 
 private:
-    void m_draw(QPainter& painter, const QPointF& offset) const override;
+    void m_draw(QPainter &painter, const QPointF &offset) const override;
 };
 
 #endif  // LINE_H
