@@ -1,7 +1,7 @@
 #ifndef CACHEGRID_H
 #define CACHEGRID_H
 #include <QHash>
-#include <QImage>
+#include <QPixmap>
 #include <QPoint>
 
 class CacheGrid;
@@ -19,12 +19,12 @@ public:
     const QPoint &point() const;
     bool dirty() const;
     void setDirty(bool dirty);
-    QImage &image() const;
+    QPixmap &image() const;
     QPainter &painter() const;
 
 private:
     QPoint m_point{};
-    std::unique_ptr<QImage> m_image{nullptr};
+    std::unique_ptr<QPixmap> m_image{nullptr};
     std::unique_ptr<QPainter> m_painter{};
     std::weak_ptr<CacheCell> nextCell{};
     std::weak_ptr<CacheCell> prevCell{};

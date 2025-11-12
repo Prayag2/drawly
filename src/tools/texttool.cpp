@@ -145,7 +145,11 @@ void TextTool::mouseMoved(ApplicationContext *context) {
                 m_curItem->setSelectionEnd(end + 1);
             }
         } else {
-            m_curItem->setSelectionEnd(curIndex);
+            if (curIndex == m_curItem->selectionStart()) {
+                m_curItem->setSelectionEnd(Text::INVALID);
+            } else {
+                m_curItem->setSelectionEnd(curIndex);
+            }
         }
 
         spatialContext.cacheGrid().markDirty(transformer.worldToGrid(m_curItem->boundingBox()).toRect());

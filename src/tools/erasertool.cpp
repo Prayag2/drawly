@@ -133,6 +133,9 @@ void EraserTool::leave(ApplicationContext *context) {
 void EraserTool::cleanup() {
     ApplicationContext *context{ApplicationContext::instance()};
 
+    context->uiContext().event().setButton(Qt::LeftButton);
+    mouseReleased(context);
+
     auto& overlayPainter{context->renderingContext().overlayPainter()};
     overlayPainter.save();
 

@@ -121,6 +121,12 @@ void FreeformTool::mouseReleased(ApplicationContext *context) {
     }
 }
 
+void FreeformTool::cleanup() {
+    ApplicationContext *context{ApplicationContext::instance()};
+    context->uiContext().event().setButton(Qt::LeftButton);
+    mouseReleased(context);
+}
+
 ToolID FreeformTool::id() const {
     return ToolID::FreeformTool;
 }

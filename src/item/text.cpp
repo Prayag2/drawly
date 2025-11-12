@@ -62,7 +62,6 @@ void Text::draw(QPainter &painter, const QPointF &offset) {
         // PERF: There is no need to scan the entire text just to place the caret
         // This can be a lot more efficient, so feel free to open a PR
         auto [start, end] = getLineRange(cur);
-        qDebug() << start << ", " << end;
         const QString &curLine{m_text.mid(start, cur - start)};
 
         int lineCount{0};
@@ -318,6 +317,9 @@ void Text::deleteSelection() {
 }
 
 bool Text::hasSelection() const {
+    if (selectionStart() == selectionEnd())
+        return false;
+
     return selectionStart() != INVALID && selectionEnd() != INVALID;
 }
 

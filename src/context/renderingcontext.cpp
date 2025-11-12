@@ -115,9 +115,9 @@ void RenderingContext::setZoomFactor(qreal diff, QPoint center) {
     beginPainters();
 
     m_applicationContext->spatialContext().cacheGrid().markAllDirty();
-    Common::renderCanvas(m_applicationContext);
 
-    canvas().update();
+    m_applicationContext->renderingContext().markForRender();
+    m_applicationContext->renderingContext().markForUpdate();
 }
 
 const int RenderingContext::fps() const {

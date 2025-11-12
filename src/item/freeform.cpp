@@ -2,6 +2,7 @@
 
 #include "../common/constants.h"
 #include "../common/utils.h"
+#include <QDateTime>
 #include <memory>
 
 Freeform::Freeform() {

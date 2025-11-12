@@ -10,8 +10,7 @@ class RenderingContext;
  * There are three coordinate systems in drawly:
  *  1. World (the one used by the QuadTree to store items)
  *  2. Grid (the one used by the CacheGrid to cache tiles)
- *  3. View (the viewport)
- */
+ *  3. View (the viewport) */
 class CoordinateTransformer {
 private:
     SpatialContext *m_spatialContext;
@@ -65,6 +64,10 @@ public:
     QPoint gridToView(QPoint point);
     QSize gridToView(QSize size);
     QRect gridToView(QRect rect);
+
+    QPoint round(QPointF point);
+    QRect round(QRectF rect);
+    QSize round(QSizeF size);
 };
 
 #endif  // COORDINATETRANSFORMER_H

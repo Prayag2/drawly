@@ -109,11 +109,13 @@ ActionManager::ActionManager(ApplicationContext *context) : m_context{context}, 
 
     keybindManager.addKeybinding(undoAction, "Ctrl+Z");
     keybindManager.addKeybinding(redoAction, "Ctrl+Y");
+    keybindManager.addKeybinding(redoAction, "Ctrl+Shift+Z");
     keybindManager.addKeybinding(zoomInAction, "Ctrl++");
     keybindManager.addKeybinding(zoomOutAction, "Ctrl+-");
     keybindManager.addKeybinding(increaseThicknessAction, "]");
     keybindManager.addKeybinding(decreaseThicknessAction, "[");
     keybindManager.addKeybinding(freeformToolAction, "P");
+    keybindManager.addKeybinding(freeformToolAction, "B");
     keybindManager.addKeybinding(eraserToolAction, "E");
     keybindManager.addKeybinding(selectionToolAction, "S");
     keybindManager.addKeybinding(rectangleToolAction, "R");

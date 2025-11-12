@@ -152,8 +152,9 @@ void Controller::wheel(QWheelEvent *event) {
         return;
     }
 
+    qDebug() << event << "\n";
     m_context->spatialContext().setOffsetPos(offsetPos - event->angleDelta() / zoomFactor);
-    Common::renderCanvas(m_context);
 
-    canvas.update();
+    m_context->renderingContext().markForRender();
+    m_context->renderingContext().markForUpdate();
 }

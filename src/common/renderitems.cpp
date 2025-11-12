@@ -23,16 +23,18 @@ void Common::renderCanvas(ApplicationContext *context) {
     canvas.canvas()->fill(canvas.bg());
 
     QPointF gridOffset{transformer.worldToGrid(offsetPos)};
-    QRectF gridViewport(gridOffset, canvas.dimensions());
+    QRectF gridViewport(gridOffset, transformer.viewToGrid(canvas.dimensions()));
 
     QVector<std::shared_ptr<CacheCell>> visibleCells{
-        context->spatialContext().cacheGrid().queryCells(gridViewport.toRect())};
+        context->spatialContext().cacheGrid().queryCells(transformer.round(gridViewport))};
 
     QPainter &canvasPainter{context->renderingContext().canvasPainter()};
 
     for (auto cell : visibleCells) {
-        // QPen pen; pen.setColor(Qt::white); painter.setPen(pen);
-        // painter.drawRect(cell->rect().translated(-viewOffset.toPoint()));
+        // canvasPainter.save();
+        // QPen pen; pen.setColor(Qt::white); canvasPainter.setPen(pen);
+        // canvasPainter.drawRect(transformer.gridToView(cell->rect()));
+        // canvasPainter.restore();
 
         if (cell->dirty()) {
             cell->image().fill(Qt::transparent);
@@ -48,17 +50,17 @@ void Common::renderCanvas(ApplicationContext *context) {
 
             qreal zoomFactor{context->renderingContext().zoomFactor()};
 
+            QPointF topLeftPoint{transformer.gridToWorld(cell->rect().topLeft().toPointF())};
+
             cell->painter().resetTransform();
             cell->painter().scale(zoomFactor, zoomFactor);
-
-            QPointF topLeftPoint{transformer.gridToWorld(cell->rect().topLeft())};
 
             for (auto intersectingItem : intersectingItems) {
                 intersectingItem->draw(cell->painter(), topLeftPoint);
             }
         }
 
-        canvasPainter.drawImage(cell->rect().translated(-gridOffset.toPoint()), cell->image());
+        canvasPainter.drawPixmap(transformer.round(transformer.gridToView(cell->rect())), cell->image());
     }
 
     QRectF selectionBox{};

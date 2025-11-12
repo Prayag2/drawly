@@ -16,6 +16,7 @@ public:
     void mousePressed(ApplicationContext *context) override;
     void mouseMoved(ApplicationContext *context) override;
     void mouseReleased(ApplicationContext *context) override;
+    void cleanup() override;
 
     ToolID id() const override;
 };

@@ -87,6 +87,12 @@ void PolygonDrawingTool::mouseReleased(ApplicationContext *context) {
     }
 };
 
+void PolygonDrawingTool::cleanup() {
+    ApplicationContext *context{ApplicationContext::instance()};
+    context->uiContext().event().setButton(Qt::LeftButton);
+    mouseReleased(context);
+}
+
 ToolID PolygonDrawingTool::id() const {
     return ToolID::PolygonDrawingTool;
 }

@@ -11,14 +11,14 @@ public:
     explicit Canvas(QWidget *parent = nullptr);
     ~Canvas();
 
-    QImage *const canvas() const;
-    QImage *const overlay() const;
-    QImage *const widget() const;
+    QPixmap *const canvas() const;
+    QPixmap *const overlay() const;
+    QPixmap *const widget() const;
     QSize sizeHint() const override;
     QSize dimensions() const;
 
     QColor bg() const;
-    void setBg(const QColor &color, QImage *canvas = nullptr, QImage *overlay = nullptr);
+    void setBg(const QColor &color, QPixmap *canvas = nullptr, QPixmap *overlay = nullptr);
 
     qreal scale() const;
     void setScale(const qreal scale);
@@ -57,17 +57,17 @@ protected:
 
 private:
     qreal m_scale{1.0};  // default scale is 1
-    QImage *m_canvas{};
-    QImage *m_overlay{};
-    QImage *m_widget{};
+    QPixmap *m_canvas{};
+    QPixmap *m_overlay{};
+    QPixmap *m_widget{};
     QColor m_bg{};
 
     QSize m_sizeHint{500, 500};
     QSize m_maxSize{};
-    const QImage::Format m_imageFormat{QImage::Format_ARGB32_Premultiplied};
+    // const QPixmap::Format m_imageFormat{QPixmap::Format_ARGB32_Premultiplied};
 
-    static QByteArray imageData(QImage *const img);
-    static void setImageData(QImage *const img, const QByteArray &arr);
+    static QByteArray imageData(QPixmap *const img);
+    static void setImageData(QPixmap *const img, const QByteArray &arr);
     void resize();
 };
 
