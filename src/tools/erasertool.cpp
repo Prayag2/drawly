@@ -116,7 +116,9 @@ void EraserTool::mouseReleased(ApplicationContext *context) {
             erasedItems.push_back(item);
         }
 
-        commandHistory.insert(std::make_shared<RemoveItemCommand>(erasedItems));
+        if (!erasedItems.empty()) {
+            commandHistory.insert(std::make_shared<RemoveItemCommand>(erasedItems));
+        }
 
         renderingContext.markForRender();
         renderingContext.markForUpdate();
@@ -147,6 +149,6 @@ void EraserTool::cleanup() {
     overlayPainter.restore();
 }
 
-ToolID EraserTool::id() const {
-    return ToolID::EraserTool;
+Tool::Type EraserTool::type() const {
+    return Tool::Eraser;
 }

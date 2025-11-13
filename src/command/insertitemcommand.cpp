@@ -1,6 +1,7 @@
 #include "insertitemcommand.h"
 
 #include "../context/applicationcontext.h"
+#include "../context/selectioncontext.h"
 #include "../context/coordinatetransformer.h"
 #include "../context/spatialcontext.h"
 #include "../data-structures/cachegrid.h"
@@ -28,9 +29,12 @@ void InsertItemCommand::undo(ApplicationContext *context) {
     auto &transformer{context->spatialContext().coordinateTransformer()};
     auto &quadtree{context->spatialContext().quadtree()};
     auto &cacheGrid{context->spatialContext().cacheGrid()};
+    auto &selectedItems{context->selectionContext().selectedItems()};
 
     for (auto &item : m_items) {
         QRect dirtyRegion{transformer.worldToGrid(item->boundingBox()).toRect()};
+
+        selectedItems.erase(item);
         quadtree.deleteItem(item);
         cacheGrid.markDirty(dirtyRegion);
     }

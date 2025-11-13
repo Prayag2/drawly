@@ -2,21 +2,21 @@
 
 #include "../common/utils.h"
 
-Line::Line() {
+LineItem::LineItem() {
 }
 
-void Line::m_draw(QPainter &painter, const QPointF &offset) const {
+void LineItem::m_draw(QPainter &painter, const QPointF &offset) const {
     painter.drawLine(start() - offset, end() - offset);
 }
 
-bool Line::intersects(const QRectF &rect) {
+bool LineItem::intersects(const QRectF &rect) {
     return Common::intersects(rect, QLineF{start(), end()});
 };
 
-bool Line::intersects(const QLineF &line) {
+bool LineItem::intersects(const QLineF &line) {
     return Common::intersects(QLineF{start(), end()}, line);
 }
 
-Item::Type Line::type() const {
+Item::Type LineItem::type() const {
     return Item::Line;
 }

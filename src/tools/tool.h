@@ -5,19 +5,6 @@
 #include <QCursor>
 class ApplicationContext;
 
-enum class ToolID {
-    SelectionTool,
-    FreeformTool,
-    PolygonDrawingTool,
-    EraserTool,
-    MoveTool,
-    RectangleTool,
-    EllipseTool,
-    LineTool,
-    ArrowTool,
-    TextTool
-};
-
 // INTERFACE
 class Tool {
 public:
@@ -38,7 +25,20 @@ public:
 
     virtual void cleanup();
 
-    virtual ToolID id() const = 0;
+    enum Type {
+        Selection,
+        Freeform,
+        PolygonDrawing,
+        Eraser,
+        Move,
+        Rectangle,
+        Ellipse,
+        Line,
+        Arrow,
+        Text
+    };
+
+    virtual Type type() const = 0;
 
     virtual const QVector<Property::Type> properties() const;
 

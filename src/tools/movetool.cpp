@@ -20,14 +20,18 @@ QString MoveTool::iconAlt() const {
 
 void MoveTool::mousePressed(ApplicationContext *context) {
     UIContext &uiContext{context->uiContext()};
+    auto button{uiContext.event().button()};
 
-    if (uiContext.event().button() == Qt::LeftButton) {
+    if (button == Qt::LeftButton || button == Qt::MiddleButton) {
         SpatialContext &spatialContext{context->spatialContext()};
+        RenderingContext &renderingContext{context->renderingContext()};
 
         m_isActive = true;
 
         m_initialOffsetPos = spatialContext.offsetPos();
         m_initialPos = uiContext.event().pos();
+
+        renderingContext.canvas().setCursor(Qt::ClosedHandCursor);
     }
 };
 
@@ -42,9 +46,6 @@ void MoveTool::mouseMoved(ApplicationContext *context) {
 
         spatialContext.setOffsetPos(newPoint / zoom);
 
-        renderingContext.canvas().setCursor(Qt::ClosedHandCursor);
-        qDebug() << "Offset: " << spatialContext.offsetPos();
-
         renderingContext.markForRender();
         renderingContext.markForUpdate();
     }
@@ -52,7 +53,9 @@ void MoveTool::mouseMoved(ApplicationContext *context) {
 
 void MoveTool::mouseReleased(ApplicationContext *context) {
     UIContext &uiContext{context->uiContext()};
-    if (uiContext.event().button() == Qt::LeftButton) {
+    auto button{uiContext.event().button()};
+
+    if (button == Qt::LeftButton || button == Qt::MiddleButton) {
         RenderingContext &renderingContext{context->renderingContext()};
 
         renderingContext.canvas().setCursor(Qt::OpenHandCursor);
@@ -60,6 +63,6 @@ void MoveTool::mouseReleased(ApplicationContext *context) {
     }
 };
 
-ToolID MoveTool::id() const {
-    return ToolID::MoveTool;
+Tool::Type MoveTool::type() const {
+    return Tool::Move;
 }

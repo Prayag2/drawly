@@ -14,7 +14,7 @@
  * TODO: This file needs some refactoring as well, feel free to open a PR
  */
 
-Text::Text() {
+TextItem::TextItem() {
     m_properties[Property::StrokeColor] = Property{QColor(Qt::white), Property::StrokeColor};
     m_properties[Property::Opacity] = Property{255, Property::Opacity};
     m_properties[Property::FontSize] = Property{18, Property::FontSize};
@@ -26,10 +26,10 @@ Text::Text() {
     m_mode = NORMAL;
 }
 
-Text::~Text() {
+TextItem::~TextItem() {
 }
 
-void Text::createTextBox(const QPoint position) {
+void TextItem::createTextBox(const QPoint position) {
     m_boundingBox.setTopLeft(position);
     m_boundingBox.setWidth(Common::defaultTextBoxWidth);
 
@@ -37,15 +37,15 @@ void Text::createTextBox(const QPoint position) {
     m_boundingBox.setHeight(metrics.height());
 }
 
-bool Text::intersects(const QRectF &rect) {
+bool TextItem::intersects(const QRectF &rect) {
     return m_boundingBox.intersects(rect);
 }
 
-bool Text::intersects(const QLineF &line) {
+bool TextItem::intersects(const QLineF &line) {
     return Common::intersects(m_boundingBox, line);
 }
 
-void Text::draw(QPainter &painter, const QPointF &offset) {
+void TextItem::draw(QPainter &painter, const QPointF &offset) {
     painter.save();
 
     QRectF curBox{m_boundingBox.translated(-offset)};
@@ -134,33 +134,33 @@ void Text::draw(QPainter &painter, const QPointF &offset) {
     painter.restore();
 }
 
-void Text::erase(QPainter &painter, const QPointF &offset, QColor color) const {
+void TextItem::erase(QPainter &painter, const QPointF &offset, QColor color) const {
 }
 
-void Text::translate(const QPointF &amount) {
+void TextItem::translate(const QPointF &amount) {
     m_boundingBox.translate(amount);
 }
 
-void Text::m_draw(QPainter &painter, const QPointF &offset) const {
+void TextItem::m_draw(QPainter &painter, const QPointF &offset) const {
 }
 
-Text::Mode Text::mode() const {
+TextItem::Mode TextItem::mode() const {
     return m_mode;
 }
 
-void Text::setMode(Mode mode) {
+void TextItem::setMode(Mode mode) {
     m_mode = mode;
 }
 
-qsizetype Text::caret() const {
+qsizetype TextItem::caret() const {
     return m_caretIndex;
 }
 
-qsizetype Text::caretPosInLine() const {
+qsizetype TextItem::caretPosInLine() const {
     return m_caretPosInLine;
 }
 
-void Text::setCaret(qsizetype index, bool updatePosInLine) {
+void TextItem::setCaret(qsizetype index, bool updatePosInLine) {
     if (index < 0 || index > m_text.size())
         return;
 
@@ -174,7 +174,7 @@ void Text::setCaret(qsizetype index, bool updatePosInLine) {
     }
 }
 
-int Text::getLineFromY(double yPos) const {
+int TextItem::getLineFromY(double yPos) const {
     QFontMetricsF metrics{getFont()};
     double lineHeight{metrics.height()};
 
@@ -185,7 +185,7 @@ int Text::getLineFromY(double yPos) const {
     return static_cast<int>(std::ceil(distFromTop / lineHeight));
 }
 
-qsizetype Text::getIndexFromX(double xPos, int lineNumber) const {
+qsizetype TextItem::getIndexFromX(double xPos, int lineNumber) const {
     QFontMetricsF metrics{getFont()};
 
     auto [start, end] = getLineRange(lineNumber);
@@ -230,7 +230,7 @@ qsizetype Text::getIndexFromX(double xPos, int lineNumber) const {
     return start + index;
 }
 
-void Text::setCaret(const QPointF &cursorPos) {
+void TextItem::setCaret(const QPointF &cursorPos) {
     if (!m_boundingBox.contains(cursorPos))
         return;
 
@@ -240,23 +240,23 @@ void Text::setCaret(const QPointF &cursorPos) {
     setCaret(index);
 }
 
-qsizetype Text::selectionStart() const {
+qsizetype TextItem::selectionStart() const {
     return m_selectionStart;
 }
 
-qsizetype Text::selectionEnd() const {
+qsizetype TextItem::selectionEnd() const {
     return m_selectionEnd;
 }
 
-void Text::setSelectionStart(qsizetype index) {
+void TextItem::setSelectionStart(qsizetype index) {
     m_selectionStart = index;
 }
 
-void Text::setSelectionEnd(qsizetype index) {
+void TextItem::setSelectionEnd(qsizetype index) {
     m_selectionEnd = index;
 }
 
-const QString Text::selectedText() const {
+const QString TextItem::selectedText() const {
     if (!hasSelection())
         return "";
 
@@ -264,7 +264,7 @@ const QString Text::selectedText() const {
     return m_text.mid(std::min(selStart, selEnd), selEnd - selStart + 1);
 }
 
-void Text::insertText(const QString &text) {
+void TextItem::insertText(const QString &text) {
     if (text.isEmpty())
         return;
 
@@ -277,7 +277,7 @@ void Text::insertText(const QString &text) {
     updateBoundingBox();
 }
 
-void Text::updateBoundingBox() {
+void TextItem::updateBoundingBox() {
     QFontMetricsF metrics{getFont()};
     QSizeF size{metrics.size(getTextFlags(), m_text)};
 
@@ -285,7 +285,7 @@ void Text::updateBoundingBox() {
     m_boundingBox.setHeight(size.height());
 }
 
-void Text::deleteSubStr(int start, int end) {
+void TextItem::deleteSubStr(int start, int end) {
     if (start < 0 || start >= m_text.size() || end < 0 || end >= m_text.size())
         return;
 
@@ -301,7 +301,7 @@ void Text::deleteSubStr(int start, int end) {
     m_boundingBox.setHeight(size.height());
 }
 
-void Text::deleteSelection() {
+void TextItem::deleteSelection() {
     if (!hasSelection())
         return;
 
@@ -309,28 +309,28 @@ void Text::deleteSelection() {
     if (selStart > selEnd)
         std::swap(selStart, selEnd);
 
-    setSelectionStart(Text::INVALID);
-    setSelectionEnd(Text::INVALID);
+    setSelectionStart(TextItem::INVALID);
+    setSelectionEnd(TextItem::INVALID);
 
     deleteSubStr(selStart, selEnd - 1);
     setCaret(selStart);
 }
 
-bool Text::hasSelection() const {
+bool TextItem::hasSelection() const {
     if (selectionStart() == selectionEnd())
         return false;
 
     return selectionStart() != INVALID && selectionEnd() != INVALID;
 }
 
-QFont Text::getFont() const {
+QFont TextItem::getFont() const {
     QFont font{};
     font.setPointSize(property(Property::FontSize).value<int>());
 
     return font;
 }
 
-QPen Text::getPen() const {
+QPen TextItem::getPen() const {
     QPen pen{};
 
     QColor color{property(Property::StrokeColor).value<QColor>()};
@@ -340,7 +340,7 @@ QPen Text::getPen() const {
     return pen;
 }
 
-std::pair<qsizetype, qsizetype> Text::getLineRange(int lineNumber) const {
+std::pair<qsizetype, qsizetype> TextItem::getLineRange(int lineNumber) const {
     qsizetype len{m_text.length()};
 
     qsizetype startIndex{0};
@@ -361,7 +361,7 @@ std::pair<qsizetype, qsizetype> Text::getLineRange(int lineNumber) const {
     return std::make_pair(startIndex, endIndex);
 }
 
-std::pair<qsizetype, qsizetype> Text::getLineRange(qsizetype position) const {
+std::pair<qsizetype, qsizetype> TextItem::getLineRange(qsizetype position) const {
     qsizetype start{m_text.lastIndexOf("\n", position - 1)};
     if (start == -1 || position == 0)
         start = 0;
@@ -373,7 +373,7 @@ std::pair<qsizetype, qsizetype> Text::getLineRange(qsizetype position) const {
     return std::make_pair(start, end);
 }
 
-qsizetype Text::getPrevBreak(qsizetype position) const {
+qsizetype TextItem::getPrevBreak(qsizetype position) const {
     auto isBreak = [&](int pos){
         for (auto& sep : Common::wordSeparators) {
             if (m_text[pos] == sep)
@@ -395,7 +395,7 @@ qsizetype Text::getPrevBreak(qsizetype position) const {
     return 0;
 };
 
-qsizetype Text::getNextBreak(qsizetype position) const {
+qsizetype TextItem::getNextBreak(qsizetype position) const {
     qsizetype len{m_text.length()};
     for (qsizetype pos{position + 1}; pos < len; pos++) {
         for (auto& sep : Common::wordSeparators) {
@@ -408,18 +408,18 @@ qsizetype Text::getNextBreak(qsizetype position) const {
     return len;
 };
 
-constexpr int Text::getTextFlags() {
+constexpr int TextItem::getTextFlags() {
     return (Qt::TextExpandTabs);
 }
 
-const QString &Text::text() const {
+const QString &TextItem::text() const {
     return m_text;
 }
 
-Item::Type Text::type() const {
+Item::Type TextItem::type() const {
     return Item::Text;
 }
 
-void Text::updateAfterProperty() {
+void TextItem::updateAfterProperty() {
     updateBoundingBox();
 }

@@ -4,10 +4,11 @@
 #include "applicationcontext.h"
 #include "renderingcontext.h"
 #include "coordinatetransformer.h"
+#include "../command/commandhistory.h"
+#include "../command/updatepropertycommand.h"
 #include "spatialcontext.h"
 #include "../data-structures/cachegrid.h"
 #include "../properties/property.h"
-#include <stdexcept>
 
 SelectionContext::SelectionContext(ApplicationContext *context)
     : QObject{context},
@@ -32,18 +33,11 @@ QRectF SelectionContext::selectionBox() const {
 
 // PUBLIC SLOTS
 void SelectionContext::updatePropertyOfSelectedItems(Property property) {
-    QRectF dirtyRegion{};
-    for (auto& item : m_selectedItems) {
-        try {
-            item->setProperty(property.type(), property);
-            dirtyRegion |= item->boundingBox();
-        } catch (const std::logic_error& e) {
-            // Ignore if not found
-        }
-    }
+    QVector<std::shared_ptr<Item>> items{m_selectedItems.begin(), m_selectedItems.end()};
 
-    QRect gridDirtyRegion{m_applicationContext->spatialContext().coordinateTransformer().worldToGrid(dirtyRegion).toRect()};
-    m_applicationContext->spatialContext().cacheGrid().markDirty(gridDirtyRegion);
+    auto& commandHistory{m_applicationContext->spatialContext().commandHistory()};
+    commandHistory.insert(std::make_shared<UpdatePropertyCommand>(items, property));
+
     m_applicationContext->renderingContext().markForRender();
     m_applicationContext->renderingContext().markForUpdate();
 }

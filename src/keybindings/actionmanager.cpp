@@ -1,5 +1,6 @@
 #include "actionmanager.h"
 
+#include "../command/removeitemcommand.h"
 #include "../command/commandhistory.h"
 #include "../components/toolbar.h"
 #include "../context/applicationcontext.h"
@@ -13,6 +14,7 @@
 #include "../context/uicontext.h"
 #include "action.h"
 #include "keybindmanager.h"
+#include <memory>
 
 ActionManager::ActionManager(ApplicationContext *context) : m_context{context}, QObject(context) {
     KeybindManager &keybindManager{m_context->uiContext().keybindManager()};
@@ -93,12 +95,12 @@ ActionManager::ActionManager(ApplicationContext *context) : m_context{context}, 
     Action *deleteAction{new Action{"Delete",
                                       "Deletes selected items",
                                       [&, context]() { 
-                                          auto& itemsToBeDeleted{context->selectionContext().selectedItems()};
+                                          auto& selectedItems{context->selectionContext().selectedItems()};
                                           auto& transformer{context->spatialContext().coordinateTransformer()};
-                                          for (auto& item : itemsToBeDeleted) {
-                                              context->spatialContext().cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
-                                              context->spatialContext().quadtree().deleteItem(item);
-                                          }
+                                          auto& commandHistory{context->spatialContext().commandHistory()};
+
+                                          QVector<std::shared_ptr<Item>> items{selectedItems.begin(), selectedItems.end()};
+                                          commandHistory.insert(std::make_shared<RemoveItemCommand>(items));
 
                                           context->renderingContext().markForRender();
                                           context->renderingContext().markForUpdate();
@@ -148,35 +150,35 @@ void ActionManager::zoomOut() {
 }
 
 void ActionManager::switchToFreeformTool() {
-    m_context->uiContext().toolBar().changeTool(ToolID::FreeformTool);
+    m_context->uiContext().toolBar().changeTool(Tool::Freeform);
 }
 
 void ActionManager::switchToEraserTool() {
-    m_context->uiContext().toolBar().changeTool(ToolID::EraserTool);
+    m_context->uiContext().toolBar().changeTool(Tool::Eraser);
 }
 
 void ActionManager::switchToRectangleTool() {
-    m_context->uiContext().toolBar().changeTool(ToolID::RectangleTool);
+    m_context->uiContext().toolBar().changeTool(Tool::Rectangle);
 }
 
 void ActionManager::switchToEllipseTool() {
-    m_context->uiContext().toolBar().changeTool(ToolID::EllipseTool);
+    m_context->uiContext().toolBar().changeTool(Tool::Ellipse);
 }
 
 void ActionManager::switchToLineTool() {
-    m_context->uiContext().toolBar().changeTool(ToolID::LineTool);
+    m_context->uiContext().toolBar().changeTool(Tool::Line);
 }
 
 void ActionManager::switchToArrowTool() {
-    m_context->uiContext().toolBar().changeTool(ToolID::ArrowTool);
+    m_context->uiContext().toolBar().changeTool(Tool::Arrow);
 }
 
 void ActionManager::switchToMoveTool() {
-    m_context->uiContext().toolBar().changeTool(ToolID::MoveTool);
+    m_context->uiContext().toolBar().changeTool(Tool::Move);
 }
 
 void ActionManager::switchToSelectionTool() {
-    m_context->uiContext().toolBar().changeTool(ToolID::SelectionTool);
+    m_context->uiContext().toolBar().changeTool(Tool::Selection);
 }
 
 void ActionManager::increaseThickness() {

@@ -15,7 +15,7 @@ public:
     void mouseMoved(ApplicationContext *context) override;
     void mouseReleased(ApplicationContext *context) override;
 
-    ToolID id() const override;
+    Tool::Type type() const override;
 
 private:
     bool m_isActive{false};

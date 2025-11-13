@@ -20,11 +20,11 @@ public:
 
     void cleanup() override;
 
-    ToolID id() const override;
+    Tool::Type type() const override;
     QString iconAlt() const override;
 
 private:
-    std::shared_ptr<Text> m_curItem{nullptr};
+    std::shared_ptr<TextItem> m_curItem{nullptr};
 
     bool m_isSelecting{false};
     bool m_mouseMoved{false};

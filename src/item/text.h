@@ -6,10 +6,10 @@
 #include <QRect>
 #include <set>
 
-class Text : public Item {
+class TextItem : public Item {
 public:
-    Text();
-    ~Text();
+    TextItem();
+    ~TextItem();
 
     bool intersects(const QRectF &rect) override;
     bool intersects(const QLineF &rect) override;

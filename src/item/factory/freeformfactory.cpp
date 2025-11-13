@@ -5,5 +5,5 @@
 FreeformFactory::FreeformFactory() {
 }
 std::shared_ptr<Item> FreeformFactory::create() const {
-    return std::make_shared<Freeform>();
+    return std::make_shared<FreeformItem>();
 }

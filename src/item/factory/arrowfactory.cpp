@@ -6,5 +6,5 @@ ArrowFactory::ArrowFactory() {
 }
 
 std::shared_ptr<Item> ArrowFactory::create() const {
-    return std::make_shared<Arrow>();
+    return std::make_shared<ArrowItem>();
 }

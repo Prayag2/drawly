@@ -3,14 +3,14 @@
 #include "../common/utils.h"
 #include <QDebug>
 
-Rectangle::Rectangle() {
+RectangleItem::RectangleItem() {
 }
 
-void Rectangle::m_draw(QPainter &painter, const QPointF &offset) const {
+void RectangleItem::m_draw(QPainter &painter, const QPointF &offset) const {
     painter.drawRect(QRectF(start() - offset, end() - offset));
 }
 
-bool Rectangle::intersects(const QRectF &rect) {
+bool RectangleItem::intersects(const QRectF &rect) {
     if (!boundingBox().intersects(rect))
         return false;
 
@@ -43,11 +43,11 @@ bool Rectangle::intersects(const QRectF &rect) {
             Common::intersects(QLineF{p, s}, QLineF{d, a}));
 };
 
-bool Rectangle::intersects(const QLineF &line) {
+bool RectangleItem::intersects(const QLineF &line) {
     QRectF box{start(), end()};
     return Common::intersects(box, line);
 }
 
-Item::Type Rectangle::type() const {
+Item::Type RectangleItem::type() const {
     return Item::Rectangle;
 }

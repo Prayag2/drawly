@@ -1,6 +1,7 @@
 #include "removeitemcommand.h"
 
 #include "../common/constants.h"
+#include "../context/selectioncontext.h"
 #include "../context/applicationcontext.h"
 #include "../context/coordinatetransformer.h"
 #include "../context/spatialcontext.h"
@@ -15,10 +16,12 @@ void RemoveItemCommand::execute(ApplicationContext *context) {
     auto &transformer{context->spatialContext().coordinateTransformer()};
     auto &quadtree{context->spatialContext().quadtree()};
     auto &cacheGrid{context->spatialContext().cacheGrid()};
+    auto &selectedItems{context->selectionContext().selectedItems()};
 
     for (auto &item : m_items) {
         QRect dirtyRegion{transformer.worldToGrid(item->boundingBox()).toRect()};
 
+        selectedItems.erase(item);
         quadtree.deleteItem(item);
         cacheGrid.markDirty(dirtyRegion);
     }

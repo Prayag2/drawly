@@ -36,14 +36,14 @@ QVector<Tool *> ToolBar::tools() const {
     return result;
 }
 
-void ToolBar::addTool(Tool *tool, ToolID toolID) {
+void ToolBar::addTool(Tool *tool, Tool::Type type) {
     if (tool == nullptr)
         return;
 
     QPushButton *btn{new QPushButton(tool->iconAlt(), this)};
     btn->setCheckable(true);
 
-    int id{static_cast<int>(toolID)};
+    int id{static_cast<int>(type)};
 
     m_tools[id] = tool;
     m_group->addButton(btn, id);
@@ -54,11 +54,15 @@ void ToolBar::addTool(Tool *tool, ToolID toolID) {
     }
 };
 
-void ToolBar::changeTool(ToolID toolID) {
-    int id{static_cast<int>(toolID)};
+void ToolBar::changeTool(Tool::Type type) {
+    int id{static_cast<int>(type)};
 
     m_group->button(id)->setChecked(true);
     emit toolChanged(curTool());
+}
+
+Tool& ToolBar::tool(Tool::Type type) const {
+    return *m_tools.at(type);
 }
 
 // PRIVATE SLOTS

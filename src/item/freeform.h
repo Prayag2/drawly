@@ -5,11 +5,11 @@
 #include <deque>
 #include <memory>
 
-class Freeform : public Item, public std::enable_shared_from_this<Freeform> {
+class FreeformItem : public Item, public std::enable_shared_from_this<FreeformItem> {
 public:
-    Freeform();
-    ~Freeform() = default;
-    Freeform(const Freeform &freeform);
+    FreeformItem();
+    ~FreeformItem() = default;
+    FreeformItem(const FreeformItem &freeform);
 
     static int minPointDistance();
 

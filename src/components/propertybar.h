@@ -6,7 +6,6 @@
 #include <QVBoxLayout>
 class Tool;
 class PropertyManager;
-enum class ToolID;
 
 class PropertyBar : public QFrame {
     Q_OBJECT

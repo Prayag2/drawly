@@ -1,11 +1,15 @@
 #include "selectiontool.h"
 
+#include "../../common/constants.h"
 #include "../../context/applicationcontext.h"
 #include "../../context/coordinatetransformer.h"
+#include "../../context/renderingcontext.h"
 #include "../../context/selectioncontext.h"
 #include "../../context/spatialcontext.h"
 #include "../../context/uicontext.h"
 #include "../../event/event.h"
+#include "../../command/moveitemcommand.h"
+#include "../../command/commandhistory.h"
 #include "../../item/item.h"
 #include "selectiontoolmovestate.h"
 #include "selectiontoolselectstate.h"
@@ -53,6 +57,43 @@ std::shared_ptr<SelectionToolState> SelectionTool::getCurrentState(ApplicationCo
     }
 }
 
+void SelectionTool::keyPressed(ApplicationContext *context) {
+    auto& selectedItems{context->selectionContext().selectedItems()};
+    if (selectedItems.empty())
+        return;
+
+    auto& event{context->uiContext().event()};
+    auto& commandHistory{context->spatialContext().commandHistory()};
+    QVector<std::shared_ptr<Item>> items{selectedItems.begin(), selectedItems.end()};
+
+    int delta{Common::translationDelta};
+    if (event.modifiers() & Qt::ShiftModifier)
+        delta = Common::shiftTranslationDelta;
+
+    bool updated{true};
+    switch(event.key()) {
+        case Qt::Key_Left:
+            commandHistory.insert(std::make_shared<MoveItemCommand>(items, QPoint{-delta, 0}));
+            break;
+        case Qt::Key_Right:
+            commandHistory.insert(std::make_shared<MoveItemCommand>(items, QPoint{delta, 0}));
+            break;
+        case Qt::Key_Up:
+            commandHistory.insert(std::make_shared<MoveItemCommand>(items, QPoint{0, -delta}));
+            break;
+        case Qt::Key_Down:
+            commandHistory.insert(std::make_shared<MoveItemCommand>(items, QPoint{0, delta}));
+            break;
+        default:
+            updated = false;
+    }
+
+    if (updated) {
+        context->renderingContext().markForRender();
+        context->renderingContext().markForUpdate();
+    }
+}
+
 const QVector<Property::Type> SelectionTool::properties() const {
     ApplicationContext *context{ApplicationContext::instance()};
     auto& selectedItems{context->selectionContext().selectedItems()};
@@ -67,6 +108,6 @@ const QVector<Property::Type> SelectionTool::properties() const {
     return QVector<Property::Type>(result.begin(), result.end());
 }
 
-ToolID SelectionTool::id() const {
-    return ToolID::SelectionTool;
+Tool::Type SelectionTool::type() const {
+    return Tool::Selection;
 };

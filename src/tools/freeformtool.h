@@ -3,7 +3,7 @@
 
 #include "drawingtool.h"
 #include <QElapsedTimer>
-class Freeform;
+class FreeformItem;
 class PropertyManager;
 
 class FreeformTool : public DrawingTool {
@@ -17,10 +17,10 @@ public:
     void mouseReleased(ApplicationContext *context) override;
     void cleanup() override;
 
-    ToolID id() const override;
+    Tool::Type type() const override;
 
 private:
-    std::shared_ptr<Freeform> curItem{};
+    std::shared_ptr<FreeformItem> curItem{};
     QPointF m_lastPoint{};
 };
 

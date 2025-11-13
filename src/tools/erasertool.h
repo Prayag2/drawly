@@ -20,7 +20,7 @@ public:
 
     void cleanup() override;
 
-    ToolID id() const override;
+    Tool::Type type() const override;
 
 private:
     bool m_isErasing{false};

@@ -14,10 +14,11 @@ public:
     ~ToolBar();
 
     Tool &curTool() const;
-    void addTool(Tool *tool, ToolID toolID);
+    void addTool(Tool *tool, Tool::Type type);
     QVector<Tool *> tools() const;
 
-    void changeTool(ToolID toolID);
+    Tool &tool(Tool::Type type) const;
+    void changeTool(Tool::Type type);
 
 signals:
     void toolChanged(Tool &);

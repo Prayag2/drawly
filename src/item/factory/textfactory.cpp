@@ -6,5 +6,5 @@ TextFactory::TextFactory() {
 }
 
 std::shared_ptr<Item> TextFactory::create() const {
-    return std::make_shared<Text>();
+    return std::make_shared<TextItem>();
 }

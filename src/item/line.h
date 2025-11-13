@@ -3,10 +3,10 @@
 
 #include "polygon.h"
 
-class Line : public Polygon {
+class LineItem : public PolygonItem {
 public:
-    Line();
-    ~Line() override = default;
+    LineItem();
+    ~LineItem() override = default;
 
     bool intersects(const QRectF &rect) override;
     bool intersects(const QLineF &rect) override;

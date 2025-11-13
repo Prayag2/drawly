@@ -4,6 +4,7 @@
 #include <QDateTime>
 #include <QMouseEvent>
 #include <QObject>
+#include "../tools/tool.h"
 class ApplicationContext;
 
 class Controller : public QObject {
@@ -33,6 +34,7 @@ private:
     int m_clickCount{}; // for double/triple clicks
 
     bool m_mouseMoved{false};
+    bool m_movingWithMiddleClick{false};
 };
 
 #endif  // CONTROLLER_H

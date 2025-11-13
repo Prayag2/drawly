@@ -49,15 +49,15 @@ void UIContext::setUIContext() {
 
     m_event = new Event();
 
-    m_toolBar->addTool(new SelectionTool(), ToolID::SelectionTool);
-    m_toolBar->addTool(new FreeformTool(), ToolID::FreeformTool);
-    m_toolBar->addTool(new RectangleTool(), ToolID::RectangleTool);
-    m_toolBar->addTool(new EllipseTool(), ToolID::EllipseTool);
-    m_toolBar->addTool(new ArrowTool(), ToolID::ArrowTool);
-    m_toolBar->addTool(new LineTool(), ToolID::LineTool);
-    m_toolBar->addTool(new EraserTool(), ToolID::EraserTool);
-    m_toolBar->addTool(new TextTool(), ToolID::TextTool);
-    m_toolBar->addTool(new MoveTool(), ToolID::MoveTool);
+    m_toolBar->addTool(new SelectionTool(), Tool::Selection);
+    m_toolBar->addTool(new FreeformTool(), Tool::Freeform);
+    m_toolBar->addTool(new RectangleTool(), Tool::Rectangle);
+    m_toolBar->addTool(new EllipseTool(), Tool::Ellipse);
+    m_toolBar->addTool(new ArrowTool(), Tool::Arrow);
+    m_toolBar->addTool(new LineTool(), Tool::Line);
+    m_toolBar->addTool(new EraserTool(), Tool::Eraser);
+    m_toolBar->addTool(new TextTool(), Tool::Text);
+    m_toolBar->addTool(new MoveTool(), Tool::Move);
 
     m_actionBar->addButton("-", 1);
     m_actionBar->addButton("+", 2);
@@ -144,5 +144,6 @@ void UIContext::toolChanged(Tool &tool) {
 
     m_lastTool = &tool;
     canvas.setCursor(tool.cursor());
-    canvas.update();
+
+    m_applicationContext->renderingContext().markForUpdate();
 }

@@ -23,7 +23,7 @@ Controller::~Controller() {
 }
 
 void Controller::mousePressed(QMouseEvent *event) {
-    // No on really clicks in this corner and this solves a 
+    // No on really clicks in this corner (0, 0) and this solves a 
     // bug on Hyprland where it would register a mouse press in this corner
     if (event->pos() == QPoint{0, 0})
         return;
@@ -50,6 +50,14 @@ void Controller::mousePressed(QMouseEvent *event) {
 
     contextEvent.setPos(event->pos(), canvas.scale());
     contextEvent.setButton(event->button());
+
+    if (event->button() == Qt::MiddleButton) {
+        m_movingWithMiddleClick = true;
+        toolBar.curTool().cleanup();
+        toolBar.tool(Tool::Move).mousePressed(m_context);
+        return;
+    }
+
     toolBar.curTool().mousePressed(m_context);
 
     if (event->type() != QEvent::TabletPress) {
@@ -89,6 +97,11 @@ void Controller::mouseMoved(QMouseEvent *event) {
     contextEvent.setPos(event->pos(), canvas.scale());
     contextEvent.setButton(event->button());
 
+    if (m_movingWithMiddleClick) {
+        toolBar.tool(Tool::Move).mouseMoved(m_context);
+        return;
+    }
+
     toolBar.curTool().mouseMoved(m_context);
 }
 
@@ -99,14 +112,22 @@ void Controller::mouseReleased(QMouseEvent *event) {
 
     contextEvent.setPos(event->pos(), canvas.scale());
     contextEvent.setButton(event->button());
+
+    if (event->button() == Qt::MiddleButton) {
+        m_movingWithMiddleClick = false;
+        toolBar.tool(Tool::Move).mouseReleased(m_context);
+        canvas.setCursor(toolBar.curTool().cursor());
+        return;
+    }
+
     toolBar.curTool().mouseReleased(m_context);
 }
 
 void Controller::tablet(QTabletEvent *event) {
-    Event &contextEvent{m_context->uiContext().event()};
+    Event &ev{m_context->uiContext().event()};
 
     // TODO: Remove magic numbers
-    contextEvent.setPressure(event->pressure() / 1.60 + 0.375);
+    ev.setPressure(event->pressure() / 1.60 + 0.375);
 }
 
 void Controller::keyPressed(QKeyEvent *event) {
@@ -133,14 +154,13 @@ void Controller::keyReleased(QKeyEvent *event) {
 
 void Controller::inputMethodInvoked(QInputMethodEvent *event) {
 }
-    
+
 void Controller::leave(QEvent *event) {
     ToolBar &toolBar{m_context->uiContext().toolBar()};
 
     toolBar.curTool().leave(m_context);
 }
 
-// FIXME: Does not work
 void Controller::wheel(QWheelEvent *event) {
     const QPointF &offsetPos{m_context->spatialContext().offsetPos()};
     const qreal zoomFactor{m_context->renderingContext().zoomFactor()};
@@ -152,7 +172,6 @@ void Controller::wheel(QWheelEvent *event) {
         return;
     }
 
-    qDebug() << event << "\n";
     m_context->spatialContext().setOffsetPos(offsetPos - event->angleDelta() / zoomFactor);
 
     m_context->renderingContext().markForRender();
