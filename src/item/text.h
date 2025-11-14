@@ -4,12 +4,11 @@
 #include "item.h"
 #include <QPainter>
 #include <QRect>
-#include <set>
 
-class Text : public Item {
+class TextItem : public Item {
 public:
-    Text();
-    ~Text();
+    TextItem();
+    ~TextItem();
 
     bool intersects(const QRectF &rect) override;
     bool intersects(const QLineF &rect) override;
@@ -68,18 +67,18 @@ private:
     QFont getFont() const;
     QPen getPen() const;
 
+    static QTextOption getTextOptions();
     constexpr static int getTextFlags();
 
     QString m_text;
-    std::set<int> m_newlinePositions;  // stores positions of "\n" characters
 
     void renderBoundingBox(QPainter& painter) const;
     void updateBoundingBox();
 
-    qsizetype m_caretIndex;
-    qsizetype m_selectionStart;
-    qsizetype m_selectionEnd;
-    qsizetype m_caretPosInLine;
+    qsizetype m_caretIndex{};
+    qsizetype m_selectionStart{};
+    qsizetype m_selectionEnd{};
+    qsizetype m_caretPosInLine{};
     Mode m_mode;
 };
 

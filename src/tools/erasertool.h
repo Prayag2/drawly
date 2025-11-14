@@ -12,12 +12,17 @@ public:
     EraserTool();
     ~EraserTool() override = default;
 
-    QString iconAlt() const override;
+    QString tooltip() const override;
+    IconManager::Icon icon() const override;
+
     void mousePressed(ApplicationContext *context) override;
     void mouseMoved(ApplicationContext *context) override;
     void mouseReleased(ApplicationContext *context) override;
+    void leave(ApplicationContext *context) override;
 
-    ToolID id() const override;
+    void cleanup() override;
+
+    Tool::Type type() const override;
 
 private:
     bool m_isErasing{false};

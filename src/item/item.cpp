@@ -26,12 +26,22 @@ const Property &Item::property(const Property::Type propertyType) const {
     return m_properties.at(propertyType);
 }
 
-const QVector<Property::Type> Item::properties() const {
+const QVector<Property::Type> Item::propertyTypes() const {
     QVector<Property::Type> result;
 
-    std::for_each(m_properties.begin(), m_properties.end(), [&](const auto& propertyPair){
-        result.push_back(propertyPair.first);
-    });
+    for (auto& [type, _] : m_properties) {
+        result.push_back(type);
+    }
+
+    return result;
+}
+
+const QVector<Property> Item::properties() const {
+    QVector<Property> result;
+
+    for (auto& [_, property] : m_properties) {
+        result.push_back(property);
+    }
 
     return result;
 }
@@ -45,3 +55,7 @@ void Item::setProperty(const Property::Type propertyType, Property newObj) {
 }
 
 void Item::updateAfterProperty() {}
+
+int Item::boundingBoxPadding() const {
+    return m_boundingBoxPadding;
+}

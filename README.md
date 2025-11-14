@@ -44,17 +44,16 @@ Phase 2 completed!!
     - [ ] Rotate items (Low priority)
 - [x] Undo/redo support
 - [x] Basic keybinding support
-- [ ] Saving the drawings
+- [x] Saving the drawings
+- [x] Text support
 - [ ] Exporting drawings to PNGs
 - [ ] Image support
-- [ ] Text support
 - [ ] Text formatting like bold, underline, italics, etc.
 - [ ] Better freeform smoothing algorithms
 - [ ] Allow snapping
-- [ ] A "settings" page
+- [ ] Ability to store preferences
+- [ ] A "settings" page 
 - [ ] Better widgets
-- [ ] UI overhaul
-- [ ] Filling shapes with a background colour
 - [ ] Collaboration
 
 ## ⚠️ Note

@@ -1,6 +1,5 @@
 #include "texttool.h"
 
-#include "../common/constants.h"
 #include "../canvas/canvas.h"
 #include "../command/commandhistory.h"
 #include "../command/insertitemcommand.h"
@@ -52,7 +51,7 @@ void TextTool::mousePressed(ApplicationContext *context) {
 
         if (intersectingItems.empty()) {
             if (m_curItem == nullptr) {
-                m_curItem = std::dynamic_pointer_cast<Text>(m_itemFactory->create());
+                m_curItem = std::dynamic_pointer_cast<TextItem>(m_itemFactory->create());
                 m_curItem->setBoundingBoxPadding(10 * renderingContext.canvas().scale());
 
                 m_curItem->setProperty(Property::StrokeColor, uiContext.propertyManager().value(Property::StrokeColor));
@@ -63,32 +62,17 @@ void TextTool::mousePressed(ApplicationContext *context) {
                 commandHistory.insert(
                     std::make_shared<InsertItemCommand>(QVector<std::shared_ptr<Item>>{m_curItem}));
             } else {
-                m_curItem->setMode(Text::NORMAL);
-                spatialContext.cacheGrid().markDirty(
-                    transformer.worldToGrid(m_curItem->boundingBox()).toRect());
-
-                // enable keybindings again
-                uiContext.keybindManager().enable();
-                
-                if (m_curItem->text().isEmpty()) {
-                    quadTree.deleteItem(m_curItem);
-                }
-
-                context->selectionContext().selectedItems().clear();
-
-                m_curItem = nullptr;
-                renderingContext.markForRender();
-                renderingContext.markForUpdate();
+                cleanup();
                 return;
             }
         } else {
             if (m_curItem != nullptr) {
-                m_curItem->setMode(Text::NORMAL);
+                m_curItem->setMode(TextItem::NORMAL);
                 spatialContext.cacheGrid().markDirty(
                     transformer.worldToGrid(m_curItem->boundingBox()).toRect());
             }
 
-            m_curItem = std::dynamic_pointer_cast<Text>(intersectingItems.back());
+            m_curItem = std::dynamic_pointer_cast<TextItem>(intersectingItems.back());
             m_curItem->setCaret(worldPos);
 
             spatialContext.cacheGrid().markDirty(
@@ -100,11 +84,11 @@ void TextTool::mousePressed(ApplicationContext *context) {
             int lineNumber{m_curItem->getLineFromY(worldPos.y())};
             qsizetype index{m_curItem->getIndexFromX(worldPos.x(), lineNumber)};
             m_curItem->setSelectionStart(index);
-            m_curItem->setSelectionEnd(Text::INVALID);
+            m_curItem->setSelectionEnd(TextItem::INVALID);
         }
 
         context->selectionContext().selectedItems() = {m_curItem};
-        m_curItem->setMode(Text::EDIT);
+        m_curItem->setMode(TextItem::EDIT);
         uiContext.keybindManager().disable();
 
         renderingContext.markForRender();
@@ -160,7 +144,11 @@ void TextTool::mouseMoved(ApplicationContext *context) {
                 m_curItem->setSelectionEnd(end + 1);
             }
         } else {
-            m_curItem->setSelectionEnd(curIndex);
+            if (curIndex == m_curItem->selectionStart()) {
+                m_curItem->setSelectionEnd(TextItem::INVALID);
+            } else {
+                m_curItem->setSelectionEnd(curIndex);
+            }
         }
 
         spatialContext.cacheGrid().markDirty(transformer.worldToGrid(m_curItem->boundingBox()).toRect());
@@ -176,6 +164,9 @@ void TextTool::mouseReleased(ApplicationContext *context) {
 };
 
 void TextTool::mouseDoubleClick(ApplicationContext *context) {
+    if (!m_curItem)
+        return;
+
     m_doubleClicked = true;
     if (!m_mouseMoved) {
         m_isSelecting = true;
@@ -200,6 +191,9 @@ void TextTool::mouseDoubleClick(ApplicationContext *context) {
 };
 
 void TextTool::mouseTripleClick(ApplicationContext *context) {
+    if (!m_curItem)
+        return;
+
     m_tripleClicked = true;
     if (!m_mouseMoved) {
         m_isSelecting = true;
@@ -226,10 +220,13 @@ void TextTool::mouseTripleClick(ApplicationContext *context) {
 
 // TODO: Refactor, refactor, refactor!
 void TextTool::keyPressed(ApplicationContext *context) {
+    if (!m_curItem)
+        return;
+
     Event &ev{context->uiContext().event()};
 
     if (ev.key() == Qt::Key_Escape) {
-        m_curItem->setMode(Text::NORMAL);
+        m_curItem->setMode(TextItem::NORMAL);
         context->uiContext().keybindManager().enable();
         m_curItem = nullptr;
 
@@ -238,7 +235,7 @@ void TextTool::keyPressed(ApplicationContext *context) {
         context->renderingContext().markForUpdate();
     }
 
-    if (m_curItem != nullptr && m_curItem->mode() == Text::EDIT) {
+    if (m_curItem != nullptr && m_curItem->mode() == TextItem::EDIT) {
         qsizetype caret{m_curItem->caret()};
         const QString& text{m_curItem->text()};
         qsizetype size{text.size()};
@@ -264,7 +261,7 @@ void TextTool::keyPressed(ApplicationContext *context) {
 
                     if (ev.modifiers() & Qt::ShiftModifier) {
                         qsizetype pos{m_curItem->selectionEnd()};
-                        m_curItem->setSelectionEnd(m_curItem->getPrevBreak(pos == Text::INVALID ? curPos - 1 : pos - 1));
+                        m_curItem->setSelectionEnd(m_curItem->getPrevBreak(pos == TextItem::INVALID ? curPos - 1 : pos - 1));
                     } else {
                         m_curItem->setCaret(m_curItem->getPrevBreak(curPos - 1));
                     }
@@ -282,7 +279,7 @@ void TextTool::keyPressed(ApplicationContext *context) {
 
                     if (ev.modifiers() & Qt::ShiftModifier) {
                         qsizetype pos{m_curItem->selectionEnd()};
-                        m_curItem->setSelectionEnd(m_curItem->getNextBreak( pos == Text::INVALID ? curPos : pos));
+                        m_curItem->setSelectionEnd(m_curItem->getNextBreak( pos == TextItem::INVALID ? curPos : pos));
                     } else {
                         m_curItem->setCaret(m_curItem->getNextBreak(curPos));
                     }
@@ -448,10 +445,43 @@ void TextTool::keyPressed(ApplicationContext *context) {
 void TextTool::keyReleased(ApplicationContext *context) {
 }
 
-ToolID TextTool::id() const {
-    return ToolID::TextTool;
+void TextTool::cleanup() {
+    if (!m_curItem)
+        return;
+
+    ApplicationContext *context{ApplicationContext::instance()};
+    auto& spatialContext{context->spatialContext()};
+    auto& renderingContext{context->renderingContext()};
+    auto& uiContext{context->uiContext()};
+    auto& transformer{spatialContext.coordinateTransformer()};
+    auto& quadTree{spatialContext.quadtree()};
+
+    m_curItem->setMode(TextItem::NORMAL);
+    spatialContext.cacheGrid().markDirty(
+        transformer.worldToGrid(m_curItem->boundingBox()).toRect());
+
+    // enable keybindings again
+    uiContext.keybindManager().enable();
+    
+    if (m_curItem->text().isEmpty()) {
+        quadTree.deleteItem(m_curItem);
+    }
+
+    context->selectionContext().selectedItems().clear();
+
+    m_curItem = nullptr;
+    renderingContext.markForRender();
+    renderingContext.markForUpdate();
 }
 
-QString TextTool::iconAlt() const {
-    return "󰊄";
+Tool::Type TextTool::type() const {
+    return Tool::Text;
+}
+
+QString TextTool::tooltip() const {
+    return "Text Tool";
+}
+
+IconManager::Icon TextTool::icon() const {
+    return IconManager::TOOL_TEXT;
 }

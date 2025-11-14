@@ -26,6 +26,7 @@ public:
     }
 
     Type type() const;
+    const QVariant variant() const;
 
 private:
     QVariant m_value{};

@@ -32,6 +32,8 @@ public:
     UIContext &uiContext() const;
     SelectionContext &selectionContext() const;
 
+    void reset(); // resets the canvas to a blank state
+
 private:
     ApplicationContext(QWidget *parent = nullptr);
 

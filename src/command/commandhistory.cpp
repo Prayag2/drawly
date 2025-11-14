@@ -51,3 +51,8 @@ void CommandHistory::insert(std::shared_ptr<Command> command) {
     if (m_undoStack->size() == maxCommands)
         m_undoStack->pop_back();
 }
+
+void CommandHistory::clear() {
+    m_undoStack->clear();
+    m_redoStack->clear();
+}

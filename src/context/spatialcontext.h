@@ -25,13 +25,17 @@ public:
     const QPointF &offsetPos() const;
     void setOffsetPos(const QPointF &pos);
 
+    void reset();
+
 private:
     std::unique_ptr<QuadTree> m_quadtree{nullptr};
     std::unique_ptr<CacheGrid> m_cacheGrid{nullptr};
     std::unique_ptr<CoordinateTransformer> m_coordinateTransformer{nullptr};
     std::unique_ptr<CommandHistory> m_commandHistory{nullptr};
 
-    QPointF m_offsetPos{};  // all `Items` are positioned relative to this point
+    // Stores the position of the topleft corner of the viewport with respect to
+    // to the world center. If viewport moves down/right, the coordinates increase
+    QPointF m_offsetPos{};  
 
     ApplicationContext *m_applicationContext;
 };

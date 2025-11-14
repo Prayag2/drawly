@@ -7,7 +7,7 @@
 #include <array>
 
 namespace Common {
-constexpr QMargins cleanupMargin{10, 10, 10, 10};
+constexpr QMargins cleanupMargin{10, 10, 10, 10}; // in pixels
 constexpr int defaultEraserSize{30};
 
 constexpr QColor eraserBorderColor{255, 0, 0};
@@ -28,6 +28,9 @@ constexpr QColor darkForegroundColor{211, 211, 211};
 constexpr int maxItemOpacity{255};
 constexpr int eraseItemOpacity{50};
 
+constexpr int translationDelta{1}; // in pixels
+constexpr int shiftTranslationDelta{10}; // in pixels, when holding shift
+
 constexpr double defaultTextBoxWidth{5}; // in pixels
 constexpr std::array<QChar, 38> wordSeparators{
     '\t', '\n', '\v', '\f', '\r', ' ',   // whitespace
@@ -38,6 +41,8 @@ constexpr std::array<QChar, 38> wordSeparators{
 };
 
 constexpr int doubleClickInterval{300}; // milliseconds
+
+constexpr qreal tabStopDistance{4};
 
 };  // namespace Common
 

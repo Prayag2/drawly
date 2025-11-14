@@ -18,11 +18,14 @@ public:
     void mouseDoubleClick(ApplicationContext *context) override;
     void mouseTripleClick(ApplicationContext *context) override;
 
-    ToolID id() const override;
-    QString iconAlt() const override;
+    void cleanup() override;
+
+    Tool::Type type() const override;
+    QString tooltip() const override;
+    IconManager::Icon icon() const override;
 
 private:
-    std::shared_ptr<Text> m_curItem{nullptr};
+    std::shared_ptr<TextItem> m_curItem{nullptr};
 
     bool m_isSelecting{false};
     bool m_mouseMoved{false};

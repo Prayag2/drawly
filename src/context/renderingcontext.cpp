@@ -86,7 +86,7 @@ qreal RenderingContext::zoomFactor() const {
     return m_zoomFactor;
 }
 
-void RenderingContext::setZoomFactor(int diff) {
+void RenderingContext::updateZoomFactor(qreal diff, QPoint center) {
     // zoom out limit is 0.1
     if (diff < 0 && m_zoomFactor - 0.1 <= 1e-9)
         return;
@@ -96,22 +96,32 @@ void RenderingContext::setZoomFactor(int diff) {
 
     qDebug() << "Zoom: " << m_zoomFactor;
 
-    QSize viewport{canvas().dimensions()};
     QPointF offsetPos{m_applicationContext->spatialContext().offsetPos()};
 
-    offsetPos.setX(offsetPos.x() + viewport.width() / (2 * oldZoomFactor) -
-                   viewport.width() / (2 * m_zoomFactor));
-    offsetPos.setY(offsetPos.y() + viewport.height() / (2 * oldZoomFactor) -
-                   viewport.height() / (2 * m_zoomFactor));
+    QSize viewport{canvas().dimensions() / oldZoomFactor};
+    int width{viewport.width()};
+    int height{viewport.height()};
+
+    qreal centerX {center.x() == -1 ? width / 2.0 : center.x()};
+    qreal centerY {center.y() == -1 ? height / 2.0 : center.y()};
+
+    offsetPos.setX(offsetPos.x() + centerX * (1 - oldZoomFactor / m_zoomFactor));
+    offsetPos.setY(offsetPos.y() + centerY * (1 - oldZoomFactor / m_zoomFactor));
+
+    m_applicationContext->spatialContext().setOffsetPos(offsetPos);
 
     // changes scale
     endPainters();
     beginPainters();
 
     m_applicationContext->spatialContext().cacheGrid().markAllDirty();
-    Common::renderCanvas(m_applicationContext);
 
-    canvas().update();
+    m_applicationContext->renderingContext().markForRender();
+    m_applicationContext->renderingContext().markForUpdate();
+}
+
+void RenderingContext::setZoomFactor(qreal newValue) {
+    m_zoomFactor = newValue;
 }
 
 const int RenderingContext::fps() const {
@@ -143,4 +153,8 @@ void RenderingContext::markForUpdate() {
 void RenderingContext::markForUpdate(const QRect &region) {
     m_needsUpdate = true;
     m_updateRegion = region;
+}
+
+void RenderingContext::reset() {
+    setZoomFactor(1.0);
 }

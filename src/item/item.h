@@ -23,8 +23,10 @@ public:
     const QRectF boundingBox() const;
 
     void setBoundingBoxPadding(int padding);
+    int boundingBoxPadding() const;
 
-    const QVector<Property::Type> properties() const;
+    const QVector<Property::Type> propertyTypes() const;
+    const QVector<Property> properties() const;
 
     void setProperty(const Property::Type propertyType, Property newObj);
     const Property &property(const Property::Type propertyType) const;

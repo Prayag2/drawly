@@ -3,10 +3,10 @@
 
 #include "polygon.h"
 
-class Ellipse : public Polygon {
+class EllipseItem : public PolygonItem {
 public:
-    Ellipse();
-    virtual ~Ellipse() = default;
+    EllipseItem();
+    virtual ~EllipseItem() = default;
 
     bool intersects(const QRectF &rect) override;
     bool intersects(const QLineF &rect) override;

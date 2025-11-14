@@ -1,4 +1,7 @@
 #include "toolbar.h"
+#include "../context/uicontext.h"
+#include "../context/applicationcontext.h"
+#include "../iconmanager/iconmanager.h"
 
 ToolBar::ToolBar(QWidget *parent) : QFrame{parent} {
     m_group = new QButtonGroup(this);
@@ -8,6 +11,7 @@ ToolBar::ToolBar(QWidget *parent) : QFrame{parent} {
     this->setFrameShape(QFrame::StyledPanel);
     this->setFrameShadow(QFrame::Raised);
     this->setAutoFillBackground(true);
+    this->setProperty("class", "drawlyFrame drawlyToolBar");
 
     QObject::connect(m_group, &QButtonGroup::idClicked, this, &ToolBar::onToolChanged);
 }
@@ -36,14 +40,19 @@ QVector<Tool *> ToolBar::tools() const {
     return result;
 }
 
-void ToolBar::addTool(Tool *tool, ToolID toolID) {
+void ToolBar::addTool(Tool *tool, Tool::Type type) {
     if (tool == nullptr)
         return;
 
-    QPushButton *btn{new QPushButton(tool->iconAlt(), this)};
-    btn->setCheckable(true);
+    ApplicationContext *context{ApplicationContext::instance()};
+    QPushButton *btn{new QPushButton("", this)};
+    btn->setIcon(context->uiContext().iconManager().icon(tool->icon()));
 
-    int id{static_cast<int>(toolID)};
+    btn->setCheckable(true);
+    btn->setProperty("class", "drawlyToolButton");
+    btn->setCursor(Qt::PointingHandCursor);
+
+    int id{static_cast<int>(type)};
 
     m_tools[id] = tool;
     m_group->addButton(btn, id);
@@ -54,11 +63,15 @@ void ToolBar::addTool(Tool *tool, ToolID toolID) {
     }
 };
 
-void ToolBar::changeTool(ToolID toolID) {
-    int id{static_cast<int>(toolID)};
+void ToolBar::changeTool(Tool::Type type) {
+    int id{static_cast<int>(type)};
 
     m_group->button(id)->setChecked(true);
     emit toolChanged(curTool());
+}
+
+Tool& ToolBar::tool(Tool::Type type) const {
+    return *m_tools.at(type);
 }
 
 // PRIVATE SLOTS

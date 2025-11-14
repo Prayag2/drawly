@@ -9,15 +9,17 @@ public:
     SelectionTool();
     ~SelectionTool() = default;
 
-    QString iconAlt() const override;
+    QString tooltip() const override;
+    IconManager::Icon icon() const override;
 
     void mousePressed(ApplicationContext *context) override;
     void mouseMoved(ApplicationContext *context) override;
     void mouseReleased(ApplicationContext *context) override;
+    void keyPressed(ApplicationContext *context) override;
 
     const QVector<Property::Type> properties() const override;
 
-    ToolID id() const override;
+    Tool::Type type() const override;
 
 private:
     std::shared_ptr<SelectionToolState> getCurrentState(ApplicationContext *context);

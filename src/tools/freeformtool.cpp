@@ -38,8 +38,8 @@ FreeformTool::FreeformTool() {
     m_properties = { Property::StrokeWidth, Property::StrokeColor };
 }
 
-QString FreeformTool::iconAlt() const {
-    return "󰽉";
+QString FreeformTool::tooltip() const {
+    return "Pen Tool";
 };
 
 void FreeformTool::mousePressed(ApplicationContext *context) {
@@ -50,7 +50,7 @@ void FreeformTool::mousePressed(ApplicationContext *context) {
         RenderingContext &renderingContext{context->renderingContext()};
         CoordinateTransformer &transformer{spatialContext.coordinateTransformer()};
 
-        curItem = std::dynamic_pointer_cast<Freeform>(m_itemFactory->create());
+        curItem = std::dynamic_pointer_cast<FreeformItem>(m_itemFactory->create());
 
         curItem->setProperty(Property::StrokeWidth, uiContext.propertyManager().value(Property::StrokeWidth));
         curItem->setProperty(Property::StrokeColor, uiContext.propertyManager().value(Property::StrokeColor));
@@ -84,7 +84,7 @@ void FreeformTool::mouseMoved(ApplicationContext *context) {
         double dist{std::sqrt(std::pow(m_lastPoint.x() - curPoint.x(), 2) +
                               std::pow(m_lastPoint.y() - curPoint.y(), 2))};
 
-        if (dist < Freeform::minPointDistance())
+        if (dist < FreeformItem::minPointDistance())
             return;
 
         QPainter &painter{renderingContext.overlayPainter()};
@@ -121,6 +121,16 @@ void FreeformTool::mouseReleased(ApplicationContext *context) {
     }
 }
 
-ToolID FreeformTool::id() const {
-    return ToolID::FreeformTool;
+void FreeformTool::cleanup() {
+    ApplicationContext *context{ApplicationContext::instance()};
+    context->uiContext().event().setButton(Qt::LeftButton);
+    mouseReleased(context);
+}
+
+Tool::Type FreeformTool::type() const {
+    return Tool::Freeform;
+}
+
+IconManager::Icon FreeformTool::icon() const {
+    return IconManager::TOOL_FREEFORM;
 }

@@ -1,5 +1,8 @@
 #include "actionmanager.h"
 
+#include "../serializer/loader.h"
+#include "../serializer/serializer.h"
+#include "../command/removeitemcommand.h"
 #include "../command/commandhistory.h"
 #include "../components/toolbar.h"
 #include "../context/applicationcontext.h"
@@ -13,6 +16,7 @@
 #include "../context/uicontext.h"
 #include "action.h"
 #include "keybindmanager.h"
+#include <memory>
 
 ActionManager::ActionManager(ApplicationContext *context) : m_context{context}, QObject(context) {
     KeybindManager &keybindManager{m_context->uiContext().keybindManager()};
@@ -93,12 +97,12 @@ ActionManager::ActionManager(ApplicationContext *context) : m_context{context}, 
     Action *deleteAction{new Action{"Delete",
                                       "Deletes selected items",
                                       [&, context]() { 
-                                          auto& itemsToBeDeleted{context->selectionContext().selectedItems()};
+                                          auto& selectedItems{context->selectionContext().selectedItems()};
                                           auto& transformer{context->spatialContext().coordinateTransformer()};
-                                          for (auto& item : itemsToBeDeleted) {
-                                              context->spatialContext().cacheGrid().markDirty(transformer.worldToGrid(item->boundingBox()).toRect());
-                                              context->spatialContext().quadtree().deleteItem(item);
-                                          }
+                                          auto& commandHistory{context->spatialContext().commandHistory()};
+
+                                          QVector<std::shared_ptr<Item>> items{selectedItems.begin(), selectedItems.end()};
+                                          commandHistory.insert(std::make_shared<RemoveItemCommand>(items));
 
                                           context->renderingContext().markForRender();
                                           context->renderingContext().markForUpdate();
@@ -107,13 +111,33 @@ ActionManager::ActionManager(ApplicationContext *context) : m_context{context}, 
                                       },
                                       context}};
 
+    Action *saveAction{new Action{"Save",
+                                      "Save canvas",
+                                      [&, context]() {
+                                          Serializer serializer{};
+
+                                          serializer.serialize(context);
+                                          serializer.saveToFile();
+                                      },
+                                      context}};
+
+    Action *openFileAction{new Action{"Open File",
+                                      "Open an existing file",
+                                      [&, context]() {
+                                          Loader loader{};
+                                          loader.loadFromFile(context);
+                                      },
+                                      context}};
+
     keybindManager.addKeybinding(undoAction, "Ctrl+Z");
     keybindManager.addKeybinding(redoAction, "Ctrl+Y");
+    keybindManager.addKeybinding(redoAction, "Ctrl+Shift+Z");
     keybindManager.addKeybinding(zoomInAction, "Ctrl++");
     keybindManager.addKeybinding(zoomOutAction, "Ctrl+-");
     keybindManager.addKeybinding(increaseThicknessAction, "]");
     keybindManager.addKeybinding(decreaseThicknessAction, "[");
     keybindManager.addKeybinding(freeformToolAction, "P");
+    keybindManager.addKeybinding(freeformToolAction, "B");
     keybindManager.addKeybinding(eraserToolAction, "E");
     keybindManager.addKeybinding(selectionToolAction, "S");
     keybindManager.addKeybinding(rectangleToolAction, "R");
@@ -123,6 +147,8 @@ ActionManager::ActionManager(ApplicationContext *context) : m_context{context}, 
     keybindManager.addKeybinding(moveToolAction, "M");
     keybindManager.addKeybinding(selectAllAction, "Ctrl+A");
     keybindManager.addKeybinding(deleteAction, "Delete");
+    keybindManager.addKeybinding(saveAction, "Ctrl+S");
+    keybindManager.addKeybinding(openFileAction, "Ctrl+O");
 }
 
 void ActionManager::undo() {
@@ -138,43 +164,43 @@ void ActionManager::redo() {
 }
 
 void ActionManager::zoomIn() {
-    m_context->renderingContext().setZoomFactor(1);
+    m_context->renderingContext().updateZoomFactor(1);
 }
 
 void ActionManager::zoomOut() {
-    m_context->renderingContext().setZoomFactor(-1);
+    m_context->renderingContext().updateZoomFactor(-1);
 }
 
 void ActionManager::switchToFreeformTool() {
-    m_context->uiContext().toolBar().changeTool(ToolID::FreeformTool);
+    m_context->uiContext().toolBar().changeTool(Tool::Freeform);
 }
 
 void ActionManager::switchToEraserTool() {
-    m_context->uiContext().toolBar().changeTool(ToolID::EraserTool);
+    m_context->uiContext().toolBar().changeTool(Tool::Eraser);
 }
 
 void ActionManager::switchToRectangleTool() {
-    m_context->uiContext().toolBar().changeTool(ToolID::RectangleTool);
+    m_context->uiContext().toolBar().changeTool(Tool::Rectangle);
 }
 
 void ActionManager::switchToEllipseTool() {
-    m_context->uiContext().toolBar().changeTool(ToolID::EllipseTool);
+    m_context->uiContext().toolBar().changeTool(Tool::Ellipse);
 }
 
 void ActionManager::switchToLineTool() {
-    m_context->uiContext().toolBar().changeTool(ToolID::LineTool);
+    m_context->uiContext().toolBar().changeTool(Tool::Line);
 }
 
 void ActionManager::switchToArrowTool() {
-    m_context->uiContext().toolBar().changeTool(ToolID::ArrowTool);
+    m_context->uiContext().toolBar().changeTool(Tool::Arrow);
 }
 
 void ActionManager::switchToMoveTool() {
-    m_context->uiContext().toolBar().changeTool(ToolID::MoveTool);
+    m_context->uiContext().toolBar().changeTool(Tool::Move);
 }
 
 void ActionManager::switchToSelectionTool() {
-    m_context->uiContext().toolBar().changeTool(ToolID::SelectionTool);
+    m_context->uiContext().toolBar().changeTool(Tool::Selection);
 }
 
 void ActionManager::increaseThickness() {

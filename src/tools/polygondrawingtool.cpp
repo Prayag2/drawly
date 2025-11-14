@@ -28,7 +28,7 @@ void PolygonDrawingTool::mousePressed(ApplicationContext *context) {
         CoordinateTransformer &transformer{spatialContext.coordinateTransformer()};
         RenderingContext &renderingContext{context->renderingContext()};
 
-        curItem = std::dynamic_pointer_cast<Polygon>(m_itemFactory->create());
+        curItem = std::dynamic_pointer_cast<PolygonItem>(m_itemFactory->create());
 
         curItem->setProperty(Property::StrokeWidth, uiContext.propertyManager().value(Property::StrokeWidth));
         curItem->setProperty(Property::StrokeColor, uiContext.propertyManager().value(Property::StrokeColor));
@@ -87,6 +87,12 @@ void PolygonDrawingTool::mouseReleased(ApplicationContext *context) {
     }
 };
 
-ToolID PolygonDrawingTool::id() const {
-    return ToolID::PolygonDrawingTool;
+void PolygonDrawingTool::cleanup() {
+    ApplicationContext *context{ApplicationContext::instance()};
+    context->uiContext().event().setButton(Qt::LeftButton);
+    mouseReleased(context);
+}
+
+Tool::Type PolygonDrawingTool::type() const {
+    return Tool::PolygonDrawing;
 }

@@ -11,7 +11,8 @@ public:
     bool mouseReleased(ApplicationContext *context) override;
 
 private:
-    QPointF m_lastPos;
+    QPointF m_lastPos{};
+    QPointF m_initialPos{};
 };
 
 #endif  // SELECTIONTOOLMOVESTATE_H

@@ -6,6 +6,10 @@ LineTool::LineTool() {
     m_itemFactory = std::make_unique<LineFactory>();
 }
 
-QString LineTool::iconAlt() const {
-    return "⟋";
+QString LineTool::tooltip() const {
+    return "Line Tool";
+}
+
+IconManager::Icon LineTool::icon() const {
+    return IconManager::TOOL_LINE;
 }

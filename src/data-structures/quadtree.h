@@ -47,6 +47,7 @@ public:
     void deleteItems(const QRectF &boundingBox);
 
     QVector<ItemPtr> getAllItems() const;
+    void clear();
 
     template <typename Shape, typename QueryCondition>
     QVector<ItemPtr> queryItems(const Shape &shape, QueryCondition condition) const;

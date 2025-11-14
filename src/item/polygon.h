@@ -3,9 +3,9 @@
 
 #include "item.h"
 
-class Polygon : public Item {
+class PolygonItem : public Item {
 public:
-    Polygon();
+    PolygonItem();
 
     virtual void setStart(QPointF start);
     virtual void setEnd(QPointF end);

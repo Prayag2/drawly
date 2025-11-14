@@ -6,6 +6,10 @@ RectangleTool::RectangleTool() {
     m_itemFactory = std::make_unique<RectangleFactory>();
 }
 
-QString RectangleTool::iconAlt() const {
-    return "󰹟";
+QString RectangleTool::tooltip() const {
+    return "Rectangle Tool";
+}
+
+IconManager::Icon RectangleTool::icon() const {
+    return IconManager::TOOL_RECTANGLE;
 }

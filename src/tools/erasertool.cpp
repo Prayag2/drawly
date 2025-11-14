@@ -1,5 +1,6 @@
 #include "erasertool.h"
 
+#include "../canvas/canvas.h"
 #include "../command/commandhistory.h"
 #include "../command/removeitemcommand.h"
 #include "../common/constants.h"
@@ -23,10 +24,6 @@ EraserTool::EraserTool() {
     m_cursor = QCursor(Qt::CrossCursor);
 
     m_properties = { Property::EraserSize };
-}
-
-QString EraserTool::iconAlt() const {
-    return "";
 }
 
 void EraserTool::mousePressed(ApplicationContext *context) {
@@ -115,7 +112,9 @@ void EraserTool::mouseReleased(ApplicationContext *context) {
             erasedItems.push_back(item);
         }
 
-        commandHistory.insert(std::make_shared<RemoveItemCommand>(erasedItems));
+        if (!erasedItems.empty()) {
+            commandHistory.insert(std::make_shared<RemoveItemCommand>(erasedItems));
+        }
 
         renderingContext.markForRender();
         renderingContext.markForUpdate();
@@ -125,6 +124,35 @@ void EraserTool::mouseReleased(ApplicationContext *context) {
     }
 }
 
-ToolID EraserTool::id() const {
-    return ToolID::EraserTool;
+void EraserTool::leave(ApplicationContext *context) {
+    cleanup();
+};
+
+void EraserTool::cleanup() {
+    ApplicationContext *context{ApplicationContext::instance()};
+
+    context->uiContext().event().setButton(Qt::LeftButton);
+    mouseReleased(context);
+
+    auto& overlayPainter{context->renderingContext().overlayPainter()};
+    overlayPainter.save();
+
+    overlayPainter.setCompositionMode(QPainter::CompositionMode_Source);
+    overlayPainter.fillRect(m_lastRect + Common::cleanupMargin, Qt::transparent);
+
+    context->renderingContext().markForUpdate();
+
+    overlayPainter.restore();
 }
+
+Tool::Type EraserTool::type() const {
+    return Tool::Eraser;
+}
+
+QString EraserTool::tooltip() const {
+    return "Eraser Tool";
+}
+
+IconManager::Icon EraserTool::icon() const {
+    return IconManager::TOOL_ERASER;
+};

@@ -1,12 +1,10 @@
 #include "quadtree.h"
 
-#include "../common/utils.h"
 #include "../item/item.h"
 #include "orderedlist.h"
 #include <QDebug>
 #include <cstdlib>
 #include <memory>
-#include <unordered_map>
 
 QuadTree::QuadTree(QRectF region, int capacity) : m_boundingBox{region}, m_capacity{capacity} {
     if (m_orderedList == nullptr) {
@@ -95,6 +93,17 @@ void QuadTree::deleteItem(std::shared_ptr<Item> const item) {
         m_topRight->deleteItem(item);
         m_bottomLeft->deleteItem(item);
         m_bottomRight->deleteItem(item);
+    }
+}
+
+void QuadTree::clear() {
+    m_items.clear();
+
+    if (m_topLeft != nullptr) {
+        m_topLeft->clear();
+        m_topRight->clear();
+        m_bottomRight->clear();
+        m_bottomLeft->clear();
     }
 }
 

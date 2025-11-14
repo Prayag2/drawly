@@ -42,27 +42,27 @@ QRectF CoordinateTransformer::viewToWorld(QRectF rect) {
 }
 
 QPoint CoordinateTransformer::worldToView(QPoint point) {
-    return worldToView(point.toPointF()).toPoint();
+    return round(worldToView(point.toPointF()));
 }
 
 QSize CoordinateTransformer::worldToView(QSize size) {
-    return worldToView(size.toSizeF()).toSize();
+    return round(worldToView(size.toSizeF()));
 }
 
 QRect CoordinateTransformer::worldToView(QRect rect) {
-    return worldToView(rect.toRectF()).toRect();
+    return round(worldToView(rect.toRectF()));
 }
 
 QPoint CoordinateTransformer::viewToWorld(QPoint point) {
-    return viewToWorld(point.toPointF()).toPoint();
+    return round(viewToWorld(point.toPointF()));
 }
 
 QSize CoordinateTransformer::viewToWorld(QSize size) {
-    return viewToWorld(size.toSizeF()).toSize();
+    return round(viewToWorld(size.toSizeF()));
 }
 
 QRect CoordinateTransformer::viewToWorld(QRect rect) {
-    return viewToWorld(rect.toRectF()).toRect();
+    return round(viewToWorld(rect.toRectF()));
 }
 
 QPointF CoordinateTransformer::worldToGrid(QPointF point) {
@@ -90,31 +90,31 @@ QRectF CoordinateTransformer::gridToWorld(QRectF rect) {
 }
 
 QPoint CoordinateTransformer::worldToGrid(QPoint point) {
-    return worldToGrid(point.toPointF()).toPoint();
+    return round(worldToGrid(point.toPointF()));
 }
 
 QSize CoordinateTransformer::worldToGrid(QSize size) {
-    return worldToGrid(size.toSizeF()).toSize();
+    return round(worldToGrid(size.toSizeF()));
 }
 
 QRect CoordinateTransformer::worldToGrid(QRect rect) {
-    return worldToGrid(rect.toRectF()).toRect();
+    return round(worldToGrid(rect.toRectF()));
 }
 
 QPoint CoordinateTransformer::gridToWorld(QPoint point) {
-    return gridToWorld(point.toPointF()).toPoint();
+    return round(gridToWorld(point.toPointF()));
 }
 
 QSize CoordinateTransformer::gridToWorld(QSize size) {
-    return gridToWorld(size.toSizeF()).toSize();
+    return round(gridToWorld(size.toSizeF()));
 }
 
 QRect CoordinateTransformer::gridToWorld(QRect rect) {
-    return gridToWorld(rect.toRectF()).toRect();
+    return round(gridToWorld(rect.toRectF()));
 }
 
 QPointF CoordinateTransformer::viewToGrid(QPointF point) {
-    return point + m_spatialContext->offsetPos();
+    return point + worldToView(m_spatialContext->offsetPos());
 }
 
 QSizeF CoordinateTransformer::viewToGrid(QSizeF size) {
@@ -126,7 +126,7 @@ QRectF CoordinateTransformer::viewToGrid(QRectF rect) {
 }
 
 QPointF CoordinateTransformer::gridToView(QPointF point) {
-    return point - m_spatialContext->offsetPos();
+    return point - worldToGrid(m_spatialContext->offsetPos());
 }
 
 QSizeF CoordinateTransformer::gridToView(QSizeF size) {
@@ -138,25 +138,42 @@ QRectF CoordinateTransformer::gridToView(QRectF rect) {
 }
 
 QPoint CoordinateTransformer::viewToGrid(QPoint point) {
-    return viewToGrid(point.toPointF()).toPoint();
+    return round(viewToGrid(point.toPointF()));
 }
 
 QSize CoordinateTransformer::viewToGrid(QSize size) {
-    return viewToGrid(size.toSizeF()).toSize();
+    return round(viewToGrid(size.toSizeF()));
 }
 
 QRect CoordinateTransformer::viewToGrid(QRect rect) {
-    return viewToGrid(rect.toRectF()).toRect();
+    return round(viewToGrid(rect.toRectF()));
 }
 
 QPoint CoordinateTransformer::gridToView(QPoint point) {
-    return gridToView(point.toPointF()).toPoint();
+    return round(gridToView(point.toPointF()));
 }
 
 QSize CoordinateTransformer::gridToView(QSize size) {
-    return gridToView(size.toSizeF()).toSize();
+    return round(gridToView(size.toSizeF()));
 }
 
 QRect CoordinateTransformer::gridToView(QRect rect) {
-    return gridToView(rect.toRectF()).toRect();
+    return round(gridToView(rect.toRectF()));
+}
+
+QPoint CoordinateTransformer::round(QPointF point) {
+    return QPoint{qRound(point.x()), qRound(point.y())};
+}
+
+QRect CoordinateTransformer::round(QRectF rect) {
+    int x1 = qRound(rect.left());
+    int y1 = qRound(rect.top());
+    int x2 = qRound(rect.right());
+    int y2 = qRound(rect.bottom());
+
+    return QRect {x1, y1, x2 - x1, y2 - y1};
+}
+
+QSize CoordinateTransformer::round(QSizeF size) {
+    return QSize{qRound(size.width()), qRound(size.height())};
 }

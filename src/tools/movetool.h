@@ -10,12 +10,14 @@ public:
     MoveTool();
     ~MoveTool() = default;
 
-    QString iconAlt() const override;
     void mousePressed(ApplicationContext *context) override;
     void mouseMoved(ApplicationContext *context) override;
     void mouseReleased(ApplicationContext *context) override;
 
-    ToolID id() const override;
+    Tool::Type type() const override;
+
+    QString tooltip() const override;
+    IconManager::Icon icon() const override;
 
 private:
     bool m_isActive{false};

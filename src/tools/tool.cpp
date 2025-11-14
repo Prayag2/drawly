@@ -25,3 +25,5 @@ void Tool::keyPressed(ApplicationContext *context) {}
 void Tool::keyReleased(ApplicationContext *context) {}
 void Tool::mouseDoubleClick(ApplicationContext *context) {}
 void Tool::mouseTripleClick(ApplicationContext *context) {}
+void Tool::leave(ApplicationContext *context) {}
+void Tool::cleanup() {}

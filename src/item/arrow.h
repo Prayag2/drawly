@@ -3,10 +3,10 @@
 
 #include "polygon.h"
 
-class Arrow : public Polygon {
+class ArrowItem : public PolygonItem {
 public:
-    Arrow();
-    ~Arrow() override = default;
+    ArrowItem();
+    ~ArrowItem() override = default;
 
     void setStart(QPointF start) override;
     void setEnd(QPointF end) override;

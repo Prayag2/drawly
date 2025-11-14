@@ -5,11 +5,11 @@
 #include <deque>
 #include <memory>
 
-class Freeform : public Item, public std::enable_shared_from_this<Freeform> {
+class FreeformItem : public Item, public std::enable_shared_from_this<FreeformItem> {
 public:
-    Freeform();
-    ~Freeform() = default;
-    Freeform(const Freeform &freeform);
+    FreeformItem();
+    ~FreeformItem() = default;
+    FreeformItem(const FreeformItem &freeform);
 
     static int minPointDistance();
 
@@ -31,6 +31,9 @@ public:
     virtual void addPoint(const QPointF &point, const qreal pressure, bool optimize = true);
 
     Item::Type type() const override;
+
+    const QVector<QPointF>& points() const;
+    const QVector<qreal>& pressures() const;
 
 protected:
     void m_draw(QPainter &painter, const QPointF &offset) const override;

@@ -6,5 +6,5 @@ EllipseFactory::EllipseFactory() {
 }
 
 std::shared_ptr<Item> EllipseFactory::create() const {
-    return std::make_shared<Ellipse>();
+    return std::make_shared<EllipseItem>();
 }

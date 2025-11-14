@@ -2,12 +2,12 @@
 #define POLYGONDRAWINGTOOL_H
 
 #include "drawingtool.h"
-class Polygon;
+class PolygonItem;
 class PropertyManager;
 
 class PolygonDrawingTool : public DrawingTool {
 protected:
-    std::shared_ptr<Polygon> curItem{};
+    std::shared_ptr<PolygonItem> curItem{};
 
 public:
     PolygonDrawingTool();
@@ -16,8 +16,9 @@ public:
     void mousePressed(ApplicationContext *context) override;
     void mouseMoved(ApplicationContext *context) override;
     void mouseReleased(ApplicationContext *context) override;
+    void cleanup() override;
 
-    ToolID id() const override;
+    Tool::Type type() const override;
 };
 
 #endif  // POLYGONDRAWINGTOOL_H

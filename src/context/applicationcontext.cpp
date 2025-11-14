@@ -45,3 +45,11 @@ UIContext &ApplicationContext::uiContext() const {
 SelectionContext &ApplicationContext::selectionContext() const {
     return *m_selectionContext;
 }
+
+void ApplicationContext::reset() {
+    selectionContext().reset();
+    uiContext().reset();
+    selectionContext().reset();
+    spatialContext().reset();
+    renderingContext().reset();
+}

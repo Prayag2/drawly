@@ -10,7 +10,8 @@ public:
 
     ~EllipseTool() override = default;
 
-    QString iconAlt() const override;
+    QString tooltip() const override;
+    IconManager::Icon icon() const override;
 };
 
 #endif  // ELLIPSETOOL_H

@@ -1,6 +1,7 @@
 #ifndef ACTIONBAR_H
 #define ACTIONBAR_H
 
+#include "../iconmanager/iconmanager.h"
 #include <QFrame>
 #include <QHBoxLayout>
 #include <QHash>
@@ -11,7 +12,7 @@ class ActionBar : public QFrame {
 public:
     ActionBar(QWidget *parent = nullptr);
 
-    void addButton(const QString &text, int id);
+    void addButton(const QString &tooltip, IconManager::Icon icon, int id);
     QPushButton &button(int id);
 
 private:

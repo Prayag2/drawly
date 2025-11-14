@@ -2,19 +2,20 @@
 
 #include "../common/constants.h"
 #include "../common/utils.h"
+#include <QDateTime>
 #include <memory>
 
-Freeform::Freeform() {
+FreeformItem::FreeformItem() {
     m_properties[Property::StrokeWidth] = Property{1, Property::StrokeWidth};
     m_properties[Property::StrokeColor] = Property{QColor(Qt::black), Property::StrokeColor};
     m_properties[Property::Opacity] = Property{Common::maxItemOpacity, Property::Opacity};
 }
 
-int Freeform::minPointDistance() {
+int FreeformItem::minPointDistance() {
     return 0;
 }
 
-void Freeform::addPoint(const QPointF &point, const qreal pressure, bool optimize) {
+void FreeformItem::addPoint(const QPointF &point, const qreal pressure, bool optimize) {
     QPointF newPoint{point};
     if (optimize) {
         newPoint = optimizePoint(point);
@@ -41,7 +42,7 @@ void Freeform::addPoint(const QPointF &point, const qreal pressure, bool optimiz
     m_pressures.push_back(pressure);
 }
 
-bool Freeform::intersects(const QRectF &rect) {
+bool FreeformItem::intersects(const QRectF &rect) {
     if (!boundingBox().intersects(rect))
         return false;
 
@@ -67,7 +68,7 @@ bool Freeform::intersects(const QRectF &rect) {
     return false;
 }
 
-bool Freeform::intersects(const QLineF &line) {
+bool FreeformItem::intersects(const QLineF &line) {
     qsizetype pointSize{m_points.size()};
     for (qsizetype index{1}; index < pointSize; index++) {
         if (Common::intersects(QLineF{m_points[index - 1], m_points[index]}, line)) {
@@ -77,7 +78,7 @@ bool Freeform::intersects(const QLineF &line) {
     return false;
 }
 
-void Freeform::draw(QPainter &painter, const QPointF &offset) {
+void FreeformItem::draw(QPainter &painter, const QPointF &offset) {
     QPen pen{};
 
     QColor color{property(Property::StrokeColor).value<QColor>()};
@@ -95,13 +96,13 @@ void Freeform::draw(QPainter &painter, const QPointF &offset) {
     m_draw(painter, offset);
 }
 
-void Freeform::erase(QPainter &painter, const QPointF &offset, QColor color) const {
+void FreeformItem::erase(QPainter &painter, const QPointF &offset, QColor color) const {
     painter.setCompositionMode(QPainter::CompositionMode_Source);
     painter.fillRect(boundingBox().translated(-offset), Qt::transparent);
     painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
 }
 
-QPointF Freeform::optimizePoint(const QPointF &newPoint) {
+QPointF FreeformItem::optimizePoint(const QPointF &newPoint) {
     m_currentWindow.push_back(newPoint);
     m_currentWindowSum += newPoint;
 
@@ -113,7 +114,7 @@ QPointF Freeform::optimizePoint(const QPointF &newPoint) {
     return m_currentWindowSum / m_currentWindow.size();
 }
 
-void Freeform::quickDraw(QPainter &painter, const QPointF &offset) const {
+void FreeformItem::quickDraw(QPainter &painter, const QPointF &offset) const {
     QPen pen{};
 
     QColor color{property(Property::StrokeColor).value<QColor>()};
@@ -138,7 +139,7 @@ void Freeform::quickDraw(QPainter &painter, const QPointF &offset) const {
     }
 }
 
-void Freeform::m_draw(QPainter &painter, const QPointF &offset) const {
+void FreeformItem::m_draw(QPainter &painter, const QPointF &offset) const {
     int strokeWidth{property(Property::StrokeWidth).value<int>()};
     int alpha{property(Property::Opacity).value<int>()};
     double currentWidth{strokeWidth * 1.0};
@@ -175,18 +176,18 @@ void Freeform::m_draw(QPainter &painter, const QPointF &offset) const {
     }
 }
 
-int Freeform::size() const {
+int FreeformItem::size() const {
     return m_points.size();
 }
 
-int Freeform::maxSize() const {
+int FreeformItem::maxSize() const {
     // Max number of points per freeform
     return 500;
 }
 
 // If the number of points exceeds the limit, this method can be called
 // to split this freeform into multiple smaller freeforms
-QVector<std::shared_ptr<Item>> Freeform::split() const {
+QVector<std::shared_ptr<Item>> FreeformItem::split() const {
     QVector<std::shared_ptr<Item>> items;
 
     qsizetype pointSize{m_points.size()};
@@ -194,25 +195,25 @@ QVector<std::shared_ptr<Item>> Freeform::split() const {
         if (index % maxSize() == 0) {
             // add this point to the previous freeform too
             if (!items.empty()) {
-                std::shared_ptr<Freeform> last{std::static_pointer_cast<Freeform>(items.back())};
+                std::shared_ptr<FreeformItem> last{std::static_pointer_cast<FreeformItem>(items.back())};
                 last->addPoint(m_points[index], m_pressures[index]);
             }
 
             // create a copy
-            std::shared_ptr<Freeform> newItem{std::make_shared<Freeform>()};
+            std::shared_ptr<FreeformItem> newItem{std::make_shared<FreeformItem>()};
             newItem->m_properties = m_properties;
             newItem->m_boundingBoxPadding = m_boundingBoxPadding;
 
             items.push_back(newItem);
         }
-        std::shared_ptr<Freeform> cur{std::static_pointer_cast<Freeform>(items.back())};
+        std::shared_ptr<FreeformItem> cur{std::static_pointer_cast<FreeformItem>(items.back())};
         cur->addPoint(m_points[index], m_pressures[index], false);
     }
 
     return items;
 }
 
-void Freeform::translate(const QPointF &amount) {
+void FreeformItem::translate(const QPointF &amount) {
     for (QPointF &point : m_points) {
         point += amount;
     }
@@ -220,6 +221,14 @@ void Freeform::translate(const QPointF &amount) {
     m_boundingBox.translate(amount);
 };
 
-Item::Type Freeform::type() const {
+Item::Type FreeformItem::type() const {
     return Item::Freeform;
+}
+
+const QVector<QPointF>& FreeformItem::points() const {
+    return m_points;
+}
+
+const QVector<qreal>& FreeformItem::pressures() const {
+    return m_pressures;
 }

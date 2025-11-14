@@ -8,7 +8,9 @@ class LineTool : public PolygonDrawingTool {
 public:
     LineTool();
     ~LineTool() override = default;
-    QString iconAlt() const override;
+
+    QString tooltip() const override;
+    IconManager::Icon icon() const override;
 };
 
 #endif  // LINETOOL_H
