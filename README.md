@@ -1,9 +1,23 @@
 # ✏️ Drawy
 Your handy, infinite, brainstorming tool.
 ---
-Drawly is a work-in-progress infinite whiteboard tool, which aims to be a native desktop alternative to the amazing web-based Excalidraw.
+Drawy is a work-in-progress infinite whiteboard tool written in Qt/C++, which aims to be a native-desktop alternative to the amazing web-based Excalidraw.
 
 <img src="./assets/screenshot.png" style="width: 100%"/>
+
+# Installation
+Windows binaries will soon be available. For now, you can try the AppImage that works on all major Linux distributions.
+<a href="https://github.com/Prayag2/drawy/releases">
+<img alt="Static Badge" src="https://img.shields.io/badge/Download-Linux-F7B601?style=for-the-badge">
+</a>
+
+## Compiling from Source
+- Install `cmake` and `g++`
+- Install Qt 6.9 or above from [here](https://www.qt.io/download-qt-installer-oss) or using [aqtinstall](https://github.com/miurahr/aqtinstall)
+- Clone this repository: `git clone https://github.com/prayag2/drawy && cd drawy`
+- Setup cmake: `cmake -B build -S . -DCMAKE_BUILD_TYPE=Release`
+- Compile: `cmake --build build --config Release`
+- Run: `./build/drawy`
 
 # Licence
 This project uses the GNU Lesser General Public Licence.
@@ -29,14 +43,12 @@ The following is a list of features I'll be planning to add to it:
     - [x] Colour of strokes
     - [x] Stroke width  
   
-Phase 2 completed!!
-
 ## Phase 3
 - [x] Buttons to zoom in/out
 - [x] Pressure senstivity for drawing tablets
 - [x] Selection tool to select items and do these actions:
-    - [x] Translate items (move)
-    - [ ] Delete items (Low priority)
+    - [x] Move items
+    - [x] Delete items
     - [ ] Transform items (resize) (Low priority)
     - [ ] Rotate items (Low priority)
 - [x] Undo/redo support
@@ -51,4 +63,6 @@ Phase 2 completed!!
 - [ ] Ability to store preferences
 - [ ] A "settings" page 
 - [ ] Better widgets
-- [ ] Collaboration
+- [ ] Online collaboration
+
+Feature requests are welcome!
