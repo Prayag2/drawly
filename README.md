@@ -23,6 +23,13 @@ Windows binaries will soon be available. For now, you can try the AppImage that 
 # Licence
 This project uses the GNU Lesser General Public Licence.
 
+# Support Me ♥
+If you liked this project, then please consider supporting me!  
+  
+<a href="https://liberapay.com/Prayag/donate"><img alt="Donate using Liberapay" src="https://img.shields.io/badge/LIBERAPAY-%231A171B?style=for-the-badge&logo=liberapay"/></a>
+<a href="https://ko-fi.com/O5O1FJ70D"><img alt="Buy Me A Coffee" src="https://img.shields.io/badge/Buy%20Me%20A%20Coffee-%234D798C?style=for-the-badge&logo=ko-fi"/></a>
+<a href="https://coindrop.to/prayagjain"><img alt="Done using PayPal" src="https://img.shields.io/badge/PayPal-%23F2BA37?style=for-the-badge&logo=paypal"/></a>
+
 # TODOs
 Started: `2025-01-02 04:40PM`  
 Development is divided into phases.  
