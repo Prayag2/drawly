@@ -1,5 +1,7 @@
 #include "actionmanager.h"
 
+#include "../serializer/loader.h"
+#include "../serializer/serializer.h"
 #include "../command/removeitemcommand.h"
 #include "../command/commandhistory.h"
 #include "../components/toolbar.h"
@@ -109,6 +111,24 @@ ActionManager::ActionManager(ApplicationContext *context) : m_context{context}, 
                                       },
                                       context}};
 
+    Action *saveAction{new Action{"Save",
+                                      "Save canvas",
+                                      [&, context]() {
+                                          Serializer serializer{};
+
+                                          serializer.serialize(context);
+                                          serializer.saveToFile();
+                                      },
+                                      context}};
+
+    Action *openFileAction{new Action{"Open File",
+                                      "Open an existing file",
+                                      [&, context]() {
+                                          Loader loader{};
+                                          loader.loadFromFile(context);
+                                      },
+                                      context}};
+
     keybindManager.addKeybinding(undoAction, "Ctrl+Z");
     keybindManager.addKeybinding(redoAction, "Ctrl+Y");
     keybindManager.addKeybinding(redoAction, "Ctrl+Shift+Z");
@@ -127,6 +147,8 @@ ActionManager::ActionManager(ApplicationContext *context) : m_context{context}, 
     keybindManager.addKeybinding(moveToolAction, "M");
     keybindManager.addKeybinding(selectAllAction, "Ctrl+A");
     keybindManager.addKeybinding(deleteAction, "Delete");
+    keybindManager.addKeybinding(saveAction, "Ctrl+S");
+    keybindManager.addKeybinding(openFileAction, "Ctrl+O");
 }
 
 void ActionManager::undo() {
@@ -142,11 +164,11 @@ void ActionManager::redo() {
 }
 
 void ActionManager::zoomIn() {
-    m_context->renderingContext().setZoomFactor(1);
+    m_context->renderingContext().updateZoomFactor(1);
 }
 
 void ActionManager::zoomOut() {
-    m_context->renderingContext().setZoomFactor(-1);
+    m_context->renderingContext().updateZoomFactor(-1);
 }
 
 void ActionManager::switchToFreeformTool() {

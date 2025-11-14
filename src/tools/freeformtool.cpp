@@ -38,8 +38,8 @@ FreeformTool::FreeformTool() {
     m_properties = { Property::StrokeWidth, Property::StrokeColor };
 }
 
-QString FreeformTool::iconAlt() const {
-    return "󰽉";
+QString FreeformTool::tooltip() const {
+    return "Pen Tool";
 };
 
 void FreeformTool::mousePressed(ApplicationContext *context) {
@@ -129,4 +129,8 @@ void FreeformTool::cleanup() {
 
 Tool::Type FreeformTool::type() const {
     return Tool::Freeform;
+}
+
+IconManager::Icon FreeformTool::icon() const {
+    return IconManager::TOOL_FREEFORM;
 }

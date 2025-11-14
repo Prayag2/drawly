@@ -224,3 +224,11 @@ void FreeformItem::translate(const QPointF &amount) {
 Item::Type FreeformItem::type() const {
     return Item::Freeform;
 }
+
+const QVector<QPointF>& FreeformItem::points() const {
+    return m_points;
+}
+
+const QVector<qreal>& FreeformItem::pressures() const {
+    return m_pressures;
+}

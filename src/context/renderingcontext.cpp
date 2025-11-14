@@ -86,7 +86,7 @@ qreal RenderingContext::zoomFactor() const {
     return m_zoomFactor;
 }
 
-void RenderingContext::setZoomFactor(qreal diff, QPoint center) {
+void RenderingContext::updateZoomFactor(qreal diff, QPoint center) {
     // zoom out limit is 0.1
     if (diff < 0 && m_zoomFactor - 0.1 <= 1e-9)
         return;
@@ -120,6 +120,10 @@ void RenderingContext::setZoomFactor(qreal diff, QPoint center) {
     m_applicationContext->renderingContext().markForUpdate();
 }
 
+void RenderingContext::setZoomFactor(qreal newValue) {
+    m_zoomFactor = newValue;
+}
+
 const int RenderingContext::fps() const {
     QScreen *screen{m_canvas->screen()};
     if (screen) {
@@ -149,4 +153,8 @@ void RenderingContext::markForUpdate() {
 void RenderingContext::markForUpdate(const QRect &region) {
     m_needsUpdate = true;
     m_updateRegion = region;
+}
+
+void RenderingContext::reset() {
+    setZoomFactor(1.0);
 }

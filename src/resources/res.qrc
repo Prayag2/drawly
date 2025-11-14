@@ -2,4 +2,48 @@
     <qresource prefix="/styles">
         <file>style.qss</file>
     </qresource>
+    <qresource prefix="/">
+        <file>fonts/Inter.ttf</file>
+        <file>fonts/FuzzyBubbles.ttf</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>icons/fa-dark/tool-selection.svg</file>
+        <file>icons/fa-dark/tool-freeform.svg</file>
+        <file>icons/fa-dark/tool-rectangle.svg</file>
+        <file>icons/fa-dark/tool-ellipse.svg</file>
+        <file>icons/fa-dark/tool-arrow.svg</file>
+        <file>icons/fa-dark/tool-line.svg</file>
+        <file>icons/fa-dark/tool-eraser.svg</file>
+        <file>icons/fa-dark/tool-text.svg</file>
+        <file>icons/fa-dark/tool-move.svg</file>
+        <file>icons/fa-dark/action-save.svg</file>
+        <file>icons/fa-dark/action-open_file.svg</file>
+        <file>icons/fa-dark/action-zoom_in.svg</file>
+        <file>icons/fa-dark/action-zoom_out.svg</file>
+        <file>icons/fa-dark/action-undo.svg</file>
+        <file>icons/fa-dark/action-redo.svg</file>
+        <file>icons/fa-dark/action-dark_mode.svg</file>
+        <file>icons/fa-dark/action-light_mode.svg</file>
+        <file>icons/fa-dark/ui-angle_up.svg</file>
+        <file>icons/fa-dark/ui-angle_down.svg</file>
+        <file>icons/fa-light/tool-selection.svg</file>
+        <file>icons/fa-light/tool-freeform.svg</file>
+        <file>icons/fa-light/tool-rectangle.svg</file>
+        <file>icons/fa-light/tool-ellipse.svg</file>
+        <file>icons/fa-light/tool-arrow.svg</file>
+        <file>icons/fa-light/tool-line.svg</file>
+        <file>icons/fa-light/tool-eraser.svg</file>
+        <file>icons/fa-light/tool-text.svg</file>
+        <file>icons/fa-light/tool-move.svg</file>
+        <file>icons/fa-light/action-save.svg</file>
+        <file>icons/fa-light/action-open_file.svg</file>
+        <file>icons/fa-light/action-zoom_in.svg</file>
+        <file>icons/fa-light/action-zoom_out.svg</file>
+        <file>icons/fa-light/action-undo.svg</file>
+        <file>icons/fa-light/action-redo.svg</file>
+        <file>icons/fa-light/action-dark_mode.svg</file>
+        <file>icons/fa-light/action-light_mode.svg</file>
+        <file>icons/fa-light/ui-angle_up.svg</file>
+        <file>icons/fa-light/ui-angle_down.svg</file>
+    </qresource>
 </RCC>

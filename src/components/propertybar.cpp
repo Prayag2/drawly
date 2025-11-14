@@ -1,5 +1,6 @@
 #include "propertybar.h"
 
+#include <QSpacerItem>
 #include "toolbar.h"
 #include "../context/applicationcontext.h"
 #include "../context/uicontext.h"
@@ -15,6 +16,7 @@ PropertyBar::PropertyBar(QWidget *parent) : QFrame{parent}
     this->setFrameStyle(QFrame::StyledPanel | QFrame::Plain);
     this->setAutoFillBackground(true);
     this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    this->setProperty("class", "drawlyFrame");
 
     m_layout = new QVBoxLayout{this};
     setLayout(m_layout);
@@ -54,12 +56,19 @@ void PropertyBar::updateProperties(Tool &tool) {
         show();
     }
 
+    qsizetype count{0};
     for (Property::Type property : properties) {
         try {
             const PropertyWidget& widget{m_propertyManager->widget(property)};
             QLabel *widgetLabel{new QLabel{widget.name(), this}};
             m_layout->addWidget(widgetLabel);
             m_layout->addWidget(widget.widget());
+
+            if (count > 0) {
+                widgetLabel->setProperty("class", "drawlyPropertyLabelMargin");
+            }
+
+            count++;
             widget.widget()->show();
         } catch (const std::logic_error& e) {
             // ignore this property

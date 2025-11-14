@@ -50,3 +50,10 @@ const QPointF &SpatialContext::offsetPos() const {
 void SpatialContext::setOffsetPos(const QPointF &pos) {
     m_offsetPos = pos;
 }
+
+void SpatialContext::reset() {
+    quadtree().clear();
+    cacheGrid().markAllDirty();
+    commandHistory().clear();
+    setOffsetPos(QPointF{0, 0});
+}

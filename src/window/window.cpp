@@ -1,5 +1,6 @@
 #include "window.h"
 
+#include <QFontDatabase>
 #include "../canvas/canvas.h"
 #include "../components/actionbar.h"
 #include "../components/propertybar.h"
@@ -29,8 +30,8 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
 
     layout->setMargins(10);
     layout->setLeftWidget(&uiContext.propertyBar());
-    layout->setBottomWidget(&uiContext.toolBar());
-    layout->setTopWidget(&uiContext.actionBar());
+    layout->setTopWidget(&uiContext.toolBar());
+    layout->setBottomWidget(&uiContext.actionBar());
     layout->setCentralWidget(&renderingContext.canvas());
 
     QObject::connect(&renderingContext.canvas(),
@@ -53,18 +54,18 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
                      &Canvas::keyReleased,
                      controller,
                      &Controller::keyReleased);
+
     QObject::connect(&renderingContext.canvas(), &Canvas::tablet, controller, &Controller::tablet);
     QObject::connect(&renderingContext.canvas(), &Canvas::wheel, controller, &Controller::wheel);
     QObject::connect(&renderingContext.canvas(), &Canvas::leave, controller, &Controller::leave);
+
+    m_applyCustomStyles();
 }
 
 MainWindow::~MainWindow() {
 }
 
 void MainWindow::m_applyCustomStyles() {
-    if (this->m_config_useSystemStyles)
-        return;
-
     QFile file(":/styles/style.qss");
     if (file.open(QFile::ReadOnly | QFile::Text)) {
         QTextStream stream(&file);
@@ -73,4 +74,15 @@ void MainWindow::m_applyCustomStyles() {
     } else {
         qWarning() << "Failed to load stylesheet.";
     }
+
+    int fontID = QFontDatabase::addApplicationFont(":/fonts/FuzzyBubbles.ttf");
+    if (fontID == -1) {
+        qWarning() << "Failed to load font: FuzzyBubbles";
+    }
+
+    fontID = QFontDatabase::addApplicationFont(":/fonts/Inter.ttf");
+    if (fontID == -1) {
+        qWarning() << "Failed to load font: Inter";
+    }
 }
+

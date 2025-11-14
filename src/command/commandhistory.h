@@ -17,6 +17,8 @@ public:
 
     static constexpr int maxCommands{100};  // arbitrary
 
+    void clear();
+
 private:
     std::unique_ptr<std::deque<std::shared_ptr<Command>>> m_undoStack;
     std::unique_ptr<std::deque<std::shared_ptr<Command>>> m_redoStack;

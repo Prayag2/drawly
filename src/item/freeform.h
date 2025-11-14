@@ -32,6 +32,9 @@ public:
 
     Item::Type type() const override;
 
+    const QVector<QPointF>& points() const;
+    const QVector<qreal>& pressures() const;
+
 protected:
     void m_draw(QPainter &painter, const QPointF &offset) const override;
     QVector<QPointF> m_points{};

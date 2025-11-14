@@ -2,6 +2,7 @@
 #define TOOL_H
 
 #include "../properties/property.h"
+#include "../iconmanager/iconmanager.h"
 #include <QCursor>
 class ApplicationContext;
 
@@ -12,7 +13,7 @@ public:
     virtual ~Tool();
 
     const QCursor &cursor() const;
-    virtual QString iconAlt() const = 0;
+    virtual QString tooltip() const = 0;
 
     virtual void mousePressed(ApplicationContext *context);
     virtual void mouseMoved(ApplicationContext *context);
@@ -39,6 +40,7 @@ public:
     };
 
     virtual Type type() const = 0;
+    virtual IconManager::Icon icon() const = 0;
 
     virtual const QVector<Property::Type> properties() const;
 

@@ -13,6 +13,8 @@ StrokeColorWidget::StrokeColorWidget(QWidget *parent)
     m_widget = new QWidget{parent};
 
     QHBoxLayout *layout{new QHBoxLayout{m_widget}};
+    layout->setContentsMargins(0, 0, 0, 0);
+
     m_group = new QButtonGroup{m_widget};
     m_widget->setLayout(layout);
 
@@ -31,8 +33,9 @@ StrokeColorWidget::StrokeColorWidget(QWidget *parent)
         m_group->addButton(btn, color.rgba());
     }
 
+    layout->setSpacing(0);
     m_group->buttons()[0]->setChecked(true);
-    m_widget->setStyleSheet(QString::asprintf("QPushButton {width: %dpx; height: %dpx};", 20, 20));
+    m_widget->setProperty("class", "drawlyStrokeColorWidget");
     m_widget->hide();
 
     QObject::connect(m_group, &QButtonGroup::idClicked, this, [this](){

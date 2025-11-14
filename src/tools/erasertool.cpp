@@ -26,10 +26,6 @@ EraserTool::EraserTool() {
     m_properties = { Property::EraserSize };
 }
 
-QString EraserTool::iconAlt() const {
-    return "";
-}
-
 void EraserTool::mousePressed(ApplicationContext *context) {
     Event &event{context->uiContext().event()};
 
@@ -152,3 +148,11 @@ void EraserTool::cleanup() {
 Tool::Type EraserTool::type() const {
     return Tool::Eraser;
 }
+
+QString EraserTool::tooltip() const {
+    return "Eraser Tool";
+}
+
+IconManager::Icon EraserTool::icon() const {
+    return IconManager::TOOL_ERASER;
+};

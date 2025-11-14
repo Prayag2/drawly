@@ -16,6 +16,8 @@ public:
     std::unordered_set<std::shared_ptr<Item>> &selectedItems();
     QRectF selectionBox() const;
 
+    void reset();
+
 public slots:
     void updatePropertyOfSelectedItems(Property property);
 

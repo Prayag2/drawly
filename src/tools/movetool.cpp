@@ -14,10 +14,6 @@ MoveTool::MoveTool() {
     m_cursor = QCursor(Qt::OpenHandCursor);
 }
 
-QString MoveTool::iconAlt() const {
-    return "";
-}
-
 void MoveTool::mousePressed(ApplicationContext *context) {
     UIContext &uiContext{context->uiContext()};
     auto button{uiContext.event().button()};
@@ -65,4 +61,12 @@ void MoveTool::mouseReleased(ApplicationContext *context) {
 
 Tool::Type MoveTool::type() const {
     return Tool::Move;
+}
+
+QString MoveTool::tooltip() const {
+    return "Move Tool";
+}
+
+IconManager::Icon MoveTool::icon() const {
+    return IconManager::TOOL_MOVE;
 }

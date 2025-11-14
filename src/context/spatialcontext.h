@@ -25,6 +25,8 @@ public:
     const QPointF &offsetPos() const;
     void setOffsetPos(const QPointF &pos);
 
+    void reset();
+
 private:
     std::unique_ptr<QuadTree> m_quadtree{nullptr};
     std::unique_ptr<CacheGrid> m_cacheGrid{nullptr};

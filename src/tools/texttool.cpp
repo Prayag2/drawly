@@ -478,6 +478,10 @@ Tool::Type TextTool::type() const {
     return Tool::Text;
 }
 
-QString TextTool::iconAlt() const {
-    return "󰊄";
+QString TextTool::tooltip() const {
+    return "Text Tool";
+}
+
+IconManager::Icon TextTool::icon() const {
+    return IconManager::TOOL_TEXT;
 }

@@ -1,4 +1,7 @@
 #include "toolbar.h"
+#include "../context/uicontext.h"
+#include "../context/applicationcontext.h"
+#include "../iconmanager/iconmanager.h"
 
 ToolBar::ToolBar(QWidget *parent) : QFrame{parent} {
     m_group = new QButtonGroup(this);
@@ -8,6 +11,7 @@ ToolBar::ToolBar(QWidget *parent) : QFrame{parent} {
     this->setFrameShape(QFrame::StyledPanel);
     this->setFrameShadow(QFrame::Raised);
     this->setAutoFillBackground(true);
+    this->setProperty("class", "drawlyFrame drawlyToolBar");
 
     QObject::connect(m_group, &QButtonGroup::idClicked, this, &ToolBar::onToolChanged);
 }
@@ -40,8 +44,13 @@ void ToolBar::addTool(Tool *tool, Tool::Type type) {
     if (tool == nullptr)
         return;
 
-    QPushButton *btn{new QPushButton(tool->iconAlt(), this)};
+    ApplicationContext *context{ApplicationContext::instance()};
+    QPushButton *btn{new QPushButton("", this)};
+    btn->setIcon(context->uiContext().iconManager().icon(tool->icon()));
+
     btn->setCheckable(true);
+    btn->setProperty("class", "drawlyToolButton");
+    btn->setCursor(Qt::PointingHandCursor);
 
     int id{static_cast<int>(type)};
 

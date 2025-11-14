@@ -9,7 +9,8 @@ public:
     SelectionTool();
     ~SelectionTool() = default;
 
-    QString iconAlt() const override;
+    QString tooltip() const override;
+    IconManager::Icon icon() const override;
 
     void mousePressed(ApplicationContext *context) override;
     void mouseMoved(ApplicationContext *context) override;

@@ -72,6 +72,8 @@ void Common::renderCanvas(ApplicationContext *context) {
     // render a box around selected items
     canvasPainter.save();
     QPen pen{Common::selectionBorderColor};
+    pen.setWidth(2);
+
     canvasPainter.setPen(pen);
 
     for (auto item : selectedItems) {
@@ -80,7 +82,6 @@ void Common::renderCanvas(ApplicationContext *context) {
         selectionBox |= curBox;
     }
 
-    pen.setStyle(Qt::DashLine);
     canvasPainter.setPen(pen);
     canvasPainter.drawRect(selectionBox);
     canvasPainter.restore();

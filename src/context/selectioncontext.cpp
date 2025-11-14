@@ -41,3 +41,7 @@ void SelectionContext::updatePropertyOfSelectedItems(Property property) {
     m_applicationContext->renderingContext().markForRender();
     m_applicationContext->renderingContext().markForUpdate();
 }
+
+void SelectionContext::reset() {
+    selectedItems().clear();
+}

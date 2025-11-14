@@ -19,6 +19,8 @@
 #include "../tools/rectangletool.h"
 #include "../tools/selectiontool/selectiontool.h"
 #include "../tools/texttool.h"
+#include "../serializer/serializer.h"
+#include "../serializer/loader.h"
 #include "applicationcontext.h"
 #include "renderingcontext.h"
 #include "selectioncontext.h"
@@ -40,6 +42,7 @@ void UIContext::setUIContext() {
     m_propertyBar = new PropertyBar(m_applicationContext->parentWidget());
     m_keybindManager = new KeybindManager(&m_applicationContext->renderingContext().canvas());
     m_actionManager = new ActionManager(m_applicationContext);
+    m_iconManager = new IconManager(m_applicationContext);
 
     m_propertyManager = new PropertyManager(m_propertyBar);
     m_propertyBar->setPropertyManager(m_propertyManager);
@@ -59,21 +62,24 @@ void UIContext::setUIContext() {
     m_toolBar->addTool(new TextTool(), Tool::Text);
     m_toolBar->addTool(new MoveTool(), Tool::Move);
 
-    m_actionBar->addButton("-", 1);
-    m_actionBar->addButton("+", 2);
-    m_actionBar->addButton("󰖨", 3);
-    m_actionBar->addButton("󰕌", 4);
-    m_actionBar->addButton("󰑎", 5);
+    // TODO: Define their functions somewhere else
+    m_actionBar->addButton("Save to File", IconManager::ACTION_SAVE,6);
+    m_actionBar->addButton("Open File", IconManager::ACTION_OPEN_FILE, 7);
+    m_actionBar->addButton("Zoom Out", IconManager::ACTION_ZOOM_OUT, 1);
+    m_actionBar->addButton("Zoom In", IconManager::ACTION_ZOOM_IN, 2);
+    m_actionBar->addButton("Light Mode", IconManager::ACTION_LIGHT_MODE, 3);
+    m_actionBar->addButton("Undo", IconManager::ACTION_UNDO, 4);
+    m_actionBar->addButton("Redo", IconManager::ACTION_REDO, 5);
 
     QObject::connect(m_toolBar, &ToolBar::toolChanged, this, &UIContext::toolChanged);
     QObject::connect(m_toolBar, &ToolBar::toolChanged, m_propertyBar, &PropertyBar::updateProperties);
 
     QObject::connect(&m_actionBar->button(1), &QPushButton::clicked, this, [this]() {
-        m_applicationContext->renderingContext().setZoomFactor(-1);
+        m_applicationContext->renderingContext().updateZoomFactor(-1);
     });
 
     QObject::connect(&m_actionBar->button(2), &QPushButton::clicked, this, [this]() {
-        m_applicationContext->renderingContext().setZoomFactor(1);
+        m_applicationContext->renderingContext().updateZoomFactor(1);
     });
 
     QObject::connect(&m_actionBar->button(4), &QPushButton::clicked, this, [this]() {
@@ -88,13 +94,31 @@ void UIContext::setUIContext() {
         m_applicationContext->renderingContext().markForUpdate();
     });
 
+    QObject::connect(&m_actionBar->button(6), &QPushButton::clicked, this, [this]() {
+        Serializer serializer{};
+
+        serializer.serialize(m_applicationContext);
+        serializer.saveToFile();
+    });
+
+    QObject::connect(&m_actionBar->button(7), &QPushButton::clicked, this, [this]() {
+        Loader loader{};
+
+        loader.loadFromFile(m_applicationContext);
+    });
+
     QObject::connect(&m_actionBar->button(3), &QPushButton::clicked, this, [this]() {
         Canvas &canvas{m_applicationContext->renderingContext().canvas()};
+        QPushButton &button{actionBar().button(3)};
 
         if (canvas.bg() == Common::lightBackgroundColor) {
             canvas.setBg(Common::darkBackgroundColor);
+            button.setToolTip("Light Mode");
+            button.setIcon(iconManager().icon(IconManager::ACTION_LIGHT_MODE));
         } else {
             canvas.setBg(Common::lightBackgroundColor);
+            button.setToolTip("Dark Mode");
+            button.setIcon(iconManager().icon(IconManager::ACTION_DARK_MODE));
         }
 
         m_applicationContext->renderingContext().markForRender();
@@ -132,6 +156,10 @@ Event &UIContext::event() const {
     return *m_event;
 }
 
+IconManager &UIContext::iconManager() const {
+    return *m_iconManager;
+}
+
 void UIContext::toolChanged(Tool &tool) {
     m_applicationContext->selectionContext().selectedItems().clear();
 
@@ -146,4 +174,9 @@ void UIContext::toolChanged(Tool &tool) {
     canvas.setCursor(tool.cursor());
 
     m_applicationContext->renderingContext().markForUpdate();
+}
+
+void UIContext::reset() {
+    m_lastTool = nullptr;
+    toolBar().changeTool(Tool::Selection);
 }

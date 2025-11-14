@@ -25,9 +25,12 @@ public:
     void markForUpdate(const QRect &region);
 
     qreal zoomFactor() const;
-    void setZoomFactor(qreal diff, QPoint center = {-1, -1});
+    void setZoomFactor(qreal newValue);
+    void updateZoomFactor(qreal diff, QPoint center = {-1, -1});
 
     const int fps() const;
+
+    void reset();
 
 private slots:
     void beginPainters();

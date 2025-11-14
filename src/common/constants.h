@@ -42,6 +42,8 @@ constexpr std::array<QChar, 38> wordSeparators{
 
 constexpr int doubleClickInterval{300}; // milliseconds
 
+constexpr qreal tabStopDistance{4};
+
 };  // namespace Common
 
 #endif  // CONSTANTS_H

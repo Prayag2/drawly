@@ -23,10 +23,6 @@ SelectionTool::SelectionTool() {
     m_selectState = std::make_shared<SelectionToolSelectState>();
 }
 
-QString SelectionTool::iconAlt() const {
-    return "󰆿";
-}
-
 void SelectionTool::mousePressed(ApplicationContext *context) {
     m_stateLocked = getCurrentState(context)->mousePressed(context);
 };
@@ -100,7 +96,7 @@ const QVector<Property::Type> SelectionTool::properties() const {
 
     std::set<Property::Type> result{};
     for (const auto& item : selectedItems) {
-        for (const auto& property : item->properties()) {
+        for (const auto& property : item->propertyTypes()) {
             result.insert(property);
         }
     }
@@ -111,3 +107,11 @@ const QVector<Property::Type> SelectionTool::properties() const {
 Tool::Type SelectionTool::type() const {
     return Tool::Selection;
 };
+
+QString SelectionTool::tooltip() const {
+    return "Selection Tool";
+}
+
+IconManager::Icon SelectionTool::icon() const {
+    return IconManager::TOOL_SELECTION;
+}

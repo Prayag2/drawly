@@ -21,7 +21,8 @@ public:
     void cleanup() override;
 
     Tool::Type type() const override;
-    QString iconAlt() const override;
+    QString tooltip() const override;
+    IconManager::Icon icon() const override;
 
 private:
     std::shared_ptr<TextItem> m_curItem{nullptr};

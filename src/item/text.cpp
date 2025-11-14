@@ -326,6 +326,7 @@ bool TextItem::hasSelection() const {
 QFont TextItem::getFont() const {
     QFont font{};
     font.setPointSize(property(Property::FontSize).value<int>());
+    font.setFamily("Fuzzy Bubbles");
 
     return font;
 }
@@ -409,7 +410,14 @@ qsizetype TextItem::getNextBreak(qsizetype position) const {
 };
 
 constexpr int TextItem::getTextFlags() {
-    return (Qt::TextExpandTabs);
+    return Qt::TextExpandTabs;
+}
+
+QTextOption TextItem::getTextOptions() {
+    QTextOption options{};
+    options.setTabStopDistance(Common::tabStopDistance);
+    
+    return options;
 }
 
 const QString &TextItem::text() const {

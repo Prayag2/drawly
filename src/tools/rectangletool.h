@@ -9,7 +9,8 @@ public:
     RectangleTool();
     ~RectangleTool() override = default;
 
-    QString iconAlt() const override;
+    QString tooltip() const override;
+    IconManager::Icon icon() const override;
 };
 
 #endif  // RECTANGLETOOL_H
