@@ -1,0 +1,54 @@
+name: Build AppImage
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build-appimage:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 6.10.0
+          host: linux
+          target: desktop
+          arch: gcc_64
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential cmake git wget patchelf fuse curl software-properties-common \
+            libxkbcommon0 libxkbcommon-x11-0 libxkbcommon-dev libxcb-keysyms1 libxcb-keysyms1-dev \
+            libxcb-icccm4 libxcb-icccm4-dev libgl1-mesa-dev libxcb-cursor0 libxcb-cursor-dev \
+            libxcb-shape0 libxcb-shape0-dev
+
+      - name: Configure
+        run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$Qt6_DIR
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Prepare AppImage tools
+        run: |
+          cd deploy/appimage
+          wget https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
+          chmod +x linuxdeployqt-continuous-x86_64.AppImage
+
+      - name: Create AppImage
+        run: |
+          cd deploy/appimage
+          export APPIMAGE_EXTRACT_AND_RUN=1
+          ./linuxdeployqt-continuous-x86_64.AppImage AppDir/usr/share/applications/drawy.desktop -appimage
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AppImage
+          path: deploy/appimage/*.AppImage
