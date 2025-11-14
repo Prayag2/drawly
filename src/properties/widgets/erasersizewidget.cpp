@@ -1,11 +1,9 @@
 #include "erasersizewidget.h"
-#include "../property.h"
 
+#include "../property.h"
 #include <QSpinBox>
 
-EraserSizeWidget::EraserSizeWidget(QWidget *parent)
-    : PropertyWidget{parent}
-{
+EraserSizeWidget::EraserSizeWidget(QWidget *parent) : PropertyWidget{parent} {
     QSpinBox *box{new QSpinBox(parent)};
     box->setRange(1, 100);
     box->setValue(30);
@@ -13,9 +11,7 @@ EraserSizeWidget::EraserSizeWidget(QWidget *parent)
     box->hide();
     m_widget = box;
 
-    QObject::connect(box, &QSpinBox::valueChanged, this, [this](){
-        emit changed(value());
-    });
+    QObject::connect(box, &QSpinBox::valueChanged, this, [this]() { emit changed(value()); });
 }
 
 QString EraserSizeWidget::name() const {

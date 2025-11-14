@@ -1,4 +1,5 @@
 #include "item.h"
+
 #include <algorithm>
 
 // PUBLIC
@@ -29,7 +30,7 @@ const Property &Item::property(const Property::Type propertyType) const {
 const QVector<Property::Type> Item::propertyTypes() const {
     QVector<Property::Type> result;
 
-    for (auto& [type, _] : m_properties) {
+    for (auto &[type, _] : m_properties) {
         result.push_back(type);
     }
 
@@ -39,7 +40,7 @@ const QVector<Property::Type> Item::propertyTypes() const {
 const QVector<Property> Item::properties() const {
     QVector<Property> result;
 
-    for (auto& [_, property] : m_properties) {
+    for (auto &[_, property] : m_properties) {
         result.push_back(property);
     }
 
@@ -54,7 +55,8 @@ void Item::setProperty(const Property::Type propertyType, Property newObj) {
     updateAfterProperty();
 }
 
-void Item::updateAfterProperty() {}
+void Item::updateAfterProperty() {
+}
 
 int Item::boundingBoxPadding() const {
     return m_boundingBoxPadding;

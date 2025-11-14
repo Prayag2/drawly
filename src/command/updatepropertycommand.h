@@ -1,8 +1,8 @@
 #ifndef UPDATEPROPERTYCOMMAND_H
 #define UPDATEPROPERTYCOMMAND_H
 
-#include "itemcommand.h"
 #include "../properties/property.h"
+#include "itemcommand.h"
 class ApplicationContext;
 
 class UpdatePropertyCommand : public ItemCommand {

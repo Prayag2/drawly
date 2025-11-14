@@ -171,7 +171,7 @@ QRect CoordinateTransformer::round(QRectF rect) {
     int x2 = qRound(rect.right());
     int y2 = qRound(rect.bottom());
 
-    return QRect {x1, y1, x2 - x1, y2 - y1};
+    return QRect{x1, y1, x2 - x1, y2 - y1};
 }
 
 QSize CoordinateTransformer::round(QSizeF size) {

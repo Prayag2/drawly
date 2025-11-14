@@ -1,11 +1,9 @@
 #include "strokewidthwidget.h"
-#include "../property.h"
 
+#include "../property.h"
 #include <QSpinBox>
 
-StrokeWidthWidget::StrokeWidthWidget(QWidget *parent)
-    : PropertyWidget{parent}
-{
+StrokeWidthWidget::StrokeWidthWidget(QWidget *parent) : PropertyWidget{parent} {
     QSpinBox *box{new QSpinBox(parent)};
     box->setRange(1, 10);
     box->setValue(6);
@@ -13,9 +11,7 @@ StrokeWidthWidget::StrokeWidthWidget(QWidget *parent)
     box->hide();
     m_widget = box;
 
-    QObject::connect(box, &QSpinBox::valueChanged, this, [this](){
-        emit changed(value());
-    });
+    QObject::connect(box, &QSpinBox::valueChanged, this, [this]() { emit changed(value()); });
 }
 
 QString StrokeWidthWidget::name() const {

@@ -5,7 +5,7 @@
 class Property;
 
 class PropertyWidget : public QObject {
-Q_OBJECT
+    Q_OBJECT
 public:
     PropertyWidget(QWidget *parent = nullptr);
 

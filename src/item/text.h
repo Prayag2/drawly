@@ -20,7 +20,7 @@ public:
 
     void translate(const QPointF &amount) override;
 
-    void createTextBox(const QPoint position);
+    void createTextBox(const QPointF position);
 
     enum Mode { EDIT, NORMAL };
 
@@ -72,7 +72,7 @@ private:
 
     QString m_text;
 
-    void renderBoundingBox(QPainter& painter) const;
+    void renderBoundingBox(QPainter &painter) const;
     void updateBoundingBox();
 
     qsizetype m_caretIndex{};

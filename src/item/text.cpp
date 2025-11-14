@@ -1,7 +1,7 @@
 #include "text.h"
 
-#include "../common/utils.h"
 #include "../common/constants.h"
+#include "../common/utils.h"
 #include <QFontMetricsF>
 #include <utility>
 
@@ -29,7 +29,7 @@ TextItem::TextItem() {
 TextItem::~TextItem() {
 }
 
-void TextItem::createTextBox(const QPoint position) {
+void TextItem::createTextBox(const QPointF position) {
     m_boundingBox.setTopLeft(position);
     m_boundingBox.setWidth(Common::defaultTextBoxWidth);
 
@@ -108,11 +108,15 @@ void TextItem::draw(QPainter &painter, const QPointF &offset) {
                     qsizetype selectionRectEnd = qMin(selEnd, currentLineEndPos);
 
                     if (selectionRectStart < selectionRectEnd) {
-                        const QString linePrefix = m_text.mid(currentLineStartPos, selectionRectStart - currentLineStartPos);
-                        const QString selectedTextOnLine = m_text.mid(selectionRectStart, selectionRectEnd - selectionRectStart);
+                        const QString linePrefix =
+                            m_text.mid(currentLineStartPos,
+                                       selectionRectStart - currentLineStartPos);
+                        const QString selectedTextOnLine =
+                            m_text.mid(selectionRectStart, selectionRectEnd - selectionRectStart);
 
                         const int prefixWidth = metrics.size(getTextFlags(), linePrefix).width();
-                        const int selectionWidth = metrics.size(getTextFlags(), selectedTextOnLine).width();
+                        const int selectionWidth =
+                            metrics.size(getTextFlags(), selectedTextOnLine).width();
 
                         const qreal x{curBox.left() + prefixWidth};
                         const qreal y{curBox.top() + (lineIndex * lineHeight)};
@@ -192,8 +196,7 @@ qsizetype TextItem::getIndexFromX(double xPos, int lineNumber) const {
     const QString line{m_text.mid(start, end - start + 1)};
 
     const double distanceFromLeft{std::max(xPos - m_boundingBox.x(), 0.0)};
-    const double lineWidth{
-        metrics.boundingRect(m_boundingBox, getTextFlags(), line).width()};
+    const double lineWidth{metrics.boundingRect(m_boundingBox, getTextFlags(), line).width()};
 
     if (distanceFromLeft > lineWidth) {
         if (end == m_text.size() - 1)
@@ -375,8 +378,8 @@ std::pair<qsizetype, qsizetype> TextItem::getLineRange(qsizetype position) const
 }
 
 qsizetype TextItem::getPrevBreak(qsizetype position) const {
-    auto isBreak = [&](int pos){
-        for (auto& sep : Common::wordSeparators) {
+    auto isBreak = [&](int pos) {
+        for (auto &sep : Common::wordSeparators) {
             if (m_text[pos] == sep)
                 return true;
         }
@@ -387,7 +390,7 @@ qsizetype TextItem::getPrevBreak(qsizetype position) const {
     while (position > 0 && isBreak(position)) {
         position--;
     }
-    
+
     for (qsizetype pos{position - 1}; pos >= 0; pos--) {
         if (isBreak(pos))
             return pos + 1;
@@ -399,7 +402,7 @@ qsizetype TextItem::getPrevBreak(qsizetype position) const {
 qsizetype TextItem::getNextBreak(qsizetype position) const {
     qsizetype len{m_text.length()};
     for (qsizetype pos{position + 1}; pos < len; pos++) {
-        for (auto& sep : Common::wordSeparators) {
+        for (auto &sep : Common::wordSeparators) {
             if (m_text[pos] == sep) {
                 return pos;
             }
@@ -416,7 +419,7 @@ constexpr int TextItem::getTextFlags() {
 QTextOption TextItem::getTextOptions() {
     QTextOption options{};
     options.setTabStopDistance(Common::tabStopDistance);
-    
+
     return options;
 }
 

@@ -5,25 +5,24 @@
 #include "../command/removeitemcommand.h"
 #include "../common/constants.h"
 #include "../common/renderitems.h"
-#include "../data-structures/cachegrid.h"
 #include "../context/applicationcontext.h"
 #include "../context/coordinatetransformer.h"
 #include "../context/renderingcontext.h"
 #include "../context/selectioncontext.h"
 #include "../context/spatialcontext.h"
 #include "../context/uicontext.h"
+#include "../data-structures/cachegrid.h"
 #include "../data-structures/quadtree.h"
 #include "../event/event.h"
 #include "../item/item.h"
 #include "../properties/widgets/propertymanager.h"
-
 #include <QDebug>
 #include <QPainter>
 
 EraserTool::EraserTool() {
     m_cursor = QCursor(Qt::CrossCursor);
 
-    m_properties = { Property::EraserSize };
+    m_properties = {Property::EraserSize};
 }
 
 void EraserTool::mousePressed(ApplicationContext *context) {
@@ -67,7 +66,8 @@ void EraserTool::mouseMoved(ApplicationContext *context) {
                 continue;
 
             // TODO: Remove magic numbers
-            item->setProperty(Property::Opacity, Property{Common::eraseItemOpacity, Property::Opacity});
+            item->setProperty(Property::Opacity,
+                              Property{Common::eraseItemOpacity, Property::Opacity});
 
             m_toBeErased.insert(item);
             spatialContext.cacheGrid().markDirty(
@@ -108,7 +108,8 @@ void EraserTool::mouseReleased(ApplicationContext *context) {
             }
 
             // reset opacity
-            item->setProperty(Property::Opacity, Property{Common::maxItemOpacity, Property::Opacity});
+            item->setProperty(Property::Opacity,
+                              Property{Common::maxItemOpacity, Property::Opacity});
             erasedItems.push_back(item);
         }
 
@@ -134,7 +135,7 @@ void EraserTool::cleanup() {
     context->uiContext().event().setButton(Qt::LeftButton);
     mouseReleased(context);
 
-    auto& overlayPainter{context->renderingContext().overlayPainter()};
+    auto &overlayPainter{context->renderingContext().overlayPainter()};
     overlayPainter.save();
 
     overlayPainter.setCompositionMode(QPainter::CompositionMode_Source);

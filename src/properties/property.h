@@ -6,7 +6,7 @@
 class Property {
 public:
     Property() = default;
- 
+
     enum Type { StrokeWidth, StrokeColor, Opacity, FontSize, EraserSize };
 
     template <typename T>

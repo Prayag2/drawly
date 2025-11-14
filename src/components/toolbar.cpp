@@ -1,6 +1,7 @@
 #include "toolbar.h"
-#include "../context/uicontext.h"
+
 #include "../context/applicationcontext.h"
+#include "../context/uicontext.h"
 #include "../iconmanager/iconmanager.h"
 
 ToolBar::ToolBar(QWidget *parent) : QFrame{parent} {
@@ -70,7 +71,7 @@ void ToolBar::changeTool(Tool::Type type) {
     emit toolChanged(curTool());
 }
 
-Tool& ToolBar::tool(Tool::Type type) const {
+Tool &ToolBar::tool(Tool::Type type) const {
     return *m_tools.at(type);
 }
 

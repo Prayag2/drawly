@@ -1,25 +1,27 @@
-#include <QJsonDocument>
-#include <QStandardPaths>
-#include <QJsonArray>
-#include <QFileDialog>
 #include "serializer.h"
-#include "../data-structures/quadtree.h"
-#include "../context/spatialcontext.h"
+
 #include "../context/applicationcontext.h"
 #include "../context/renderingcontext.h"
+#include "../context/spatialcontext.h"
+#include "../data-structures/quadtree.h"
+#include "../item/freeform.h"
 #include "../item/item.h"
 #include "../item/polygon.h"
-#include "../item/freeform.h"
 #include "../item/text.h"
+#include <QFileDialog>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QStandardPaths>
 #include <memory>
 
-Serializer::Serializer() {}
+Serializer::Serializer() {
+}
 
 void Serializer::serialize(ApplicationContext *context) {
     QVector<std::shared_ptr<Item>> items{context->spatialContext().quadtree().getAllItems()};
 
     QJsonArray array{};
-    for (auto& item : items) {
+    for (auto &item : items) {
         array.push_back(toJson(item));
     }
 
@@ -40,7 +42,7 @@ QJsonObject Serializer::toJson(std::shared_ptr<Item> item) {
     obj["bounding_box_padding"] = QJsonValue(item->boundingBoxPadding());
     obj["properties"] = toJson(item->properties());
 
-    switch(item->type()) {
+    switch (item->type()) {
         case Item::Freeform: {
             std::shared_ptr<FreeformItem> freeform{std::dynamic_pointer_cast<FreeformItem>(item)};
             obj["points"] = toJson(freeform->points());
@@ -65,7 +67,7 @@ QJsonObject Serializer::toJson(std::shared_ptr<Item> item) {
     return obj;
 }
 
-QJsonObject Serializer::toJson(const Property& property) {
+QJsonObject Serializer::toJson(const Property &property) {
     QJsonObject result{};
 
     result["type"] = property.type();
@@ -74,7 +76,7 @@ QJsonObject Serializer::toJson(const Property& property) {
     return result;
 }
 
-QJsonObject Serializer::toJson(const QRectF& rect) {
+QJsonObject Serializer::toJson(const QRectF &rect) {
     QJsonObject result{};
     result["x"] = QJsonValue(rect.x());
     result["y"] = QJsonValue(rect.y());
@@ -84,7 +86,7 @@ QJsonObject Serializer::toJson(const QRectF& rect) {
     return result;
 }
 
-QJsonObject Serializer::toJson(const QPointF& point) {
+QJsonObject Serializer::toJson(const QPointF &point) {
     QJsonObject result{};
     result["x"] = QJsonValue(point.x());
     result["y"] = QJsonValue(point.y());
@@ -99,7 +101,8 @@ void Serializer::saveToFile() {
 
     QDir homeDir{QDir::home()};
     QString defaultFilePath = homeDir.filePath("Untitled.json");
-    QString fileName{QFileDialog::getSaveFileName(nullptr, "Save File", defaultFilePath, "JSON (*.json)")};
+    QString fileName{
+        QFileDialog::getSaveFileName(nullptr, "Save File", defaultFilePath, "JSON (*.json)")};
 
     QFile file{fileName};
     file.open(QIODevice::WriteOnly);

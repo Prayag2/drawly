@@ -1,14 +1,14 @@
 #include "selectioncontext.h"
 
-#include "../item/item.h"
-#include "applicationcontext.h"
-#include "renderingcontext.h"
-#include "coordinatetransformer.h"
 #include "../command/commandhistory.h"
 #include "../command/updatepropertycommand.h"
-#include "spatialcontext.h"
 #include "../data-structures/cachegrid.h"
+#include "../item/item.h"
 #include "../properties/property.h"
+#include "applicationcontext.h"
+#include "coordinatetransformer.h"
+#include "renderingcontext.h"
+#include "spatialcontext.h"
 
 SelectionContext::SelectionContext(ApplicationContext *context)
     : QObject{context},
@@ -35,7 +35,7 @@ QRectF SelectionContext::selectionBox() const {
 void SelectionContext::updatePropertyOfSelectedItems(Property property) {
     QVector<std::shared_ptr<Item>> items{m_selectedItems.begin(), m_selectedItems.end()};
 
-    auto& commandHistory{m_applicationContext->spatialContext().commandHistory()};
+    auto &commandHistory{m_applicationContext->spatialContext().commandHistory()};
     commandHistory.insert(std::make_shared<UpdatePropertyCommand>(items, property));
 
     m_applicationContext->renderingContext().markForRender();

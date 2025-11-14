@@ -1,5 +1,7 @@
 #include "selectiontool.h"
 
+#include "../../command/commandhistory.h"
+#include "../../command/moveitemcommand.h"
 #include "../../common/constants.h"
 #include "../../context/applicationcontext.h"
 #include "../../context/coordinatetransformer.h"
@@ -8,8 +10,6 @@
 #include "../../context/spatialcontext.h"
 #include "../../context/uicontext.h"
 #include "../../event/event.h"
-#include "../../command/moveitemcommand.h"
-#include "../../command/commandhistory.h"
 #include "../../item/item.h"
 #include "selectiontoolmovestate.h"
 #include "selectiontoolselectstate.h"
@@ -54,12 +54,12 @@ std::shared_ptr<SelectionToolState> SelectionTool::getCurrentState(ApplicationCo
 }
 
 void SelectionTool::keyPressed(ApplicationContext *context) {
-    auto& selectedItems{context->selectionContext().selectedItems()};
+    auto &selectedItems{context->selectionContext().selectedItems()};
     if (selectedItems.empty())
         return;
 
-    auto& event{context->uiContext().event()};
-    auto& commandHistory{context->spatialContext().commandHistory()};
+    auto &event{context->uiContext().event()};
+    auto &commandHistory{context->spatialContext().commandHistory()};
     QVector<std::shared_ptr<Item>> items{selectedItems.begin(), selectedItems.end()};
 
     int delta{Common::translationDelta};
@@ -67,7 +67,7 @@ void SelectionTool::keyPressed(ApplicationContext *context) {
         delta = Common::shiftTranslationDelta;
 
     bool updated{true};
-    switch(event.key()) {
+    switch (event.key()) {
         case Qt::Key_Left:
             commandHistory.insert(std::make_shared<MoveItemCommand>(items, QPoint{-delta, 0}));
             break;
@@ -92,11 +92,11 @@ void SelectionTool::keyPressed(ApplicationContext *context) {
 
 const QVector<Property::Type> SelectionTool::properties() const {
     ApplicationContext *context{ApplicationContext::instance()};
-    auto& selectedItems{context->selectionContext().selectedItems()};
+    auto &selectedItems{context->selectionContext().selectedItems()};
 
     std::set<Property::Type> result{};
-    for (const auto& item : selectedItems) {
-        for (const auto& property : item->propertyTypes()) {
+    for (const auto &item : selectedItems) {
+        for (const auto &property : item->propertyTypes()) {
             result.insert(property);
         }
     }

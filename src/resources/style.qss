@@ -2,8 +2,8 @@
     background: #202025;
     border: none;
     border-radius: 4px;
-    width: 42px;
-    height: 42px;
+    width: 36px;
+    height: 36px;
     color: #fff;
     font-size: 18px;
     text-align: center;

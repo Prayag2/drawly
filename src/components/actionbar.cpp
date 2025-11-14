@@ -1,7 +1,7 @@
 #include "actionbar.h"
+
 #include "../context/applicationcontext.h"
 #include "../context/uicontext.h"
-
 #include <stdexcept>
 
 ActionBar::ActionBar(QWidget *parent) : QFrame{parent} {

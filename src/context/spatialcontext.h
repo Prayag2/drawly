@@ -35,7 +35,7 @@ private:
 
     // Stores the position of the topleft corner of the viewport with respect to
     // to the world center. If viewport moves down/right, the coordinates increase
-    QPointF m_offsetPos{};  
+    QPointF m_offsetPos{};
 
     ApplicationContext *m_applicationContext;
 };

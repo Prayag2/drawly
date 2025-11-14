@@ -1,19 +1,19 @@
 #include "actionmanager.h"
 
-#include "../serializer/loader.h"
-#include "../serializer/serializer.h"
-#include "../command/removeitemcommand.h"
 #include "../command/commandhistory.h"
+#include "../command/removeitemcommand.h"
+#include "../components/propertybar.h"
 #include "../components/toolbar.h"
 #include "../context/applicationcontext.h"
-#include "../context/renderingcontext.h"
-#include "../context/spatialcontext.h"
-#include "../context/selectioncontext.h"
-#include "../data-structures/quadtree.h"
-#include "../data-structures/cachegrid.h"
 #include "../context/coordinatetransformer.h"
-#include "../components/propertybar.h"
+#include "../context/renderingcontext.h"
+#include "../context/selectioncontext.h"
+#include "../context/spatialcontext.h"
 #include "../context/uicontext.h"
+#include "../data-structures/cachegrid.h"
+#include "../data-structures/quadtree.h"
+#include "../serializer/loader.h"
+#include "../serializer/serializer.h"
 #include "action.h"
 #include "keybindmanager.h"
 #include <memory>
@@ -80,46 +80,48 @@ ActionManager::ActionManager(ApplicationContext *context) : m_context{context}, 
                                       [&]() { this->switchToMoveTool(); },
                                       context}};
 
-    Action *selectAllAction{new Action{"Select All",
-                                      "Select all items",
-                                      [&, context]() {
-                                          this->switchToSelectionTool();
+    Action *selectAllAction{new Action{
+        "Select All",
+        "Select all items",
+        [&, context]() {
+            this->switchToSelectionTool();
 
-                                          auto allItems{context->spatialContext().quadtree().getAllItems()};
-                                          context->selectionContext().selectedItems().insert(allItems.begin(), allItems.end());
+            auto allItems{context->spatialContext().quadtree().getAllItems()};
+            context->selectionContext().selectedItems().insert(allItems.begin(), allItems.end());
 
-                                          context->uiContext().propertyBar().updateToolProperties();
-                                          context->renderingContext().markForRender();
-                                          context->renderingContext().markForUpdate();
-                                      },
-                                      context}};
+            context->uiContext().propertyBar().updateToolProperties();
+            context->renderingContext().markForRender();
+            context->renderingContext().markForUpdate();
+        },
+        context}};
 
-    Action *deleteAction{new Action{"Delete",
-                                      "Deletes selected items",
-                                      [&, context]() { 
-                                          auto& selectedItems{context->selectionContext().selectedItems()};
-                                          auto& transformer{context->spatialContext().coordinateTransformer()};
-                                          auto& commandHistory{context->spatialContext().commandHistory()};
+    Action *deleteAction{new Action{
+        "Delete",
+        "Deletes selected items",
+        [&, context]() {
+            auto &selectedItems{context->selectionContext().selectedItems()};
+            auto &transformer{context->spatialContext().coordinateTransformer()};
+            auto &commandHistory{context->spatialContext().commandHistory()};
 
-                                          QVector<std::shared_ptr<Item>> items{selectedItems.begin(), selectedItems.end()};
-                                          commandHistory.insert(std::make_shared<RemoveItemCommand>(items));
+            QVector<std::shared_ptr<Item>> items{selectedItems.begin(), selectedItems.end()};
+            commandHistory.insert(std::make_shared<RemoveItemCommand>(items));
 
-                                          context->renderingContext().markForRender();
-                                          context->renderingContext().markForUpdate();
+            context->renderingContext().markForRender();
+            context->renderingContext().markForUpdate();
 
-                                          context->selectionContext().selectedItems().clear();
-                                      },
-                                      context}};
+            context->selectionContext().selectedItems().clear();
+        },
+        context}};
 
     Action *saveAction{new Action{"Save",
-                                      "Save canvas",
-                                      [&, context]() {
-                                          Serializer serializer{};
+                                  "Save canvas",
+                                  [&, context]() {
+                                      Serializer serializer{};
 
-                                          serializer.serialize(context);
-                                          serializer.saveToFile();
-                                      },
-                                      context}};
+                                      serializer.serialize(context);
+                                      serializer.saveToFile();
+                                  },
+                                  context}};
 
     Action *openFileAction{new Action{"Open File",
                                       "Open an existing file",
