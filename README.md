@@ -6,7 +6,8 @@ Drawy is a work-in-progress infinite whiteboard tool written in Qt/C++, which ai
 <img src="./assets/screenshot.png" style="width: 100%"/>
 
 # Installation
-Windows binaries will soon be available. For now, you can try the AppImage that works on all major Linux distributions.
+Windows binaries will soon be available. For now, you can try the AppImage that works on all major Linux distributions.  
+  
 <a href="https://github.com/Prayag2/drawy/releases">
 <img alt="Static Badge" src="https://img.shields.io/badge/Download-Linux-F7B601?style=for-the-badge">
 </a>
