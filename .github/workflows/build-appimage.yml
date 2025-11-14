@@ -19,7 +19,6 @@ jobs:
           version: 6.10.0
           host: linux
           target: desktop
-          arch: gcc_64
 
       - name: Install dependencies
         run: |
