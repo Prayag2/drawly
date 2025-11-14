@@ -29,7 +29,7 @@ TextItem::TextItem() {
 TextItem::~TextItem() {
 }
 
-void TextItem::createTextBox(const QPoint position) {
+void TextItem::createTextBox(const QPointF position) {
     m_boundingBox.setTopLeft(position);
     m_boundingBox.setWidth(Common::defaultTextBoxWidth);
 

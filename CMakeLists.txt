@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(drawly VERSION 0.1 LANGUAGES CXX)
+project(drawy VERSION 0.1 LANGUAGES CXX)
 
 # Enable automatic handling of UI, MOC, and RCC files.
 set(CMAKE_AUTOUIC ON)
@@ -17,7 +17,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS OpenGLWidgets)
 
 # Translation files.
-set(TS_FILES ${CMAKE_SOURCE_DIR}/translations/drawly_en_GB.ts)
+set(TS_FILES ${CMAKE_SOURCE_DIR}/translations/drawy_en_GB.ts)
 
 # Source directory.
 set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)

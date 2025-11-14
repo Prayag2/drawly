@@ -1,5 +1,5 @@
 {
-    description = "x86_64 dev environment for Shwet, the whiteboard app.";
+    description = "x86_64 dev environment for Drawy, the whiteboard app.";
     inputs = {
         nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     };

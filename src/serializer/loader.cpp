@@ -126,6 +126,7 @@ std::shared_ptr<Item> Loader::createItem(const QJsonObject &obj) {
             std::shared_ptr<TextItem> cur{std::make_shared<TextItem>()};
             QPointF topLeft = toPointF(value(obj, "bounding_box"));
 
+            cur->createTextBox(topLeft);
             cur->insertText(value(obj, "text").toString());
 
             item = cur;

@@ -20,7 +20,7 @@ public:
 
     void translate(const QPointF &amount) override;
 
-    void createTextBox(const QPoint position);
+    void createTextBox(const QPointF position);
 
     enum Mode { EDIT, NORMAL };
 
