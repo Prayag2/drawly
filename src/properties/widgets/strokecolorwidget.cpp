@@ -1,15 +1,13 @@
 #include "strokecolorwidget.h"
-#include "../property.h"
 
+#include "../property.h"
 #include <QButtonGroup>
 #include <QColor>
 #include <QHBoxLayout>
 #include <QPushButton>
 
 // TODO: Use a better widget and a better way to return colors instead of button id
-StrokeColorWidget::StrokeColorWidget(QWidget *parent)
-    : PropertyWidget{parent}
-{
+StrokeColorWidget::StrokeColorWidget(QWidget *parent) : PropertyWidget{parent} {
     m_widget = new QWidget{parent};
 
     QHBoxLayout *layout{new QHBoxLayout{m_widget}};
@@ -38,9 +36,7 @@ StrokeColorWidget::StrokeColorWidget(QWidget *parent)
     m_widget->setProperty("class", "drawlyStrokeColorWidget");
     m_widget->hide();
 
-    QObject::connect(m_group, &QButtonGroup::idClicked, this, [this](){
-        emit changed(value());
-    });
+    QObject::connect(m_group, &QButtonGroup::idClicked, this, [this]() { emit changed(value()); });
 }
 
 QString StrokeColorWidget::name() const {
@@ -48,5 +44,6 @@ QString StrokeColorWidget::name() const {
 };
 
 const Property StrokeColorWidget::value() const {
-    return Property{QColor::fromRgba(static_cast<quint64>(m_group->checkedId())), Property::StrokeColor};
+    return Property{QColor::fromRgba(static_cast<quint64>(m_group->checkedId())),
+                    Property::StrokeColor};
 };

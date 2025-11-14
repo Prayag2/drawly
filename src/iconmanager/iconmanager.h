@@ -35,7 +35,7 @@ public:
 private:
     std::unordered_map<Icon, QString> m_iconName;
 
-    QString m_curTheme{"fa-dark"}; // default
+    QString m_curTheme{"fa-dark"};  // default
 };
 
-#endif // ICONMANAGER_H
+#endif  // ICONMANAGER_H

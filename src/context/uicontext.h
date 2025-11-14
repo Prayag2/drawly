@@ -26,7 +26,7 @@ public:
     Event &event() const;
     KeybindManager &keybindManager() const;
     ActionManager &actionManager() const;
-    PropertyManager& propertyManager() const;
+    PropertyManager &propertyManager() const;
     IconManager &iconManager() const;
 
     void reset();
@@ -44,7 +44,7 @@ private:
     Event *m_event{nullptr};
     IconManager *m_iconManager{};
 
-    Tool* m_lastTool{nullptr}; // Used to call the cleanup function of the last tool
+    Tool *m_lastTool{nullptr};  // Used to call the cleanup function of the last tool
 
     ApplicationContext *m_applicationContext;
 };

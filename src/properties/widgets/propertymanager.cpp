@@ -1,9 +1,9 @@
 #include "propertymanager.h"
 
 #include "erasersizewidget.h"
+#include "fontsizewidget.h"
 #include "strokecolorwidget.h"
 #include "strokewidthwidget.h"
-#include "fontsizewidget.h"
 
 PropertyManager::PropertyManager(QWidget *parent) : QObject{parent} {
     m_widgets[Property::StrokeWidth] = new StrokeWidthWidget(parent);
@@ -11,12 +11,12 @@ PropertyManager::PropertyManager(QWidget *parent) : QObject{parent} {
     m_widgets[Property::EraserSize] = new EraserSizeWidget(parent);
     m_widgets[Property::FontSize] = new FontSizeWidget(parent);
 
-    for (const auto& [_, widget] : m_widgets) {
+    for (const auto &[_, widget] : m_widgets) {
         QObject::connect(widget, &PropertyWidget::changed, this, &PropertyManager::propertyUpdated);
     }
 }
 
-const PropertyWidget& PropertyManager::widget(const Property::Type type) const {
+const PropertyWidget &PropertyManager::widget(const Property::Type type) const {
     if (m_widgets.find(type) == m_widgets.end()) {
         throw std::logic_error("A valid widget for the given Property::Type does not exist.");
     }

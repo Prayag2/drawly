@@ -1,6 +1,7 @@
 #include "selectiontoolselectstate.h"
 
 #include "../../canvas/canvas.h"
+#include "../../components/propertybar.h"
 #include "../../context/applicationcontext.h"
 #include "../../context/coordinatetransformer.h"
 #include "../../context/renderingcontext.h"
@@ -8,7 +9,6 @@
 #include "../../context/spatialcontext.h"
 #include "../../context/uicontext.h"
 #include "../../data-structures/cachegrid.h"
-#include "../../components/propertybar.h"
 #include "../../data-structures/quadtree.h"
 #include "../../event/event.h"
 #include "../../item/item.h"
@@ -25,9 +25,10 @@ bool SelectionToolSelectState::mousePressed(ApplicationContext *context) {
         auto &transformer{spatialContext.coordinateTransformer()};
 
         QVector<std::shared_ptr<Item>> intersectingItems{
-            spatialContext.quadtree().queryItems(transformer.viewToWorld(m_lastPos), [](std::shared_ptr<Item> item, auto& pos) {
-                return item->boundingBox().contains(pos);
-            })};
+            spatialContext.quadtree().queryItems(transformer.viewToWorld(m_lastPos),
+                                                 [](std::shared_ptr<Item> item, auto &pos) {
+                                                     return item->boundingBox().contains(pos);
+                                                 })};
 
         bool lockState = true;
 
@@ -55,7 +56,7 @@ void SelectionToolSelectState::mouseMoved(ApplicationContext *context) {
     auto &spatialContext{context->spatialContext()};
     renderingContext.canvas().setCursor(Qt::ArrowCursor);
 
-    auto& painter{renderingContext.overlayPainter()};
+    auto &painter{renderingContext.overlayPainter()};
     if (!m_isActive) {
         return;
     }

@@ -9,18 +9,18 @@
 #include "../event/event.h"
 #include "../keybindings/actionmanager.h"
 #include "../keybindings/keybindmanager.h"
+#include "../properties/widgets/propertymanager.h"
+#include "../serializer/loader.h"
+#include "../serializer/serializer.h"
 #include "../tools/arrowtool.h"
 #include "../tools/ellipsetool.h"
 #include "../tools/erasertool.h"
 #include "../tools/freeformtool.h"
 #include "../tools/linetool.h"
 #include "../tools/movetool.h"
-#include "../properties/widgets/propertymanager.h"
 #include "../tools/rectangletool.h"
 #include "../tools/selectiontool/selectiontool.h"
 #include "../tools/texttool.h"
-#include "../serializer/serializer.h"
-#include "../serializer/loader.h"
 #include "applicationcontext.h"
 #include "renderingcontext.h"
 #include "selectioncontext.h"
@@ -47,8 +47,10 @@ void UIContext::setUIContext() {
     m_propertyManager = new PropertyManager(m_propertyBar);
     m_propertyBar->setPropertyManager(m_propertyManager);
 
-    QObject::connect(m_propertyManager, &PropertyManager::propertyUpdated,
-                     &m_applicationContext->selectionContext(), &SelectionContext::updatePropertyOfSelectedItems);
+    QObject::connect(m_propertyManager,
+                     &PropertyManager::propertyUpdated,
+                     &m_applicationContext->selectionContext(),
+                     &SelectionContext::updatePropertyOfSelectedItems);
 
     m_event = new Event();
 
@@ -63,7 +65,7 @@ void UIContext::setUIContext() {
     m_toolBar->addTool(new MoveTool(), Tool::Move);
 
     // TODO: Define their functions somewhere else
-    m_actionBar->addButton("Save to File", IconManager::ACTION_SAVE,6);
+    m_actionBar->addButton("Save to File", IconManager::ACTION_SAVE, 6);
     m_actionBar->addButton("Open File", IconManager::ACTION_OPEN_FILE, 7);
     m_actionBar->addButton("Zoom Out", IconManager::ACTION_ZOOM_OUT, 1);
     m_actionBar->addButton("Zoom In", IconManager::ACTION_ZOOM_IN, 2);
@@ -72,7 +74,10 @@ void UIContext::setUIContext() {
     m_actionBar->addButton("Redo", IconManager::ACTION_REDO, 5);
 
     QObject::connect(m_toolBar, &ToolBar::toolChanged, this, &UIContext::toolChanged);
-    QObject::connect(m_toolBar, &ToolBar::toolChanged, m_propertyBar, &PropertyBar::updateProperties);
+    QObject::connect(m_toolBar,
+                     &ToolBar::toolChanged,
+                     m_propertyBar,
+                     &PropertyBar::updateProperties);
 
     QObject::connect(&m_actionBar->button(1), &QPushButton::clicked, this, [this]() {
         m_applicationContext->renderingContext().updateZoomFactor(-1);

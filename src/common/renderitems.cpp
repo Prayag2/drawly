@@ -60,7 +60,8 @@ void Common::renderCanvas(ApplicationContext *context) {
             }
         }
 
-        canvasPainter.drawPixmap(transformer.round(transformer.gridToView(cell->rect())), cell->image());
+        canvasPainter.drawPixmap(transformer.round(transformer.gridToView(cell->rect())),
+                                 cell->image());
     }
 
     QRectF selectionBox{};

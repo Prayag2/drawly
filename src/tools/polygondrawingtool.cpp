@@ -17,7 +17,7 @@
 PolygonDrawingTool::PolygonDrawingTool() {
     m_cursor = QCursor(Qt::CrossCursor);
 
-    m_properties = { Property::StrokeWidth, Property::StrokeColor };
+    m_properties = {Property::StrokeWidth, Property::StrokeColor};
 }
 
 void PolygonDrawingTool::mousePressed(ApplicationContext *context) {
@@ -30,8 +30,10 @@ void PolygonDrawingTool::mousePressed(ApplicationContext *context) {
 
         curItem = std::dynamic_pointer_cast<PolygonItem>(m_itemFactory->create());
 
-        curItem->setProperty(Property::StrokeWidth, uiContext.propertyManager().value(Property::StrokeWidth));
-        curItem->setProperty(Property::StrokeColor, uiContext.propertyManager().value(Property::StrokeColor));
+        curItem->setProperty(Property::StrokeWidth,
+                             uiContext.propertyManager().value(Property::StrokeWidth));
+        curItem->setProperty(Property::StrokeColor,
+                             uiContext.propertyManager().value(Property::StrokeColor));
 
         curItem->setBoundingBoxPadding(10 * renderingContext.canvas().scale());
         curItem->setStart(transformer.viewToWorld(uiContext.event().pos()));

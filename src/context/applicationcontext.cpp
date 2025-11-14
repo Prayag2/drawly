@@ -6,7 +6,7 @@
 #include "spatialcontext.h"
 #include "uicontext.h"
 
-ApplicationContext* ApplicationContext::m_instance = nullptr;
+ApplicationContext *ApplicationContext::m_instance = nullptr;
 
 ApplicationContext::ApplicationContext(QWidget *parent) : QObject{parent}, m_parentWidget{parent} {
     m_selectionContext = new SelectionContext(this);

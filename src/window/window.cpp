@@ -1,6 +1,5 @@
 #include "window.h"
 
-#include <QFontDatabase>
 #include "../canvas/canvas.h"
 #include "../components/actionbar.h"
 #include "../components/propertybar.h"
@@ -12,6 +11,7 @@
 #include "boardlayout.h"
 #include <QButtonGroup>
 #include <QFile>
+#include <QFontDatabase>
 #include <QShortcut>
 
 MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
@@ -85,4 +85,3 @@ void MainWindow::m_applyCustomStyles() {
         qWarning() << "Failed to load font: Inter";
     }
 }
-

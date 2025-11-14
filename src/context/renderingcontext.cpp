@@ -102,8 +102,8 @@ void RenderingContext::updateZoomFactor(qreal diff, QPoint center) {
     int width{viewport.width()};
     int height{viewport.height()};
 
-    qreal centerX {center.x() == -1 ? width / 2.0 : center.x()};
-    qreal centerY {center.y() == -1 ? height / 2.0 : center.y()};
+    qreal centerX{center.x() == -1 ? width / 2.0 : center.x()};
+    qreal centerY{center.y() == -1 ? height / 2.0 : center.y()};
 
     offsetPos.setX(offsetPos.x() + centerX * (1 - oldZoomFactor / m_zoomFactor));
     offsetPos.setY(offsetPos.y() + centerY * (1 - oldZoomFactor / m_zoomFactor));

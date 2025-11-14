@@ -8,7 +8,9 @@
 #include "../data-structures/quadtree.h"
 #include "../item/item.h"
 
-MoveItemCommand::MoveItemCommand(QVector<std::shared_ptr<Item>> items, QPointF delta) : ItemCommand{items}, m_delta{delta} {
+MoveItemCommand::MoveItemCommand(QVector<std::shared_ptr<Item>> items, QPointF delta)
+    : ItemCommand{items},
+      m_delta{delta} {
 }
 
 void MoveItemCommand::execute(ApplicationContext *context) {

@@ -35,7 +35,7 @@ FreeformTool::FreeformTool() {
                               size - borderWidth);
     m_cursor = QCursor{cursorShape, size / 2, size / 2};
 
-    m_properties = { Property::StrokeWidth, Property::StrokeColor };
+    m_properties = {Property::StrokeWidth, Property::StrokeColor};
 }
 
 QString FreeformTool::tooltip() const {
@@ -52,8 +52,10 @@ void FreeformTool::mousePressed(ApplicationContext *context) {
 
         curItem = std::dynamic_pointer_cast<FreeformItem>(m_itemFactory->create());
 
-        curItem->setProperty(Property::StrokeWidth, uiContext.propertyManager().value(Property::StrokeWidth));
-        curItem->setProperty(Property::StrokeColor, uiContext.propertyManager().value(Property::StrokeColor));
+        curItem->setProperty(Property::StrokeWidth,
+                             uiContext.propertyManager().value(Property::StrokeWidth));
+        curItem->setProperty(Property::StrokeColor,
+                             uiContext.propertyManager().value(Property::StrokeColor));
 
         curItem->setBoundingBoxPadding(10 * renderingContext.canvas().scale());
 

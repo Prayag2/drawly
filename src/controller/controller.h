@@ -1,10 +1,10 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+#include "../tools/tool.h"
 #include <QDateTime>
 #include <QMouseEvent>
 #include <QObject>
-#include "../tools/tool.h"
 class ApplicationContext;
 
 class Controller : public QObject {
@@ -31,7 +31,7 @@ private:
     ApplicationContext *m_context{};
     qint64 m_lastTime{};
     qint64 m_lastClickTime{};
-    int m_clickCount{}; // for double/triple clicks
+    int m_clickCount{};  // for double/triple clicks
 
     bool m_mouseMoved{false};
     bool m_movingWithMiddleClick{false};

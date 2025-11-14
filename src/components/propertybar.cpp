@@ -1,18 +1,17 @@
 #include "propertybar.h"
 
-#include <QSpacerItem>
-#include "toolbar.h"
 #include "../context/applicationcontext.h"
 #include "../context/uicontext.h"
-#include "../properties/widgets/propertywidget.h"
 #include "../properties/widgets/propertymanager.h"
+#include "../properties/widgets/propertywidget.h"
 #include "../tools/tool.h"
+#include "toolbar.h"
 #include <QLabel>
+#include <QSpacerItem>
 #include <QVBoxLayout>
 #include <stdexcept>
 
-PropertyBar::PropertyBar(QWidget *parent) : QFrame{parent}
-{
+PropertyBar::PropertyBar(QWidget *parent) : QFrame{parent} {
     this->setFrameStyle(QFrame::StyledPanel | QFrame::Plain);
     this->setAutoFillBackground(true);
     this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
@@ -59,7 +58,7 @@ void PropertyBar::updateProperties(Tool &tool) {
     qsizetype count{0};
     for (Property::Type property : properties) {
         try {
-            const PropertyWidget& widget{m_propertyManager->widget(property)};
+            const PropertyWidget &widget{m_propertyManager->widget(property)};
             QLabel *widgetLabel{new QLabel{widget.name(), this}};
             m_layout->addWidget(widgetLabel);
             m_layout->addWidget(widget.widget());
@@ -70,7 +69,7 @@ void PropertyBar::updateProperties(Tool &tool) {
 
             count++;
             widget.widget()->show();
-        } catch (const std::logic_error& e) {
+        } catch (const std::logic_error &e) {
             // ignore this property
         }
     }

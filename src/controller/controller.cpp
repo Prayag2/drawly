@@ -10,11 +10,11 @@
 #include "../context/uicontext.h"
 #include "../event/event.h"
 #include "../tools/tool.h"
-#include <QWheelEvent>
 #include <QDateTime>
+#include <QWheelEvent>
 
 Controller::Controller(QObject *parent) : QObject{parent} {
-    m_context = ApplicationContext::instance(dynamic_cast<QWidget*>(parent));
+    m_context = ApplicationContext::instance(dynamic_cast<QWidget *>(parent));
     m_context->setContexts();
 }
 
@@ -23,7 +23,7 @@ Controller::~Controller() {
 }
 
 void Controller::mousePressed(QMouseEvent *event) {
-    // No on really clicks in this corner (0, 0) and this solves a 
+    // No on really clicks in this corner (0, 0) and this solves a
     // bug on Hyprland where it would register a mouse press in this corner
     if (event->pos() == QPoint{0, 0})
         return;
@@ -39,7 +39,7 @@ void Controller::mousePressed(QMouseEvent *event) {
             mouseTripleClick(event);
         }
         return;
-    }  else {
+    } else {
         m_clickCount = 1;
         m_mouseMoved = false;
     }
@@ -65,7 +65,7 @@ void Controller::mousePressed(QMouseEvent *event) {
     }
 }
 
-void Controller::mouseDoubleClick(QMouseEvent* event) {
+void Controller::mouseDoubleClick(QMouseEvent *event) {
     Event &contextEvent{m_context->uiContext().event()};
     ToolBar &toolBar{m_context->uiContext().toolBar()};
     Canvas &canvas{m_context->renderingContext().canvas()};
@@ -76,7 +76,7 @@ void Controller::mouseDoubleClick(QMouseEvent* event) {
     toolBar.curTool().mouseDoubleClick(m_context);
 }
 
-void Controller::mouseTripleClick(QMouseEvent* event) {
+void Controller::mouseTripleClick(QMouseEvent *event) {
     Event &contextEvent{m_context->uiContext().event()};
     ToolBar &toolBar{m_context->uiContext().toolBar()};
     Canvas &canvas{m_context->renderingContext().canvas()};

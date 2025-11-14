@@ -1,8 +1,8 @@
 #ifndef TOOL_H
 #define TOOL_H
 
-#include "../properties/property.h"
 #include "../iconmanager/iconmanager.h"
+#include "../properties/property.h"
 #include <QCursor>
 class ApplicationContext;
 

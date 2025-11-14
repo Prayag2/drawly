@@ -84,16 +84,15 @@ bool SelectionToolMoveState::mouseReleased(ApplicationContext *context) {
     m_isActive = false;
 
     if (delta != QPointF{0, 0}) {
-        auto& selectedItems{context->selectionContext().selectedItems()};
+        auto &selectedItems{context->selectionContext().selectedItems()};
         QVector<std::shared_ptr<Item>> items{selectedItems.begin(), selectedItems.end()};
 
         // TODO: Instead of un-doing the translation so that the command can execute it again,
         //       just make it not translate manually at all in the mouseMoved method
-        for (auto& item : items)
+        for (auto &item : items)
             item->translate(-delta);
 
-        commandHistory.insert(
-            std::make_shared<MoveItemCommand>(items, delta));
+        commandHistory.insert(std::make_shared<MoveItemCommand>(items, delta));
     }
 
     return false;

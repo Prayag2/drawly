@@ -8,8 +8,8 @@ class UIContext;
 class SelectionContext;
 
 /**
- * @note: This class was made a Singleton recently, so in many places it is still accessed by passing its pointer
- *        instead of using the `instance` method.
+ * @note: This class was made a Singleton recently, so in many places it is still accessed by
+ * passing its pointer instead of using the `instance` method.
  */
 class ApplicationContext : public QObject {
 public:
@@ -32,13 +32,13 @@ public:
     UIContext &uiContext() const;
     SelectionContext &selectionContext() const;
 
-    void reset(); // resets the canvas to a blank state
+    void reset();  // resets the canvas to a blank state
 
 private:
     ApplicationContext(QWidget *parent = nullptr);
 
-    ApplicationContext(const ApplicationContext&) = delete;
-    ApplicationContext(ApplicationContext*) = delete;
+    ApplicationContext(const ApplicationContext &) = delete;
+    ApplicationContext(ApplicationContext *) = delete;
 
     QWidget *m_parentWidget;
 
@@ -47,7 +47,7 @@ private:
     UIContext *m_uiContext{nullptr};
     SelectionContext *m_selectionContext{nullptr};
 
-    static ApplicationContext* m_instance;
+    static ApplicationContext *m_instance;
 };
 
 #endif  // APPLICATIONCONTEXT_H

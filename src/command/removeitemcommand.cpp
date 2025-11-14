@@ -1,9 +1,9 @@
 #include "removeitemcommand.h"
 
 #include "../common/constants.h"
-#include "../context/selectioncontext.h"
 #include "../context/applicationcontext.h"
 #include "../context/coordinatetransformer.h"
+#include "../context/selectioncontext.h"
 #include "../context/spatialcontext.h"
 #include "../data-structures/cachegrid.h"
 #include "../data-structures/quadtree.h"

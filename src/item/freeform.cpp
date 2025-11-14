@@ -195,7 +195,8 @@ QVector<std::shared_ptr<Item>> FreeformItem::split() const {
         if (index % maxSize() == 0) {
             // add this point to the previous freeform too
             if (!items.empty()) {
-                std::shared_ptr<FreeformItem> last{std::static_pointer_cast<FreeformItem>(items.back())};
+                std::shared_ptr<FreeformItem> last{
+                    std::static_pointer_cast<FreeformItem>(items.back())};
                 last->addPoint(m_points[index], m_pressures[index]);
             }
 
@@ -225,10 +226,10 @@ Item::Type FreeformItem::type() const {
     return Item::Freeform;
 }
 
-const QVector<QPointF>& FreeformItem::points() const {
+const QVector<QPointF> &FreeformItem::points() const {
     return m_points;
 }
 
-const QVector<qreal>& FreeformItem::pressures() const {
+const QVector<qreal> &FreeformItem::pressures() const {
     return m_pressures;
 }
