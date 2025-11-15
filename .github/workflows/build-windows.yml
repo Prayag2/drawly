@@ -18,6 +18,7 @@ jobs:
           version: 6.10.0
           host: windows
           target: desktop
+          arch: win64_msvc2019_64
 
       - name: Configure
         run: cmake -S . -B build -G "NMake Makefiles"
