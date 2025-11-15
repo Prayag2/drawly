@@ -2,7 +2,7 @@ name: build-windows
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
 
 jobs:
@@ -34,7 +34,7 @@ jobs:
         run: copy build\\Release\\drawy.exe deploy
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: windows-build
           path: deploy
