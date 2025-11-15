@@ -1,15 +1,20 @@
-# ✏️ Drawy
-Your handy, infinite, brainstorming tool.
----
-Drawy is a work-in-progress infinite whiteboard tool written in Qt/C++, which aims to be a native-desktop alternative to the amazing web-based Excalidraw.
-
+<p align="center">
+  <img src="assets/logo-256.png" width=100/>
+  <h1 align="center">Drawy</h1>
+  <p align="center">Your handy, infinite, brainstorming tool!</center>
+</p>
 <img src="./assets/screenshot.png" style="width: 100%"/>
 
-# Installation
-Windows binaries will soon be available. For now, you can try the AppImage that works on all major Linux distributions.  
-  
-<a href="https://github.com/Prayag2/drawy/releases">
+Drawy is a work-in-progress infinite whiteboard tool written in Qt/C++, which aims to be a native-desktop alternative to the amazing web-based Excalidraw.
+
+
+# Installation  
+<a href="https://github.com/Prayag2/drawy/releases/download/1.0.0-alpha/Drawy-47b7552-x86_64.AppImage">
 <img alt="Static Badge" src="https://img.shields.io/badge/Download-Linux-F7B601?style=for-the-badge">
+</a>
+
+<a href="https://github.com/Prayag2/drawy/releases/download/1.0.0-alpha/drawy-windows-x86_64.zip">
+<img alt="Static Badge" src="https://img.shields.io/badge/Download-Windows-007CF7?style=for-the-badge">
 </a>
 
 ## Compiling from Source
@@ -20,8 +25,8 @@ Windows binaries will soon be available. For now, you can try the AppImage that 
 - Compile: `cmake --build build --config Release`
 - Run: `./build/drawy`
 
-# Licence
-This project uses the GNU Lesser General Public Licence.
+# License
+This project uses the GNU General Public License V3.
 
 # Support Me ♥
 If you liked this project, then please consider supporting me!  
