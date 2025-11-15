@@ -33,8 +33,11 @@ jobs:
 
       - name: Deploy
         run: |
-          mkdir deploy-windos
+          mkdir deploy-windows
           windeployqt build/drawy.exe --dir deploy-windows
+
+      - name: Copy Executable
+        run: copy build\\drawy.exe deploy-windows
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
