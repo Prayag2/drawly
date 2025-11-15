@@ -68,10 +68,37 @@ CMakeLists.txt.user*
 # Python byte code
 *.pyc
 
+# Python files
+pyvenv.cfg
+
+# Nix-managed files
+/.pre-commit-config.yaml
+
+# Nix store paths
+**/*.drv
+**/*.nar
+**/*.narinfo
+
+# Nix build output
+/result
+/result-*/
+/.direnv/
+
+# File backups
+**/*.bak
+
+# Zsh residue
+**/core
+
 # Binaries
 # --------
 *.dll
 *.exe
+/bin
+
+# lib
+/lib
+/lib64
 
 # build
 build/
