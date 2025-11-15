@@ -27,4 +27,4 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: dir
-        path: '.'
+        path: '../..'
