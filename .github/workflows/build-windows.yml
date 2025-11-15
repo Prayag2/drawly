@@ -1,0 +1,40 @@
+name: build-windows
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 6.10.0
+          host: windows
+          target: desktop
+
+      - name: Configure
+        run: cmake -S . -B build -G "NMake Makefiles"
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Deploy
+        run: |
+          mkdir deploy
+          windeployqt build/Release/drawy.exe --dir deploy
+
+      - name: Copy exe
+        run: copy build\\Release\\drawy.exe deploy
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-build
+          path: deploy
