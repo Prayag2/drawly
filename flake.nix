@@ -1,26 +1,111 @@
 {
-    description = "x86_64 dev environment for Drawy, the whiteboard app.";
-    inputs = {
-        nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+  description = "x86_64 dev environment for Drawy, the whiteboard app.";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+
+    systems = {
+      url = "github:nix-systems/default";
     };
-    outputs = { self, nixpkgs }:
+
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
+  outputs =
+    {
+      self,
+      nixpkgs,
+      systems,
+      ...
+    }@inputs:
     let
-        system = "x86_64-linux";
-        pkgs = nixpkgs.legacyPackages.${system};
+      forEachSystem = nixpkgs.lib.genAttrs (import systems);
+
+      # using a subset of qt6 is more economic than its entirety
+      getQt6Env =
+        pkgs:
+        with pkgs.qt6;
+        env "qt-custom-${qtbase.version}" [
+          # core
+          qtdeclarative
+          qtbase
+          qttools
+
+          # dependencies
+          pkgs.libglvnd # qtdeclarative
+        ];
     in
     {
-        devShells.${system}.default = pkgs.mkShell {
-            buildInputs = with pkgs; [
-                qt6.full
+      devShells = forEachSystem (system: {
+        default =
+          let
+            pkgs = nixpkgs.legacyPackages.${system};
+            inherit (self.checks.${system}.pre-commit-check) shellHook enabledPackages;
+          in
+          pkgs.mkShell {
+            shellHook = shellHook + ''
+              which zsh >/dev/null && exec zsh
+            '';
+            buildInputs =
+              enabledPackages
+              ++ (with pkgs; [
+                # Qt
+                (getQt6Env pkgs)
                 qtcreator
+                qt6.qtbase
+
                 cmake
                 bear
-
                 entr
-            ];
-          shellHook = ''
-            which zsh >/dev/null && exec zsh
+              ]);
+          };
+      });
+
+      checks = forEachSystem (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          pre-commit-check = inputs.git-hooks.lib.${system}.run {
+            src = ./.;
+            hooks = {
+              nixfmt-rfc-style.enable = true;
+              mirrors-clang-format = {
+                entry = "${pkgs.clang-tools}/bin/clang-format";
+                enable = true;
+              };
+            };
+          };
+        }
+      );
+
+      formatter = forEachSystem (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          config = self.checks.${system}.pre-commit-check.config;
+          inherit (config) package configFile;
+          script = ''
+            ${pkgs.lib.getExe package} run --all-files --config ${configFile}
           '';
-        };
+        in
+        pkgs.writeShellScriptBin "pre-commit-run" script
+      );
+
+      packages = forEachSystem (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default = pkgs.qt6Packages.callPackage ./package.nix {
+            qtEnv = getQt6Env pkgs;
+          };
+        }
+      );
     };
 }
