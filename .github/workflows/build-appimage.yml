@@ -36,7 +36,7 @@ jobs:
 
       - name: Prepare AppImage tools
         run: |
-          mv build/drawy deploy/appimage/AppDir/usr/bin/
+          mv build/drawy deploy/appimage/AppDir/usr/bin/drawy
           cd deploy/appimage
           wget https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
           chmod +x linuxdeployqt-continuous-x86_64.AppImage
