@@ -1,0 +1,30 @@
+id: io.github.prayag2.Drawy
+runtime: org.kde.Platform
+runtime-version: '6.10'
+sdk: org.kde.Sdk
+command: drawy
+finish-args:
+    # 3D acceleration
+  - --device=dri
+    # X11
+  - --share=ipc
+    # show a window
+  - --socket=fallback-x11
+  - --socket=wayland
+
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - /share/man
+  - '*.pc'
+  - '*.a'
+  - '*.la'
+
+modules:
+  - name: drawy
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    buildsystem: cmake-ninja
+    sources:
+      - type: dir
+        path: '.'

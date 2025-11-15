@@ -1,0 +1,27 @@
+on:
+  push:
+    branches: [master]
+  pull_request:
+    paths-ignore:
+      - "**.md"
+      - "docs/*"
+      - ".github/ISSUE_TEMPLATE/**"
+
+name: CI Build Flatpak
+jobs:
+
+  flatpak:
+    name: "Flatpak"
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/flathub-infra/flatpak-github-actions:kde-6.10
+      options: --privileged
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+    - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+      with:
+        bundle: Drawy.flatpak
+        manifest-path: deploy/flatpak/io.github.prayag2.Drawy.yaml
+        cache-key: flatpak-builder-${{ github.sha }}
