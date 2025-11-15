@@ -26,21 +26,21 @@ jobs:
           arch: win64_msvc2022_64
 
       - name: Configure
-        run: cmake -S . -B build -G "NMake Makefiles"
+        run: cmake -S . -B build -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
         run: cmake --build build --config Release
 
       - name: Deploy
         run: |
-          mkdir deploy-windows
-          windeployqt build/drawy.exe --dir deploy-windows
+          mkdir deploy/windows
+          windeployqt build/drawy.exe --dir deploy/windows
 
       - name: Copy Executable
-        run: copy build\\drawy.exe deploy-windows
+        run: copy build\\drawy.exe deploy\\windows
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: windows-build
-          path: deploy-windows
+          name: drawy-windows-x86_64
+          path: deploy/windows
